@@ -3,7 +3,7 @@
 // Capacitor-6 default (compile/target 34) only when rootProject.ext is unset,
 // so bumping here bumps the whole build in one place.
 ext {
-    minSdkVersion = 22
+    minSdkVersion = 24
     // 35 = Android 15. Google Play requires new uploads to target 35, and
     // targeting it also opts the app into forced edge-to-edge — the system no
     // longer insets the window for the status/navigation bars, and
