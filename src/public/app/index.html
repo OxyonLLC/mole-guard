@@ -172,7 +172,7 @@
       <div class="card">
         <h1 style="margin-bottom:12px">What are we doing today?</h1>
         <span class="tag tagSol">$WinLEW · on Solana</span>
-        <p class="lead"><b>$WinLEW</b> is WinLEW's token on <b>Solana</b>. To claim the drip, your Solana wallet must <b>hold at least 1,000 $WinLEW</b>. Holding also earns weekly <a href="/hodl/">HODL rewards</a>.</p>
+        <p class="lead"><b>$WinLEW</b> is WinLEW's token on <b>Solana</b>. To claim the drip, your Solana wallet must <b>hold at least 1,000 $WinLEW</b>. Holders may also receive weekly <a href="/hodl/">HODL rewards</a>.</p>
         <button class="primary" id="btnClaim" type="button">💧 Claim your $WinLEW drip</button>
         <p class="center tiny" id="claimNote" style="margin:12px 0 0">Checking the faucet…</p>
       </div>
@@ -188,10 +188,10 @@
       </div>
 
       <div class="grid">
-        <a class="tile" href="/quiz/"><span class="ico">🧠</span>Quiz<small>Answer, earn points</small></a>
+        <a class="tile" href="/quiz/"><span class="ico">🧠</span>Quiz<small>Answer, collect points</small></a>
         <a class="tile" href="/mole-hub/"><span class="ico">🎮</span>Games<small>The Mole Hub arcade</small></a>
-        <a class="tile" href="/hodl/"><span class="ico">💎</span>HODL rewards<small>Hold $WinLEW, earn weekly</small></a>
-        <a class="tile" href="/xl1/arcade/"><span class="ico">🕹️</span>XL1 Arcade<small>Play, earn $XL1</small></a>
+        <a class="tile" href="/hodl/"><span class="ico">💎</span>HODL rewards<small>Weekly rewards for holders</small></a>
+        <a class="tile" href="/xl1/arcade/"><span class="ico">🕹️</span>XL1 Arcade<small>Browser games, XL1 rewards</small></a>
         <a class="tile" href="/leaderboards/"><span class="ico">🏆</span>Leaderboard<small>Where you rank</small></a>
         <a class="tile" href="/contribute/"><span class="ico">🤝</span>Contribute<small>Back the project</small></a>
         <a class="tile" href="/about/"><span class="ico">📖</span>About<small>What WinLEW is</small></a>
@@ -206,7 +206,7 @@
           <img src="https://oxyon.io/assets/logo-mark.png" alt="" width="40" height="39" loading="lazy">
           <div>
             <b>One wallet for both: Oxyon Wallet</b>
-            <span>Holds $WinLEW on Solana <i>and</i> $XL1 on XYO Layer One, with Ethereum chains too. Your keys stay on your device.</span>
+            <span>Holds $WinLEW on Solana <i>and</i> $XL1 on XYO Layer One, with Ethereum chains too. <b style="display:inline;font-size:inherit">Create a new wallet</b> for WinLEW: no need to import a key from another wallet. Your keys stay on your device; WinLEW never sees them.</span>
           </div>
         </div>
         <div class="row2" style="margin:0 0 14px">
@@ -394,6 +394,9 @@
         if (!res.ok) return;
         const latest = await res.json();
         const running = Number(info && info.build);
+        // Google Play builds (versionCode 10000 and up, 1.0.0+) update ONLY through Google Play: Play's
+        // policy forbids an app offering its own APK. Only the sideloaded beta line (0.x) gets this banner.
+        if (running >= 10000) return;
         if (!Number.isFinite(running) || !latest || Number(latest.build) <= running) return;
 
         $('updateWhat').textContent =

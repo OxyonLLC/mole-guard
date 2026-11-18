@@ -1,8 +1,8 @@
 {
   "name": "winlew-mobile-beta",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
-  "description": "Capacitor native wrapper for the existing WinLEW web platform (winlew.co). No separate business logic \u2014 see docs/mobile-beta.md.",
+  "description": "Capacitor native wrapper for the existing WinLEW web platform (winlew.co). No separate business logic — see docs/mobile-beta.md.",
   "scripts": {
     "sync": "cap sync",
     "sync:android": "cap sync android",

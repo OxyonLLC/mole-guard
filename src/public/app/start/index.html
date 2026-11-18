@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Welcome to WinLEW</title>
+  <meta name="description" content="Welcome to WinLEW: what it is, the two tokens it uses, and an 18+ confirmation before you start." />
+  <meta name="theme-color" content="#130b08" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <script>
+    // The WinLEW app starts here (capacitor.config server.url). After the first run, go straight to the
+    // app, before anything paints, so returning users never see this page.
+    try {
+      if (localStorage.getItem('winlew.app.started') === '1') location.replace('/app/' + location.search + location.hash);
+    } catch (e) { /* storage blocked: show the welcome, it still works */ }
+  </script>
+  <style>
+    :root{--bg:#130b08;--bg2:#24150d;--line:rgba(255,255,255,.12);--text:#f6efe8;--muted:rgba(246,239,232,.82);--brand:#d6a866}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);
+      background:radial-gradient(1200px 700px at 50% -10%, #3a2414 0%, var(--bg) 60%) fixed;display:flex;flex-direction:column}
+    main{flex:1;display:flex;flex-direction:column;justify-content:center;max-width:460px;width:100%;margin:0 auto;padding:28px 18px calc(18px + env(safe-area-inset-bottom))}
+    .slide{display:none;animation:in .25s ease-out}
+    .slide.on{display:block}
+    @keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    .logo{display:block;width:92px;height:92px;border-radius:24px;margin:0 auto 18px;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+    h1{font-size:28px;line-height:1.15;margin:0 0 12px;text-align:center}
+    p{font-size:15.5px;line-height:1.6;color:var(--muted);margin:0 0 14px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.022));border:1px solid var(--line);border-radius:18px;padding:16px;margin:0 0 12px}
+    .card b{color:var(--text)}
+    .tag{display:inline-block;font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px;margin:0 0 8px}
+    .sol{background:rgba(153,69,255,.16);color:#c9a6ff;border:1px solid rgba(153,69,255,.4)}
+    .xl1{background:rgba(0,200,170,.12);color:#7fe3cf;border:1px solid rgba(0,200,170,.35)}
+    .card p{font-size:14px;margin:0}
+    ul{margin:0 0 14px;padding-left:20px;color:var(--muted);line-height:1.6;font-size:15px}
+    button{width:100%;border:0;border-radius:14px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;margin-top:8px;
+      background:linear-gradient(180deg,#e6be7f,#c9944f);color:#24150d}
+    button:disabled{opacity:.45;cursor:not-allowed}
+    button.ghost{background:transparent;color:var(--muted);border:1px solid var(--line);font-weight:700}
+    .dots{display:flex;gap:8px;justify-content:center;margin:20px 0 0}
+    .dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2)}
+    .dots i.on{background:var(--brand)}
+    label.age{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.5;margin:6px 0 4px;cursor:pointer}
+    label.age input{width:22px;height:22px;margin:2px 0 0;accent-color:var(--brand);flex:none}
+    .fine{font-size:12.5px;color:rgba(246,239,232,.55);line-height:1.55;margin:10px 0 0}
+    a{color:var(--brand)}
+    a.get{display:block;text-align:center;font-weight:800;text-decoration:none;padding:12px;border-radius:12px;border:1px solid rgba(214,168,102,.45);background:rgba(214,168,102,.1)}
+  </style>
+</head>
+<body>
+  <main>
+    <section class="slide on" data-step="0" aria-label="Welcome">
+      <img class="logo" src="/images/avatars/utility-bot-128.png" alt="WinLEW" width="92" height="92" />
+      <h1>Welcome to WinLEW</h1>
+      <p>WinLEW is a community you take part in: browser games, a daily quiz, and leaderboards, with a Discord full of real people behind it.</p>
+      <ul>
+        <li>Play the Mole Hub games and the XL1 Arcade</li>
+        <li>Answer the quiz and climb the leaderboards</li>
+        <li>Connect a wallet once, and come back any time</li>
+      </ul>
+      <button type="button" data-next>Next</button>
+    </section>
+
+    <section class="slide" data-step="1" aria-label="Two tokens">
+      <h1>Two tokens, two networks</h1>
+      <div class="card">
+        <span class="tag sol">$WinLEW · Solana</span>
+        <p><b>$WinLEW</b> is WinLEW's own token, on Solana. The daily drip is for wallets that already hold at least 1,000 $WinLEW.</p>
+      </div>
+      <div class="card">
+        <span class="tag xl1">$XL1 · XYO Layer One</span>
+        <p><b>$XL1</b> is the coin of XYO Layer One, a different network. XL1 rewards are distributed by <b>Oxyon</b> to a wallet you have verified.</p>
+      </div>
+      <div class="card">
+        <p><b>One wallet for both: Oxyon Wallet.</b> It holds $WinLEW and $XL1. <b>Create a new wallet in it</b> for WinLEW: you don't need to import a key from another wallet, and WinLEW never sees your keys. They stay on your phone.</p>
+        <p style="margin-top:10px"><a class="get" href="https://play.google.com/store/apps/details?id=io.oxyon.wallet" rel="noopener">▶ Get Oxyon Wallet on Google Play</a></p>
+      </div>
+      <button type="button" data-next>Next</button>
+    </section>
+
+    <section class="slide" data-step="2" aria-label="Before you start">
+      <h1>Before you start</h1>
+      <p>WinLEW involves crypto tokens, so it's for adults only.</p>
+      <label class="age"><input type="checkbox" id="age" /> <span>I confirm I'm <b>18 or older</b>.</span></label>
+      <p class="fine">Rewards depend on rules, limits and availability, and aren't guaranteed. Token values can go up or down. Nothing in WinLEW is financial advice. You keep your own keys: no one from WinLEW or Oxyon will ever ask for your recovery phrase.</p>
+      <button type="button" id="enter" disabled>Enter WinLEW</button>
+      <p class="fine" style="text-align:center">Help: the <a href="https://discord.gg/PSCrBzqdbE" rel="noopener">WinLEW Discord</a> · <a href="mailto:support@winlew.co">support@winlew.co</a></p>
+    </section>
+
+    <div class="dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+  </main>
+  <script>
+    (function () {
+      'use strict';
+      // Hide the native load screen once this page is drawn (app only; a no-op in a browser).
+      try { var S = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.SplashScreen; if (S && S.hide) S.hide(); } catch (e) {}
+      var slides = document.querySelectorAll('.slide'), dots = document.querySelectorAll('.dots i'), step = 0;
+      function go(n) {
+        step = n;
+        slides.forEach(function (s, i) { s.classList.toggle('on', i === n); });
+        dots.forEach(function (d, i) { d.classList.toggle('on', i === n); });
+        window.scrollTo(0, 0);
+      }
+      document.querySelectorAll('[data-next]').forEach(function (b) { b.addEventListener('click', function () { go(step + 1); }); });
+      var age = document.getElementById('age'), enter = document.getElementById('enter');
+      age.addEventListener('change', function () { enter.disabled = !age.checked; });
+      enter.addEventListener('click', function () {
+        if (!age.checked) return;
+        try { localStorage.setItem('winlew.app.started', '1'); localStorage.setItem('winlew.app.ageConfirmedAt', new Date().toISOString()); } catch (e) {}
+        location.replace('/app/' + location.search + location.hash);
+      });
+      // Android back button: step back through the welcome instead of leaving the app.
+      try {
+        var A = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App;
+        if (A && A.addListener) A.addListener('backButton', function () { if (step > 0) go(step - 1); else if (A.exitApp) A.exitApp(); });
+      } catch (e) {}
+    })();
+  </script>
+</body>
+</html>
