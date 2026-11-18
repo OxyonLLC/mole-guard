@@ -1,0 +1,742 @@
+{
+  "$comment": [
+    "CANONICAL MACHINE-READABLE MANIFEST for See You Next Tuesday / $CUNT (spec §48).",
+    "This file is the SINGLE SOURCE OF TRUTH for supply, allocations, releases and",
+    "identities (§27). Documents, tests, the website and bots must READ these numbers",
+    "rather than restating them. docs/cunt/CUNT-TOKENOMICS.md is checked against this",
+    "file by test/cunt/tokenomicsInvariants.test.mjs, so the two cannot drift.",
+    "NO SECRETS. Public addresses only. Never add a private key to this file.",
+    "Nulls are honest: they mean 'not decided yet', not 'zero'."
+  ],
+  "version": "0.1.0",
+  "spec_revision": "MASTER SPRINT 2026-08-08",
+  "last_updated": "2026-08-08",
+  "identity": {
+    "project_name": "See You Next Tuesday",
+    "symbol": "CUNT",
+    "public_brand": "TUESDAY",
+    "mascot": "Platypus",
+    "mascot_concept": "God's Joke",
+    "chain": "solana"
+  },
+  "status": {
+    "phase": "INCUBATION",
+    "stage": "BELLY",
+    "deployment_status": "NOT_DEPLOYED",
+    "program_status": "NOT_SPECIFIED",
+    "treasury_status": "SINGLE_KEY_RESERVED",
+    "liquidity_status": "NO_POOL",
+    "mainnet_approved": false
+  },
+  "supply": {
+    "total": 1000000000,
+    "decimals": null,
+    "$decimals_note": "Undecided. 6 would match $WinLEW. Not a canonical fact in the spec, so it is not invented here (§65)."
+  },
+  "allocations": {
+    "community": {
+      "amount": 800000000,
+      "percent": 80
+    },
+    "team": {
+      "amount": 100000000,
+      "percent": 10
+    },
+    "market_liquidity": {
+      "amount": 100000000,
+      "percent": 10
+    }
+  },
+  "$allocation_history": [
+    {
+      "date": "2026-08-07",
+      "third_bucket": "protocol_locked",
+      "note": "100M was a community-owned permanent floor, making the community share 90%."
+    },
+    {
+      "date": "2026-08-08",
+      "third_bucket": "market_liquidity",
+      "note": "Spec §6/§66 makes the 100M market/liquidity, moving the community share to 80%. Confirmed by the owner. Recorded per §55 because it changes a stated number."
+    }
+  ],
+  "community_releases": [
+    {
+      "stage": "BELLY",
+      "amount": 300000000,
+      "cumulative": 300000000,
+      "status": "PLANNED",
+      "trigger": null
+    },
+    {
+      "stage": "CRAWL",
+      "amount": 200000000,
+      "cumulative": 500000000,
+      "status": "PLANNED",
+      "trigger": null
+    },
+    {
+      "stage": "RUN",
+      "amount": 200000000,
+      "cumulative": 700000000,
+      "status": "PLANNED",
+      "trigger": null
+    },
+    {
+      "stage": "FINAL_TUESDAY",
+      "amount": 100000000,
+      "cumulative": 800000000,
+      "status": "PLANNED",
+      "trigger": null
+    }
+  ],
+  "$releases_note": "'Released' means authorized for use under approved community mechanisms — NOT sent to wallets (§7). Triggers are null because §8 forbids finalising them before simulation.",
+  "eligibility": {
+    "model": "VERIFIED_WALLETS_ONLY",
+    "decided": "2026-08-08",
+    "binding": "wallet -> hashed verified identity, 1:1",
+    "identity_source": "WinLEW Discord verification (wallet_links.json is keyed by Discord user ID)",
+    "identity_stored_as": "HASH",
+    "$why": "Signing a claim transaction already proves key ownership, so 'verified wallet' read as key-control gates nothing — a sybil operator legitimately controls all their wallets. The resistance comes from binding a wallet to something costlier to mass-produce than a keypair. See docs/cunt/CUNT-WEEKLY-PROTOCOL.md §9.",
+    "$base_size_warning": "As of 2026-08-08 only 5 wallets have ever completed verification (wallet_links.json, source=verified-default), against 155 registrations. Gating on verification today would exclude ~97% of registrants."
+  },
+  "team_vesting": {
+    "total": 100000000,
+    "status": "PROPOSED",
+    "tranches": [
+      {
+        "name": "first",
+        "amount": 50000000,
+        "percent": 5,
+        "trigger": null
+      },
+      {
+        "name": "second",
+        "amount": 50000000,
+        "percent": 5,
+        "trigger": null
+      }
+    ],
+    "$note": "§9: the second tranche must NOT unlock on price, volume or market cap. Triggers stay null until approved."
+  },
+  "vanity_targets": {
+    "mint": {
+      "label": "Official $CUNT Mint",
+      "pattern": "wen...CUNT",
+      "accepted_cases": [
+        "wen",
+        "Wen"
+      ],
+      "$case_note": "Owner decision 2026-08-08: grind both concurrently and take whichever lands first, halving expected wall-clock time. Either is acceptable.",
+      "address": null,
+      "status": "SEARCHING",
+      "expected_keys": 38042681545262,
+      "$expected_keys_note": "Exact, computed with BigInt in src/cunt/vanityEstimate.js. Was 37,383,456,078,208 when P(w) was estimated at 1/982; the exact value is 1/999."
+    },
+    "weekly": {
+      "label": "Weekly CUNT",
+      "pattern": "W...CUNT",
+      "address": "WhPApnQQXf33cJsfboHAijwQqSmfhLAudeBm4aNCUNT",
+      "status": "RESERVED",
+      "role_finalized": false,
+      "$note": "Reserved system keypair. A vanity keypair is NOT a program ID or PDA (§2B); the final technical role is undecided."
+    },
+    "community": {
+      "label": "Community CUNT",
+      "pattern": "...CUNT",
+      "address": "13CrW3Tc2mCxyxYo86qQTcPGUYqrGbYiFF4TpvX3CUNT",
+      "status": "RESERVED",
+      "role_finalized": true,
+      "role": "community treasury — an SPL TOKEN ACCOUNT at this address whose owner field is the 2-of-3 multisig",
+      "custody": "MULTISIG_OWNED_TOKEN_ACCOUNT",
+      "$custody_resolution": "DECIDED 2026-08-08, and it CLOSES the former MEDIUM finding rather than mitigating it. Previously SINGLE_KEY: a ground vanity key that holds value must be kept secret forever, can never live on a hardware wallet, and cannot 'migrate to a multisig' — migrating means moving funds to a DIFFERENT address, which discards the vanity. Instead the token account is created AT this address with owner = the multisig. The vanity keypair signs SystemProgram.createAccount once and is then inert, exactly like a mint keypair. PROVEN on a local validator 2026-08-08: the vanity key attempting to spend was rejected by the SPL Token program with 'Error: owner does not match' (custom program error 0x4), 1-of-3 was rejected with MissingRequiredSignature, and 2-of-3 (B+C) succeeded.",
+      "$caveats": [
+        "A token account is MINT-SPECIFIC: this address can hold $CUNT and nothing else — no SOL, no other tokens. A general-purpose wallet here would require keeping the key forever, which reopens the finding.",
+        "It is NOT an ATA. Senders must use this literal address; anything deriving an ATA from the multisig computes a different one. Integrations must hardcode it.",
+        "The address begins with '1', i.e. a literal 0x00 leading byte. Any base58 implementation routing through a BigInt drops it and yields a DIFFERENT 43-char address. Round-trip verified; a test pins it."
+      ]
+    }
+  },
+  "naming": {
+    "$rule": "Domains are LABELS, not wallets. Point a new .sol subdomain at a NEW $CUNT address to get the WinLEW association for free. Never reuse the wallet an existing WinLEW domain resolves to — burn.winlew.sol is EX5nxVKgRKaJVZLfDUinXie6HQ5GPhKwkZ419pRGaZ74, a live wallet with 27 signatures of WinLEW history, and diglew.sol is a live WinLEW identity.",
+    "$mutability_caveat": "A .sol domain can be re-pointed or transferred; an address cannot. Compromise the domain owner and everything sent 'to burn.winlew.sol' goes to the attacker. So the ADDRESS is the canonical record and the domain is a convenience alias — never the reverse. This makes a domain a weaker identity claim than a vanity address, not a stronger one.",
+    "$vanity_is_not_authentication": "A bare ...CUNT suffix costs 44.7 seconds expected at 253,000 keys/sec (58^4 = 11,316,496 keys). Anyone can mint a matching address before their coffee cools. Publishing 'ends in CUNT = official' therefore builds a phishing kit and prices it at under a minute. The vanity suffix is a MNEMONIC; the short, closed, published address list is the credential. Two vanity addresses is the ceiling, and both are already banked.",
+    "$multisig_is_not_a_wallet": "An SPL multisig account has NO private key — it is a 355-byte account owned by the Token program listing signer pubkeys and a threshold. A wallet cannot 'become' one. A domain may point AT the multisig account; that is all."
+  },
+  "burn": {
+    "mechanism": "spl_token::burn instruction, authorized by the 2-of-3 multisig, executed directly from the community treasury",
+    "burn_address_required": false,
+    "keys_required": 0,
+    "$why_no_burn_wallet": "docs/burn-program.md §4, on WinLEW: 'A burn wallet, by itself, is just a wallet — tokens sitting in it are still part of total supply.' The `burn` instruction permanently reduces the mint's supply and is verifiable via getTokenSupply. Burning straight from the multisig-owned treasury needs no extra address, no extra key, and leaves no 'is it actually burned?' ambiguity to explain later. SPL `burn` accepts a multisig authority.",
+    "$not_yet_scheduled": "No burn amount, schedule or commitment exists. This records the MECHANISM only. Any actual burn is a separate decision requiring explicit approval, per the same rule WinLEW's burn program follows."
+  },
+  "authorities": {
+    "mint_authority": {
+      "holder": null,
+      "policy": "REVOKE_AFTER_GENESIS",
+      "decided": false,
+      "revoked": false
+    },
+    "freeze_authority": {
+      "holder": null,
+      "policy": "NEVER_SET",
+      "decided": false,
+      "revoked": false
+    },
+    "program_upgrade_authority": {
+      "holder": null,
+      "policy": "MULTISIG_THEN_RESTRICT",
+      "decided": false,
+      "revoked": false
+    }
+  },
+  "$authorities_note": "§20/§21/§50. Nothing is revoked during this sprint. 'decided: false' means the policy is a recommendation, not a commitment. These three are also rows in authority_matrix below; tokenomicsInvariants keeps the two consistent.",
+  "$authority_vocabulary": {
+    "holders": {
+      "NOBODY": "No key or program can perform this. The strongest state.",
+      "NOT_YET_EXISTS": "The thing this acts on has not been created.",
+      "OWNER_SINGLE_KEY": "One private key held by one person. A single point of failure.",
+      "MULTISIG": "M-of-N signers. Not yet created (§18).",
+      "PROGRAM_PDA": "Enforced by on-chain program logic. No human key can perform it.",
+      "ANY_PARTICIPANT": "Permissionless — any eligible wallet, acting for itself.",
+      "GOVERNANCE": "Community process. Does not exist for $CUNT yet."
+    },
+    "$note": "Free text in these fields would drift into meaninglessness. The test validates every current/future value against this vocabulary."
+  },
+  "authority_matrix": [
+    {
+      "id": "mint_new_tokens",
+      "action": "Mint new $CUNT",
+      "current": "NOT_YET_EXISTS",
+      "future": "NOBODY",
+      "can_be_revoked": true,
+      "should_be_revoked": true,
+      "multisig": false,
+      "program_controlled": false,
+      "publicly_verifiable": true,
+      "notes": "§20. Revoke immediately AFTER genesis allocation — revoking first makes the supply unmintable. Irreversible, which is the point: nobody can ever dilute holders."
+    },
+    {
+      "id": "freeze_token_account",
+      "action": "Freeze / thaw any holder's token account",
+      "current": "NOT_YET_EXISTS",
+      "future": "NOBODY",
+      "can_be_revoked": true,
+      "should_be_revoked": true,
+      "multisig": false,
+      "program_controlled": false,
+      "publicly_verifiable": true,
+      "notes": "§21. Preferred outcome is to set freeze authority to None AT CREATION rather than revoke later — 'revoke later' leaves a window in which it existed and could have been used. A freeze authority is the power to confiscate by immobilisation."
+    },
+    {
+      "id": "move_community_treasury",
+      "action": "Move the Community CUNT treasury",
+      "current": "OWNER_SINGLE_KEY",
+      "future": "MULTISIG",
+      "can_be_revoked": false,
+      "should_be_revoked": false,
+      "multisig": true,
+      "program_controlled": false,
+      "publicly_verifiable": true,
+      "notes": "THE LARGEST CURRENT TRUST ASSUMPTION. One key can move the entire community allocation today. §18 requires migration to 2-of-3 or 3-of-5 before it holds value. Cannot be 'revoked' — custody must be replaced, not removed."
+    },
+    {
+      "id": "access_team_vesting",
+      "action": "Withdraw team tokens",
+      "current": "NOT_YET_EXISTS",
+      "future": "PROGRAM_PDA",
+      "can_be_revoked": false,
+      "should_be_revoked": false,
+      "multisig": false,
+      "program_controlled": true,
+      "publicly_verifiable": true,
+      "notes": "§9. Enforced by a vesting contract (Streamflow/Jupiter), not a promise. The second 50M tranche must not unlock on price, volume or market cap."
+    },
+    {
+      "id": "release_community_tranche",
+      "action": "Authorize a community release (BELLY→CRAWL→RUN→TUESDAY)",
+      "current": "NOT_YET_EXISTS",
+      "future": "PROGRAM_PDA",
+      "can_be_revoked": false,
+      "should_be_revoked": false,
+      "multisig": false,
+      "program_controlled": true,
+      "publicly_verifiable": true,
+      "notes": "§8. Triggers undecided and must be simulated first. A human-callable release_any_amount() is exactly the admin function §37 forbids."
+    },
+    {
+      "id": "fund_tuesday_vault",
+      "action": "Move tokens INTO the Tuesday reward vault",
+      "current": "NOT_YET_EXISTS",
+      "future": "MULTISIG",
+      "can_be_revoked": false,
+      "should_be_revoked": false,
+      "multisig": true,
+      "program_controlled": false,
+      "publicly_verifiable": true,
+      "notes": "Funding is safe to be human-authorised — it can only ever ADD to what participants can claim. The dangerous direction is out, not in."
+    },
+    {
+      "id": "withdraw_tuesday_vault",
+      "action": "Move tokens OUT of the Tuesday reward vault (other than by a claim)",
+      "current": "NOT_YET_EXISTS",
+      "future": "NOBODY",
+      "can_be_revoked": false,
+      "should_be_revoked": false,
+      "multisig": false,
+      "program_controlled": true,
+      "publicly_verifiable": true,
+      "notes": "§16: 'Humans should not possess a private key capable of arbitrarily emptying the Tuesday reward vault.' There must be NO instruction that does this. Not multisig-gated — absent."
+    },
+    {
+      "id": "open_epoch",
+      "action": "Open a Tuesday epoch",
+      "current": "NOT_YET_EXISTS",
+      "future": "PROGRAM_PDA",
+      "can_be_revoked": false,
+      "should_be_revoked": false,
+      "multisig": false,
+      "program_controlled": true,
+      "publicly_verifiable": true,
+      "notes": "Should follow from the clock, not from an operator deciding it is Tuesday. If a human must open each epoch, a missed press cancels everyone's week."
+    },
+    {
+      "id": "close_epoch",
+      "action": "Close / finalize a Tuesday epoch",
+      "current": "NOT_YET_EXISTS",
+      "future": "PROGRAM_PDA",
+      "can_be_revoked": false,
+      "should_be_revoked": false,
+      "multisig": false,
+      "program_controlled": true,
+      "publicly_verifiable": true,
+      "notes": "Same reasoning. Early closure by a human would be a denial-of-claim power."
+    },
+    {
+      "id": "register_participant",
+      "action": "Register a wallet as a verified participant",
+      "current": "NOT_YET_EXISTS",
+      "future": "MULTISIG",
+      "can_be_revoked": false,
+      "should_be_revoked": false,
+      "multisig": true,
+      "program_controlled": false,
+      "publicly_verifiable": true,
+      "notes": "NEW TRUST ASSUMPTION created by the verified-wallet-gating decision (2026-08-08). A chain cannot see Discord, so the wallet-to-identity binding must be attested on-chain by an authority — which means whoever can register decides who can claim. It cannot mint, move or steal anything, but it CAN exclude a real participant, and it CAN admit a sybil by registering fabricated identities. That second one is the failure mode that matters: the gate is only as good as the honesty of this authority."
+    },
+    {
+      "id": "claim_tuesday",
+      "action": "Claim the Tuesday reward",
+      "current": "NOT_YET_EXISTS",
+      "future": "ANY_PARTICIPANT",
+      "can_be_revoked": false,
+      "should_be_revoked": false,
+      "multisig": false,
+      "program_controlled": true,
+      "publicly_verifiable": true,
+      "notes": "§14: users actively claim; nothing is pushed to them. Miss it and it is 'See You Next Tuesday'."
+    },
+    {
+      "id": "set_reward_per_claim",
+      "action": "Change the per-claim reward amount",
+      "current": "NOT_YET_EXISTS",
+      "future": "MULTISIG",
+      "can_be_revoked": false,
+      "should_be_revoked": false,
+      "multisig": true,
+      "program_controlled": true,
+      "publicly_verifiable": true,
+      "notes": "§37 bounded configuration: adjustable ONLY within limits fixed at deployment. An unbounded setter is equivalent to draining the vault slowly."
+    },
+    {
+      "id": "override_claim_history",
+      "action": "Edit or erase a participant's claim record",
+      "current": "NOT_YET_EXISTS",
+      "future": "NOBODY",
+      "can_be_revoked": false,
+      "should_be_revoked": false,
+      "multisig": false,
+      "program_controlled": true,
+      "publicly_verifiable": true,
+      "notes": "§37 names override_claim_history() as a function that must not exist. Proof of Tuesday is worthless if it is editable."
+    },
+    {
+      "id": "pause_protocol",
+      "action": "Pause the protocol",
+      "current": "NOT_YET_EXISTS",
+      "future": "MULTISIG",
+      "can_be_revoked": true,
+      "should_be_revoked": false,
+      "multisig": true,
+      "program_controlled": true,
+      "publicly_verifiable": true,
+      "notes": "§51. May halt NEW claims only. Must never move or confiscate user funds. Undecided whether it should exist at all — a pause is also a censorship power."
+    },
+    {
+      "id": "upgrade_program",
+      "action": "Upgrade the Weekly CUNT program",
+      "current": "NOT_YET_EXISTS",
+      "future": "MULTISIG",
+      "can_be_revoked": true,
+      "should_be_revoked": true,
+      "multisig": true,
+      "program_controlled": false,
+      "publicly_verifiable": true,
+      "notes": "§50. STRICTLY MORE POWERFUL THAN EVERY OTHER ROW: whoever can upgrade can replace the claim logic, the vault rules and this matrix. Every 'PROGRAM_PDA' guarantee below is really a guarantee about the CURRENT bytecode. Lifecycle: developer → multisig → restricted/immutable. Do not make it immutable before it is tested."
+    },
+    {
+      "id": "modify_liquidity",
+      "action": "Add or remove pool liquidity",
+      "current": "NOT_YET_EXISTS",
+      "future": "MULTISIG",
+      "can_be_revoked": false,
+      "should_be_revoked": false,
+      "multisig": true,
+      "program_controlled": false,
+      "publicly_verifiable": true,
+      "notes": "§12. Whoever holds the LP tokens can withdraw the position — established fact, not theory: WinLEW's own Raydium pool is 53.66% LP-held by its Developer Reserve. Lock policy undecided."
+    },
+    {
+      "id": "publish_manifest",
+      "action": "Change cunt-project.json (supply, allocations, addresses)",
+      "current": "OWNER_SINGLE_KEY",
+      "future": "OWNER_SINGLE_KEY",
+      "can_be_revoked": false,
+      "should_be_revoked": false,
+      "multisig": false,
+      "program_controlled": false,
+      "publicly_verifiable": true,
+      "notes": "Off-chain and intentionally so. It describes reality; it cannot change it. If the manifest and the chain disagree, THE CHAIN WINS (§64). Git history is the audit trail."
+    },
+    {
+      "id": "operate_bot",
+      "action": "Run the $CUNT Discord bot",
+      "current": "OWNER_SINGLE_KEY",
+      "future": "OWNER_SINGLE_KEY",
+      "can_be_revoked": false,
+      "should_be_revoked": false,
+      "multisig": false,
+      "program_controlled": false,
+      "publicly_verifiable": false,
+      "notes": "§29: the bot REPORTS state, the chain ENFORCES it. It must hold no treasury key. If it dies, nothing about the token changes. Not publicly verifiable — which is precisely why it must never be authoritative."
+    }
+  ],
+  "project_controlled_addresses": [
+    {
+      "address": "WhPApnQQXf33cJsfboHAijwQqSmfhLAudeBm4aNCUNT",
+      "label": "Weekly CUNT (reserved)",
+      "kind": "RESERVED_SYSTEM"
+    },
+    {
+      "address": "13CrW3Tc2mCxyxYo86qQTcPGUYqrGbYiFF4TpvX3CUNT",
+      "label": "Community CUNT Treasury (reserved)",
+      "kind": "TREASURY"
+    }
+  ],
+  "$disclosure_note": "§19/§43: every project-controlled identity is disclosed here. These must never be counted as independent community holders in our own analytics (§42 INVARIANT 7).",
+  "related_tokens": [
+    {
+      "label": "THE FIRST CUNT",
+      "chain": "base",
+      "contract": "0x555cc44a50f228da3a48ea8b8ab0d4831bff0804",
+      "status": "RETIRED",
+      "is_this_project": false,
+      "$note": "The Base original. Documented, never hidden (§1), and never to be presented as the Solana token."
+    }
+  ],
+  "mainnet_gate": {
+    "passed": false,
+    "$note": "§60. Every item must be `done` before mainnet. test/cunt/mainnetGate.test.mjs refuses to let `passed` be true while any item is not done, and refuses to let deployment_status leave NOT_DEPLOYED while passed is false.",
+    "items": [
+      {
+        "id": "mint_role_finalized",
+        "what": "wen…CUNT role finalized",
+        "status": "blocked",
+        "note": "Not found. 4.8y CPU / days on GPU. Either case accepted."
+      },
+      {
+        "id": "weekly_role_finalized",
+        "what": "W…CUNT role finalized",
+        "status": "todo",
+        "note": "Key banked and unclaimed. Its technical role is undecided — a vanity keypair is not a program ID."
+      },
+      {
+        "id": "treasury_custody",
+        "what": "…CUNT treasury custody finalized",
+        "status": "partial",
+        "note": "DESIGN PROVEN 2026-08-09, NOT YET APPLIED. Still a single key TODAY — the authority matrix's current state correctly reads OWNER_SINGLE_KEY. What changed: the straightforward fix does not exist for a vanity address (migrating means moving funds to a DIFFERENT address and discarding the vanity, and a ground key can never live on a hardware wallet), so the key is made IRRELEVANT instead — an SPL token account created AT 13Cr...CUNT with owner = the 2-of-3. Proven on a local validator: the vanity key attempting to spend is rejected with 'Error: owner does not match' (0x4), 1-of-3 with MissingRequiredSignature, 2-of-3 accepted. The three signers exist and are possession-proven. PARTIAL not done because creating the account is a mainnet action behind the §61 gate. §18 still requires this BEFORE funding, not after."
+      },
+      {
+        "id": "supply_finalized",
+        "what": "supply finalized",
+        "status": "done",
+        "note": "1,000,000,000. Invariant-tested. Decimals still null."
+      },
+      {
+        "id": "allocations_finalized",
+        "what": "allocations finalized",
+        "status": "done",
+        "note": "800M/100M/100M, sums to exactly 1B, invariant-tested."
+      },
+      {
+        "id": "team_vesting",
+        "what": "team vesting finalized",
+        "status": "todo",
+        "note": "2x50M proposed; triggers null. Must not unlock on price."
+      },
+      {
+        "id": "release_conditions",
+        "what": "community-release conditions finalized",
+        "status": "todo",
+        "note": "Owner 2026-08-08: nothing set, all prospective; WinLEW may run a community vote on it. Note the simulator finding stands regardless — under ~10,000 CUNT/claim the staged model is decorative."
+      },
+      {
+        "id": "liquidity_amount",
+        "what": "liquidity amount finalized",
+        "status": "todo",
+        "note": "100M bucket agreed; SOL side unknown and gates the opening price."
+      },
+      {
+        "id": "initial_sol",
+        "what": "initial SOL liquidity finalized",
+        "status": "blocked",
+        "note": "Owner 2026-08-08: not going live for a few months; SOL figure unknown at this time. Remains the gate on the opening price."
+      },
+      {
+        "id": "lp_control",
+        "what": "LP control finalized",
+        "status": "todo",
+        "note": "Owner 2026-08-08: \"I kind of like all of the above.\" Burn/lock/retain are mutually exclusive FOR A GIVEN POSITION, but the 100M bucket can be SPLIT across all three. See CUNT-LIQUIDITY-POLICY.md."
+      },
+      {
+        "id": "mint_authority",
+        "what": "mint authority policy finalized",
+        "status": "todo",
+        "note": "Policy REVOKE_AFTER_GENESIS recorded; decided=false. Revocation mechanism proven on a local validator 2026-08-08: after setAuthority(MintTokens, null), minting was rejected."
+      },
+      {
+        "id": "freeze_authority",
+        "what": "freeze authority policy finalized",
+        "status": "todo",
+        "note": "Policy NEVER_SET recorded; decided=false."
+      },
+      {
+        "id": "upgrade_authority",
+        "what": "upgrade authority policy finalized",
+        "status": "todo",
+        "note": "Dominates every other control. Lifecycle undecided."
+      },
+      {
+        "id": "multisig_tested",
+        "what": "multisig tested",
+        "status": "partial",
+        "note": "MECHANISM PROVEN 2026-08-08 on a local validator: 1-of-3 rejected with MissingRequiredSignature, 2-of-3 accepted, either pair works, revocation kills minting. SIGNER SET COMPLETE 2026-08-09: three keys on three devices, each possession-proven by a nonce-bound signature verified offline, each with its derivation path recorded, all three device identities distinct, and C's steel plate restored and re-derived. Still PARTIAL because the multisig account does not exist on any network — creating it is a mainnet action behind the §61 gate. Control model is KEY_SECURITY_ONLY (owner holds all three)."
+      },
+      {
+        "id": "program_tested",
+        "what": "Tuesday program tested",
+        "status": "blocked",
+        "note": "No program. Spec + 32-test reference model only."
+      },
+      {
+        "id": "release_controller_tested",
+        "what": "release controller tested",
+        "status": "partial",
+        "note": "Simulated off-chain; not implemented."
+      },
+      {
+        "id": "security_audit",
+        "what": "security audit complete",
+        "status": "partial",
+        "note": "Internal model done, 2 HIGHs closed. NOT an audit (§38)."
+      },
+      {
+        "id": "independent_review",
+        "what": "independent review complete",
+        "status": "todo",
+        "note": "None. Must never be conflated with the internal one."
+      },
+      {
+        "id": "transparency_site",
+        "what": "transparency site complete",
+        "status": "todo",
+        "note": "/cunt/future/ is a teaser. No /cunt/transparency/ exists."
+      },
+      {
+        "id": "registry_complete",
+        "what": "machine-readable registry complete",
+        "status": "done",
+        "note": "cunt-project.json, invariant-tested against the docs."
+      },
+      {
+        "id": "wallets_labeled",
+        "what": "all project wallets labeled",
+        "status": "done",
+        "note": "Both reserved identities disclosed in project_controlled_addresses."
+      },
+      {
+        "id": "backups_tested",
+        "what": "backups tested",
+        "status": "partial",
+        "note": "§59. ONE OF THREE TESTED, 2026-08-09. Signer C's steel plate was restored — the 24 words read FROM THE PLATE derived exactly the expected public key — which is a real recovery test rather than a claim, and it mattered most there because C's plate is the only copy that will exist. A's and B's plates have NEVER been restored; both keys still have working devices, so the plates are untested backups of keys that currently work. That is precisely the state §59 warns about. PARTIAL until all three are restored, and re-tested every 180 days thereafter. Note this covers KEY backups only — no test of project/data backup or restore procedure has been done at all."
+      },
+      {
+        "id": "no_secret_leakage",
+        "what": "no secret leakage",
+        "status": "done",
+        "note": "Scanner in CI on every push; keys on ext4 outside the repo; verified by planting."
+      },
+      {
+        "id": "runbook_reviewed",
+        "what": "deployment runbook reviewed",
+        "status": "todo",
+        "note": "No mainnet runbook written — deliberately."
+      },
+      {
+        "id": "human_approval",
+        "what": "final human approval received",
+        "status": "todo",
+        "note": "Not given. The sprint stops here (§61 Phase I)."
+      }
+    ],
+    "$counts_note": "Counts are derived from items[].status, never written by hand. As of 2026-08-09: 5 done, 5 partial, 12 todo, 3 blocked. Two items moved todo -> partial on 2026-08-09 (treasury_custody, backups_tested); neither moved to done, because in both cases the remaining step is a mainnet action or an untested plate."
+  },
+  "multisig": {
+    "status": "DESIGNED_NOT_CREATED",
+    "threshold": "2-of-3",
+    "$why_not_2of2": "2-of-2 has no recovery — losing either key freezes the treasury permanently. 2-of-3 survives losing any one key, which is the failure this mostly defends against.",
+    "token_authorities": {
+      "mechanism": "SPL Token native multisig",
+      "verified_offline": true,
+      "account_bytes": 355,
+      "rent_sol": 0.00336168,
+      "covers": [
+        "mint authority",
+        "freeze authority",
+        "token transfers"
+      ]
+    },
+    "general_purpose": {
+      "mechanism": "UNDECIDED (Squads is the usual choice)",
+      "verified": false,
+      "covers": [
+        "program upgrade authority",
+        "LP position",
+        "registration authority"
+      ],
+      "$note": "Third-party software; needs its own review before holding value."
+    },
+    "signers": [
+      {
+        "id": "A",
+        "holder": "owner",
+        "storage": "Ledger 1 — seed generated inside the secure element, never exported. Recovery phrase on steel, kept at the same location.",
+        "wallet_app": "Ledger",
+        "os": "Ledger firmware",
+        "address": "C9FQVuWxxpiiecCkeC58n2cE9dX33rgoh6HQcFbk171x",
+        "device": "ledger-1",
+        "location": "home",
+        "backup_location": "home",
+        "online": false,
+        "possession_proven": true,
+        "derivation_path": "m/44'/501'/0'",
+        "keypair_uri": "usb://ledger?key=0",
+        "possession_proof": "PROVEN 2026-08-09. Signed the nonce-bound challenge on the Ledger and verified offline. Encoding: Solana off-chain message envelope v0 format 0 (restricted ASCII) — NOT raw UTF-8. Path confirmed empirically: usb://ledger?key=0 reaches this address, which is the one Ledger Live displays as 'Solana 1'.",
+        "device_id": "8UB1TY6CAdqMCbUgczinwkN6uepZtJa7hZ2mjUvTGszJ",
+        "phrase_only": false,
+        "plate_restored": null
+      },
+      {
+        "id": "B",
+        "holder": "owner",
+        "storage": "Ledger 2 — kept at the daughter's house with its steel phrase. This is the second signing key, so it must stay reachable.",
+        "wallet_app": "Ledger",
+        "os": "Ledger firmware",
+        "address": "2uyi68Buh5oGH6gquoMbS7h3WGQQRUE4YL8qfTgoB2G5",
+        "device": "ledger-2",
+        "location": "daughters-house",
+        "backup_location": "daughters-house",
+        "online": false,
+        "possession_proven": true,
+        "derivation_path": "m/44'/501'/0'",
+        "device_id": "5X3MbUStiq5PX8FCVqHvzBa78fXSWkqiNFJ6fHjAW4kv",
+        "keypair_uri": "usb://ledger?key=0",
+        "possession_proof": "PROVEN 2026-08-09. Signed the nonce-bound challenge on Ledger 2 and verified offline; encoding offchain-v0-format-0. SEPARATE DEVICE CONFIRMED with Ledger 1 physically disconnected: device_id 5X3MbUSt... differs from signer A's 8UB1TY6C..., and usb://ledger?key=1 on Ledger 1 returns EH86jJJGEL6Uztd1wSRFJnQcZfE6L6fGf1WhG7ScbtNG — NOT this address — so this is not account index 1 on A's seed. Both facts were needed: the same-seed failure is invisible from the addresses alone.",
+        "phrase_only": false,
+        "plate_restored": null
+      },
+      {
+        "id": "C",
+        "holder": "owner",
+        "storage": "PHRASE ONLY on steel, in the bank safe deposit box. Generated in Phantom on a clean Android phone that has never run a crypto wallet, then the phone is wiped. The key has no live device and no update channel.",
+        "address": "FyPMDgMkmYxhJMiMpxFoFHLTNidRnNnaf6tikRmuoxxt",
+        "device": "steel-plate",
+        "location": "bank-deposit-box",
+        "backup_location": null,
+        "online": false,
+        "possession_proven": true,
+        "wallet_app": "Phantom (generator only — wiped after)",
+        "os": "Android (generator only)",
+        "derivation_path": "m/44'/501'/0'/0'",
+        "device_id": null,
+        "phrase_only": true,
+        "keypair_uri": "prompt://?key=0/0",
+        "possession_proof": "PROVEN 2026-08-09, AND the steel verified in the same act. The 24 words were read FROM THE STEEL PLATE — not from the phone — into solana-keygen pubkey \"prompt://?key=0/0\", which derived exactly the address Phantom displayed, then signed the nonce-bound challenge with the same URI. Encoding offchain-v0-format-0. Note the path is m/44'/501'/0'/0' (Phantom's), NOT m/44'/501'/0' like signers A and B — the two are different keys and recording the wrong one would have created a permanent dead slot.",
+        "plate_restored": "2026-08-09"
+      }
+    ],
+    "placement_status": "REALISED",
+    "$placement_status_note": "The declared plan is now the actual arrangement. All three keys exist, all three have proven possession, and the loss/compromise matrix passes against the real signers rather than a proposal: 3 distinct locations, 3 distinct devices, 0 keys with online exposure, max 1 key at any one location, no single point of failure. The MULTISIG ITSELF STILL DOES NOT EXIST — status stays DESIGNED_NOT_CREATED, because creating it is a mainnet action behind the §61 gate.",
+    "$placement_rationale": "Owner inventory 2026-08-09: this PC, the serving PC, a child's gaming PC, ~6 phones, and THREE LEDGERS. Device count was never the constraint — the first arrangement measured 3 keys at one location and TWO single points of failure. Excluded: this PC (dev machine, /mnt/c where chmod is a no-op), the serving PC ($hard_rule), and the gaming PC (mods, trainers, installers). Three Ledgers supersede the earlier phone plan: a Ledger generates its seed inside the secure element and never exports it, so the seed never touches a networked system and `online` is false for all three — an improvement on the phone plan, which had two.",
+    "$cloud_backup_warning": "Phones behind one Apple ID or Google account are ONE key, not several. The matrix showed it exactly: a shared-cloud scenario loses zero keys and still hands an attacker the threshold, because compromise takes EITHER copy while loss needs BOTH. Independent hardware behind one password is not independent.",
+    "$software_diversity": "SUPERSEDED for A and B by three Ledgers. The earlier Phantom/iOS + Solflare/Android split bought supply-chain diversity, which three Ledgers give up: one vendor, one firmware, one update channel. That trade is accepted deliberately — see $vendor_concentration. A Ledger-generated seed is BIP39, so the PHRASE is vendor-neutral even though the device is not: if Ledger ships bad firmware or disappears, any standard wallet restores it.",
+    "$hardware_wallet_placement": "If a hardware wallet is bought, it replaces A or B — NOT C. Hardware belongs where signing actually happens, not where a backup sits. C is a cold key touched almost never; a device stored offsite can arrive with a dead battery, a pending firmware update, or having been tidied away, whereas steel has no failure mode and no battery. Upgrading a frequently-used software key to hardware buys far more than upgrading a cold backup.",
+    "$phrase_placement": "Each recovery phrase lives at the SAME location as its device, not pooled at home. Pooling all three phrases in one drawer exposes all three at once; keeping each with its device means any single location loses exactly one key, which a 2-of-3 survives.",
+    "$offsite_locations_unconfirmed": "RESOLVED 2026-08-09. home / daughters-house / bank-deposit-box — three genuine blast radii. The earlier home+safe attempt FAILED the matrix: two locations cannot hold three keys at a threshold of 2, because whichever place holds two both hands a burglar the threshold and takes recovery if lost. That is arithmetic, not a preference. The bank box resolves it. Note the home safe is a PARTIAL separation only — steel survives a house fire regardless (fires peak ~1100C, steel goes well past), so a safe buys burglary resistance, not fire protection, and only if bolted down.",
+    "$signer_field_note": "device/location/backup_location drive the loss-and-compromise matrix in `npm run cunt:multisig-verify -- plan`. A LOCATION IS A BLAST RADIUS, NOT A ROOM: if two spots burn in one fire or fall to one burglary, give them the SAME location name — 'home-office' and 'home-safe' are one location. possession_proven is set only after that device has signed a challenge; an address written down is not a key you can use.",
+    "last_recovery_test": "2026-08-09",
+    "$recovery_test_rule": "Restore each backup onto a clean device and confirm it derives the expected public key — BEFORE the treasury is funded, and again every 180 days. A backup that has never been restored is a hope.",
+    "key_inventory": {
+      "$derived_from": "The 18 authority_matrix rows: 4 end at NOBODY (revoked or never set), 4 at PROGRAM_PDA (derived — no private key exists), 1 at ANY_PARTICIPANT, 7 at MULTISIG (all served by ONE 2-of-3), 2 at OWNER_SINGLE_KEY (of which manifest edits are git, not a chain key).",
+      "secrets_held_forever": 4,
+      "secrets": [
+        "signer A",
+        "signer B",
+        "signer C",
+        "operational hot wallet (bot/payer) — trivial balance, disposable, rotatable, NOT a signer"
+      ],
+      "discarded_after_initialization": [
+        "mint keypair — irrelevant once InitializeMint runs",
+        "SPL multisig account keypair — irrelevant once InitializeMultisig runs",
+        "community treasury token-account keypair (13Cr…CUNT) — irrelevant once InitializeAccount runs"
+      ],
+      "$same_signers_both_multisigs": "The same three signers serve BOTH the SPL native multisig and the general-purpose one. With independent_signers: 0 and one holder, separate signer sets buy nothing against the actual threat (key loss, device compromise) — the same three devices already cover it. That is 3 phrases, not 6.",
+      "$one_seed_warning": "NEVER derive the three signers from a single seed phrase at different derivation paths. The addresses look unrelated on-chain, which makes it feel safer than it is; one phrase compromised is all three keys. GeoWallet's wallet-core is single-seed by design (m/44'/501'/0'/0') — correct for a user wallet, wrong for a 2-of-3.",
+      "$generation_rule": "Each key is generated ON the device that will hold it. A hardware wallet creates its seed internally and never exports it; a script that generates the seed for you throws away the only property the device has. Signer C, if not a hardware device, uses `solana-keygen new` on an offline machine — Anza's official CLI. We do not write key generators: see CUNT-VANITY-GRINDER-AUDIT.md §1 and the 2022 Profanity disaster (~$3.3M drained because a project wrote its own).",
+      "$winlew_keys_excluded": "No WinLEW key may serve as a $CUNT key. Branding linkage is free and reversible — say '$CUNT is from the WinLEW team', or point a .sol subdomain at a NEW address. Key linkage is permanent: it welds both projects into one transaction graph forever, and one compromise takes both treasuries. `cunt:multisig-verify check` git-greps every candidate against the repo for exactly this reason."
+    },
+    "$hard_rule": "No signer key may live on the serving machine, and no existing system/automation wallet may be reused as a signer. Those keys already sit on the machine that runs the bots, so reusing one hands an attacker who compromises it TWO signatures at once — converting a 2-of-3 into a 1-of-1 for exactly the event a multisig exists to survive.",
+    "$disclosure_requirement": "If all keys are held by one person this is a KEY-SECURITY multisig, not a governance one. It must be published as such: 'all three keys are currently controlled by the project owner on separate devices, so this protects against key loss and device compromise — not against the owner.' Calling it distributed control when one person holds every key is the manufactured decentralisation §43 forbids.",
+    "enforcement_proven": true,
+    "$enforcement_note": "PROVEN 2026-08-08 on a LOCAL VALIDATOR (solana-test-validator 4.1.1 — closer to mainnet 4.1.0 than devnet, which runs 4.2.0-rc.0). Devnet was not used: its faucet returned 429 repeatedly and Alchemy devnet 403. Demonstrated: (1) 2-of-3 created, m=2 n=3 initialized; (2) mint authority set to the multisig, freeze authority None at creation; (3) ONE of three signers REJECTED by the SPL Token program with Error: MissingRequiredSignature — the correct reason, read from the program logs rather than inferred from a generic failure; (4) TWO of three accepted; (5) a DIFFERENT pair (B+C) also accepted, so any 2 work rather than only the first; (6) mint authority revoked, after which minting was rejected. WHAT IS NOT PROVEN: our actual multisig with real keys does not exist on any network. This proves the MECHANISM enforces, not that we have configured one.",
+    "control_model": "KEY_SECURITY_ONLY",
+    "$control_model_note": "SETTLED 2026-08-08 — owner: \"its just me, no dev\". All three keys are held by one person, so this is a key-security multisig and NOT a governance one. It protects against key loss, key theft and device compromise. It does not protect against the owner, and must never be published as distributed control (§43).",
+    "independent_signers": 0,
+    "$independent_note": "Zero. If an independent signer is ever added, control_model may change to distributed and the disclosure sentence must be rewritten — not before.",
+    "$proof_environment": "local validator (solana-test-validator 4.1.1), throwaway keys, ledger destroyed after",
+    "$vendor_concentration": "ACCEPTED RISK, named rather than engineered away. With a threshold of 2 and 3 keys, ANY vendor holding 2+ devices reaches the threshold, so eliminating concentration would need 3 different vendors — impractical. The trade is taken because device compromise and key loss are far more likely than a Ledger secure-element break, which has not happened in the wild, whereas phone wallets are drained routinely. The free mitigation is applied: signer C is PHRASE ONLY with its device wiped, so it has no firmware and no update channel at all. A remote software compromise therefore cannot reach all three keys.",
+    "$how_the_chain_knows": "VERIFIED on a local validator 2026-08-09. InitializeMultisig writes the signer PUBLIC KEYS into the 355-byte multisig account itself: m=2, n=3, is_initialized=true, and 11 signer slots of which 3 hold our keys and 8 are zeroed (they read as the all-ones base58 address). The account is owned by the SPL Token program. On each instruction the program reads that stored list, counts how many of the transaction's signers appear in it, and rejects with MissingRequiredSignature below m. Nothing about devices, locations or people is on chain — the chain knows THREE PUBLIC KEYS and a number. Every placement decision in this manifest is off-chain policy the chain cannot enforce.",
+    "$signer_set_is_immutable": "PROVEN 2026-08-09. There is no instruction to add, remove or replace a signer. Re-initializing an existing multisig to swap one key was rejected with 'Error: account or token already in use' (custom program error 0x6). CONSEQUENCE: a wrong or unusable public key in the set is PERMANENT — rotating a signer means creating a NEW multisig and transferring every authority to it. This is why possession must be proven for all three keys BEFORE creation: a key that cannot sign becomes a dead slot, and a 2-of-3 with a dead slot is a 2-of-2 with no recovery.",
+    "$signer_c_generation": "REVISED 2026-08-09. Ledger 3 was the original plan; it HAS FUNDS ON IT and must not be wiped. C is instead generated in Phantom on an Android phone that has never run a crypto wallet — a clean generator, and a different software stack from A and B, so a Ledger firmware problem at generation time cannot have touched all three. The phone is a GENERATOR, not the key: the steel is the key, the phone is wiped afterwards. A phone in a bank box would be a dead battery within months.",
+    "$derivation_path_rule": "FOUND THE HARD WAY 2026-08-09, on the first real signer. One physical Ledger shows DIFFERENT addresses in different apps because they derive Solana differently: Ledger Live uses m/44'/501'/0' (solana CLI: usb://ledger?key=0) while Phantom uses m/44'/501'/0'/0' (usb://ledger?key=0/0). Ledger Live showed C9FQV...k171x; Phantom showed C5seVdzeSGDsRueJZ5jiUS2qSx4YaBvtCGnesjXSG4P2. Both are real keys from the same seed and neither app is wrong. CONSEQUENCE: an address without its derivation path is ambiguous, and 'signer A' meaning two addresses depending on which app was open is exactly how a dead slot gets committed. Every signer MUST record derivation_path alongside address. The signing page caught this on its first real use by refusing to sign with a non-matching account — without that check it would have produced a valid signature proving possession of a key that was not going into the multisig.",
+    "$path_choice_guidance": "Prefer the address the DEVICE ITSELF displays (Ledger Live, m/44'/501'/0'). The reason is recovery, not preference: in a disaster you will be restoring from steel and confirming against the hardware, not against a browser extension. Both paths are signable from the CLI, so the choice is free — but it must be recorded, and the signing tool must be pointed at the recorded path.",
+    "$signer_pubkey_disclosure": "DECIDED 2026-08-09. Signer PUBLIC keys are recorded here. They are not secrets: InitializeMultisig writes all three into a 355-byte on-chain account that anyone can read, so they become permanently public the moment the multisig exists, and §19 requires publishing the arrangement anyway. An earlier guard asserted no signer pubkey appeared anywhere in the repo; that conflated 'public key' with 'secret' and would have forced the ceremony to keep no record of itself. The guard now asserts what actually matters: addresses live ONLY in this manifest, and no private key or seed phrase appears anywhere (enforced separately by npm run scan:secrets).",
+    "$offchain_encoding_note": "`solana sign-offchain-message` signs a WRAPPED envelope — b'\\xffsolana offchain' + version + format + u16 length + message — while a browser wallet's signMessage() signs the RAW bytes. Both are valid and they are different signatures over different data. The verifier initially understood only the raw form and REJECTED signer A's genuine signature, which looks exactly like a broken device. It now tries both and reports which matched.",
+    "$device_id_rule": "The identifier the solana CLI echoes as usb://ledger/<pubkey>. It identifies the PHYSICAL DEVICE, so two signers sharing one device_id are two accounts on ONE SEED — a 2-of-3 that is really a 1-of-2, because one recovery phrase yields both keys. This is invisible from the addresses: no amount of pubkey checking can detect it, which is exactly why it is recorded and asserted. RAISED 2026-08-09 when signer B's candidate appeared in the same Ledger Live account list as A, named 'CUNT-2' beside 'Solana Cunt-1' — the pattern produced by clicking 'Add account', which adds the next account index on the SAME device. Capture it with only that Ledger connected: solana-keygen pubkey usb://ledger echoes the device URI.",
+    "$signer_c_verification": "The steel must be verified by READING FROM IT, not from the phone. Signing in Phantom proves the PHONE holds a key; it proves nothing about the plate, and the plate will be the only copy. So possession and steel-verification are ONE step: type the words from the steel into `solana-keygen pubkey \"prompt://?key=0/0\"` and confirm it derives the address Phantom displayed, then sign the challenge with the same URI. prompt:// reads interactively and writes nothing to disk. Accepted tradeoff: the phrase passes through the Windows machine once. The alternative — signing on the phone — never verifies the plate, which is the larger risk for a key whose only copy IS the plate. NOTE THE PATH: Phantom derives m/44'/501'/0'/0' (prompt://?key=0/0), not m/44'/501'/0' — the same trap that produced two addresses for signer A.",
+    "$phrase_only_rule": "At least one signer must be phrase_only: no live device, no firmware, no update channel. It is what guarantees a remote software compromise cannot reach all three keys, and it cannot be inferred from an empty wallet_app field — signer C HAS a wallet_app (Phantom) because something had to generate the seed; that app is wiped afterwards and the key exists only as steel. 'Generated by' and 'lives on' are different facts and need different fields.",
+    "$last_recovery_test_note": "Set by signer C's verification, which WAS the recovery test: the phrase was restored from the steel plate and derived the expected public key. That is the §59 requirement met for the key where it matters most — C's plate is the only copy that will exist once the phone is wiped. A and B keep working devices AND steel, so their plates are not yet independently restored; re-test all three every 180 days.",
+    "$plate_restored_rule": "Per-signer, because 'recovery tested' as a single project-wide date OVERSTATES it. Only C's plate has been restored — it had to be, since the generator phone was wiped and the plate became the only copy. A's and B's are untested backups of keys that currently work, which is exactly the situation §59 describes. Owner scheduled 2026-08-15 to restore both. Re-test every 180 days thereafter.",
+    "ceremony_status": "COMPLETE",
+    "$ceremony_status_note": "Completed 2026-08-09: three keys generated on three devices, each possession-proven by a nonce-bound signature verified offline, each carrying its derivation path, all device identities distinct. Physical steps confirmed by the owner: the Phantom generator was WIPED from the Android phone, and all three steel plates are in their recorded locations (home, daughters-house, bank-deposit-box). What is NOT complete: A's and B's plates have never been restored, and the multisig account does not exist on any network."
+  }
+}

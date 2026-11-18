@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Oxyon — Every Decision Deserves Evidence</title>
+<meta name="description" content="Oxyon is an evidence ecosystem: Observe, Locate, Verify, Connect. GeoProof is its proof protocol. An experimental landing page and development lab.">
+<!-- Experimental sandbox: kept out of search results until it graduates. Flip to "index, follow" and run `npm run sitemap:build` to publish. -->
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://winlew.co/future/">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0a0a0c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Oxyon — Every Decision Deserves Evidence">
+<meta property="og:description" content="Observe. Locate. Verify. Connect. An evidence ecosystem built on verifiable proofs.">
+<meta property="og:url" content="https://winlew.co/future/">
+<meta property="og:image" content="https://winlew.co/future/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="assets/oxyon.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top"><div class="wrap top-in">
+  <a class="mark" href="./" aria-label="Oxyon home"><img src="assets/oxyon-symbol.webp" alt="" width="28" height="28"><span>OXYON</span></a>
+  <nav class="nav" aria-label="Sections">
+    <a href="#problem">Problem</a><a href="#model">Model</a><a href="#oxyon">O·XY·O·N</a><a href="#geoproof">GeoProof</a><a href="#ecosystem">Ecosystem</a><a href="#lab">Lab</a>
+  </nav>
+</div></header>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="hero"><div class="wrap hero-grid">
+  <div>
+    <h1 class="wordmark">OXYON</h1>
+    <p class="spelled" aria-label="Origin, Location, Oracle, Nexus"><b>O</b>rigin · <b>XY</b> location · <b>O</b>racle · <b>N</b>exus</p>
+    <p class="statement">Every Decision Deserves Evidence.</p>
+    <p class="sequence">Observe.<span>→</span>Locate.<span>→</span>Verify.<span>→</span>Connect.</p>
+    <p class="explain">Oxyon is an evidence ecosystem. It turns observations into signed, verifiable
+      evidence that anyone can check for themselves, so trust comes from proof rather than from
+      whoever is making the claim.</p>
+    <div class="btns">
+      <a class="btn primary" href="#model">See the model</a>
+      <a class="btn ghost" href="#geoproof">GeoProof protocol</a>
+    </div>
+  </div>
+
+  <aside class="evidence" aria-label="Illustrative evidence card">
+    <div class="evidence-head">
+      <img src="assets/oxyon-symbol.webp" alt="" width="40" height="40">
+      <div><strong>EVIDENCE RECORD</strong><small>oxyon.geoproof.event.v1</small></div>
+    </div>
+    <dl class="kv">
+      <dt>observed</dt><dd>“Sensor 7 reads 21.4 °C”</dd>
+      <dt>origin</dt><dd>signer xl1:4f2a…c19e</dd>
+      <dt>location</dt><dd>cell 8a2a1072b59ffff</dd>
+      <dt>time</dt><dd id="ev-time">—</dd>
+      <dt>sha-256</dt><dd class="gold" id="ev-hash">computing…</dd>
+      <dt>anchor</dt><dd>optional · XL1 receipt</dd>
+    </dl>
+    <div class="meter">
+      <div class="meter-row"><span>confidence</span><span id="ev-conf">—</span></div>
+      <div class="meter-bar"><i id="ev-bar"></i></div>
+    </div>
+    <p class="note">Illustrative record. The hash is real and is computed in your browser.</p>
+  </aside>
+</div></section>
+
+<!-- PROBLEM -->
+<section class="section alt" id="problem"><div class="wrap">
+  <p class="eyebrow">The problem</p>
+  <h2 class="h2">Most of what we rely on is a claim, not evidence.</h2>
+  <p class="lead">We trust these every day because of who presents them, not because we can check them.</p>
+  <div class="claims">
+    <div class="claim"><b>Screenshots</b><span>Easy to edit, impossible to audit.</span></div>
+    <div class="claim"><b>Databases</b><span>Rows change without a trace.</span></div>
+    <div class="claim"><b>APIs</b><span>You see what the server chooses to return.</span></div>
+    <div class="claim"><b>Organizations</b><span>Their word is the evidence.</span></div>
+    <div class="claim"><b>AI output</b><span>Fluent, confident, unsourced.</span></div>
+    <div class="claim"><b>Location claims</b><span>“I was there” is trivial to fake.</span></div>
+    <div class="claim"><b>Transaction histories</b><span>Context gets stripped away.</span></div>
+    <div class="claim"><b>Online identities</b><span>Anyone can be anyone.</span></div>
+  </div>
+  <p class="question">Can the evidence itself be independently verified?</p>
+</div></section>
+
+<!-- MODEL -->
+<section class="section" id="model"><div class="wrap">
+  <p class="eyebrow">The Oxyon model</p>
+  <h2 class="h2">From observation to better decisions.</h2>
+  <p class="lead">Each step makes the next one checkable. Trust is the output of the chain, never the input.</p>
+  <ol class="chain">
+    <li><div class="node" aria-hidden="true"></div><h3>Observation</h3><p>Something is seen, measured or done.</p></li>
+    <li><div class="node" aria-hidden="true"></div><h3>Evidence</h3><p>It is recorded, hashed and signed at its origin.</p></li>
+    <li><div class="node" aria-hidden="true"></div><h3>Verification</h3><p>Anyone can recheck the signature, hash and sources.</p></li>
+    <li><div class="node" aria-hidden="true"></div><h3>Confidence</h3><p>Evidence is weighed, with the reasoning shown.</p></li>
+    <li><div class="node" aria-hidden="true"></div><h3>Trust</h3><p>Earned from proof, not assumed from authority.</p></li>
+    <li><div class="node" aria-hidden="true"></div><h3>Better Decisions</h3><p>Made on what can be shown, not on what is said.</p></li>
+  </ol>
+
+  <div class="demo" aria-labelledby="demo-title">
+    <div class="panel">
+      <label for="obs" id="demo-title">Try it: fingerprint an observation</label>
+      <textarea id="obs" spellcheck="false">Delivery 4471 arrived at Dock B, 2 boxes, seal intact.</textarea>
+      <p class="small">Runs entirely in your browser with the Web Crypto API. Nothing is sent anywhere.</p>
+    </div>
+    <div class="panel" aria-live="polite">
+      <label>SHA-256 fingerprint</label>
+      <div class="hash" id="hash-now">—</div>
+      <label style="margin-top:16px">Previous fingerprint</label>
+      <div class="hash prev" id="hash-prev">Edit the text to compare.</div>
+      <p class="diff" id="hash-diff"></p>
+    </div>
+  </div>
+  <p class="small">Change one character and the fingerprint changes completely. That is what makes a
+    record tamper-evident. A full GeoProof event also adds a signature, location, time and links to its sources.</p>
+</div></section>
+
+<!-- O·XY·O·N -->
+<section class="section alt" id="oxyon"><div class="wrap">
+  <p class="eyebrow">O·XY·O·N</p>
+  <h2 class="h2">Four parts, one sequence.</h2>
+  <p class="lead">The name is the method.</p>
+  <div class="letters">
+    <div class="letter"><div class="glyph">O</div><h3>Origin</h3><span class="verb">Observe</span><p>Where evidence is born: who or what made the observation, and its signature.</p></div>
+    <div class="letter"><div class="glyph">XY</div><h3>Location</h3><span class="verb">Locate</span><p>Where and when it happened: a coordinate in space and time.</p></div>
+    <div class="letter"><div class="glyph">O</div><h3>Oracle</h3><span class="verb">Verify</span><p>How it is checked: independent verification that reaches a judgement and shows the reasoning.</p></div>
+    <div class="letter"><div class="glyph">N</div><h3>Nexus</h3><span class="verb">Connect</span><p>How it links: verified evidence connects across apps, people and decisions.</p></div>
+  </div>
+</div></section>
+
+<!-- GEOPROOF -->
+<section class="section" id="geoproof"><div class="wrap">
+  <p class="eyebrow">GeoProof</p>
+  <h2 class="h2">The protocol under the ecosystem.</h2>
+  <p class="lead">Oxyon and GeoProof are not the same thing.</p>
+  <div class="split">
+    <div class="layer"><span class="tagline">Ecosystem layer</span><h3>Oxyon</h3>
+      <p>The company and ecosystem: the products, the people and the decisions that rely on evidence.</p></div>
+    <div class="layer"><span class="tagline">Protocol layer</span><h3>GeoProof</h3>
+      <p>A shared proof schema. Every product emits the same standard, verifiable event, so evidence from one app can be checked and connected by any other.
+        <br><span class="schema">oxyon.geoproof.{event, presence, attestation, receipt, anchor.batch}.v1</span></p></div>
+  </div>
+
+  <h3 class="h3">Where XL1 fits</h3>
+  <p class="lead" style="margin-bottom:20px">Oxyon is not another blockchain. A blockchain is one optional step: it gives evidence
+    a public, timestamped receipt that nobody can quietly rewrite.</p>
+  <ol class="pipeline">
+    <li>Observation<small>something happens</small></li>
+    <li>Evidence<small>hashed + signed</small></li>
+    <li class="key">GeoProof<small>standard event</small></li>
+    <li>Verification<small>receipt with reasons</small></li>
+    <li class="opt">XL1 anchor<small>optional receipt</small></li>
+    <li>Independent check<small>by anyone</small></li>
+  </ol>
+  <p class="small">On XL1 we use anchoring (batch roots of proofs), receipts and provenance (who signed what, when).
+    Proof events are built on XYO payloads and bound witnesses; GeoProof defines the schema and does not reinvent the cryptography.</p>
+</div></section>
+
+<!-- ECOSYSTEM -->
+<section class="section alt" id="ecosystem"><div class="wrap">
+  <p class="eyebrow">Ecosystem</p>
+  <h2 class="h2">What exists today, labelled honestly.</h2>
+  <p class="lead">Some of this is live. Much of it is still being built.</p>
+  <div class="legend">
+    <span><i class="tag tag-live">Live</i> public and usable</span>
+    <span><i class="tag tag-proto">Prototype</i> working, rough</span>
+    <span><i class="tag tag-dev">In development</i> not public</span>
+    <span><i class="tag tag-exp">Experimental</i> may change</span>
+    <span><i class="tag tag-concept">Concept</i> idea only</span>
+  </div>
+  <div class="cards">
+    <article class="card"><span class="tag tag-dev">In development</span><h3>GeoProof</h3>
+      <p>The proof protocol. The specification, reference implementation and test vectors exist; there is no public release yet.</p></article>
+    <article class="card"><span class="tag tag-live">Live · beta</span><h3>Oxyon Wallet</h3>
+      <p>A self-custody wallet for Ethereum, Solana and XL1, formerly GeoWallet. The browser extension and web wallet are in beta; mobile is in development.</p>
+      <a class="more" href="/wallet/">Wallet page →</a></article>
+    <article class="card"><span class="tag tag-exp">Experimental</span><h3>Wallet messaging</h3>
+      <p>Wallet-to-wallet messages on XL1 (<code>oxyon.wallet.message</code>): public or end-to-end encrypted, with optional XL1 attached. Early and experimental.</p></article>
+    <article class="card"><span class="tag tag-proto">Prototype</span><h3>GeoHackers</h3>
+      <p>Community, events and challenges with verified wallets and proofs anyone can check.</p>
+      <a class="more" href="/xl1/geohackers/">GeoHackers →</a></article>
+    <article class="card"><span class="tag tag-dev">In development</span><h3>GeoJustice</h3>
+      <p>A verification engine that scores contracts and claims, and publishes the exact evidence behind each decision.</p>
+      <a class="more" href="/ecosystem/geojustice/">Preview →</a></article>
+    <article class="card"><span class="tag tag-dev">In development</span><h3>GeoPresence</h3>
+      <p>Proof of presence: turns a signed wallet check-in and a location into a privacy-preserving, verifiable proof.</p>
+      <a class="more" href="/ecosystem/geopresence/">Preview →</a></article>
+    <article class="card"><span class="tag tag-proto">Prototype</span><h3>GeoAgora</h3>
+      <p>A marketplace built on reputation, discovery and trusted exchange. Not open to the public.</p></article>
+    <article class="card"><span class="tag tag-concept">Concept</span><h3>GeoForge</h3>
+      <p>A planned developer platform: SDKs, deployment and APIs for building on GeoProof.</p></article>
+  </div>
+</div></section>
+
+<!-- LAB -->
+<section class="section" id="lab"><div class="wrap lab-grid">
+  <div>
+    <p class="eyebrow">Oxyon Lab</p>
+    <h2 class="h2">Built in the open, tested in a sandbox.</h2>
+    <p class="lead">This page is also our development sandbox. Experiments stay inside it and never touch production systems.
+      Here is what this host can run today.</p>
+  </div>
+  <ul class="checklist">
+    <li><span class="st y">YES</span><span><b>Static pages + browser crypto</b>: everything on this page.</span></li>
+    <li><span class="st y">YES</span><span><b>PHP 8.2</b> with SQLite / MySQL: small server-side features.</span></li>
+    <li><span class="st y">YES</span><span><b>Outbound HTTPS</b> from PHP to the XL1 network.</span></li>
+    <li><span class="st n">NO</span><span><b>Node.js</b>, persistent workers or long-running services.</span></li>
+  </ul>
+</div></section>
+
+</main>
+
+<footer><div class="wrap foot">
+  <span>Oxyon · an independent evidence ecosystem · experimental preview</span>
+  <span><a href="#main">Top</a> · <a class="quiet" href="lab/" rel="nofollow">Developer Lab</a></span>
+</div></footer>
+
+<script src="assets/oxyon.js" defer></script>
+</body>
+</html>

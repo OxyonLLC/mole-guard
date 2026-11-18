@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <title>WinLEW Transparency Center</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="WinLEW's official mint, graduation milestone, active markets, historical launch records, and live on-chain ecosystem balances in one place." />
+  <link rel="canonical" href="https://winlew.co/transparency/" />
+  <meta property="og:title" content="WinLEW Transparency Center" />
+  <meta property="og:description" content="Official mint, verified active markets, preserved launch history, and live on-chain transparency." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/transparency/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    .hidden { display: none !important; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      padding: 0;
+      margin: 0;
+      line-height: 1.7;
+    }
+    /* overflow-x:hidden lives on html only, not body — body also has its
+       own max-width+margin:auto (a narrower, centered box), and body-level
+       overflow-x:hidden clips ANY child to body's own box, silently
+       defeating .nav's intentional full-bleed edge-to-edge extension past
+       that box (see assets/nav.css / docs/site-navigation.md). html's own
+       overflow-x:hidden already fully covers the "no page-level horizontal
+       scroll" job (it's the true root scroller/clipper), so body doesn't
+       need a second, narrower copy — found 2026-07-18 when the nav's
+       account area grew wide enough to actually need that bled space and
+       the clip became visibly wrong instead of an invisible no-op. */
+    html { overflow-x: hidden; }
+    .wlPageShell { max-width: 1000px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin-bottom: 8px; }
+    h1 { font-size: clamp(30px, 5vw, 44px); margin-top: 0; }
+    h2 { font-size: clamp(18px, 2.6vw, 22px); margin-top: 0; }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header.wlHero { text-align: left; margin-bottom: 8px; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624; border-radius: 20px; padding: 26px; margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: 0.85; }
+    code { background: #2e1f16; padding: 2px 6px; border-radius: 6px; font-size: 0.9em; word-break: break-all; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid #4e3624; font-weight: 850; font-size: 13px; text-decoration: none; cursor: pointer; color: inherit; font-family: inherit; }
+    .btn.primary { background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22)); }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .ctaRow { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 18px 0 0; }
+    .status-note { border-left: 3px solid #d6a866; padding: 10px 14px; background: rgba(214,168,102,.08); border-radius: 0 10px 10px 0; margin-top: 14px; font-size: 14px; }
+    .status-note.pending { border-left-color: #ffb347; background: rgba(255,179,71,.10); }
+
+    .componentGrid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 8px; }
+    .component {
+      background: linear-gradient(180deg, rgba(27,18,14,.92), rgba(19,12,9,.96));
+      border: 1px solid #4e3624; border-radius: 18px; padding: 22px;
+      box-shadow: 0 12px 32px rgba(0,0,0,.24);
+      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+    .component:hover { transform: translateY(-2px); border-color: rgba(214,168,102,.3); box-shadow: 0 18px 44px rgba(0,0,0,.3); }
+    .component .compHead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
+    .component h3 { margin: 0; font-size: 17px; }
+    .compIcon { font-size: 20px; }
+    .compPurpose { margin: 6px 0 14px; }
+    .trustBadge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 800; border: 1px solid rgba(85,240,165,.3); background: rgba(85,240,165,.12); color: #55f0a5; white-space: nowrap; }
+    .trustBadge.warn { border-color: rgba(255,179,71,.3); background: rgba(255,179,71,.12); color: #ffb347; }
+    .compStats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    @media (max-width: 480px) { .compStats { grid-template-columns: 1fr; } }
+    .statBox {
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid #4e3624; border-radius: 14px; padding: 14px; text-align: center;
+      transition: transform .16s ease, border-color .16s ease;
+    }
+    .statBox:hover { transform: translateY(-2px); border-color: rgba(214,168,102,.32); }
+    .statVal { font-size: 18px; font-weight: 900; color: #e7c18f; }
+    .statLbl { font-size: 11px; opacity: 0.8; margin-top: 2px; }
+    .addrRow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+    .compLinks { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .compWho { font-size: 12px; color: rgba(246,239,232,.85); margin: -6px 0 12px; }
+    .compWho a { font-weight: 700; }
+    .solChip { background: rgba(214,168,102,.08); border: 1px solid rgba(214,168,102,.25); border-radius: 8px; padding: 2px 8px; font-size: 11.5px; color: #e7c18f; }
+    .compError { color: #ffb347; font-size: 13px; margin-top: 10px; }
+    /* Supply figures must never wrap mid-number. At narrow widths the amount
+       column was breaking "50,000,000" into "50,000,0 / 00", which on a page
+       whose entire purpose is being checkable reads as a different number.
+       .tableWrap already scrolls horizontally, so nowrap costs nothing. */
+    #circulatingSupplyBox td code { white-space: nowrap; }
+    /* ...except the address in the first column, which is long and SHOULD wrap. */
+    #circulatingSupplyBox td:first-child code { white-space: normal; word-break: break-all; }
+    /* ── Transparency dashboard chrome (2026-08-13) ──────────────────────
+       Quick nav, overview metrics and the collapsible evidence pattern. Built
+       from the existing tokens (#e7c18f, #4e3624, the .box gradient) rather
+       than a new palette — this should read as the same page, reorganised. */
+    .tcNav {
+      display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+      padding: 10px 4px; margin: 4px 0 6px; scrollbar-width: thin;
+    }
+    .tcNav a {
+      flex: 0 0 auto; padding: 8px 14px; border-radius: 999px;
+      border: 1px solid #4e3624; background: rgba(255,255,255,.05);
+      font-size: 13px; font-weight: 800; color: #f6efe8; white-space: nowrap;
+      /* 44px tap target on mobile — this row is the primary way to move around
+         the page now, so it must not be fiddly on a phone. */
+      min-height: 40px; display: inline-flex; align-items: center;
+    }
+    .tcNav a:hover { text-decoration: none; border-color: rgba(214,168,102,.5); background: rgba(214,168,102,.12); }
+
+    /* Anchors must not land under the site nav. Without this the heading you
+       jumped to sits behind the header and the section looks like it starts
+       mid-sentence. */
+    :target { scroll-margin-top: 96px; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+    .tcMetrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 14px; }
+    @media (max-width: 900px) { .tcMetrics { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 430px) { .tcMetrics { grid-template-columns: 1fr; } }
+    .tcMetric {
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid #4e3624; border-radius: 16px; padding: 16px; text-align: center;
+    }
+    .tcMetricLead { border-color: rgba(214,168,102,.45); background: linear-gradient(180deg, rgba(214,168,102,.14), rgba(214,168,102,.04)); }
+    .tcMetricVal {
+      font-size: clamp(18px, 2.2vw, 24px); font-weight: 900; color: #e7c18f; line-height: 1.25;
+      /* Never break a figure across lines — "811,724,836." over "43" reads as a
+         different number on a page whose job is being checkable. Tiles show
+         whole tokens; full precision is in the evidence section. */
+      white-space: nowrap;
+    }
+    .tcMetricLbl { font-size: 11.5px; opacity: .82; margin-top: 4px; text-transform: uppercase; letter-spacing: .4px; }
+    .tcMetricLink { display: inline-block; margin-top: 8px; font-size: 12px; font-weight: 800; }
+
+    .tcDetails { margin-top: 14px; border: 1px solid #4e3624; border-radius: 14px; background: rgba(255,255,255,.03); }
+    .tcDetails > summary {
+      cursor: pointer; padding: 14px 16px; list-style: none; display: flex;
+      align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+      font-weight: 850; color: #e7c18f; min-height: 44px;
+    }
+    .tcDetails > summary::-webkit-details-marker { display: none; }
+    .tcDetails > summary::after { content: "▾ show"; font-size: 12px; opacity: .8; font-weight: 800; }
+    .tcDetails[open] > summary::after { content: "▴ hide"; }
+    .tcDetails > summary:hover { background: rgba(214,168,102,.08); border-radius: 13px; }
+    .tcDetails > *:not(summary) { padding: 0 16px 16px; }
+    .tcSummaryHint { font-size: 12px; opacity: .8; font-weight: 700; }
+    .tableWrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 12px; }
+    .tableWrap table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .tableWrap th, .tableWrap td { text-align: left; padding: 10px; border-bottom: 1px solid #4e3624; vertical-align: top; }
+    .tableWrap th { color: #e7c18f; font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; }
+    .marketStatus { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 900; white-space: nowrap; border: 1px solid #4e3624; }
+    .marketStatus.active { background: rgba(85,240,165,.12); border-color: rgba(85,240,165,.3); color: #55f0a5; }
+    .marketStatus.secondary { background: rgba(93,173,255,.12); border-color: rgba(93,173,255,.3); color: #8fc0ff; }
+    .marketStatus.historical { background: rgba(255,179,71,.12); border-color: rgba(255,179,71,.3); color: #ffcf88; }
+    .marketLinks { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .providerGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 14px 0 20px; }
+    .providerCard { background: rgba(255,255,255,.04); border: 1px solid #4e3624; border-radius: 14px; padding: 14px; }
+    .providerCard .pName { font-weight: 900; color: #f6efe8; font-size: 14px; }
+    .providerCard .pWallet { font-size: 11px; color: rgba(246,239,232,.85); margin-top: 2px; }
+    .providerCard .pAmt { font-size: 15px; font-weight: 850; color: #e7c18f; margin-top: 8px; }
+    .providerCard .pBadges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .statusPill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 999px; font-size: 10.5px; font-weight: 900; white-space: nowrap; border: 1px solid #4e3624; }
+    .statusPill.active { background: rgba(85,240,165,.12); border-color: rgba(85,240,165,.3); color: #55f0a5; }
+    .statusPill.withdrawn { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.14); color: rgba(246,239,232,.85); }
+    .statusPill.founder { background: rgba(214,168,102,.16); border-color: rgba(214,168,102,.36); color: #e7c18f; }
+    .roundChip { background: rgba(93,173,255,.10); border: 1px solid rgba(93,173,255,.28); border-radius: 8px; padding: 2px 8px; font-size: 10.5px; color: #8fc0ff; }
+
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+<header class="wlHero" id="about">
+  <div class="wlHeroBanner"><img src="/images/page-headers/transparency.png" alt="Transparency Center — explore on-chain data and verified records" loading="lazy" /></div>
+  <div class="wlHeroMain">
+    <span class="wlKicker">🛡️ Trust dashboard · Live from Solana</span>
+    <h1 class="wlHeroTitle">Transparency Center<br><span class="wlHeroTitleAccent">No rugs, no hidden wallets.</span></h1>
+    <p class="wlHeroSub">Every major on-chain component of the WinLEW ecosystem, in one place — the permanent mint, verified active markets, preserved launch-stage history, plus live liquidity, locks, burn wallet, and reserves. Anyone can inspect each one directly.</p>
+    <div class="wlChipRow">
+      <span class="wlChip">🪙 Live token supply</span>
+      <span class="wlChip">🔒 Every lock verified</span>
+      <span class="wlChip">🔍 Read-only, always</span>
+    </div>
+    <div class="ctaRow" style="justify-content:flex-start;margin-top:16px;">
+      <a class="btn primary" href="/whitepaper/">📜 Whitepaper</a>
+      <a class="btn" href="#" onclick="window.print(); return false;">🖨 Print</a>
+    </div>
+  </div>
+  <div class="wlHeroSide">
+    <div class="wlEyebrow">Verification snapshot</div>
+    <div class="wlHeroStatGrid">
+      <div class="wlStat"><div class="n" id="heroComponentCount">—</div><div class="l">Components tracked</div></div>
+      <div class="wlStat"><div class="n" id="heroMintAuthority">—</div><div class="l">Mint authority</div></div>
+      <div class="wlStat"><div class="n" id="heroVerifiedNow">—</div><div class="l">Verified now</div></div>
+      <div class="wlStat"><div class="n" id="heroTotalSupply">—</div><div class="l">Total supply</div></div>
+    </div>
+    <div class="wlHeroNote">Every number above is read live from Solana on page load — none of it is typed in as a static figure.</div>
+  </div>
+</header>
+
+<!-- Quick navigation. Added 2026-08-13: the page had grown to ~17,900px on
+     desktop and ~31,900px on mobile, with Tokenomics starting at 29,547px —
+     i.e. 92% of the way down. Nothing was wrong with the content; there was
+     simply no way to reach it except scrolling past every record. -->
+<nav class="tcNav wlIn" aria-label="Transparency sections">
+  <a href="#overview">Overview</a>
+  <a href="#token">Token</a>
+  <a href="#markets">Markets</a>
+  <a href="#wallets">Wallets &amp; Locks</a>
+  <a href="#community-liquidity">Liquidity</a>
+  <a href="#farm-records">Farms</a>
+  <a href="#tokenomics">Tokenomics</a>
+  <a href="#supply-calculation">Evidence</a>
+</nav>
+
+<!-- Live overview. Four numbers, read live, that answer "what is the state of
+     this token" before any evidence is shown. The calculation behind the
+     circulating figure lives at #supply-calculation, deliberately far below —
+     summary first, receipts on request. -->
+<div class="box wlGlow wlIn" id="overview">
+  <div class="wlEyebrow">Live overview</div>
+  <h2>📊 At a glance</h2>
+  <p class="muted">Read from Solana on page load. Nothing here is a stored figure.</p>
+  <div class="tcMetrics">
+    <div class="tcMetric">
+      <div class="tcMetricVal" id="ovTotal">—</div>
+      <div class="tcMetricLbl">Total supply</div>
+    </div>
+    <div class="tcMetric tcMetricLead">
+      <div class="tcMetricVal" id="ovCirculating">—</div>
+      <div class="tcMetricLbl">Circulating supply</div>
+      <a class="tcMetricLink" href="#supply-calculation">See how this is calculated ↓</a>
+    </div>
+    <div class="tcMetric">
+      <div class="tcMetricVal" id="ovLocked">—</div>
+      <div class="tcMetricLbl">Locked / vested</div>
+      <a class="tcMetricLink" href="#supply-calculation">What is locked ↓</a>
+    </div>
+    <div class="tcMetric">
+      <div class="tcMetricVal" id="ovBurned">—</div>
+      <div class="tcMetricLbl">Burned (confirmed)</div>
+      <a class="tcMetricLink" href="/burn/">Burn Center →</a>
+    </div>
+  </div>
+  <p class="muted" id="ovNote" style="margin-top:12px;font-size:13px;"></p>
+  <!-- Added 2026-08-18 alongside the launch of /giveaways/. Transparency is
+       where people come to check what this project actually did with its
+       tokens; giving them away is a large part of that answer, and the ledger
+       lives on its own page rather than being summarised here. -->
+  <p class="muted" style="margin-top:10px;font-size:13.5px;">
+    🎟️ <strong>Giveaways:</strong> every giveaway this project has run — what was promised,
+    what was actually paid, and the transaction for each, including the ones that never
+    triggered. <a href="/giveaways/">Giveaway Records →</a>
+  </p>
+</div>
+
+<div class="box wlGlow wlIn" id="token">
+  <div class="wlEyebrow">Official token identity</div>
+  <h2>🪙 Official Token Identity</h2>
+  <p class="muted">The WinLEW mint remains the permanent token identity before and after graduation. Holder verification, faucet payouts, quiz rewards, contribution detection, Proof of Value calculations, and all supply accounting still key to this mint.</p>
+  <div id="mintLoading" class="muted">Loading live supply data…</div>
+  <div id="mintData" class="hidden">
+    <div class="compStats">
+      <div class="statBox"><div class="statVal" id="mintSupply">—</div><div class="statLbl">Total supply</div></div>
+      <div class="statBox"><div class="statVal" id="mintDecimalsStat">—</div><div class="statLbl">Decimals</div></div>
+      <div class="statBox"><div class="statVal" id="mintAuthorityStat">—</div><div class="statLbl">Mint authority</div></div>
+      <div class="statBox"><div class="statVal" id="freezeAuthorityStat">—</div><div class="statLbl">Freeze authority</div></div>
+    </div>
+    <div class="addrRow">
+      <code id="mintAddress">DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump</code>
+      <button class="btn" type="button" data-copy="DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump">📋 Copy</button>
+    </div>
+    <div class="compLinks">
+      <a class="btn" href="https://solscan.io/token/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+      <a class="btn" href="https://rugcheck.xyz/tokens/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">RugCheck ↗</a>
+      <a class="btn" href="https://dex.coinmarketcap.com/token/solana/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump/" target="_blank" rel="noreferrer noopener">CMC Dexscan ↗</a>
+      <a class="btn" href="https://www.mexc.com/dex/onchain/sol/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">MEXC DEX ↗</a>
+    </div>
+    <div class="status-note"><strong>Always verify the mint.</strong> Symbols and names can be copied.</div>
+  </div>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Graduation</div>
+  <h2>🎓 Graduation Milestone</h2>
+  <p><strong>Confirmed milestone date:</strong> July 22, 2026.</p>
+  <p class="muted">That date is based on the creation time of the verified PumpSwap market for the permanent WinLEW mint, now surfaced by pump.fun, DexScreener, and GeckoTerminal.</p>
+  <div class="status-note">
+    <strong>What changed:</strong> WinLEW moved beyond its original pump.fun launch phase into a post-graduation market structure with a verified PumpSwap market and continued Raydium availability.
+  </div>
+  <div class="status-note">
+    <strong>What did not change:</strong> the official mint stayed the same, existing holders kept the same token, and all wallet checks, payouts, and supply accounting still use the permanent mint.
+  </div>
+  <p class="muted">Search for <code>$WinLEW</code>, <code>WinLEW</code>, or verify with the official mint. Availability varies by platform.</p>
+</div>
+
+<div class="box wlIn" id="markets">
+  <div class="wlEyebrow">Markets</div>
+  <h2>📈 Active Markets</h2>
+  <!-- "Active" was doing a lot of unquantified work here. The page's own
+       distinction is Active (has liquidity) vs Historical (none), which is a
+       fair rule — but a reader seeing "Active · established" reasonably infers
+       a busier market than a few hundred dollars of depth. Re-verified on
+       GeckoTerminal 2026-08-05 and the pool depth now appears beside the
+       label, so the word is anchored to a number instead of standing alone.
+       Depth is quoted rather than 24h volume deliberately: volume swings
+       hourly and would be stale in a static page within the day, whereas
+       reserve depth is the stable figure that actually decides whether a
+       market is usable. -->
+  <p class="muted">Market references last manually verified: 2026-08-05. Pool depth shown below was read from GeckoTerminal on that date — it moves with the market, so treat it as a checkpoint, not a live figure, and follow the links for current numbers.</p>
+  <div class="tableWrap">
+    <table>
+      <thead>
+        <tr><th>DEX</th><th>Pair / Pool</th><th>Token Pair</th><th>Status</th><th>Links</th><th>Role</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>PumpSwap</strong></td>
+          <td><code>Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL</code> <button class="btn" type="button" data-copy="Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL">📋 Copy</button></td>
+          <td>WinLEW / SOL</td>
+          <td><span class="marketStatus active">Active · primary</span></td>
+          <td>
+            <div class="marketLinks">
+              <a class="btn" href="https://dexscreener.com/solana/Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL" target="_blank" rel="noreferrer noopener">DexScreener ↗</a>
+              <a class="btn" href="https://www.geckoterminal.com/solana/pools/Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL" target="_blank" rel="noreferrer noopener">GeckoTerminal ↗</a>
+              <a class="btn" href="https://solscan.io/account/Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+              <a class="btn" href="https://pump.fun/coin/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">pump.fun Coin ↗</a>
+              <a class="btn" href="https://dex.coinmarketcap.com/token/solana/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump/" target="_blank" rel="noreferrer noopener">CMC Dexscan ↗</a>
+            </div>
+          </td>
+          <td>Current post-graduation market for the permanent mint. Pool depth ≈ $5,600 (2026-08-05).</td>
+        </tr>
+        <tr>
+          <td><strong>Raydium</strong></td>
+          <td><code>5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx</code> <button class="btn" type="button" data-copy="5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx">📋 Copy</button></td>
+          <td>WinLEW / SOL</td>
+          <td><span class="marketStatus secondary">Active · established</span></td>
+          <td>
+            <div class="marketLinks">
+              <a class="btn" href="https://raydium.io/swap/?inputMint=sol&outputMint=DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">Raydium Swap ↗</a>
+              <a class="btn" href="https://raydium.io/liquidity/increase/?mode=add&pool_id=5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer noopener">Add Liquidity ↗</a>
+              <a class="btn" href="https://www.geckoterminal.com/solana/pools/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer noopener">GeckoTerminal ↗</a>
+              <a class="btn" href="https://dexscreener.com/solana/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer noopener">DexScreener ↗</a>
+              <a class="btn" href="https://solscan.io/account/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+            </div>
+            <!-- Campaign pointer, added 2026-08-20. No rules restated here on
+                 purpose — /news/liquidity-and-hodl-campaign/ is the canonical
+                 copy. Committed prize only; the conditional 6M is not teased. -->
+            <p class="muted" style="margin:8px 0 0;font-size:12.5px;">
+              🎟️ Adding liquidity to this pool currently earns an entry in the
+              <a href="/news/liquidity-and-hodl-campaign/">1,000,000 $WinLEW HODL + Liquidity Campaign</a> (closes 1 Oct 2026).
+            </p>
+          </td>
+          <td>Established secondary market that remains available after graduation. Pool depth ≈ $600 (2026-08-05) — thin; the PumpSwap market above is the primary route.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">History</div>
+  <!-- Called "launch" infrastructure, and the pool below "the pump.fun launch
+       market". It isn't. Verified twice (2026-08-04 and again 2026-08-05):
+       this pump.fun AMM pool was created 2025-07-19 — five months AFTER the
+       Raydium pool listed above as an "established secondary" market
+       (2025-02-10), and long after the stated Dec 2024 launch. It is a real,
+       superseded pump.fun market and belongs on this page; it just isn't the
+       first one. On a page whose stated purpose is not rewriting history,
+       mislabelling which market came first is the wrong error to leave in. -->
+  <h2>🧑‍🚀 Superseded Market Infrastructure</h2>
+  <p class="muted">Earlier market infrastructure is preserved here so WinLEW does not rewrite or hide its history. WinLEW originally launched through the pump.fun bonding curve; the pool below is a later pump.fun market that has since been superseded, not the original launch venue.</p>
+  <div class="tableWrap">
+    <table>
+      <thead>
+        <tr><th>Infrastructure</th><th>Address</th><th>Status</th><th>Links</th><th>Role</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Superseded pump.fun market</strong></td>
+          <td><code id="pumpAddress">H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg</code> <button class="btn" type="button" data-copy="H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg">📋 Copy</button></td>
+          <td><span class="marketStatus historical">Historical / superseded</span></td>
+          <td>
+            <div class="marketLinks">
+              <a class="btn" href="https://solscan.io/account/H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+              <a class="btn" href="https://www.geckoterminal.com/solana/pools/H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg" target="_blank" rel="noreferrer noopener">GeckoTerminal ↗</a>
+            </div>
+          </td>
+          <td>A pump.fun market created 2025-07-19 and since superseded — currently reporting no liquidity. Preserved for transparency, and deliberately not labeled as an active trade route.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="wlSectionHead" id="faucetDistribution" style="margin:26px 0 4px; display:none;">
+  <div>
+    <div class="wlEyebrow">Rewards distributed</div>
+    <h2 style="margin:2px 0 0;">What the faucet reserve has actually paid out</h2>
+    <p class="muted" style="margin:6px 0 0;font-size:13px;">
+      The component below shows that wallet's <strong>current balance</strong> — but a balance says nothing
+      about how much has flowed <em>through</em> it. This is its lifetime outbound total, read from the chain.
+    </p>
+  </div>
+</div>
+<div id="faucetDistributionBox" style="display:none;">
+  <div id="wallets" class="box">
+    <div class="statGrid">
+      <div class="statBox"><div class="statVal" id="fdTotal">—</div><div class="statLbl">$WinLEW distributed, all time</div></div>
+      <div class="statBox"><div class="statVal" id="fdCount">—</div><div class="statLbl">Payout transactions</div></div>
+      <div class="statBox"><div class="statVal" id="fdRecipients">—</div><div class="statLbl">Distinct wallets paid</div></div>
+      <div class="statBox"><div class="statVal" id="fdSince">—</div><div class="statLbl">First payout</div></div>
+    </div>
+    <p class="muted" style="font-size:13px;margin-top:12px;" id="fdNote"></p>
+  </div>
+</div>
+
+<div class="wlSectionHead" id="components" style="margin:26px 0 4px;">
+  <div>
+    <div class="wlEyebrow">Ecosystem components</div>
+    <h2 style="margin:2px 0 0;">Verified on-chain</h2>
+    <p class="muted" style="margin:6px 0 0;font-size:13px;">
+      Every wallet below shows <strong>who holds it</strong> and its verified <code>.sol</code> names —
+      each name checked on-chain against the address shown. Program-owned escrows (locks, liquidity)
+      are labeled as such: no person can spend those. Reserve wallets accept
+      <a href="/contribute/">contributions →</a>
+    </p>
+  </div>
+</div>
+<div id="componentGrid" class="componentGrid"></div>
+
+<div class="box wlIn" id="community-liquidity">
+  <div class="wlEyebrow">Community</div>
+  <h2>💧 Community Liquidity Providers</h2>
+  <p class="muted">Holders who added WinLEW + SOL liquidity to the Raydium pool above, from their own wallet — plus, where applicable, staked those same LP tokens into one of the project's two liquidity farms. Every entry here was independently verified by reading the deposit/withdraw transaction itself (Raydium's own <code>Deposit</code>/<code>Withdraw</code> instructions and token-balance deltas) — not transcribed from a screenshot or claim. History is preserved permanently: a provider who has since withdrawn everything still shows here, clearly marked, rather than disappearing.</p>
+  <div class="compStats">
+    <div class="statBox"><div class="statVal" id="lpStatProviders">—</div><div class="statLbl">Providers tracked</div></div>
+    <div class="statBox"><div class="statVal" id="lpStatWinlew">—</div><div class="statLbl">Total $WinLEW ever deposited</div></div>
+    <div class="statBox"><div class="statVal" id="lpStatSol">—</div><div class="statLbl">Total SOL ever deposited</div></div>
+  </div>
+  <!-- Collapsed by default 2026-08-13. This section was 4,002px on desktop and
+       8,393px on mobile — 26% of the whole page — and sat between the wallet
+       cards and Farm Records, which is why farms and tokenomics were never
+       reached. NOTHING is removed: every provider and every transaction is
+       still here, one tap away, and a withdrawn provider still shows as
+       withdrawn. <details> is used rather than a JS accordion because it is
+       keyboard-accessible, works with no script, and is findable by the
+       browser's own in-page search when open. -->
+  <details class="tcDetails">
+    <summary>
+      <span class="tcSummaryLabel">View all liquidity providers &amp; transactions</span>
+      <span class="tcSummaryHint" id="lpRecordCount"></span>
+    </summary>
+    <div class="providerGrid" id="communityLiquidityProviders"></div>
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Provider</th><th>Wallet</th><th>Type</th><th>$WinLEW</th><th>Evidence</th></tr>
+        </thead>
+        <tbody id="communityLiquidityBody">
+          <tr><td colspan="6" class="muted">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+  <div class="status-note" style="margin-top:16px;">
+    <strong>Added liquidity and don't see it here?</strong> Message a mod in <a href="/community/">Discord</a> with your transaction signature — every entry above is added by hand after independent on-chain verification, the same standard as the rest of this page.
+  </div>
+</div>
+
+<div class="box wlIn" id="farm-records">
+  <div class="wlEyebrow">Community</div>
+  <h2>🌾 Liquidity Farm Rounds</h2>
+  <p class="muted">Two Raydium staking farms let WinLEW/SOL LP token holders earn extra rewards on top of ordinary trading fees. Both farm accounts are still live on-chain — neither has been closed — so either can be refunded and reopened by the project at any time. Staking requires holding LP tokens from the pool above first.</p>
+  <div class="componentGrid" id="farmProgramsGrid"></div>
+</div>
+
+<div class="box wlIn" id="tokenomics">
+  <div class="wlEyebrow">Reference</div>
+  <h2>📈 Tokenomics</h2>
+  <!-- This paragraph said "22M+ was placed in a Streamflow vesting contract",
+       singular. There are TWO. The second (7,013,300 tokens, full cliff to
+       Oct 29 2030) was itself once missing from this page entirely and was
+       added as a live component on 2026-07-17 — but this summary was never
+       updated to match, so the page listed the lock and then under-reported it
+       one section later. Verified on-chain 2026-08-05: 22,069,652.82 and
+       7,013,300.00 respectively. Summarising 94.08M of locked supply as 87.07M
+       is exactly the kind of quiet undercount a transparency page cannot
+       afford, even in a paragraph explicitly labelled as historical context. -->
+  <p class="muted">The tokenomics figures communicated at launch represent the original allocation and are preserved here as historical documentation, not edited retroactively. Since then, allocations have moved as described above: a 50M lock, a 15M team lock, a 25M faucet-runway lock, a 19.19M Developer Reserve self-lock (added Aug 11 2026 — 3-year cliff, then 2M/year through 2033) and two 20M Burn Locks (added Aug 16 2026 — 40M moved out of the burn wallet so burn-staged supply cannot be spent before its date; one unlocks Aug 1 2027, the other in three annual instalments 2029–2031) were placed via Jupiter Lock, and <strong>two separate</strong> Streamflow vesting contracts hold a further 22M+ and 7M+ — with dedicated reserve wallets funding the faucet (both Discord and website) and ongoing development. Cross-reference any historical figure against the live components above — that's the actual current state, not the original plan.</p>
+</div>
+
+<!-- ══ EVIDENCE ══ Moved here 2026-08-13 from directly under the mint card.
+     The summary belongs at the top; the methodology, the six escrow records and
+     the "what is NOT excluded" table belong where someone who wants to check
+     the arithmetic can find them — and where they do not stand between a casual
+     visitor and Farm Records. The anchor is stable and linkable: a CoinMarketCap
+     or CoinGecko reviewer can be sent straight to
+     https://winlew.co/transparency/#supply-calculation
+     Nothing was removed in the move. -->
+<div class="box wlGlow wlIn" id="supply-calculation">
+  <div class="wlEyebrow">Our evidence</div>
+  <h2>🧮 Circulating Supply — Calculation &amp; Evidence</h2>
+  <p class="muted">Everything behind the circulating-supply figure at the top of this page: the formula, every balance deducted and why, every balance deliberately <em>not</em> deducted, and a Solscan link for each so the arithmetic can be reproduced without trusting us.</p>
+  <p class="muted"><a href="#overview">↑ Back to overview</a></p>
+<div id="csLoading" class="muted">Loading live supply data…</div>
+
+  <div id="csData" class="hidden">
+    <div class="status-note" id="csFormula">
+      <strong>The calculation.</strong>
+      <div class="tableWrap" style="margin-top:10px;">
+        <table>
+          <tbody>
+            <tr><td>Current total supply</td><td style="text-align:right;"><code id="csFormulaTotal">—</code></td></tr>
+            <tr><td>Less: qualifying locked / vested supply</td><td style="text-align:right;"><code id="csFormulaLocked">—</code></td></tr>
+            <tr><td><strong>Reported circulating supply</strong></td><td style="text-align:right;"><strong><code id="csFormulaCirc">—</code></strong></td></tr>
+            <tr><td class="muted">Circulating % / non-circulating %</td><td style="text-align:right;" class="muted"><code id="csFormulaPct">—</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" style="margin:10px 0 0;">There is no third line. Only escrowed and vesting balances are deducted — see below for what is deliberately left in.</p>
+    </div>
+
+    <h3 style="margin-top:22px;">🔒 What is excluded, and why</h3>
+    <p class="muted">Each of these is held by a third-party program — Jupiter Lock or Streamflow — under a release schedule, not in a wallet the project can spend from today. The amount shown is the escrow's live on-chain balance.</p>
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr><th>Lock</th><th>$WinLEW</th><th>Provider</th><th>Type &amp; schedule</th><th>Claimable today</th><th>Verify</th></tr>
+        </thead>
+        <tbody id="csExcludedBody"></tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:22px;">✅ What is <em>not</em> excluded, and why</h3>
+    <p class="muted">A project can shrink its reported circulating supply by calling any wallet a reserve. These balances are all project-accessible or freely tradeable, so they stay counted as circulating.</p>
+    <div class="tableWrap">
+      <table>
+        <thead>
+          <tr><th>Balance</th><th>$WinLEW</th><th>Why it stays in circulating supply</th><th>Verify</th></tr>
+        </thead>
+        <tbody id="csNotExcludedBody"></tbody>
+      </table>
+    </div>
+
+    <div class="status-note" style="margin-top:18px;">
+      <strong>Staged for burn is not burned.</strong> The burn wallet's balance is counted as circulating on this page. Those tokens still exist and the mint still counts them; they leave supply only when a Solana burn instruction destroys them. Verified burns that have actually executed are on the <a href="/burn/">Burn Center</a>.
+    </div>
+
+    <p class="muted" id="csComputedAt" style="margin-top:14px;"></p>
+  </div>
+
+  <div id="csUnavailable" class="hidden">
+    <p class="compError">⚠️ <strong>Circulating supply cannot be calculated right now.</strong></p>
+    <p class="muted">One or more of the on-chain sources this calculation depends on could not be read. No figure is shown, deliberately: a missing lock would not make the number slightly wrong, it would make it too high by the whole size of that lock, and it would look completely normal. Details:</p>
+    <ul class="muted" id="csProblems"></ul>
+    <p class="muted">Every underlying balance remains independently checkable on Solscan using the addresses in the components below.</p>
+  </div>
+
+</div>
+
+
+
+<footer>
+  <a href="/">← Back to WinLEW</a> · <a href="/whitepaper/">Whitepaper</a> · <a href="/community/">Discord</a>
+</footer>
+</div>
+
+<script src="/assets/wallet-auth.js"></script>
+<script src="./js/app.js"></script>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

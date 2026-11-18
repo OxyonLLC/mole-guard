@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <title>About WinLEW</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="About the WinLEW platform: BUILD • MAP • EMPOWER, the public platform structure, and the ecosystem surfaces already live today." />
+  <link rel="canonical" href="https://winlew.co/about/" />
+  <meta property="og:title" content="About WinLEW" />
+  <meta property="og:description" content="What WinLEW is, how the platform is organized, and where each public surface fits." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/about/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    html { overflow-x: hidden; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      line-height: 1.7;
+    }
+    .wlPageShell { max-width: 1120px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin: 0 0 10px; }
+    h1 { font-size: clamp(32px, 4.8vw, 50px); }
+    h2 { font-size: clamp(20px, 2.8vw, 28px); }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624;
+      border-radius: 20px;
+      padding: 26px;
+      margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: 0.85; }
+    .laneGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .laneCard {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    .laneCard h3 { font-size: 18px; }
+    .laneCard p { margin: 0; color: rgba(246,239,232,.78); }
+    .laneList { margin: 12px 0 0; padding-left: 18px; color: rgba(246,239,232,.78); }
+    /* The lane items name real destinations but were plain text, so the page
+       described the platform without letting anyone walk into it. Links inherit
+       the muted list colour so the cards look unchanged until hover. */
+    .laneList a { color: inherit; text-decoration: none; }
+    .laneList a:hover, .laneList a:focus { color: #f0c989; text-decoration: underline; }
+    .linkGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .linkCard {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      text-decoration: none;
+      color: inherit;
+    }
+    .linkCard:hover { text-decoration: none; border-color: rgba(214,168,102,.34); background: rgba(255,255,255,.07); }
+    .linkCard strong { color: #f6efe8; }
+    .linkCard span { color: rgba(246,239,232,.74); font-size: 14px; }
+    .principles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .principleCard {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(214,168,102,.18);
+      background: linear-gradient(180deg, rgba(214,168,102,.08), rgba(255,255,255,.03));
+    }
+    .principleCard h3 { font-size: 17px; margin-bottom: 8px; }
+    .ctaRow { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid #4e3624;
+      font-weight: 850;
+      text-decoration: none;
+      color: inherit;
+    }
+    .btn.primary { background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22)); }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+    @media (max-width: 900px) {
+      .laneGrid, .linkGrid, .principles { grid-template-columns: 1fr; }
+      .wlPageShell { padding: 22px 16px 32px; }
+    }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+  <header class="wlHero" id="about-overview">
+    <div class="wlHeroBanner"><img src="/images/page-headers/about.png" alt="About WinLEW — our mission, story, and values" loading="lazy" /></div>
+    <div class="wlHeroMain">
+      <span class="wlKicker">WINLEW • BUILD • MAP • EMPOWER</span>
+      <h1 class="wlHeroTitle">What WinLEW is.<br><span class="wlHeroTitleAccent">One platform, not isolated pages.</span></h1>
+      <p class="wlHeroSub">WinLEW started as a community and grew into a participation platform: quiz rewards, faucet claims, browser games, wallet verification, governance, transparency, and public tools that all point back to the same ecosystem.</p>
+      <div class="wlChipRow">
+        <span class="wlChip">BUILD tools, games, and proposals</span>
+        <span class="wlChip">MAP activity, identity, and progress</span>
+        <span class="wlChip">EMPOWER participation and rewards</span>
+      </div>
+      <div class="ctaRow">
+        <a class="btn primary" href="/mole-hub/">Open Mole Hub</a>
+        <a class="btn" href="/modules/">View Modules</a>
+        <a class="btn" href="/roadmap/">Open Roadmap</a>
+        <a class="btn" href="/who-we-are/">Who's behind WinLEW →</a>
+      </div>
+    </div>
+    <div class="wlHeroSide">
+      <div class="wlEyebrow">Platform orientation</div>
+      <div class="wlHeroStatGrid">
+        <div class="wlStat"><div class="n">PLAY</div><div class="l">Games and arcade activity</div></div>
+        <div class="wlStat"><div class="n">EARN</div><div class="l">Quiz, Faucet, events, rewards</div></div>
+        <div class="wlStat"><div class="n">TRUST</div><div class="l">Verify, burn, transparency</div></div>
+        <div class="wlStat"><div class="n">BUILD</div><div class="l">Modules, roadmap, tools</div></div>
+      </div>
+      <div class="wlHeroNote">The page-level subtitle explains the current activity. The shared header and menu explain that you are still inside WinLEW.</div>
+    </div>
+  </header>
+
+  <div class="box wlGlow wlIn">
+    <div class="wlEyebrow">Core identity</div>
+    <h2>BUILD • MAP • EMPOWER</h2>
+    <div class="principles">
+      <div class="principleCard">
+        <h3>BUILD</h3>
+        <p>Create useful things: games, utilities, governance flows, modules, proposals, and community systems.</p>
+      </div>
+      <div class="principleCard">
+        <h3>MAP</h3>
+        <p>Connect identity, activity, reputation, milestones, and community contribution into something visible and explainable.</p>
+      </div>
+      <div class="principleCard">
+        <h3>EMPOWER</h3>
+        <p>Reward participation, strengthen holders and contributors, and give the community tools that are actually usable.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box wlIn">
+    <div class="wlEyebrow">Platform structure</div>
+    <h2>How the public surfaces fit together</h2>
+    <div class="laneGrid">
+      <div class="laneCard">
+        <h3>PLAY &amp; EARN</h3>
+        <p>Short-session participation surfaces where activity is visible and reward-linked.</p>
+        <ul class="laneList">
+          <li><a href="/mole-hub/">Mole Hub and games</a></li>
+          <li><a href="/quiz/">Quiz</a></li>
+          <li><a href="/faucet/">Faucet</a></li>
+          <li><a href="/leaderboards/">Leaderboards</a></li>
+          <li><a href="/events/">Events</a></li>
+        </ul>
+      </div>
+      <div class="laneCard">
+        <h3>TRUST &amp; GOVERN</h3>
+        <p>Identity, verification, burn records, transparency, and governance surfaces.</p>
+        <ul class="laneList">
+          <li><a href="/verify/">Verify</a></li>
+          <li><a href="/verify/profile.html">Dashboard</a></li>
+          <li><a href="/proof-of-value/">Proof of Value</a></li>
+          <li><a href="/burn/">Burn Center</a></li>
+          <li><a href="/transparency/">Transparency Center</a></li>
+          <li><a href="/governance/">Governance</a></li>
+        </ul>
+      </div>
+      <div class="laneCard">
+        <h3>BUILD &amp; EXPLORE</h3>
+        <p>The long-term system map and the tools that describe or extend it.</p>
+        <ul class="laneList">
+          <li><a href="/modules/">Modules</a></li>
+          <li><a href="/roadmap/">Roadmap</a></li>
+          <li><a href="/discord-bots/">Discord Bots</a></li>
+          <li><a href="/winlew-forge/">WinLEW Forge</a></li>
+          <li><a href="/whitepaper/">Whitepaper</a></li>
+        </ul>
+      </div>
+      <div class="laneCard">
+        <h3>CONNECTED ACCOUNT</h3>
+        <p>One shared wallet/session path ties the surfaces together instead of forcing separate logins.</p>
+        <ul class="laneList">
+          <li>Shared Dashboard</li>
+          <li>Wallet-linked participation</li>
+          <li>Quiz points and activity</li>
+          <li>Claim and reward state</li>
+          <li>Public profile surface</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="box wlIn">
+    <div class="wlEyebrow">WinLEW &amp; Oxyon</div>
+    <h2>The technology has its own home now</h2>
+    <p>WinLEW is the community, token and participation ecosystem. The tools we built along the way (the wallet, verification and proof systems, our XL1 infrastructure) are now developed under <a href="https://oxyon.io/" target="_blank" rel="noreferrer noopener">Oxyon ↗</a>, built by the same team. WinLEW is not being replaced or renamed; it is where much of that technology is used first. GeoWallet is now Oxyon Wallet: same wallet, same keys.</p>
+    <p class="muted"><a href="/news/winlew-isnt-going-away/">Read the announcement: WinLEW Isn't Going Away — We're Building Around It →</a></p>
+  </div>
+
+  <div class="box wlIn">
+    <div class="wlEyebrow">Start here</div>
+    <h2>Key destinations</h2>
+    <div class="linkGrid">
+      <a class="linkCard" href="/verify/">
+        <strong>Verify</strong>
+        <span>Link a wallet, confirm identity, and move into the shared account flow.</span>
+      </a>
+      <a class="linkCard" href="/verify/profile.html">
+        <strong>Dashboard</strong>
+        <span>See wallet state, progress, profile, and participation signals in one place.</span>
+      </a>
+      <a class="linkCard" href="/quiz/">
+        <strong>Quiz</strong>
+        <span>Build knowledge, map progress, and earn points in the live cycle.</span>
+      </a>
+      <a class="linkCard" href="/faucet/">
+        <strong>Faucet</strong>
+        <span>Claim through the shared wallet-linked reward surface.</span>
+      </a>
+      <a class="linkCard" href="/mole-hub/">
+        <strong>Mole Hub</strong>
+        <span>Play the arcade surfaces and move through the broader WinLEW game family.</span>
+      </a>
+      <a class="linkCard" href="/who-we-are/">
+        <strong>Who We Are</strong>
+        <span>The team, official channels, and every wallet address — in one place.</span>
+      </a>
+      <a class="linkCard" href="/transparency/">
+        <strong>Transparency Center</strong>
+        <span>Inspect the ecosystem components, balances, and public on-chain references.</span>
+      </a>
+      <a class="linkCard" href="/burn/">
+        <strong>Burn Center</strong>
+        <span>See the verified burn ledger and the long-term 100M target progress.</span>
+      </a>
+      <a class="linkCard" href="/roadmap/">
+        <strong>Roadmap</strong>
+        <span>See where the platform is going next and where the canonical module status lives.</span>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <a href="/">← Back to WinLEW</a> · <a href="/modules/">Modules</a> · <a href="/roadmap/">Roadmap</a> · <a href="/whitepaper/">Whitepaper</a>
+  </footer>
+</div>
+
+<script src="/assets/wallet-auth.js"></script>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

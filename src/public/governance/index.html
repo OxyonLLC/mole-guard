@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <title>WinLEW Governance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="WinLEW Governance — verified $WinLEW holders vote on community, feature, and burn-program proposals. A permanent public record, not a decorative poll." />
+  <link rel="canonical" href="https://winlew.co/governance/" />
+  <meta property="og:title" content="WinLEW Governance" />
+  <meta property="og:description" content="Structured community voting with clear eligibility, honest results, and no pretense that a vote executes a transaction." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/governance/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    .hidden { display: none !important; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      padding: 0;
+      margin: 0;
+      line-height: 1.7;
+    }
+    /* overflow-x:hidden lives on html only, not body — body also has its
+       own max-width+margin:auto (a narrower, centered box), and body-level
+       overflow-x:hidden clips ANY child to body's own box, silently
+       defeating .nav's intentional full-bleed edge-to-edge extension past
+       that box (see assets/nav.css / docs/site-navigation.md). html's own
+       overflow-x:hidden already fully covers the "no page-level horizontal
+       scroll" job (it's the true root scroller/clipper), so body doesn't
+       need a second, narrower copy — found 2026-07-18 when the nav's
+       account area grew wide enough to actually need that bled space and
+       the clip became visibly wrong instead of an invisible no-op. */
+    html { overflow-x: hidden; }
+    .wlPageShell { max-width: 1000px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin-bottom: 8px; }
+    h1 { font-size: clamp(30px, 5vw, 44px); margin-top: 0; }
+    h2 { font-size: clamp(18px, 2.6vw, 22px); margin-top: 0; }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header.wlHero { text-align: left; margin-bottom: 8px; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624; border-radius: 20px; padding: 26px; margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: 0.85; }
+    code { background: #2e1f16; padding: 2px 6px; border-radius: 6px; font-size: 0.9em; word-break: break-all; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid #4e3624; font-weight: 850; font-size: 13px; text-decoration: none; cursor: pointer; color: inherit; font-family: inherit; }
+    .btn.primary { background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22)); }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .status-note { border-left: 3px solid #d6a866; padding: 10px 14px; background: rgba(214,168,102,.08); border-radius: 0 10px 10px 0; margin-top: 14px; font-size: 14px; }
+    .disclaimer { margin: 10px 0; font-size: 13px; }
+
+    .quickAnswers { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+    @media (max-width: 640px) { .quickAnswers { grid-template-columns: 1fr; } }
+    .qa { background: rgba(255,255,255,.04); border: 1px solid #4e3624; border-radius: 12px; padding: 12px 14px; }
+    .qa .q { font-size: 12px; color: #e7c18f; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 4px; }
+    .qa .a { font-size: 13.5px; }
+
+    .statGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 8px; }
+    @media (max-width: 720px) { .statGrid { grid-template-columns: repeat(2, 1fr); } }
+    .statBox {
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid #4e3624; border-radius: 14px; padding: 14px; text-align: center;
+      transition: transform .16s ease, border-color .16s ease;
+    }
+    .statBox:hover { transform: translateY(-2px); border-color: rgba(214,168,102,.32); }
+    .statVal { font-size: clamp(18px, 2.6vw, 24px); font-weight: 900; }
+    .statLbl { font-size: 11.5px; opacity: .8; margin-top: 4px; }
+
+    .proposalGrid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 8px; }
+    .proposalCard {
+      background: linear-gradient(180deg, rgba(27,18,14,.92), rgba(19,12,9,.96));
+      border: 1px solid #4e3624; border-radius: 18px; padding: 18px 20px; display: block; color: inherit;
+      box-shadow: 0 12px 32px rgba(0,0,0,.24);
+      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+    .proposalCard:hover { text-decoration: none; border-color: rgba(214,168,102,.4); transform: translateY(-2px); box-shadow: 0 18px 44px rgba(0,0,0,.3); }
+    .pHead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
+    .proposalCard h3 { margin: 0; font-size: 16px; color: #f6efe8; }
+    .pMeta { font-size: 12px; opacity: .75; margin-top: 4px; }
+    .pSummary { margin: 10px 0 0; font-size: 13.5px; }
+    .pProgress { margin-top: 10px; height: 6px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
+    .pProgressFill { height: 100%; background: linear-gradient(90deg, #d6a866, #7d5837); }
+
+    .statusPill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 800; border: 1px solid #4e3624; white-space: nowrap; }
+    .statusPill.active { background: rgba(85,240,165,.14); color: #55f0a5; border-color: rgba(85,240,165,.3); }
+    .statusPill.upcoming { background: rgba(85,150,240,.14); color: #86b8ff; border-color: rgba(85,150,240,.3); }
+    .statusPill.closed { background: rgba(255,255,255,.06); color: #f6efe8; }
+    .statusPill.rejected { background: rgba(255,107,138,.12); color: #ff8fa3; border-color: rgba(255,107,138,.3); }
+
+    .modePill { display: inline-flex; padding: 3px 9px; border-radius: 999px; font-size: 11px; background: rgba(255,255,255,.05); border: 1px solid #4e3624; opacity: .85; }
+
+    .tabRow { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+    /* .pill has no base style outside .nav (nav.css/premium.css both scope
+       it to nav-only contexts) — these buttons were rendering as bare
+       unstyled <button> elements. Give them the same pill look every other
+       tab/filter row on the site already uses (Events, Partners). */
+    .tabRow .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 14px; border-radius: 999px;
+      background: rgba(255,255,255,.06); border: 1px solid #4e3624;
+      font-size: 13px; font-weight: 850; font-family: inherit; color: inherit;
+      cursor: pointer; opacity: 0.75;
+      transition: opacity .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .tabRow .pill:hover { background: rgba(255,255,255,.10); opacity: 0.95; }
+    .tabRow .pill.active {
+      opacity: 1;
+      background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22));
+      border-color: rgba(214,168,102,.4);
+    }
+
+    .catList { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .catChip { font-size: 12px; padding: 6px 11px; border-radius: 999px; background: rgba(255,255,255,.04); border: 1px solid #4e3624; }
+
+    .tableWrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 12px; }
+    .tableWrap table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 0; }
+    .tableWrap th, .tableWrap td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #4e3624; vertical-align: top; }
+    .tableWrap th { color: #e7c18f; font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; }
+
+    .stepList { counter-reset: step; list-style: none; padding-left: 0; margin: 10px 0 0; }
+    .stepList li { counter-increment: step; position: relative; padding-left: 34px; margin-bottom: 10px; font-size: 13.5px; }
+    .stepList li::before { content: counter(step); position: absolute; left: 0; top: 0; width: 22px; height: 22px; border-radius: 7px; background: rgba(214,168,102,.14); border: 1px solid rgba(214,168,102,.3); color: #d6a866; font-weight: 800; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+<header class="wlHero" id="about">
+  <div class="wlHeroBanner"><img src="/images/page-headers/governance.png" alt="Governance — have a say in the future of the WinLEW ecosystem" loading="lazy" /></div>
+  <div class="wlHeroMain">
+    <span class="wlKicker">🗳️ Community participation · Permanent public record</span>
+    <h1 class="wlHeroTitle">Governance<br><span class="wlHeroTitleAccent">Your vote, verified and counted.</span></h1>
+    <p class="wlHeroSub">Verified $WinLEW holders get a structured, server-verified voice in community, feature, reward, and burn-program decisions — not a decorative poll, and not a claim that a vote moves funds by itself.</p>
+    <div class="wlChipRow">
+      <!-- Was "One wallet, one vote", which stopped being true on 2026-07-28
+           when capped pay-per-vote weight shipped (web.js: totalWeight =
+           1 + purchasedWeight, applied to every proposal). -->
+      <span class="wlChip">🗳️ One free vote each, capped extras</span>
+      <span class="wlChip">🔍 Server-verified eligibility</span>
+      <span class="wlChip">📜 Public record</span>
+    </div>
+    <div class="ctaRow" style="justify-content:flex-start;margin-top:16px;">
+      <a class="btn primary" href="#proposals">View Proposals ↓</a>
+      <a class="btn" href="/governance/submit/">📝 Submit a Proposal →</a>
+    </div>
+  </div>
+  <div class="wlHeroSide">
+    <div class="wlEyebrow">Participation</div>
+    <div class="wlHeroStatGrid">
+      <div class="wlStat"><div class="n" id="heroActiveProposals">—</div><div class="l">Active now</div></div>
+      <div class="wlStat"><div class="n" id="heroCompletedProposals">—</div><div class="l">Completed</div></div>
+      <div class="wlStat"><div class="n" id="heroUpcomingProposals">—</div><div class="l">Upcoming</div></div>
+      <div class="wlStat"><div class="n" id="heroMinBalance">—</div><div class="l">Min WinLEW to vote</div></div>
+    </div>
+    <div class="wlHeroNote">Eligibility is checked server-side every time — never trusted from the browser.</div>
+  </div>
+</header>
+
+<div class="box wlGlow wlIn">
+  <div class="wlEyebrow">Overview</div>
+  <h2>What is this page?</h2>
+  <div class="quickAnswers">
+    <div class="qa"><div class="q">What's being decided?</div><div class="a" id="qaWhat">Loading…</div></div>
+    <div class="qa"><div class="q">Am I eligible?</div><div class="a" id="qaEligible">Sign in and verify a wallet to check.</div></div>
+    <div class="qa"><div class="q">When does voting close?</div><div class="a" id="qaCloses">See each proposal's own timeline.</div></div>
+    <div class="qa"><div class="q">What happens if it passes?</div><div class="a">Nothing executes automatically. A passed vote moves to maintainer safety review, then — only if approved — a separately, manually authorized action. See "Execution boundaries" below.</div></div>
+  </div>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Read first</div>
+  <h2>Execution boundaries — read this first</h2>
+  <p class="disclaimer muted">A vote here is a structured expression of community preference. It does <strong>not</strong> itself move treasury funds, execute a token burn, or trigger any on-chain transaction. Every category is labeled with its <strong>governance mode</strong> (advisory / community-approved / maintainer-ratified / binding-within-defined-policy), and every sensitive action — burns, treasury allocation — remains a separately authorized, manually executed step after a passed vote, with public evidence recorded once it happens. See <a href="/governance/#rules">Rules &amp; documentation</a> below for the full rules and <a href="/burn/">the Burn Center</a> for the same execution boundary already enforced there.</p>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Live status</div>
+  <h2>Live status</h2>
+  <div class="statGrid">
+    <div class="statBox"><div class="statVal" id="statActive">—</div><div class="statLbl">Active proposals</div></div>
+    <div class="statBox"><div class="statVal" id="statUpcoming">—</div><div class="statLbl">Upcoming</div></div>
+    <div class="statBox"><div class="statVal" id="statCompleted">—</div><div class="statLbl">Completed</div></div>
+    <div class="statBox"><div class="statVal" id="statMinBalance">—</div><div class="statLbl">Min WinLEW to vote</div></div>
+  </div>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Participate</div>
+  <h2>Have an idea?</h2>
+  <p class="muted">Anyone with a verified wallet can submit a proposal idea for maintainer review. <strong>Submitting is not publishing</strong> — it creates a reviewable draft only; nothing here can schedule or activate a vote by itself.</p>
+  <p><a class="btn primary" href="/governance/submit/">📝 Submit a Proposal →</a></p>
+</div>
+
+<div class="box wlIn" id="proposals">
+  <div class="wlEyebrow">Directory</div>
+  <h2>Proposals</h2>
+  <div class="tabRow" id="proposalTabs">
+    <button class="pill tab active" data-bucket="active" type="button">Active</button>
+    <button class="pill tab" data-bucket="upcoming" type="button">Upcoming</button>
+    <button class="pill tab" data-bucket="completed" type="button">Recently completed</button>
+    <button class="pill tab" data-bucket="archive" type="button">Full archive</button>
+  </div>
+  <div id="proposalGrid" class="proposalGrid">
+    <div class="muted">Loading…</div>
+  </div>
+</div>
+
+<div class="box wlIn" id="eligibility">
+  <div class="wlEyebrow">Requirements</div>
+  <h2>Voting eligibility</h2>
+  <p class="muted">Checked server-side every time — never trusted from the browser. Default rule for Governance v1:</p>
+  <ul>
+    <li>Signed in with the shared WinLEW session (same login as Dashboard/Quiz/Faucet).</li>
+    <li>A verified, linked Solana wallet (the same verification the Dashboard already shows).</li>
+    <li>That wallet holds at least <strong id="eligMin">1</strong> WinLEW. Verifying is what earns your vote — that was the original intent, and it is the intent again.</li>
+    <li><strong>Buying extra weight</strong> on top of that free vote is separate, and needs at least <strong id="eligPurchaseMin">1,000,000</strong> WinLEW held. The 1,000,000 bar set on 2026-07-17 was not dropped; it moved from deciding <em>whether</em> you have a voice to deciding whether you can amplify one. Purchased weight is paid for with governance contributions and stays capped, so no holder can buy their way past the ceiling.</li>
+    <li>One verified wallet = one free vote, plus an optional paid vote-weight boost (see "Adding vote weight" below) — no free-form token-weighting. Since v1.1, your eligibility for a specific proposal is locked in the first time it's checked at or after that proposal's snapshot boundary — later balance changes don't change it. This is <strong>not</strong> a full historical chain snapshot; see <a href="/governance/#rules">the rules doc</a> for exactly what it does and doesn't guarantee.</li>
+  </ul>
+  <div class="status-note pending">
+    <strong>Said plainly, not glossed over:</strong> this system verifies one wallet's balance at one point in time — it cannot fully prevent one person from controlling multiple funded wallets and Discord accounts (there is no KYC here, and none is planned). Raising the minimum balance and locking eligibility to a proposal's snapshot boundary both raise the real cost of gaming a vote, but neither claims to eliminate it. Evidence over assumptions: we're telling you the actual limit of what this can guarantee, not implying more than the code does.
+  </div>
+  <p class="muted" style="font-size:13px;margin-top:12px;">Verified holders also get a <strong>Verified WinLEW Holders</strong> Discord role and access to the private <strong>#governance</strong> channel where proposals are discussed before a vote opens — a recognition signal and a place to talk, not the vote-eligibility check itself (that's always the live balance rule above).</p>
+</div>
+
+<div class="box wlIn" id="vote-weight">
+  <div class="wlEyebrow">Optional</div>
+  <h2>Adding vote weight</h2>
+  <p class="muted">Your free vote as a verified holder always counts. On top of that, anyone can add weight to their vote on a specific open proposal — roughly <strong>$1 per additional vote, capped at 10 per proposal</strong> — by sending WinLEW through <a href="/contribute/">Contribute</a>'s "Governance Vote Weight" option.</p>
+  <ul>
+    <li>Priced off a <strong>3-day trailing average</strong>, not the current spot price — a brief price spike (buy heavily, vote while it's pumped, sell after) has limited effect on a 72-hour average, which is what actually keeps this from being cheaply gameable.</li>
+    <li>Every payment is a real, independently re-verified on-chain transfer through the same Contribute flow used for Dev/Faucet/Burn — never a self-reported amount.</li>
+    <li>Weight from one proposal can't be double-counted on another — paying for weight allocates that specific amount to that specific proposal.</li>
+    <li>Quorum (whether enough people showed up to vote at all) is still based on the number of distinct wallets that voted, regardless of weight — a low-turnout vote can't pass just because one wallet bought the maximum.</li>
+  </ul>
+  <div class="status-note pending" id="whyThisWallet">
+    <strong>Why this wallet (and not a new one)?</strong> Vote-weight payments go to <code>winlew.sol</code> — the same address that already funds the X (Twitter) Faucet program. That's deliberate, not a shortcut: proceeds from governance participation flow directly into an existing, already-transparent reserve that pays out real community rewards (with the option to top up the Discord faucet from it too), rather than creating another address holders have to separately track on <a href="/transparency/">Transparency</a>. Participating in governance and funding the faucet become the same action.
+  </div>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Get eligible</div>
+  <h2>How to unlock voting</h2>
+  <p class="muted">Voting eligibility reuses the exact same Discord-verified wallet link the Dashboard and every holder-tier role already use — there is no separate governance-only verification step.</p>
+  <ol class="stepList">
+    <li>In Discord, type <code>/mole link</code> (either bot works) and follow the link it gives you — or skip straight there from the website with the button below.</li>
+    <li>Verify your wallet on the website at <a href="/verify/">/verify/</a> — sign a message with your wallet to prove ownership (no private key or seed phrase is ever entered anywhere).</li>
+    <li>Your Discord roles (including <strong>Verified WinLEW Holders</strong> and access to <strong>#governance</strong>) are applied automatically the moment verification completes — nothing else to click. <strong>Server Settings → Linked Roles</strong> is just where you can go to see it; it's not a separate step you need to perform.</li>
+  </ol>
+  <div class="ctaRow" style="margin-top:14px;">
+    <!-- Through the api-proxy on purpose: /linked-role/* is a route on the NODE app, not a file on this static host, so a bare /linked-role/mole 404s. Reported live 2026-08-21. -->
+    <a class="btn primary" href="/verify/api-proxy.php/linked-role/mole">🔗 Verify with Discord</a>
+  </div>
+  <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;">
+    <figure style="margin:0;flex:1;min-width:220px;max-width:320px;">
+      <img src="./assets/discord-linked-roles-menu.png" alt="Discord server menu with the Linked Roles option highlighted" style="width:100%;border-radius:14px;border:1px solid #4e3624;display:block;">
+      <figcaption class="muted" style="font-size:12px;margin-top:6px;">Server name → <strong>Linked Roles</strong> — where you can confirm it took, not where you grant it</figcaption>
+    </figure>
+    <figure style="margin:0;flex:1;min-width:220px;max-width:320px;">
+      <img src="./assets/discord-linked-roles-panel.png" alt="Discord Linked Roles panel showing the Verified WinLEW Holders role available to select" style="width:100%;border-radius:14px;border:1px solid #4e3624;display:block;">
+      <figcaption class="muted" style="font-size:12px;margin-top:6px;"><strong>Verified WinLEW Holders</strong> (or your holder tier) — already applied by this point</figcaption>
+    </figure>
+  </div>
+  <p class="muted" style="font-size:13px;margin-top:12px;">Governance eligibility checks your linked wallet's live balance directly — it does not read your Discord role. The role is a recognition badge and your #governance channel key; the vote itself is checked on-chain every time.</p>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">How it works</div>
+  <h2>Governance process</h2>
+  <ol class="stepList">
+    <li>Draft &amp; review — a proposal is drafted and reviewed for completeness/safety.</li>
+    <li>Discussion — opened in Discord for community discussion before any vote.</li>
+    <li>Active voting — a defined window; eligible holders cast (and may update) a vote.</li>
+    <li>Result — quorum and approval threshold are checked automatically, publicly.</li>
+    <li>Maintainer safety review — a passed vote is reviewed before anything is approved for execution.</li>
+    <li>Execution (if applicable) — a separate, manually authorized action, with public evidence recorded here afterward.</li>
+  </ol>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Scope</div>
+  <h2>Categories</h2>
+  <div class="catList" id="categoryList"></div>
+</div>
+
+<!-- Governance moved to Discord on 2026-07-31 (src/mole/commands.js) but no
+     page said so, leaving the full voting flow discoverable only by finding
+     the commands yourself. Same "Prefer Discord?" pattern /faucet/ uses. Every
+     command below is a real registered /mole subcommand — do not add one here
+     without checking it exists. -->
+<div class="box wlIn">
+  <div class="wlEyebrow">Prefer Discord?</div>
+  <h2>You can do all of this from Discord</h2>
+  <p class="muted">The same proposals, the same eligibility check, the same record — governance is not website-only:</p>
+  <ul>
+    <li><code>/mole proposals</code> — list proposals with live results</li>
+    <li><code>/mole vote</code> — cast or update your vote on an open proposal</li>
+    <li><code>/mole myvote</code> — privately check your current vote</li>
+    <li><code>/mole votes</code> — your Governance Vote Fund total and purchased vote weight</li>
+    <li><code>/mole propose</code> — submit a proposal for maintainer review</li>
+  </ul>
+  <p class="disclaimer muted">Voting from Discord is checked server-side exactly as it is here, and your individual choice stays private on both.</p>
+  <div class="ctaRow" style="margin-top:14px;"><a class="btn" href="/community/">Open Discord ↗</a></div>
+</div>
+
+<div class="box wlIn" id="rules">
+  <div class="wlEyebrow">Reference</div>
+  <h2>Rules &amp; documentation</h2>
+  <!-- These used to link into the GitHub repo, which is private, so both 404'd
+       for every visitor — on the one section a governance page most needs to
+       be readable. Now served from this origin. Source of truth remains
+       docs/governance-v1.md and docs/governance-proposal-template.md; edit
+       those and the published pages together. -->
+  <p class="muted">Full governance rules — eligibility, vote privacy, weighting method, quorum, approval thresholds, execution boundaries and known limitations: <a href="/governance/rules/">Governance rules →</a></p>
+  <p class="muted">Every field a real proposal carries, and the rule each one satisfies: <a href="/governance/proposal-template/">Proposal template →</a></p>
+  <p class="disclaimer muted">Both are published here rather than linked off-site, so the rules are readable by anyone the moment they are cited.</p>
+</div>
+
+<footer>
+  <a href="/">← Back to WinLEW</a> · <a href="/burn/">Burn Center</a> · <a href="/transparency/">Transparency Center</a> · <a href="/events/">Events</a> · <a href="/partners/">Sponsors &amp; Partners</a>
+</footer>
+</div>
+
+<script src="/assets/wallet-auth.js"></script>
+<script src="./js/app.js"></script>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

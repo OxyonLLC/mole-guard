@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WinLEW • WinLEW Website • Terms of Service</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="Terms of Service for winlew.co — verification, faucet, quiz, games, governance, and contributions. Plain language, no custody." />
+  <link rel="canonical" href="https://winlew.co/discord-bots/terms.html" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    html { overflow-x: hidden; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; color: var(--wl-text); background: radial-gradient(1000px 620px at 10% 0%, rgba(214,168,102,.10), transparent 60%), linear-gradient(180deg, #130b08 0%, #24150d 52%, #130b08 100%); line-height: 1.6; }
+    .nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px); background: linear-gradient(180deg, rgba(19,11,8,.88), rgba(19,11,8,.58)); border-bottom: 1px solid rgba(255,255,255,.08); }
+    .navInner { max-width: 2000px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .navBrand { text-decoration: none; color: var(--wl-text); font-weight: 950; }
+    .navLinks { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 10px 13px; border-radius: 999px; text-decoration: none; font-weight: 850; background: rgba(255,255,255,.06); border: 1px solid var(--wl-border); color: inherit; }
+    .pill:hover { background: rgba(255,255,255,.10); }
+    .pill.active { background: linear-gradient(180deg, rgba(214,168,102,.30), rgba(214,168,102,.14)); border-color: rgba(214,168,102,.5); color: #ffe6b0; }
+
+    .policyShell { max-width: 900px; margin: 0 auto; padding: 22px; }
+    .policyHero { background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.02)); border: 1px solid var(--wl-border); border-radius: var(--wl-radius-lg); box-shadow: 0 28px 80px rgba(0,0,0,.42); padding: 24px; margin-bottom: 16px; }
+    .policyHeroTop { display: flex; align-items: center; gap: 14px; }
+    .policyHeroIcon { width: 52px; height: 52px; min-width: 52px; border-radius: 15px; object-fit: cover; border: 1px solid var(--wl-border-accent); flex-shrink: 0; background: var(--wl-bg); }
+    .policyHeroIcon.emoji { display: inline-flex; align-items: center; justify-content: center; font-size: 28px; background: linear-gradient(180deg, rgba(214,168,102,.22), rgba(214,168,102,.08)); }
+    .policyKind { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--wl-gold); font-weight: 800; }
+    .policyHero h1 { font-size: clamp(24px, 3.4vw, 34px); margin: 2px 0 0; line-height: 1.08; color: var(--wl-text); }
+    .policyLede { color: var(--wl-text-muted); line-height: 1.7; margin: 14px 0 0; max-width: 66ch; }
+    .docToggle { display: inline-flex; gap: 4px; margin-top: 18px; padding: 4px; border: 1px solid var(--wl-border); border-radius: 999px; background: rgba(0,0,0,.2); }
+    .docToggle a { padding: 7px 16px; border-radius: 999px; text-decoration: none; font-weight: 800; font-size: 13px; color: var(--wl-text-muted); }
+    .docToggle a.active { background: linear-gradient(180deg, rgba(214,168,102,.30), rgba(214,168,102,.14)); border: 1px solid rgba(214,168,102,.5); color: #ffe6b0; }
+    .docToggle a:not(.active):hover { color: var(--wl-text); }
+    .policyMetaRow { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; align-items: center; }
+    .policyMetaRow a { font-weight: 700; font-size: 13px; color: var(--wl-gold); text-decoration: none; }
+    .policyMetaRow a:hover { text-decoration: underline; }
+    .policyBadge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 800; white-space: nowrap; border: 1px solid var(--wl-border); background: rgba(255,255,255,.05); color: var(--wl-text-muted); }
+    .policyBadge.good { border-color: rgba(85,240,165,.3); background: rgba(85,240,165,.12); color: #55f0a5; }
+    .capCard { border: 1px solid var(--wl-border-accent); border-radius: 18px; background: linear-gradient(180deg, rgba(214,168,102,.08), rgba(255,255,255,.02)); padding: 18px 22px; margin: 14px 0; }
+    .capCard h2 { font-size: 13px; margin: 0 0 12px; color: var(--wl-gold); text-transform: uppercase; letter-spacing: .05em; }
+    .capList { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+    .capList li { position: relative; padding-left: 26px; color: var(--wl-text); line-height: 1.5; font-size: 14px; }
+    .capList li::before { content: "✓"; position: absolute; left: 0; top: 0; color: #55f0a5; font-weight: 900; }
+    .policySection { border: 1px solid var(--wl-border); border-radius: 18px; background: rgba(0,0,0,.18); padding: 20px 22px; margin: 14px 0; }
+    .policySection h2 { font-size: 17px; margin: 0 0 8px; color: var(--wl-gold); display: flex; align-items: baseline; gap: 8px; }
+    .policySection h2 .n { font-size: 12px; color: var(--wl-text-muted); font-weight: 800; }
+    .policySection p { margin: 0 0 10px; color: var(--wl-text-muted); line-height: 1.7; }
+    .policySection p:last-child, .policySection ul:last-child { margin-bottom: 0; }
+    .policySection ul { margin: 8px 0; padding-left: 20px; color: var(--wl-text-muted); line-height: 1.7; }
+    .policySection li { margin: 4px 0; }
+    .policySection strong { color: var(--wl-text); }
+    .policySection a { color: var(--wl-gold); }
+    .dataGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+    @media (max-width: 620px) { .dataGrid { grid-template-columns: 1fr; } }
+    .dataCell { border: 1px solid var(--wl-border); border-radius: 12px; padding: 12px 14px; background: rgba(255,255,255,.03); }
+    .dataCell .k { font-size: 12px; font-weight: 800; color: var(--wl-text); }
+    .dataCell .v { font-size: 12.5px; color: var(--wl-text-muted); line-height: 1.55; margin-top: 4px; }
+    .policyFooter { margin: 26px 0 10px; font-size: 12px; color: var(--wl-text-muted); text-align: center; line-height: 1.7; }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div class="navInner">
+      <a class="navBrand" href="/">WinLEW</a>
+      <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+      <div class="navRight">
+        <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+        <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+        <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+        <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="policyShell">
+    <div class="wlHeroBanner" style="margin-bottom:16px;"><img src="/images/page-headers/terms.png" alt="Terms of Service — read our terms and conditions" loading="lazy" /></div>
+    <div class="policyHero">
+      <div class="policyHeroTop">
+        <span class="policyHeroIcon emoji">🌐</span>
+        <div>
+          <div class="policyKind">WinLEW Website · Terms of Service</div>
+          <h1>WinLEW Website</h1>
+        </div>
+      </div>
+      <p class="policyLede">These are the general terms for the WinLEW website (winlew.co) and its features — verification, the faucet, quiz, games, governance, contributions, and your dashboard. Each Discord bot also has its own terms on the Policies hub.</p>
+      <div class="docToggle">
+        <a href="terms.html" class="active">📜 Terms</a>
+        <a href="privacy.html">🔒 Privacy</a>
+      </div>
+      <div class="policyMetaRow">
+        <span class="policyBadge good">🔒 No custody</span>
+        <span class="policyBadge">🌐 winlew.co</span>
+        <a href="/policies/">← All policies</a>
+      </div>
+    </div>
+
+    <div class="capCard">
+      <h2>What WinLEW Website does</h2>
+      <ul class="capList"><li>Verify a wallet and manage Discord Linked Roles</li><li>Faucet, quiz, and gaming-hub rewards</li><li>Governance proposals and voting</li><li>On-chain contributions (Dev / Faucet / X Faucet / Burn)</li><li>A personal dashboard tying it all together</li></ul>
+      
+    </div>
+
+    <div class="policySection">
+      <h2><span class="n">1</span> What WinLEW is</h2>
+      <p>WinLEW is a community project around the WinLEW Solana token. The website provides participation tools: wallet verification, a faucet, quizzes, games, governance, contribution tracking, and a personal dashboard. It is community software, provided for the community's use.</p>
+    </div>
+
+    <div class="policySection">
+      <h2><span class="n">2</span> Accounts &amp; verification</h2>
+      <p>Most features work best once you've verified a wallet you control via a one-time signature (see <a href="/verify/">/verify/</a>). That signature proves ownership and is never a fund-moving transaction. You're responsible for keeping your Discord account and wallet secure.</p>
+    </div>
+
+    <div class="policySection">
+      <h2><span class="n">3</span> Rewards, faucet, quiz &amp; games</h2>
+      <p>Rewards are community-participation rewards with <strong>no guaranteed monetary value</strong>. They're discretionary and may change or end. Reward claims are validated server-side; abuse (multi-accounting, botting, forged claims, exploiting bugs) may be reversed and can lead to suspension.</p>
+    </div>
+
+    <div class="policySection">
+      <h2><span class="n">4</span> Contributions &amp; on-chain actions</h2>
+      <p>When you contribute or transact, <strong>you</strong> sign and send from your own wallet — the site never takes custody. For contributions, the server builds an exact transfer and independently re-verifies the confirmed transaction on-chain before recording it; it never trusts a typed-in amount. On-chain actions are public and irreversible.</p>
+    </div>
+
+    <div class="policySection">
+      <h2><span class="n">5</span> Acceptable use</h2>
+      <ul><li>One identity per person; no bots or scripts for rewards.</li><li>Don't attack, overload, or probe the service; don't exploit bugs for gain.</li><li>Don't impersonate others or post fraudulent content.</li></ul>
+    </div>
+
+    <div class="policySection">
+      <h2><span class="n">6</span> Token risk &amp; no financial advice</h2>
+      <p>WinLEW is a community token; its value can go to zero. Nothing on the site is financial, investment, tax, or legal advice. Participate only with what you can afford to lose, and do your own research.</p>
+    </div>
+
+    <div class="policySection">
+      <h2><span class="n">7</span> Availability &amp; limitations</h2>
+      <p>The site is provided "as-is," dependent on Discord, wallet providers, Solana RPC, and hosting. We may change, pause, or restrict features to protect users or keep the project sustainable.</p>
+    </div>
+
+    <div class="policySection">
+      <h2><span class="n">8</span> Changes to this policy</h2>
+      <p>We may update this policy as the service evolves. Material changes are reflected here with a new "last updated" date. Continued use after an update means you accept the revised policy.</p>
+    </div>
+
+    <div class="policySection">
+      <h2><span class="n">9</span> Contact</h2>
+      <p>Questions? Ask in the <a href="/community/">WinLEW Discord</a>, or see the <a href="/policies/">Policies hub</a> for every WinLEW bot's terms and privacy documents.</p>
+    </div>
+
+    <div class="policyFooter">
+      <div>Last updated: July 19, 2026</div>
+      <div>Provided for transparency and Discord-application compliance. This is a plain-language summary, not legal advice.</div>
+    </div>
+  </div>
+
+  <script src="/assets/wallet-auth.js"></script>
+  <script>
+    (function () {
+      const { getAuth, setConnectedUi, walletLogin, getCachedWallet, refreshWalletBalance } = window.WinLEWAuth;
+      document.getElementById('navWalletConnect')?.addEventListener('click', (e) => void walletLogin({ triggerBtn: e.currentTarget, onSuccess: () => window.location.reload() }));
+      if (getAuth().session) setConnectedUi(getCachedWallet() || 'connected');
+      refreshWalletBalance();
+    })();
+  </script>
+  <script defer src="/assets/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+  <title>WinLEW Quiz</title>
+  <meta name="description" content="WinLEW Quiz — live leaderboards, cycle countdown, and your standings. Play the quiz in Discord, track everything here." />
+  <link rel="canonical" href="https://winlew.co/quiz/" />
+  <meta property="og:title" content="WinLEW Quiz" />
+  <meta property="og:description" content="Live WinLEW quiz leaderboards, cycle countdown, and payout estimates." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/quiz/" />
+  <meta property="og:image" content="https://winlew.co/images/mole-dirt-hero.png" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <!-- Shared Mole Hub theme so /quiz/ is visually identical to /mole-hub/ -->
+  <link rel="stylesheet" href="/mole-hub/css/styles.css" />
+  <link rel="stylesheet" href="./css/quiz.css" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+</head>
+<body>
+  <div class="nav">
+    <div class="navInner navArcade">
+      <a class="brandMark arcadeBrand" href="/">
+        <img class="brandAvatar" src="/images/avatars/arcade-128.png" alt="WinLEW Arcade" />
+        <span class="brandCopy">
+          <span class="brandTitle">WinLEW</span>
+          <span class="brandSub">QUIZ • LEARN • WIN</span>
+        </span>
+      </a>
+      <div class="navLinks arcadeLinks" id="siteNavLinks">
+        <a class="pill" href="/home/">🏠 Hub</a>
+        <a class="pill active" href="/quiz/">Quiz</a>
+        <a class="pill" href="#leaderboardCard">Leaderboards</a>
+        <a class="pill" href="/faucet/">Faucet</a>
+        <a class="pill" href="/about/">About</a>
+      </div>
+      <div class="navRight">
+        <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+        <div class="walletPill" id="navPointsChip" aria-label="Your quiz points">
+          <span class="walletIcon">🧠</span>
+          <span id="navPointsAmount">—</span>
+          <span class="walletTicker">PTS</span>
+        </div>
+        <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet to see your quiz standings (links to your Discord-verified wallet)">Connect wallet</button>
+        <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="app" class="wrap">
+    <main>
+      <section class="catalog-shell">
+        <div class="hub-banner"><img src="/images/page-headers/quiz.png" alt="Quiz — test your knowledge and earn rewards" loading="lazy" /></div>
+        <div class="catalog-top">
+          <div class="catalog-copy">
+            <!-- The kicker said "played in Discord • tracked here" and the
+                 sub-heading "The WinLEW quiz runs in Discord… This board is your
+                 live scoreboard". Both understate this page: it also runs the
+                 quiz. /api/quiz/play/next and /play/answer are live and
+                 session-gated, and the Daily Quiz and Sponsor Quiz sections
+                 further down are a full play surface with a per-day cap
+                 (QUIZ_WEB_DAILY_CAP, default 20 scored answers). Telling a
+                 visitor to go to Discord while offering them the quiz on the
+                 same screen sent them away from a feature that already works. -->
+            <div class="catalog-kicker">WinLEW Quiz • play here or in Discord • one shared score</div>
+            <h1 class="catalog-title">Answer. Climb. Earn.</h1>
+            <p class="catalog-sub">Answer questions to bank points, and points pay out in WinLEW each cycle. You can play right on this page or with <code>/quiz</code> in Discord — it's the same question bank, the same points balance and the same payout queue either way. Below you'll also find where you rank, how the current cycle is trending, and what's on the line.</p>
+          </div>
+          <div class="catalog-utility card">
+            <div class="catalog-utility-label">Current Cycle</div>
+            <div id="cycleCountdown" class="cycleCountdown">Loading…</div>
+            <div class="cycleMeta">
+              <span id="cycleRange" class="muted">—</span>
+              <span id="cycleRate" class="muted">—</span>
+            </div>
+            <div class="catalog-cta-row">
+              <a class="pill" href="/modules/games-trivia.html">How to play</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="meCard" class="card hidden">
+        <div class="cardHead">
+          <h2>Your standings</h2>
+          <span id="meName" class="muted"></span>
+        </div>
+        <div class="statGrid">
+          <div class="statBox"><div class="statVal" id="mePoints">—</div><div class="statLbl">Cycle points</div></div>
+          <div class="statBox"><div class="statVal" id="meRank">—</div><div class="statLbl">Cycle rank</div></div>
+          <div class="statBox"><div class="statVal" id="mePayout">—</div><div class="statLbl">Est. payout (WinLEW)</div></div>
+          <div class="statBox"><div class="statVal" id="meLifetime">—</div><div class="statLbl">Lifetime points</div></div>
+        </div>
+      </section>
+
+      <section id="redeemCard" class="card hidden">
+        <div class="cardHead">
+          <h2>Redeem points</h2>
+        </div>
+        <p class="muted">Convert your redeemable points into WinLEW. This creates the same kind of pending redemption request Discord's <code>/redeem</code> command creates — same redeemable points balance, same queue, same payout worker. Redeeming here does not require Discord. There's a minimum per redemption (matched to one faucet drip) — points below it keep accumulating until you're past the line.</p>
+        <div class="statGrid">
+          <div class="statBox"><div class="statVal" id="redeemAvailable">—</div><div class="statLbl">Redeemable points</div></div>
+          <div class="statBox"><div class="statVal" id="redeemRate">—</div><div class="statLbl">WinLEW per point</div></div>
+          <div class="statBox"><div class="statVal" id="redeemMin">—</div><div class="statLbl">Minimum redemption</div></div>
+        </div>
+        <div class="redeemWalletRow">
+          <span class="muted fine">Payout wallet:</span>
+          <span id="redeemWallet" class="redeemWalletAddr muted">—</span>
+        </div>
+        <div id="redeemForm" class="redeemForm">
+          <label class="redeemLabel" for="redeemAmount">Points to redeem</label>
+          <div class="redeemInputRow">
+            <input id="redeemAmount" class="redeemInput" type="number" min="1500" step="1" inputmode="numeric" placeholder="min 1500" />
+            <button id="redeemMaxBtn" class="pill" type="button">Max</button>
+          </div>
+          <p class="muted fine">Estimated payout: <strong id="redeemEstimate">—</strong> WinLEW</p>
+          <p class="muted fine"><strong>Your first payout gets a one-time check.</strong> A small number of people have farmed this by cycling payouts through fresh wallets, so the first time we pay a given account we look at that wallet's public funding history on-chain — once, and never again after that. Nothing is asked of you. If something needs a human to look at it your payout waits rather than fails, and your points stay exactly where they are.</p>
+          <p id="redeemFormError" class="redeemError hidden"></p>
+          <div class="actions">
+            <button id="redeemSubmitBtn" class="pill tab active" type="button">Redeem</button>
+          </div>
+        </div>
+        <div id="redeemConfirm" class="redeemConfirm hidden">
+          <p id="redeemConfirmText"></p>
+          <p class="muted fine">Blockchain payout may take time to settle, and is processed by the same automated payout worker Discord redemptions use. Do not submit twice — your request appears below once created.</p>
+          <div class="actions">
+            <button id="redeemConfirmBtn" class="pill tab active" type="button">Confirm redemption</button>
+            <button id="redeemCancelBtn" class="pill tab" type="button">Cancel</button>
+          </div>
+        </div>
+        <div id="redeemPending" class="redeemPending hidden">
+          <p class="muted">Submitting…</p>
+        </div>
+        <div id="redeemHistoryWrap" class="lbWrap" style="margin-top:16px;">
+          <table class="lbTable">
+            <thead><tr><th>Date</th><th>Points</th><th class="num">Est. WinLEW</th><th>Status</th><th>Source</th><th>TX</th></tr></thead>
+            <tbody id="redeemHistoryBody"><tr><td colspan="6" class="muted">No redemptions yet.</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="playCard" class="card hidden">
+        <div class="cardHead">
+          <h2>Daily Quiz</h2>
+          <span id="playRemaining" class="muted"></span>
+        </div>
+        <div id="playIdle">
+          <p class="muted">Answer crypto questions to bank cycle points — paid in WinLEW each cycle. You have <strong id="playRemainingInline">—</strong> scored answers left today.</p>
+          <p id="playIdleMessage" class="muted hidden"></p>
+          <div id="tierGrid" class="tierGrid">
+            <div class="sponsorTileGroup">
+              <div class="sponsorTileLabel">💠 Sponsor Quiz — pick one</div>
+              <p class="muted fine" style="margin:2px 0 8px;">Each sponsor has its own question pool — pick the one you want to learn, or answer.</p>
+              <div class="sponsorTileRow">
+                <button class="tierTile sponsorSubTile" type="button" data-level="sponsor" data-sponsor="xyo">
+                  <span class="tierName">XYO</span>
+                  <span class="tierStat" data-tier-stat="sponsor-xyo">—</span>
+                </button>
+                <button class="tierTile sponsorSubTile" type="button" data-level="sponsor" data-sponsor="winlew">
+                  <span class="tierName">WinLEW</span>
+                  <span class="tierStat" data-tier-stat="sponsor-winlew">—</span>
+                </button>
+                <button class="tierTile sponsorSubTile" type="button" disabled title="2BRZ questions aren't live yet">
+                  <span class="tierName">2BRZ</span>
+                  <span class="tierStat">🔜 Coming soon</span>
+                </button>
+              </div>
+            </div>
+            <button class="tierTile" type="button" data-level="hard">
+              <span class="tierName">🔥 Hard Quiz</span>
+              <span class="tierStat" data-tier-stat="hard">—</span>
+            </button>
+            <button class="tierTile" type="button" data-level="medium">
+              <span class="tierName">⚡ Medium Quiz</span>
+              <span class="tierStat" data-tier-stat="medium">—</span>
+            </button>
+            <button class="tierTile" type="button" data-level="easy">
+              <span class="tierName">🌱 Easy Quiz</span>
+              <span class="tierStat" data-tier-stat="easy">—</span>
+            </button>
+          </div>
+        </div>
+        <div id="playQuestion" class="hidden">
+          <div class="qTimerBar"><div id="qTimerFill" class="qTimerFill"></div></div>
+          <div id="qMeta" class="muted fine"></div>
+          <h3 id="qText" class="qText"></h3>
+          <div id="qChoices" class="qChoices"></div>
+        </div>
+        <div id="playResult" class="hidden">
+          <div id="qResultText" class="qResult"></div>
+          <div class="actions">
+            <button id="playNext" class="pill tab active" type="button">Next question →</button>
+            <button id="playChangeTier" class="pill tab" type="button">Choose a different tier</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="leaderboardCard" class="card">
+        <div class="cardHead">
+          <h2>Leaderboard</h2>
+          <div class="tabRow">
+            <button class="pill tab active" data-scope="cycle" type="button">This cycle</button>
+            <button class="pill tab" data-scope="alltime" type="button">All-time</button>
+          </div>
+        </div>
+        <div class="lbWrap">
+          <table class="lbTable">
+            <thead id="lbHead"></thead>
+            <tbody id="lbBody"><tr><td>Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <p class="muted fine">Names show as you set them on your WinLEW profile; otherwise a masked handle. Play in Discord with <code>/quiz</code> commands to appear here.</p>
+      </section>
+
+      <section id="platformCard" class="card">
+        <div class="cardHead">
+          <h2>Web vs Discord</h2>
+          <div class="tabRow" id="platformTabs">
+            <button class="pill platformTab active" data-platform="web" type="button">Web</button>
+            <button class="pill platformTab" data-platform="discord" type="button">Discord</button>
+            <button class="pill platformTab" data-platform="compare" type="button">Web vs Discord</button>
+          </div>
+        </div>
+        <p class="muted fine">Informational — separate from the cycle/all-time leaderboard above, which is what determines WinLEW payouts. Tracks accuracy and streaks per platform since this feature launched.</p>
+
+        <div id="platformTableWrap" class="lbWrap">
+          <table class="lbTable">
+            <thead id="platformLbHead"></thead>
+            <tbody id="platformLbBody"><tr><td>Loading…</td></tr></tbody>
+          </table>
+        </div>
+
+        <div id="platformCompareWrap" class="statGrid hidden">
+          <div class="statBox"><div class="statVal" id="cmpWebParticipants">—</div><div class="statLbl">Web participants</div></div>
+          <div class="statBox"><div class="statVal" id="cmpDiscordParticipants">—</div><div class="statLbl">Discord participants</div></div>
+          <div class="statBox"><div class="statVal" id="cmpWebAnswers">—</div><div class="statLbl">Web answers</div></div>
+          <div class="statBox"><div class="statVal" id="cmpDiscordAnswers">—</div><div class="statLbl">Discord answers</div></div>
+          <div class="statBox"><div class="statVal" id="cmpWebAccuracy">—</div><div class="statLbl">Web correct rate</div></div>
+          <div class="statBox"><div class="statVal" id="cmpDiscordAccuracy">—</div><div class="statLbl">Discord correct rate</div></div>
+          <div class="statBox"><div class="statVal" id="cmpWebPoints">—</div><div class="statLbl">Web points</div></div>
+          <div class="statBox"><div class="statVal" id="cmpDiscordPoints">—</div><div class="statLbl">Discord points</div></div>
+        </div>
+        <p id="platformLeaderNote" class="muted fine hidden"></p>
+      </section>
+
+      <section class="card">
+        <div class="cardHead"><h2>Prefer Discord?</h2></div>
+        <p class="muted">
+          Play the same quiz with <code>/startquiz</code>, and check your standings with <code>/mypoints</code> or
+          <code>/leaderboard</code>. Points and your daily cap are shared with this page either way.
+        </p>
+        <p class="muted fine">
+          💡 Discord gives you more precise control — <code>/startquiz level:&lt;easy|medium|hard&gt;</code> and
+          <code>/sponsorquiz sponsor:&lt;xyo|winlew&gt;</code> jump straight to the exact tier or sponsor you want,
+          as command options instead of tapping through tiles.
+        </p>
+        <div class="actions">
+          <a class="pill" href="/community/">Open Discord ↗</a>
+        </div>
+      </section>
+
+      <p class="muted fine" style="text-align:center;margin-top:20px;">
+        🔜 <strong>Coming soon:</strong> quiz actions will be recorded on the XYO Layer One Network — <strong>XL1</strong> (<code>$XL1</code>).
+      </p>
+    </main>
+  </div>
+
+  <script src="/assets/wallet-auth.js"></script>
+  <script src="./js/app.js"></script>
+  <script defer src="/assets/nav.js"></script>
+</body>
+</html>

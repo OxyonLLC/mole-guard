@@ -1,0 +1,110 @@
+apply plugin: 'com.android.application'
+
+// The app version comes from mobile/package.json, which is the wrapper's own
+// version — deliberately not the site's version in the root package.json, since
+// the shell ships on its own cadence while winlew.co updates without a new APK.
+// Capacitor's generated default was a hardcoded 1 / "1.0" and had already drifted
+// away from package.json. Bump mobile/package.json and both values follow; Play
+// rejects an upload whose versionCode isn't higher than the last one.
+def mobilePackageJson = new groovy.json.JsonSlurper().parseText(file('../../package.json').text)
+def semver = (mobilePackageJson.version =~ /^(\d+)\.(\d+)\.(\d+)/)
+if (!semver) {
+    throw new GradleException("mobile/package.json version '${mobilePackageJson.version}' is not a MAJOR.MINOR.PATCH version")
+}
+def appVersionName = mobilePackageJson.version
+def appVersionCode = semver[0][1].toInteger() * 10000 + semver[0][2].toInteger() * 100 + semver[0][3].toInteger()
+
+// Release signing. Credentials live in mobile/android/keystore.properties,
+// which is gitignored along with the .jks itself — neither is ever committed.
+//
+// Absence is handled rather than fatal: anyone cloning this repo without the
+// keystore can still build and run `assembleDebug`, and `assembleRelease` then
+// produces an UNSIGNED apk instead of failing with a confusing Gradle error.
+// The build prints which of the two happened, because an unsigned release that
+// looks successful is exactly the sort of thing that gets uploaded by mistake.
+def keystorePropsFile = rootProject.file('keystore.properties')
+def keystoreProps = new Properties()
+if (keystorePropsFile.exists()) {
+    keystorePropsFile.withInputStream { keystoreProps.load(it) }
+}
+def hasReleaseSigning = keystoreProps.containsKey('storePassword') &&
+        rootProject.file(keystoreProps.getProperty('storeFile', '')).exists()
+
+android {
+    namespace "co.winlew.app"
+    compileSdk rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "co.winlew.app"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode appVersionCode
+        versionName appVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+    signingConfigs {
+        if (hasReleaseSigning) {
+            release {
+                storeFile rootProject.file(keystoreProps.getProperty('storeFile'))
+                storePassword keystoreProps.getProperty('storePassword')
+                keyAlias keystoreProps.getProperty('keyAlias')
+                keyPassword keystoreProps.getProperty('keyPassword')
+                // v3 carries the proof-of-rotation record, and it only helps if
+                // it is present from the FIRST published build — you cannot add
+                // a rotation path retroactively. Given that losing this key
+                // otherwise means never updating co.winlew.app again, the
+                // rotation option is worth having from the start. v1/v2 stay on
+                // for older devices (v2 covers API 24+, v1 below that).
+                enableV1Signing true
+                enableV2Signing true
+                enableV3Signing true
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (hasReleaseSigning) {
+                signingConfig signingConfigs.release
+                println "[winlew] release build will be SIGNED with ${keystoreProps.getProperty('keyAlias')}"
+            } else {
+                println '[winlew] WARNING: no keystore.properties — release build will be UNSIGNED and cannot be installed or uploaded'
+            }
+        }
+    }
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'
+
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}

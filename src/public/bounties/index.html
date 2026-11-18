@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <title>WinLEW Bug Bounties</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="WinLEW's bug bounty ledger — bounties earned for finding real bugs, what's owed, what's been paid, and the on-chain proof once paid." />
+  <link rel="canonical" href="https://winlew.co/bounties/" />
+  <meta property="og:title" content="WinLEW Bug Bounties" />
+  <meta property="og:description" content="A transparent ledger of bug bounties owed and paid — not a hype page." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/bounties/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    .hidden { display: none !important; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      padding: 0;
+      margin: 0;
+      line-height: 1.7;
+    }
+    html { overflow-x: hidden; }
+    .wlPageShell { max-width: 1000px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin-bottom: 8px; }
+    h1 { font-size: clamp(30px, 5vw, 44px); margin-top: 0; }
+    h2 { font-size: clamp(18px, 2.6vw, 22px); margin-top: 0; }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header.wlHero { text-align: left; margin-bottom: 8px; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624; border-radius: 20px; padding: 26px; margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: 0.85; }
+    code { background: #2e1f16; padding: 2px 6px; border-radius: 6px; font-size: 0.9em; word-break: break-all; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid #4e3624; font-weight: 850; font-size: 13px; text-decoration: none; cursor: pointer; color: inherit; font-family: inherit; }
+    .btn.primary { background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22)); }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .ctaRow { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 18px 0 0; }
+    .status-note { border-left: 3px solid #d6a866; padding: 10px 14px; background: rgba(214,168,102,.08); border-radius: 0 10px 10px 0; margin-top: 14px; font-size: 14px; }
+    .status-note.pending { border-left-color: #ffb347; background: rgba(255,179,71,.10); }
+    .status-note.open { border-left-color: #55f0a5; background: rgba(85,240,165,.10); }
+
+    .compStats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    @media (max-width: 560px) { .compStats { grid-template-columns: 1fr; } }
+    .statBox {
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid #4e3624; border-radius: 14px; padding: 14px; text-align: center;
+      transition: transform .16s ease, border-color .16s ease;
+    }
+    .statBox:hover { transform: translateY(-2px); border-color: rgba(214,168,102,.32); }
+    .statVal { font-size: 18px; font-weight: 900; color: #e7c18f; }
+    .statLbl { font-size: 11px; opacity: 0.8; margin-top: 2px; }
+    .compError { color: #ffb347; font-size: 13px; margin-top: 10px; }
+
+    .tableWrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 12px; }
+    .tableWrap table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 0; }
+    .tableWrap th, .tableWrap td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #4e3624; vertical-align: top; }
+    .tableWrap th { color: #e7c18f; font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; }
+    .statusPill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; border: 1px solid #4e3624; white-space: nowrap; }
+    .statusPill.paid { background: rgba(85,240,165,.12); color: #55f0a5; border-color: rgba(85,240,165,.3); }
+    .statusPill.pending { background: rgba(255,179,71,.12); color: #ffb347; border-color: rgba(255,179,71,.3); }
+
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+<header class="wlHero" id="about">
+  <div class="wlHeroMain">
+    <span class="wlKicker">🎯 On-chain record · Not a hype page</span>
+    <h1 class="wlHeroTitle">Bug Bounties<br><span class="wlHeroTitleAccent">Owed, and paid, in the open.</span></h1>
+    <p class="wlHeroSub">A transparent ledger of bounties awarded for finding real bugs across the WinLEW ecosystem — what's pending, what's been paid, and the transaction proof once it has. See <a href="/transparency/">the Transparency Center</a> for the rest of the ecosystem's on-chain components.</p>
+    <div class="wlChipRow">
+      <span class="wlChip">🟢 Reporting is open</span>
+      <span class="wlChip">🐛 Real bugs, real bounties</span>
+      <span class="wlChip">🔒 Paid from the Developer Reserve</span>
+      <span class="wlChip">🔍 Verified once paid</span>
+    </div>
+    <div class="ctaRow" style="justify-content:flex-start;margin-top:16px;">
+      <a class="btn primary" href="/community/">🐛 Found a bug? Report it on Discord</a>
+    </div>
+  </div>
+  <div class="wlHeroSide">
+    <div class="wlEyebrow">Ledger snapshot</div>
+    <div class="wlHeroStatGrid">
+      <div class="wlStat"><div class="n" id="heroBountyCount">—</div><div class="l">Bounties on record</div></div>
+      <div class="wlStat"><div class="n" id="heroPendingCount">—</div><div class="l">Pending</div></div>
+      <div class="wlStat"><div class="n" id="heroPaidTotal">—</div><div class="l">Paid so far</div></div>
+      <div class="wlStat"><div class="n" id="heroPendingTotal">—</div><div class="l">Owed, unpaid</div></div>
+    </div>
+    <div class="wlHeroNote">A bounty only flips to "Paid" once its payout transaction exists and has been added below — never before.</div>
+  </div>
+</header>
+
+<div class="box wlGlow wlIn">
+  <div class="wlEyebrow">Context</div>
+  <h2>Why this page exists</h2>
+  <p>WinLEW pays real bounties to holders who find and report real bugs — in the Mole Hub, the faucet, or elsewhere across the ecosystem. This page exists so a bounty being <strong>owed</strong> is just as visible as a bounty being <strong>paid</strong> — the same "evidence over assumptions" standard as the <a href="/burn/">Burn Center</a> and <a href="/transparency/">Transparency Center</a>.</p>
+  <div class="status-note open">
+    <strong>The bounty program itself is always open.</strong> A ledger with zero pending rows means everything owed has been paid — not that reporting is closed. If you find a real bug anywhere in the ecosystem, report it on <a href="/community/">Discord</a> and it can become the next entry here.
+  </div>
+  <div class="status-note pending">
+    <strong>Pending means owed, not forgotten.</strong> A bounty shown as Pending has been publicly committed to but not yet paid out on-chain. Once it is, this page is updated with the payout transaction — the same day the status changes from Pending to Paid.
+  </div>
+  <div class="status-note">
+    <strong>Note.</strong> One bounty-worthy bug was fixed before anyone had the chance to test or report it, so it does not appear as a ledger row below.
+  </div>
+</div>
+
+<div class="box wlIn" id="live-status">
+  <div class="wlEyebrow">Live status</div>
+  <h2>Bounty ledger status</h2>
+  <div id="bountyStatusLoading" class="muted">Loading bounty data…</div>
+  <div id="bountyStatusData" class="hidden">
+    <div class="compStats">
+      <div class="statBox"><div class="statVal" id="statPendingTotal">—</div><div class="statLbl">Owed, unpaid</div></div>
+      <div class="statBox"><div class="statVal" id="statPaidTotal">—</div><div class="statLbl">Paid out</div></div>
+      <div class="statBox"><div class="statVal" id="statSourceWallet">—</div><div class="statLbl">Paid from</div></div>
+    </div>
+    <p class="muted" id="bountyLastGenerated" style="margin-top:12px;font-size:13px;"></p>
+  </div>
+  <p class="compError hidden" id="bountyStatusError"></p>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Ledger</div>
+  <h2>🎯 Bounty history</h2>
+  <div class="tableWrap">
+    <table>
+      <thead>
+        <tr><th>Recipient</th><th>Reason</th><th>Amount</th><th>Status</th><th>Scheduled / Paid</th><th>Proof</th></tr>
+      </thead>
+      <tbody id="bountiesBody">
+        <tr><td colspan="6" class="muted">Loading bounties…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<footer>
+  <a href="/">← Back to WinLEW</a> · <a href="/transparency/">Transparency Center</a> · <a href="/burn/">Burn Center</a> · <a href="/community/">Discord</a>
+  <p style="margin-top:10px;">This page only ever reads a static, hand-maintained ledger. It cannot pay a bounty, send tokens, or sign any transaction — a payout only ever happens through the Developer Reserve wallet, off this page.</p>
+</footer>
+</div>
+
+<script src="/assets/wallet-auth.js"></script>
+<script src="./js/app.js"></script>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

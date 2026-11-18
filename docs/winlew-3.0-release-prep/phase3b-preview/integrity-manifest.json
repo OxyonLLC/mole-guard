@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-10-09T15:26:33.460Z",
+  "phase3aBaseline": {
+    "index.html": "e957283ac6a72217acc679af4e84c72661c54df5efc02f6bc57011865e6988db",
+    "views.html": "244198e78d641556f360004558733c42b6e8d38916613823cabee202dc2304ee",
+    "homepage.css": "2b43af2fe61e909004a897cdab6cf25fa583b19e46a94e7ff7b856dfb4acefad",
+    "homepage.js": "145de63d86b86df3d258dd369a0f727b02efbb4bb5d3b8803b119ac97eeed1a4",
+    "adapters.js": "30cc8f45d3271665c3792851a2b52de04ad8d00c78d023ba1193cceb0a6f53f6"
+  },
+  "phase3bPackage": {
+    "index.html": "cf718afe65a7152ea6435454d57ca3417bc1895f2b7d4702e1ccf6583122b98b",
+    "views.html": "38f04971851e6a2314d715fd7e03828f6468ea68018ad991b37b593aaa53a84c",
+    "homepage.css": "34b35e28d3460ae6e51bc5a5c7e9e36208f9634f8b6ce742975eec4054417bd6",
+    "homepage.js": "5054e2e7ea12ed3074d1e852e9287e02e669347d0995a173128ca501b92a469f",
+    "adapters.js": "acede9957a9866af840959bb01f5433a1a7f84fc6b54fc273c354c2b94f9c8ae",
+    "phase2-prototype/app.js": "0f2659d184d1398111d5a87abf0b0c64b3c4521675180ed5e7e1a70a1837ed1e",
+    "phase2-prototype/styles.css": "60ef88622c750acc8379d1e752bff305c9065c082fef201cdc6dbab5078c8e2f",
+    ".htaccess": "59230e8baa04f9351282ea04ed3a89e31f351d4ab7a17d8c342f8cdcc5665b31",
+    "UPLOAD-ROLLBACK.md": "556d8f9acb3ceeb898d708872721057bce53de988201172045eaec8c535f729c"
+  }
+}

@@ -1,0 +1,183 @@
+# CI (§56). Closes the top HIGH finding in docs/cunt/CUNT-SECURITY-MODEL.md:
+# every check this project relies on already existed as code, and none of them
+# ran unless a human remembered.
+#
+# Design notes:
+#
+#  * LEAST PRIVILEGE. `permissions: contents: read` at the top level, so the
+#    default write-capable GITHUB_TOKEN is not handed to any job. Nothing here
+#    needs to write to the repository.
+#
+#  * NO SECRETS ARE AVAILABLE. No job references `secrets.*`. These checks run
+#    on public code and must never need a credential — a CI job that holds a
+#    secret is a place a secret can leak from.
+#
+#  * NO THIRD-PARTY ACTIONS. Only actions/checkout and actions/setup-node, both
+#    first-party. The secret scanner is our own script rather than a marketplace
+#    action, because an unaudited action running in the job that guards secrets
+#    is the wrong trade (§57).
+#
+#  * Node 24 matches the version the 942-test suite is actually verified
+#    against locally. Pinning to something unverified would make a green CI
+#    less meaningful, not more.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    # labeled/unlabeled so adding `baseline-expansion-approved` re-runs the gate.
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      # No `npm ci` — the scanner is dependency-free on purpose, so this job
+      # cannot be compromised by a malicious package during install. It is the
+      # first thing that runs and the cheapest thing to trust.
+      - name: Scan tracked files for secret-shaped content
+        run: node src/scripts/scan-secrets.js
+
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      # Without this the browser e2e suite skips itself and CI reports green on
+      # 90 fewer assertions. The suite now throws rather than skips when CI is
+      # set, so a missing browser fails loudly instead of quietly.
+      - name: Install Chromium for the e2e suite
+        run: npx playwright install --with-deps chromium
+      # The same non-secret placeholder environment the isolated runner gives
+      # every test (tools/test-audit/run.cjs childEnvironment). Without it,
+      # src/mole/config.js refuses to load ("Invalid configuration. Check your
+      # .env") and ~170 tests fail for that reason alone. Nothing here is a
+      # credential: Mongo is off, RPCs point at a closed port, payouts are dry-run.
+      - name: Full test suite (complete results kept)
+        env:
+          NODE_ENV: test
+          MONGO_ENABLED: 'false'
+          MONGO_URI: ''
+          DISCORD_TOKEN: isolated-placeholder
+          DISCORD_CLIENT_ID: isolated-placeholder
+          DISCORD_CLIENT_SECRET: isolated-placeholder
+          DISCORD_REDIRECT_URI: http://127.0.0.1/callback
+          WINLEW_MINT: So11111111111111111111111111111111111111112
+          SOLANA_RPC: http://127.0.0.1:1
+          RPC_URL: http://127.0.0.1:1
+          FAUCET_PAYOUTS_DRY_RUN: 'true'
+        # The complete spec output stays in this step's log (tee), and every
+        # failure, known or new, is listed in the job summary by the gate.
+        # The suite's own exit code is recorded, not used as the verdict: the
+        # baseline gate below decides, and fails on any failure not in
+        # test/known-failures.json (and on a run that recorded nothing).
+        run: |
+          set +e
+          npm run test:ci 2>&1 | tee test-output.txt
+          echo "node --test exit code: ${PIPESTATUS[0]}"
+      - name: Base branch baseline (for the expansion check)
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch --no-tags --depth=1 origin "${{ github.base_ref }}"
+          # No baseline on the base branch counts as an EMPTY one, so even the
+          # first baseline needs the baseline-expansion-approved label.
+          git show "FETCH_HEAD:test/known-failures.json" > base-known-failures.json 2>/dev/null || echo '{"entries":[]}' > base-known-failures.json
+      - name: Known-failures gate (fails on NEW failures)
+        env:
+          BASELINE_EXPANSION_APPROVED: ${{ contains(github.event.pull_request.labels.*.name, 'baseline-expansion-approved') && '1' || '0' }}
+        run: node tools/ci/test-baseline.mjs check test-results.jsonl --base-baseline base-known-failures.json
+      - name: Validate module registry
+        run: npm run modules:validate
+      # The bots, payout workers and web server are started by pm2 and are not
+      # imported by any test — importing them would connect to Discord and the
+      # chain. So a green suite does not prove those entry points can load. This
+      # resolves every bare import in the codebase against the installed tree
+      # without executing anything.
+      - name: Verify every import resolves
+        run: npm run verify:imports
+
+  isolated:
+    # The supervised suites (tools/test-audit/run.cjs). Each stage runs its
+    # tests one file at a time in a disposable root with the isolation guard,
+    # Mongo disabled and the supervisor's own placeholder environment; it fails
+    # unless every test passes AND the protected-path integrity snapshot is
+    # unchanged. No secrets: the supervisor passes only OS plumbing through.
+    name: Isolated tests (${{ matrix.stage }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        stage: [A, B, C, F, GBLAST, GICE, I, J, R, U5]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - name: Install browsers for the supervised browser stages
+        if: contains(fromJSON('["U5","F","GICE","GBLAST","J"]'), matrix.stage)
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Run stage ${{ matrix.stage }}
+        run: node tools/test-audit/run.cjs ${{ matrix.stage }}
+      # The supervisor keeps each test's TAP in .test-tmp; show the tail on
+      # failure so the cause is visible (CI holds only synthetic placeholders).
+      - name: Show failing test output
+        if: failure()
+        run: |
+          for f in .test-tmp/audit-*/test-*.tap; do
+            [ -f "$f" ] || continue
+            if grep -q -E '^not ok|^# fail [1-9]' "$f" || ! grep -q '^# pass' "$f"; then echo "::group::$f"; tail -n 80 "$f"; echo '::endgroup::'; fi
+          done
+
+  audit:
+    name: Dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+
+      # Informational: the full picture, always visible in the log.
+      - name: Report all advisories
+        run: npm audit || true
+
+      # Blocking gate — HIGH and above, with written exceptions.
+      #
+      # RATCHETED 2026-08-08 from `--audit-level=critical` after the §57
+      # dependency review. Plain `--audit-level=high` is not usable here: the
+      # remaining high advisories are all in the Solana/Bonfida chain and have
+      # NO forward fix — npm's suggested fix for each is a downgrade
+      # (@solana/spl-token 0.4.14 -> 0.1.8), so the build would be permanently
+      # red for something nobody can act on.
+      #
+      # audit-gate.js therefore fails on any advisory at high or above that is
+      # not on an explicit ACCEPTED list, each entry carrying a reason. A NEW
+      # high advisory in a future package fails the build; the four known ones
+      # do not. It also warns when an acceptance no longer matches any
+      # advisory, so the list cannot quietly rot.
+      - name: Audit gate (high and above, minus written exceptions)
+        run: npm run audit:gate

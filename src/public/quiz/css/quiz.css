@@ -1,0 +1,118 @@
+/* Quiz-page extras layered on top of the shared Gaming-Hub theme (styles.css).
+   Keep this small — reuse hub variables/classes (.card, .pill, .muted, .wrap). */
+
+.hidden { display: none !important; }
+
+.cycleCountdown {
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  line-height: 1.05;
+  margin: 6px 0 10px;
+}
+.cycleMeta { display: flex; flex-direction: column; gap: 4px; font-size: 13px; }
+
+.cardHead {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap; margin-bottom: 14px;
+}
+.cardHead h2 { margin: 0; font-size: clamp(20px, 3vw, 28px); }
+
+.tabRow { display: flex; gap: 8px; flex-wrap: wrap; }
+.tab { cursor: pointer; opacity: 0.7; }
+.tab.active { opacity: 1; }
+.platformTab { cursor: pointer; opacity: 0.7; }
+.platformTab.active { opacity: 1; }
+
+.statGrid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+}
+@media (max-width: 720px) { .statGrid { grid-template-columns: repeat(2, 1fr); } }
+.statBox {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px; padding: 14px; text-align: center;
+}
+.statVal { font-size: clamp(20px, 3vw, 28px); font-weight: 900; }
+.statLbl { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+
+.lbWrap { overflow-x: auto; }
+.lbTable { width: 100%; border-collapse: collapse; font-size: 14px; }
+.lbTable th, .lbTable td {
+  text-align: left; padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.lbTable th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.4px; opacity: 0.7; }
+.lbTable td.num, .lbTable th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.lbTable tr.you { background: rgba(124, 92, 255, 0.18); }
+.lbRank { font-weight: 900; width: 48px; }
+.lbName .badge { font-size: 11px; opacity: 0.6; margin-left: 6px; }
+.fine { font-size: 12px; margin-top: 12px; }
+
+/* Tier picker (Sponsor/Hard/Medium/Easy) — replaces the old single "Start
+   question" button so players choose a tier and can see their own accuracy
+   per tier before committing. */
+/* 3 columns so the three difficulty tiles (hard/medium/easy) sit in one
+   row. The sponsor group spans the full width above them (grid-column:
+   1 / -1). minmax(0,1fr) keeps long labels from blowing the tracks out. */
+.tierGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+@media (max-width: 560px) { .tierGrid { grid-template-columns: 1fr; } }
+.tierTile {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+  text-align: left; padding: 14px 16px; border-radius: 14px;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.14);
+  color: inherit; font: inherit; cursor: pointer; transition: filter .1s, background .1s;
+}
+.tierTile:hover:not(:disabled) { filter: brightness(1.15); }
+.tierTile:disabled { cursor: default; opacity: 0.55; }
+.tierName { font-weight: 900; font-size: 15px; }
+.tierStat { font-size: 12px; opacity: 0.75; }
+
+/* Sponsor sub-tile group (added 2026-07-18) — spans the full tier grid width
+   so "pick a sponsor" reads as its own step, distinct from the Hard/Medium/
+   Easy difficulty tiles below it. */
+.sponsorTileGroup { grid-column: 1 / -1; }
+.sponsorTileLabel { font-weight: 900; font-size: 15px; }
+.sponsorTileRow { display: flex; gap: 8px; flex-wrap: wrap; }
+.sponsorSubTile { flex: 1 1 120px; padding: 12px 14px; gap: 4px; }
+.sponsorSubTile .tierName { font-size: 14px; }
+
+/* Web-play quiz card */
+.qTimerBar { height: 6px; border-radius: 999px; background: rgba(255,255,255,0.1); overflow: hidden; margin-bottom: 12px; }
+.qTimerFill { height: 100%; width: 100%; background: linear-gradient(90deg, #7c5cff, #55f0a5); transition: width 1s linear; }
+.qTimerFill.warn { background: linear-gradient(90deg, #ff6b8a, #ffb347); }
+.qText { font-size: clamp(18px, 2.6vw, 24px); margin: 6px 0 16px; line-height: 1.3; }
+.qChoices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 560px) { .qChoices { grid-template-columns: 1fr; } }
+.qChoice {
+  text-align: left; padding: 14px 16px; border-radius: 14px;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.14);
+  color: inherit; font: inherit; font-weight: 700; cursor: pointer; transition: filter .1s, background .1s;
+}
+.qChoice:hover:not(:disabled) { filter: brightness(1.15); }
+.qChoice:disabled { cursor: default; opacity: 0.9; }
+.qChoice.correct { background: rgba(85,240,165,0.22); border-color: #55f0a5; }
+.qChoice.wrong { background: rgba(255,107,138,0.22); border-color: #ff6b8a; }
+.qChoice .key { display: inline-block; width: 22px; font-weight: 900; opacity: 0.7; }
+.qResult { font-size: clamp(18px, 2.6vw, 22px); font-weight: 900; margin-bottom: 14px; }
+.qResult .ok { color: #55f0a5; }
+.qResult .bad { color: #ff6b8a; }
+
+/* Web quiz-point redemption */
+.redeemWalletRow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 14px 0 6px; }
+.redeemWalletAddr { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; word-break: break-all; }
+.redeemForm { margin-top: 10px; }
+.redeemLabel { display: block; font-size: 12px; opacity: 0.8; margin-bottom: 6px; }
+.redeemInputRow { display: flex; gap: 8px; align-items: center; }
+.redeemInput {
+  flex: 1; min-width: 0; padding: 12px 14px; border-radius: 12px;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.14);
+  color: inherit; font: inherit; font-weight: 700;
+}
+.redeemInput:disabled { opacity: 0.6; }
+.redeemError { color: #ff6b8a; font-size: 13px; margin: 8px 0 0; }
+.redeemConfirm {
+  margin-top: 14px; padding: 14px 16px; border-radius: 14px;
+  background: rgba(124, 92, 255, 0.12); border: 1px solid rgba(124, 92, 255, 0.35);
+}
+.redeemPending { margin-top: 14px; }

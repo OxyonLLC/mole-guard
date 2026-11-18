@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GeoProof — Verify evidence · Oxyon</title>
+  <meta name="description" content="GeoProof is the open proof protocol beneath every Oxyon module: signed observations, independent receipts, permanent anchoring, and replay by anyone." />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16.png" />
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+  <meta name="theme-color" content="#0a0a0c" />
+</head>
+<body>
+
+  <header class="nav">
+    <a class="brand" href="../index.html">
+      <img class="brand-mark" src="../assets/logo-mark.png" srcset="../assets/logo-mark.png 1x, ../assets/logo-mark@2x.png 2x" alt="" aria-hidden="true" width="28" height="28" />
+      OXYON
+    </a>
+    <nav>
+      <a href="../index.html#platform">Platform</a>
+      <a href="../index.html#principles">Principles</a>
+      <a href="../index.html#vision">Vision</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="product-hero">
+      <p class="crumb"><a href="../index.html#platform">Platform</a> &nbsp;/&nbsp; Module 01</p>
+      <h1>GeoProof</h1>
+      <p class="role">Verify evidence.</p>
+      <p class="status">Reference Standard v1 · Open specification</p>
+      <p class="lede">
+        GeoProof is the proof protocol beneath every Oxyon module. It defines how
+        an observation becomes evidence a complete stranger can verify — without
+        trusting the observer, the verifier, or Oxyon itself.
+      </p>
+    </section>
+
+    <section class="section">
+      <p class="eyebrow">The lifecycle</p>
+      <h2>One path, every proof.</h2>
+      <ol class="pipeline" role="list">
+        <li><b>Observe</b><span>An event is captured as a structured, validated record.</span></li>
+        <li><b>Sign</b><span>The observer signs it. Authorship and integrity are now checkable.</span></li>
+        <li><b>Receipt</b><span>An independent verifier judges the proof and issues a signed receipt, locked to it by fingerprint.</span></li>
+        <li><b>Anchor</b><span>The fingerprints of proof and receipt are committed to a permanent shared record.</span></li>
+        <li><b>Replay</b><span>A stranger recomputes every fingerprint and signature — and reaches the same conclusion alone.</span></li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <p class="eyebrow">Capabilities</p>
+      <h2>What the standard defines.</h2>
+      <ul class="domains" role="list">
+        <li><b>Canonical schemas</b><span>One namespace for every event type: presence, attestation, receipt, anchor batch.</span></li>
+        <li><b>Signed observations</b><span>Every record carries its author and is sealed against modification.</span></li>
+        <li><b>Independent receipts</b><span>Verification is a separate, signed act — never the observer grading their own work.</span></li>
+        <li><b>Hash-linked custody</b><span>Receipts bind to the exact proof they judged. Swaps and edits break the link.</span></li>
+        <li><b>Independent replay</b><span>The full verification is reproducible from the published artifacts alone.</span></li>
+        <li><b>Tamper evidence</b><span>A substituted or altered proof yields “inconclusive” — never a false “verified.”</span></li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <p class="eyebrow">Status</p>
+      <h2>What exists today.</h2>
+      <p class="lede">
+        A written specification, a runnable reference implementation with a
+        passing verification suite, and a live demonstration that walks the whole
+        lifecycle — including a tampering attempt that gets caught. The reference
+        is the conformance baseline every Oxyon module is measured against.
+      </p>
+      <p class="lede">
+        Proofs are anchored on XYO Layer One; the protocol itself is defined
+        independently of any single network.
+      </p>
+      <p class="backlink"><a class="btn ghost" href="../index.html#platform">← Back to the platform</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="plate">
+      <p class="plate-name">OXYON</p>
+      <p class="plate-role">MODULE 01 · GEOPROOF · VERIFY EVIDENCE</p>
+      <hr />
+      <p class="plate-pillars">OBSERVE&nbsp;&nbsp;•&nbsp;&nbsp;LOCATE&nbsp;&nbsp;•&nbsp;&nbsp;VERIFY&nbsp;&nbsp;•&nbsp;&nbsp;CONNECT</p>
+      <p class="plate-copy">© <span id="year"></span> Oxyon</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

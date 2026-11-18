@@ -1,0 +1,1853 @@
+{
+  "kind": "winlew-holder-snapshot",
+  "version": 1,
+  "target": "winlew",
+  "mint": "DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump",
+  "slot": 439970982,
+  "takenAtIso": "2026-08-18T02:29:16.033Z",
+  "decimals": 6,
+  "supplyRaw": "950000000000000",
+  "sumOfBalancesRaw": "950000000000000",
+  "complete": true,
+  "counts": {
+    "tokenAccounts": 229,
+    "emptyAccounts": 150,
+    "nonEmptyAccounts": 79,
+    "distinctOwners": 79,
+    "distinctParticipantOwners": 64
+  },
+  "accounts": [
+    {
+      "tokenAccount": "1ozv6Am7XykpbSND3cNrLXxVMQnM82Hjcen7DinySka",
+      "owner": "3KvsoNxgn64nsuHKPBHQJsguef3DgEkP2izE49k6CSAZ",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "27ZZtZA2KLiZwrNeZYKfr3nyBjKSgfKbd3Cqe7NzZBC5",
+      "owner": "5Ss77nYwc7eQytYvH7vDqBRnZFue1ZTp1No2XJnCGrBw",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "13111480000",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "2AKojhtAzPBGsufvYaJK23Tg6p6kmZpzE2jeMF4YhimS",
+      "owner": "HVrHUjTLAQg2bZPuFd4PGGQnNTSvWXny9Y9mqXqJmP3p",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "8841957723945",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "2bzf9XFtze5qwNTREi8xwaUyRRibjiFwq5pSLfeVXZSo",
+      "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+      "ownerProgram": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+      "amountRaw": "0",
+      "label": "program-controlled (6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P)",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "2fMxzcrqkCRWqV2P8T5DiBmAjTBDwHWDYEWPkJ14qpne",
+      "owner": "8jr1Zov74VbbDyvuW55Hei2LgMuki9N5W2hUVnB2f986",
+      "ownerProgram": "LocpQgucEQHbqNABEYvBvwoxCPsSbG91A1QaQhQQqjn",
+      "amountRaw": "25000000000000",
+      "label": "token lock program",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "2j8D3VNwP2ZeeFcUBseUx1FJ3gwtGYasjRj9rwF2tyRG",
+      "owner": "99sUWxsS6PwoNhz8u7zHFRUvKYwuaaESjsRheadeEr8G",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "3901671240",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "2K9ELWzCwawAf5cGX7r8A5DZuWQwTWhqsPFKj4XJgv9i",
+      "owner": "23dDdfifY8haKkGJryKMD7RwPpHXZBuVH1AU9EbLQNQG",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "2KPw7ro38JueP1SHDeVgEp2MySe6fgiWvFtzufUJp7fc",
+      "owner": "HU23r7UoZbqTUuh3vA7emAGztFtqwTeVips789vqxxBw",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "2MiTTozioTm7f1aczcc3LwhaccMoqqa7NyPPE2K1fnVC",
+      "owner": "4wuDFm96HV6M8Sjazm35No1sX5GCVLjA3wCAfyK3sGxn",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "2NKgw6qNi55itx6DxxaqkTGxKDZb5UNo9A4rKBfbtRki",
+      "owner": "5gKXS4bT1mdWxgx192ieTsw951yJ4VikyyrKL45hQ2dg",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "1595146427724",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "2oMCMkrWP6jgiXkRa1SXe6ZiTRzkjxCa8UknMqtYSBbK",
+      "owner": "GP8StUXNYSZjPikyRsvkTbvRV1GBxMErb59cpeCJnDf1",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "2w6Uj7NAvipQ6WDtaEJNz6774Qyq5n86SKvofJADScLp",
+      "owner": "ES9LAdJHfeDjH6XVbW7TmtCbR8fmcrfBGHjpts6L2PQY",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "2000000",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "2YyjsBKWzfD1y6CjgzUjCjxMdx3w7yyECjBsYsJYrCqg",
+      "owner": "9sxjD45kKTSQ6wv4FiTpvxmDBTFgBtNgDVA8Ckc7nz4F",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "2ZEqqsDuiv71KAUzFshujewGyBhvDBCoYYVR1dEgykdb",
+      "owner": "5YET3YapxD6to6rqPqTWB3R9pSbURy6yduuUtoZkzoPX",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "2zktht5QV1MxAuhBRJxMPT8DpP15jpC2ZnCwnVcxQa4N",
+      "owner": "6KPYDyuRnpuKcm1TerUmwLd2BcaihvhF4Ccrr8beruu2",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "3caeRiCfwEhwqR9AZsMpD9x3syMknqM5U5R3DB2xeEyP",
+      "owner": "EX5nxVKgRKaJVZLfDUinXie6HQ5GPhKwkZ419pRGaZ74",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "10000000000002",
+      "label": "Burn Wallet",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "3ChyGhEhn8Z3uoM9urCcyLDNCmpHiBV3ZhX3MUmFdK6N",
+      "owner": "BYFwygp73sYkHR7CDwBsRXwioMun97PtASb2jyrcvA4K",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "3eSUtBNgytdfFtedEJCfCKsUbH9yhcEdGo3HWegKkHS2",
+      "owner": "DSN3j1ykL3obAVNv7ZX49VsFCPe4LqzxHnmtLiPwY6xg",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "3fF5XjLyxua9hkJyciHpk47V4MFQeBB25wgkJTSFAHHF",
+      "owner": "E24ickCevBmJahQMCU21muVKGJ889q3CmxCAr5eCZp3j",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "3G7EMtLC8XdmM1yxY9VSy6Bt5EJyWYDtnvVmsGqXJBvw",
+      "owner": "ABE6KaFM7B9ujvng9TkjgoPG3qJerz265YHQuBwibbdv",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "3KbA7aUZe1uDZX4rsTdw9LxZRUWf9b5RdSCeAfZB97UT",
+      "owner": "6WBRKKiibD9Eo8y9si9rvjyyRmhVQhoQKFx59xzVCJ3L",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "3MNdS7vZ7GSxYfY4T1pkMhyw6ghYCorjM7jftGAAKLC4",
+      "owner": "B5AiAu6WFQVxaqVoVXDAeBNcLgWBKki8C8CnujteYq9k",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "15291123128",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "3pZrYjK3Y57n66bm79xNAL9jfXxRJsiSKEt3vFwXXbh6",
+      "owner": "4jbmhXuN2jvSxZrn74TmoyHxoptD9UUur1yLWe5fJbnR",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "3xdc2UFwWViMjLkiLssFEH1mpktViVFcawvtVxis3xYS",
+      "owner": "5eQmN1diSsq9Kp6vfbkrYappX4SxBUg8nYqXJeX4rpgv",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "3ynEA28ySTkUVW3sMxyHdxaJY497ZQEb4ujrRXgKU9Ux",
+      "owner": "3Sb55oT8PnbeXNfbftS1hwHpHjbP3GKb4WoULiReSA3W",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "100000000000",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "3zRjPXkXScR8222m32dMUGw1t5nx61XX7Muca4DhWgT2",
+      "owner": "9VnmyJJVsWVBU7tU6fU3dGgB8BFQ2ek6vkmRy5CugYk4",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "21134642223246",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "44paSfcPd16GzeJRinqZ55PGmUpfr7zc5o7zXNMMZv8V",
+      "owner": "Fjv2cNbb2aNH1gCYV4diB9rBnbVGFjmtvKSiTcGG7jnM",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "45A8o3EjUwzkMMEBjd3YkViHDdai8fYtA2ciWvydoSPw",
+      "owner": "DXSXewyCa2SPFRQDEcyVVJZXPWyERuon1eLC79gT1kc6",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "87929122",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "45fTWsMZhna4kb1vacVMHmMNqQb8rJsi3U7k5vFMNiBN",
+      "owner": "D5YqVMoSxnqeZAKAUUE1Dm3bmjtdxQ5DCF356ozqN9cM",
+      "ownerProgram": "T1TANpTeScyeqVzzgNViGDNrkQ6qHz9KrSBS4aNXvGT",
+      "amountRaw": "0",
+      "label": "program-controlled (T1TANpTeScyeqVzzgNViGDNrkQ6qHz9KrSBS4aNXvGT)",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "47bCwcc1b1p87SZKWSfC2PjoVyCG3K5bHT8AvEiA71Y9",
+      "owner": "A4294aEQUn7ZKcXqAxuxhCSshj7vQ7Tm1SUXv4h9xT7B",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "48tmZJH4cJWjMNvZSCH1ewvKWsx8dVS1DAT7RpqrmAzd",
+      "owner": "45ruCyfdRkWpRNGEqWzjCiXRHkZs8WXCLQ67Pnpye7Hp",
+      "ownerProgram": "REFER4ZgmyYx9c6He5XfaTMiGfdLwRnkV4RPp9t9iF3",
+      "amountRaw": "14714708250",
+      "label": "program-controlled (REFER4ZgmyYx9c6He5XfaTMiGfdLwRnkV4RPp9t9iF3)",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "49eYF7tv6qNU5osaiUdHxDs8qT1LMHyge7BrANcE4CRr",
+      "owner": "HFqp6ErWHY6Uzhj8rFyjYuDya2mXUpYEk8VW75K9PSiY",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "4bHw1fWXPj9v2nHqsKdEB3NzYFWPYWBkqaLzzgu5aHRx",
+      "owner": "2UD718nWVyfAciEY2WXK35f9Kou78zsnxtxFub5FbCZG",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "4cwfATgRjCadN7AJbi45ANMZfc6TBZNthAZnynUcEwYd",
+      "owner": "DQ6CGWoiqtpz7Urj3BD93u66pAMHnVLDgvTxnqTrrts2",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "4etLouDJhoPakY3gEAxJoFgjNCZ6wMuNUq5nNYDF2SJn",
+      "owner": "5k62Riz9x9vWbbT1ZAYoLZhZCwe2EkhT5J4j6wFM9vxx",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "4GbWmFhxrFC9LjgK3LW3n3ZusX1a2KvJMRDzdQHuoczp",
+      "owner": "8psNvWTrdNTiVRNzAgsou9kETXNJm2SXZyaKuJraVRtf",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "234160504129",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "4hkzCEYUHFHYnkkEB3A955dQjeqjx1q18qSSxr2TDd6q",
+      "owner": "F9b4eAXRbdY3su6AdzBqEZbbjuPpGmLv57dFitt27b81",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "9044083820063",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "4KKdoZMvuhDUAoWEsJ2wFHog2Yv24LLqH5PRDd94gVbZ",
+      "owner": "25mYnjJ2MXHZH6NvTTdA63JvjgRVcuiaj6MRiEQNs1Dq",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "4LZskm74XDeek2fUVmf5D23DptsVkx9TpK7Cj5Tvo3AQ",
+      "owner": "AXpUVHKGxBVHCm1KayTio8dCyefNVhANLv5YazMgeq6g",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "402340770415",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "4mEm6WuBiFXES5WTK4ySxiSeVG2jsAceYjXh4WAvdjhf",
+      "owner": "81TYbVrVUayLEprWCzxUoihtzWEUkBhScBNks4cE6ASz",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "4QeAdFc7Q6FiKxqLSCpusfrHowSxPejWfvHPNNdeb4aW",
+      "owner": "3XwjpufGs3hTtXUfXagxLqWd3egw4u5v6CwWH75UTMoe",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "17226926020313",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "4QmmVVshXUwK5w9pufZHXtG6GKrgZK3KBPi32KqxXGcv",
+      "owner": "E8Pu1WNFqnAPbA9HDqxwgHz6xLvwBXQpekeNLRoiKzSo",
+      "ownerProgram": "LocpQgucEQHbqNABEYvBvwoxCPsSbG91A1QaQhQQqjn",
+      "amountRaw": "50000000000000",
+      "label": "token lock program",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "4toisuz2pwEfkYtmdcno86vBEhfg4wS751sQ5LoqBtnK",
+      "owner": "7Jshs1855KCekVLS3TMYCmj3GumyAFrXhskzNsUS4Bq4",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "4uvPiac4hKacC3UdWDkFKSzVavpRWfWmXEVHbnKp82CW",
+      "owner": "BkLmvJe51DmL667R6DESD1CRu4dTZwa6dDBEgGsS1rqY",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "4XnVM4G2xLiKSTfmLeRXTcS1HBnSZPewv1aQcgtpYwv9",
+      "owner": "4XnVM4G2xLiKSTfmLeRXTcS1HBnSZPewv1aQcgtpYwv9",
+      "ownerProgram": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "amountRaw": "22069652822552",
+      "label": "token-account-owned (stranded/nested)",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "4y9X7fB5AozKKpScztc2fTffpA7K82WpksbvixX5XDFm",
+      "owner": "8xy4xAmBAjpH6CQJegQTno7kwbi5odYcwHsGk5qFavSQ",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "52CpfbuBxTT4yVWf4zAaJdSaFfr9cavdBZFrXYGGoSnF",
+      "owner": "FMwfKh2jQXRksWbiFsC3biig1xNJvbThkyieP2ESPTw7",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "7645374034732",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "57C6CM21RkQqnMorfrk11nih1Hw4QFLSVevuH6Uveeh1",
+      "owner": "6hLxFtyEAmYeMJgsCGvHLu2KC8EuzyD17wbQB4gYpdHd",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "11081698392365",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "5b3sUX67mtZkTe36QWiL1zB7mZfcqBrjAJ3AWm8SrmRd",
+      "owner": "HVNjxJB4VSyTNmJiBFpakeco3XkAwBR3T9brMYGwU97a",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "5EhAuWXWf18MHERWJ7ijHzEhV3BGmUrqemnVRaLNzVtv",
+      "owner": "GHaTougpAM6Zyi92z1rvq7zwvjdgnBw4WXa62JvGT9Ge",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "29347307895417",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "5EJvT21FZkYHLpqaJH2mj6SMFwAa5r2thzCyNMoa1gCq",
+      "owner": "2qo1zLvwbMEoCGg7KxtVCY1iMHobUf7s6jPtFHddNU9a",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "5HJAvBYCqJTd4AW7imxmVyMeW98Mrto5h7xR7XKu1DTp",
+      "owner": "C84nhAr9Hz7zbT7o8MuWptfPFsehPNhkRVKTKvJnJDUW",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "361516761738",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "5LvkgCdZsZEjzb8Eptc9hsHVDo61upZfppDCZakBsRia",
+      "owner": "85ZhcDQmxymX4hURb44pqSzAfbwNcnUezNqXH8jqQ3cU",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "5MjANGGj7BkymEE9S99ACfGPzKqFrP3dMvCqoZ4fpc9T",
+      "owner": "GGiJFeSiAas5FFrFByGTwiwsCjNF4LapPR8DV9Eh8wCS",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "5uKK3apLjTnmfchMVHD51rrdwQvp5espSzPqYxT76VA4",
+      "owner": "64SpqFh68V3Yn5qa43Hfc8esnQhj3LHi2kJs7umR3kTp",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "23428858497424",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "5wuUA1r5cXGYBhDjUhUZJBMJZFcGqvPEutghpRR9qRzB",
+      "owner": "CSwJFGJqFgjVhXC7fonWHNnHNYXcNAbgi2wumFqsEG7E",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "61mr6d5jAbCvy1tLZycJauESbJJDuu2DvQgqnvDuvijB",
+      "owner": "GpMZbSM2GgvTKHJirzeGfMFoaZ8UR2X7F4v8vHTvxFbL",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "50358254213055",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "69MeRsBE9bH22a8Xu4BtVfRrJjhZThCDqCLL6fznjSPD",
+      "owner": "GpFwgThzgsVoGQUPaLFaPbYELnLBw9FNAx1LbCVjEXhN",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "10363985858489",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "6bb3FfNeoLq8ytxuiUBcgefEk1X5emVhUNPg1PJaSQqz",
+      "owner": "13ciYyTqLmjB6AGdirKNo55C8so28HogRgC6rPYdaLpg",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "6BtrUiL8M1ZbmGFuTUDE15JgYAVnJw2woMBUc7421a8G",
+      "owner": "98icoetZrZ3d3agoYrp3vrT6Zt251nUCugVCZRqHrCoK",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "6bYb81c4VxfvVRXHwaGG53BsrzV9C614XTvQ8GFxaxPz",
+      "owner": "Hih23hh65FqBeaamfejdniE3vjyNFW2bCNsoFRRtK1gy",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "6DzDK4yLggybXBzvwm8v7gBhNG8WdPbFWsfNmFiBkmyf",
+      "owner": "JD5ZUHGtFJCUkTRJ6eWvvDAYqvkAdUYdcw7GvcnQneAJ",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "6FTx4g6ECVobbzkZyzyPoNTV5zM1vsgy9iG5EUWPHWcM",
+      "owner": "8ENKEgSicn3ohwck32ekJCmRDshqPdVaPYcYmHg1mHc9",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "6HTU9poVBNUKjpLfydMPmWCsDzB8kPTqGAL75BcTNne8",
+      "owner": "2AFVfoUvDVydDD6DUmRsKveWV3mAhFwWs7XcVSu5YDhc",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "6LJtzv7wpGraYnC4KGioccYtBhaqDj9bRbgPXqNbCh8w",
+      "owner": "gtagyESa99t49VmUqnnfsuowYnigSNKuYXdXWyXWNdd",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "6rBLSeVm8tg4AEJinanuYfSwfg2HXb4q7hgen2G91YYG",
+      "owner": "ANyUAFaJBTwMZMsXHL7XiNM162zkySysB4w1UkRXsnax",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "1",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "6ReSK7uvnxEhc1AwvEWtPjmx3C8VyQektRegHzuuyiFB",
+      "owner": "DRhgcjbS7MN7cexMtirJdPSSpQ4p3yuLW7NcvDS31QBb",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "6X6syi8dfC9ETzphUzhWg94DXbUJjGPsDkU7Y1TQUxLG",
+      "owner": "5V2WR1VGjbu3zbpcTkSvkmxZ8gdhrHGWxFSizKV7v3AJ",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "6X9Ppc4VJ68FUZ7U6rXsUaUvvvryjpBmrj5uJnnA7X33",
+      "owner": "DFptJyzf5KJdL6o6hrN79o4Tt8NeEBLMRubgqwuS4J9Z",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "606103594830",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "6yWKx5My3iTWZBWs6gSfLxMvuF36H7mvApbFvNeHs5pN",
+      "owner": "3LoAYHuSd7Gh8d7RTFnhvYtiTiefdZ5ByamU42vkzd76",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "6ZM8EJDLMgC2ApLxjLEj2TAChu97bfqJScsZwmqRqJuZ",
+      "owner": "69yhtoJR4JYPPABZcSNkzuqbaFbwHsCkja1sP1Q2aVT5",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "75akiWEEvQbHQTKrm45miNsDBF3vmC1c1h2HmaTM1FUG",
+      "owner": "NXXEueZsoDPkQT7NAXS47eTkMpYoUAYnWwAqvoskbUV",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "79XdfPvoPSqZ6J9e2iQd6WtGvGZzEMZYN52ErvR71dJi",
+      "owner": "4RhVB2f6XpQauPh47gh63XRG6nXt7pGGxyRzvWoVBryw",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "7fWPVjyRVbMH3oVmYNMJzYMvoyqAcnFWchyoiYPKWJ4Y",
+      "owner": "9crcXyZaJG5rDVz7qainb4gXQp1Ntnm1CqSMAA1348AA",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "2016791680994",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "7kQAzJb5D5EexKD5HFRnpq3xkgPtDKrPeXEQWcqJBgmy",
+      "owner": "HGgDeqFjHz9FbJZz79F9xibvLB1zBtYx3wocowWTyfsi",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "217546812177",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "7LrhiAqQRBobZ6mccjFZS3t1SLAg8ekuygBS97BimCTK",
+      "owner": "6Z1QVkpp38t73PbaVcMQ7XxSsAi95Vu4qPn4NDG5z8Hj",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "7mxNJvLCQMQPaoVHJPzN4tETtcsRsLjXfg7jJAtMPCET",
+      "owner": "B3E5r1HoJVjFnAWonGfbqQDJMkZvpVo33HxdyrSijuNE",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "7NJFnSSqKZJ29FXptj4jL4xPrJDiGQshW3xp1CJvgPvH",
+      "owner": "2vQe2UpZ3BKfRiP95uvrhHZMbqiw7Q7GRjVovtLPiKDn",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "101000000",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "7NVdcWvGNu1DjF9nokfnarbFwhKSz7qSvYSPt8LPZcye",
+      "owner": "8NpNmntfm9eGHdELmciNPtTVnrAXhScF7vggfzRtTdnr",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "7TtXCwsKq6EykDM6EDTvrkTaeTRaVC57c4sVdQUCHU6F",
+      "owner": "DjuHCWYCnLx9M4DVMiY7yj55FeqGD7BE6XbE4TSaDCTM",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "1",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "7vKKsrLaQA4seTLfZ2RF8FZvb6eaqHcXt9dG89pDavLG",
+      "owner": "HJRHtdz94LcjoPpVgsrX257t9ku9ZjnLVB4f2gLuAhcH",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "7yhYVDcS8zTZqjG98zzy4ukQbpDaH7eaEg2a4BcpJtKJ",
+      "owner": "DXqf3iDfrGXv2p9bxUhCm7Jf17DPqa9AtteoTUxUvye9",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "16122503065249",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "89Eoeq5MkuAJcQcZcDQKP9whu9Dn82AAbri2wYsawwaL",
+      "owner": "755qonxrda2RMGEo1f14U327eq2a7EfsLTpSngwxRntN",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "2000000",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "8bkjyDDZchwxSvg3aRstMwghpSubPtBTY4fMLHnfqBDz",
+      "owner": "wormnduySVDzdS97MrtCqMNq2AJZom4LayknB8R1HNS",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "5040375222",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "8bmEt4Yo5WFj4m3TWK2N5PMhxWFjNsQ1DtdYx5oj5hLv",
+      "owner": "BZX45bEYdTwiGmXZCKNadambjxiYNS6RmvXJJhFdwjyL",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "8FNKocneUV2uGaNeFSorYMPKYoutRhGTGTNVxQ3A6uFv",
+      "owner": "EwpXhpA2xreNmQvxwsxd5Dunkq4aeHYXPWiDN5WYH53J",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "8GsZpisSqZcx7F6fqcvbhmAYfvwXmUzCa3o4uxvGoLnK",
+      "owner": "CejtWGL4Luhb53X3MtZ8a9D5aehJwpVVSRxsZjBvWGib",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "18",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "8K63EYMnV8jFWAvzQAbmJASzLWXwA5QcDPswauwB2SSd",
+      "owner": "J9qE1ZEpBtL87YHBKBqxoaaF7BBHnxuB2wG2m9GBGDx4",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "8m1Xu5Ra7PS45hLTvVxhyPRGSdBXyctBBTCLhPktq9uQ",
+      "owner": "4u12XCpdz43i8sm4yxFWaLFk8reXqFxRFTdozoYqicx3",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "6525766498383",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "8nGNUiTecrKHYXKdUQXkGtMNLvtYSTorcYiXtEYuBFaT",
+      "owner": "9JGvjo1bu4WAiuSCB2neW6aKniqFECGuJ3DLvSawB39k",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "25261283109469",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "8P12vXfsJWQPVxXEtizQbRKj4WNSnintoGsfDpUD5y2W",
+      "owner": "6drzVwvru3DEbJ2a1jgfCecV2Mk5vNg8PiKAw8uy76Xw",
+      "ownerProgram": "LocpQgucEQHbqNABEYvBvwoxCPsSbG91A1QaQhQQqjn",
+      "amountRaw": "20000000000000",
+      "label": "token lock program",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "8TqFB8UtcjtanCrKtRuanUZRBS4XU63PPX1yu98tYynA",
+      "owner": "CByGX5jngQMK256PewH5CJDHtonnaw8zGF4SwENw85wB",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "8tQi6s8dnJh7NRP1dWoDcm1T2bUHHyQ32aKQAWrjEpjw",
+      "owner": "EwCKdYsHm92fHNhG5RLqoSrngTRFX45TwjQfaCX22BPi",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "12518374214471",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "8ynaBz1bAXdHVtguMCJ8iKDd5N1ktstdiwKDU8yjHuJr",
+      "owner": "9uGsPcu2a2hJ8XE7U1iqsof54GVTDBjMRoksLRGvTEzQ",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "8zUkuXYDNQca1u4zff2EwtNHDcc2mh69GjUNLEZ8Y4RQ",
+      "owner": "6dUuLmUBXGo6puDoQNBFwbQArDb4v5MszCgtmZwhyGvv",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "93eHADCgEzTNAHUqpwTTLxmsGycJ948HAhTXR7gUyhVP",
+      "owner": "CECBeSNfs8eRGaBSruo7SE4H5RRtad6cNjduRLeaui8U",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "96HYLwPqmGHa8egZzoHL6kVjbGnXLDHeHCJJ15Z9fnXD",
+      "owner": "128Gjvv31oYdsFoMaEkevWGpXuSzgTBap7TpLQgUeeEZ",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "85481516345",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "9ah7s8PvmXHCfuFgbW13GjTQBbY2ZJzsoAAkDqnMqiqQ",
+      "owner": "oFuNSMt9rRy4Pjdkq74DHuuW9q12HjstbjTQBHp6bDq",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "9DyjLeo6tgJUu7Ed3htfaGJZ4mtfo3KjFFmTedqt78Th",
+      "owner": "6acWbosNW2EETHn7yA26M8KFfLZZruoNCFZE2v9LuAwR",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "9f7HmWJ8yMhkBgXAVLpjJPk86PS6crCqDxx8EnkbQ94M",
+      "owner": "5xFztPcufLGXgDXpN4gqHYc2QXPHo8Nx5w5vgkeykFyQ",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "94131400262",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "9g6NHkBqu4FY7ZD429DJrgxKBx5ZeZ4CKLXfPpQG1Hgj",
+      "owner": "89B84My2MA3Srr2LxbhQGhEHqoBGAuT22yFxtN9d9aFD",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "9H7zGQTDhu4JfB5RVmMa8nZiMjGDYxKBqFeZpgtgC2AC",
+      "owner": "F2g3PQGbHkL5GabkMsZcgUQyct6LicpgikipUv7ce7f9",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "75000000000",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "9H9m3BMSmTjod9WeU7ZqDDSnrkxcBYEZPomJirzBceci",
+      "owner": "Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL",
+      "ownerProgram": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA",
+      "amountRaw": "356816857285763",
+      "label": "PumpSwap AMM pool",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "9iLPcQ9v56SDxu6xWMXBHErmgNfQA1cRnnsA3p8gwodM",
+      "owner": "cftFbZZJFuESHrLL1HTwgnEd2oB9tPGLg5cgWVh8bK6",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "9JPYbt1giiUa5qkYxkK2WW2W6XibqC3WmLg17RppwwPv",
+      "owner": "D9GYt4W7VvteKCSvTgyjzuiBJyTy94Kmr6YiC9fbxGjW",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "9S4RJY1Nr6TVe2LmE6Q67xw1BV21iQ4SaM5bTgJFA7qP",
+      "owner": "8pY1AukbuPgUE3EetyLa59rFLMimJGT94ZzbMEZcQF4w",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "9XCNmoj7TXU55gegwTmBND3doPhWzP5SBxKtv9VsLyth",
+      "owner": "wdrwhnCv4pzW8beKsbPa4S2UDZrXenjg16KJdKSpb5u",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "A47CRdUQhG5SaRv93LAYHBPBzKZhx5Wa8TFN42WUgx1B",
+      "owner": "7ryUbujsqQvkyeTeY9nE7skDL843QiMKboHQNdvTW3cT",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "A6bYxx6xtexywxXVdpdBLm2jHJiZVCFR2AmuUSdUzUWv",
+      "owner": "FZmgeUwLtf42ZkceXMLGCP8sbVqq2621LCvBqRzEMNy6",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "A76yodxqFEWZmFe7Kfjdvvt87ER75zbsveEWrCQecU2V",
+      "owner": "7iWnBRRhBCiNXXPhqiGzvvBkKrvFSWqqmxRyu9VyYBxE",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "Ab9jrUmtUqGtpED9Y8w1LD3QQU8TU63AxRr3VZj9E8Yo",
+      "owner": "DEFFtTTL7rLmZLh8dnj46So9yrwkvMd8WSboTD2VVNFJ",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "AdgMpZxQXuSbrMx9MzepKYBXApWjjowsc5wjAcBEnjqo",
+      "owner": "9pcoovjoqV3vpRoPAB8yLhmJhxqnYz4f5KYQKpref2HD",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "AkWK17EXYhT5DNSCdgPM6mSuAsT5HRhgsqqzmfAmUQwh",
+      "owner": "GGztQqQ6pCPaJQnNpXBgELr5cs3WwDakRbh1iEMzjgSJ",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "AMSqtqHZaAdebhVEJ2YA3P3YSUofAjaEuFJKiVMcAhyD",
+      "owner": "AMSqtqHZaAdebhVEJ2YA3P3YSUofAjaEuFJKiVMcAhyD",
+      "ownerProgram": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "amountRaw": "2003800000000",
+      "label": "token-account-owned (stranded/nested)",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "AP5HsJVAEvXZWfKpeb8roauNiuijKzLMfZdiA1Ve4soh",
+      "owner": "Ae3k8wrAJXMmCatELmmNrUEccrwH4NDcQfZiCHktSouQ",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "AQc5YzF8wWGjwWHWKV68xEtLjZvk1hHWaN78PgmL7ydr",
+      "owner": "7Y5NfvYTZLi3HMZTed5V58cvVgfaUN8BFPQvqP76b3Hy",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "ATc3d5kJzfLwVtrBJUVeZReV7uWYdMDhTezREnCSqQCz",
+      "owner": "3wuHCU4ZuWuCjhEyGctAPBDbb59J7evWa4tymSZgnFcf",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "AvkopKR4sPwyUxBfBcYhdqB5EPLsqEe7s4njAkWLsa61",
+      "owner": "E91TBEgB3sy67wJMYzCsWprCatGuzLHeZqfuA59baKCG",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "AwnJMR8MKJHL6TWexj3EL9kKU2Lv6Z4NKPLHTLbPDgZy",
+      "owner": "4LeQ2gYL7rv4GBhAJu2kwetbQjbZ3cHPsEwJYwE3CGE4",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "AXP8sZa46Z6dc5ce2XhcGPw4epvzja4jMJhaEV3jKx3f",
+      "owner": "5r7QPeKCpGQ294LpVcpEymSrJ21WJsfSdBrLPaSt3buE",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "B4GJSLCH8F5EDXctPynP157FbbF1SbfZ2HsG3bWUYJpz",
+      "owner": "B4GJSLCH8F5EDXctPynP157FbbF1SbfZ2HsG3bWUYJpz",
+      "ownerProgram": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "amountRaw": "7013300000000",
+      "label": "token-account-owned (stranded/nested)",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "B7T3rdqemqw7cQ1qtByZQv9V6whgWXb2Stma7CnsVcvu",
+      "owner": "FDhcxnSo1wB2X7iYjQaFaFHD3Nc5TWsASFwfhFCbeo5j",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "B8M8QjTYijSkproiSZdbYAcvjXjJJ8rBAjFZUGHfFhHe",
+      "owner": "GFxz42bib3o6kxmPgK95fMtBxRk16yaTvt5UBwC7EhAp",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "6845194692333",
+      "label": "X Faucet / Governance Vote Fund",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "BcbQ8i88PVPFZbqThqL4wvAHrWQiPYcEEjZJyQWJJQKA",
+      "owner": "8QR5x4gd91XcY6Nyb296tWGPqwJziqoj83323QWKojbu",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "5000000000",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "Bh815s7zTHNxMGJED2F9hieH6zkm3fEDp41wd8Rx2jtw",
+      "owner": "9nnLbotNTcUhvbrsA6Mdkx45Sm82G35zo28AqUvjExn8",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "BLr4xLVaPtb7oyY2bzk89WUybE8QSafgKTykd4nRtRak",
+      "owner": "Gg9Cng6EF9aU3X798mUHRW9kGLG61Qx2uEvf9oMFFBc7",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "628746609440",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "BndwwHnmFsQ4yLW6XgWoj7ZVsh6zvNRDfJ6qg38Km55u",
+      "owner": "Bou1CAHWXsypNNzVpfdSdB2eY8hHwh9xsec1NhLyfeUa",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "BVUrLbwTuBxzCFqftGeG4sQngP8zrxRw4YtCutQmXEzc",
+      "owner": "HFmyyp1NgDHeAKqkzSEeMahwi9dVxLf2X2Z5rmiaTCgB",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "152381900019",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "BvWGmaetDimbrXpd2N9Ma8WFLi33ivw7KSLLfcz8m5Jp",
+      "owner": "zLHYYpKtXFnrwQ52PVxwSU7X87955i14RtgaGsE8SWA",
+      "ownerProgram": "LocpQgucEQHbqNABEYvBvwoxCPsSbG91A1QaQhQQqjn",
+      "amountRaw": "15000000000000",
+      "label": "token lock program",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "C76g9bChwfzgYxBpehu8cZTFdHAPG3UBT7KJ52k8zjXR",
+      "owner": "FChtgg7CC1iduhdex7YNY3Wu4DNwVgK1Mn5hnxQzi2ve",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "C9kGV8kb5iaNz7mFbkCwC1fxzJqYFeRfykkxXFwasnAA",
+      "owner": "R32xAccFis3YzBzGwZ1C4QkGiehLxSao7gDmErA3kjk",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "CcxyH6rtuVhkKpkkvjkHWkVyr9KQsztPVoKu26j7sDwt",
+      "owner": "9HhKoia8dpRcor5Zw2fFA2KeWbKZviwmFeUuHe2aJbq2",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "CCyMYyW3J674bBpkSgJ5RvFbNQwy2QQZTWZRkKZ2hvss",
+      "owner": "9vJaWLaQPFyPMYhcjANuM8e8wfhiYfAnQCeERyJ8NvTM",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "CDBRhYXTQVJVWSdfCPrnGELASgLBoUw165k3ojhupxFq",
+      "owner": "FkyJTwUSxnbwxpSgBUaJtMsGJi16oneJuNDuF3YgU4Ph",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "CdFS68axggDwy4Y4PrNdxN4yB3wzrZjdn11wKAxNwca8",
+      "owner": "41kRLRiUF43834nAbHU4F2sb19ZvUhPB1hAvgnLYFjue",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "CDYc33PQ8BCYFX2k7sShjFPUXwVmqvuSzZkcTtuMLmKS",
+      "owner": "6zAgF9bFMQy7U2ShmxBfkxieZYiSngf8psZULXKe6LoL",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "1",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "Ce45ZBRC3v3q23iajXabAjFNCEev88ZaQyA7Yd5onD9B",
+      "owner": "2RG11dJdriXTWpph3EQb8XG8CHbW4zA3dZwwRoVb4ctz",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "CFrEw2LDSmwtQHaRFaftxwn1hfE7gLeDVCbpzG8S78RC",
+      "owner": "MRiYA4oN3158fCV8evhuCofrDzbHyYvYnGZUDJvoCsa",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "Cixyatth711xYedn5wi2e6v3DPKkpAURof2hFcyJWqhw",
+      "owner": "6AGp6zbGNuyZpmzeswv9KCNU15Rf37UQDqDqFAeHmS8d",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "CjqZP6ru7MeQRd1cv8uaMev5Zm9MRzg5KQMsbdWk6rb6",
+      "owner": "8mQkiwD6jMnkVkuFaKu3J57MYCWJycbdNvraWfMqp4cH",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "1570027384235",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "CLw7xmBEWXjX4DvWwzebZBm3dLqSYyE5F1TC15Fvtyr7",
+      "owner": "FtYVF55CKtg7R5TG7nfXS6d69jT1qnvNqBaC8UyRCZN2",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "3005506423941",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "CMfdnWGmmQC4TZTrW2uVr1DaVCrgRHdskR2pZySkEGus",
+      "owner": "2MPXfsUKGL8x8czLcoF6ocQmTKtEVLudpmW2Qyoz1mEQ",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "CqeXACw7mT9ma2d9Ee7aoWC9Rw6TzCqucmWj1JgLLknu",
+      "owner": "FmwUvfBHmv1MacUfvP3P61fbKxDgJWtC8BHeP1x4d9K3",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "CQmTyBGzfwT8xu6cPkZEgUtefqotUWZJCx5YFVbRid5o",
+      "owner": "CpfBVjneS8UQMfYCBsZGDnJ7Ai5ehBNNBw4r9Fj6uhgp",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "3",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "CrbDHTe79DrR8i3H2aBZ8fiDzBrQMceNur8LvRZREXUG",
+      "owner": "9GGV9zAYrWzSreBbGMXLzME3jtqAqhVYZCra5V8Q7SvY",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "CrzAWGdvqN8vWpiUKACLXwP791aEvchhhSHyvxaAdHov",
+      "owner": "3CgvbiM3op4vjrrjH2zcrQUwsqh5veNVRjFCB9N6sRoD",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "CSJXvK1SaExFNjLR7u4MjVpbQfKUc4ZmGg3DszrPLqeK",
+      "owner": "4XBqViD1XYF1qHrErrsXBzDrCapvP9fEFX4LPjXZi9YU",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "CVSGAgTwsu6XqW6zAry3phZg9cZ7FamSh8Ca6iwJDJ4",
+      "owner": "5SRDu4XuasGKqTTkfmaSjvHrUj8abNRZTCcuhzpLCHWk",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "660095494366",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "D1cDBD2Zt4He3E9b2gmYdDW3ieNegM9Yb5bWSdnW9Poj",
+      "owner": "BVZmPigfkCUPfSnXHZ8crj7du8nU6SH3haBwmmhSVYKq",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "D6SQ1MBNQqWcFutJqDdnswYQgmHju7Vc13tk8zbcjd1h",
+      "owner": "8Bgt6fwJNWJHsrAnRqUAYHSJTnyLir3STGkaAxZJNmbT",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "De6EpjakLPQLyWNuZxHRStY5teSi4pRJiUzbrSHV7Q4J",
+      "owner": "6jzprDfyPxDYgdTxeLBdCL6tYsP8ViR66FSjNvoNhv41",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "99973045215",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "DeLmP6TB4MkRmAA3UVHatVVuLAbZV7yDeKs9GgjwZvWr",
+      "owner": "Dspk6ZxbcCWLHxLPFAV9RJaa4ZFziRcAvxjwkxthpFrz",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "5027904172",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "Dg8WPQMiHEcoY8sDhqkmGYs64CmYnF3ajXbvcz2To5M2",
+      "owner": "3CoK4Zf9Qi3qkkncVGNbMHVNyHyb9zjfdjddG5xtajmA",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "5746890588530",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "DjCzwVZ314C5n375yrebfZ9oVpnjAmwREURHknyEL6Ah",
+      "owner": "Bu1cok6KWWBUdxUYANMUM51S9wFkDxdt5j3Le6uuhVAE",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "DMu949s9iRX9dRDMeiBDXWymcpdEh3QZfSXF6MLjVmwb",
+      "owner": "4JJ5pD3AYKyC7TVx5WJdwn1ne1m92dHEcDGZbm891JDc",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "DnxsX5h5HEQYAMWJDj7FkKKSdEPZSzNXuGjaGwwQSWd3",
+      "owner": "CzYQ2kFnBxsNEt9Zy34vQ3n5fSDhvA4o4XaTnq1rLvyr",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "DpHkGqetZa6urxkht9L6LctVkR49TogiVe9Va7VS1mkY",
+      "owner": "2tgUbS9UMoQD6GkDZBiqKYCURnGrSb6ocYwRABrSJUvY",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "DQD3dPUkGwThyo7kKaZ8ue2DGXBx3rb4drCBv62D4wN2",
+      "owner": "GqboR8Q7yQAapj9hnx4Maz3VVK2CQXm4R1EW5vz8ZwdY",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "DvbWz1Zw36xYyxuNNoEQGRVvBj4czU4Eua9uQekYZxzC",
+      "owner": "9LwcrCHtXVyZt3mPCkckzZ5UeRr1vuex2hCfQKt8nHC6",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "DvCDv4dX3CQBWbcUS6n9mpAmrAJvSMyDxsZKjZcv3Lhx",
+      "owner": "Ebou1uwFq6EU3bUgyuoqNifp3o3pZHZFAcJXAniWhokh",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "DVTKi7GqJc8gjkiDZT4mw1Te1B7vuRwSymASsCarzcMe",
+      "owner": "GGCwvC7n6XKoPMFczqF3vC5aNyqQxg76Vuq5U5fvv38A",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "E3BWeVd43KVEJ4tXEiA5XYnLCSqUECfCLMzYmTMkEV9Z",
+      "owner": "DAbnhoTZMGCYz9PLwbtvxavcFWEEKGKYWeKJTzGsaMnS",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "E5UaJybj3Y6eco3cS4gZxvdMn8V8j43GibtNj3UAskT7",
+      "owner": "DeZcW7tF1mpaDsXZsAT8qYM6n6uUBtEEzkZeQvWNLyYk",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "1005000000000",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "ECq3ttBd27DCDvdn12NprDxcA5t3oFsgzVWdr7uaMAnf",
+      "owner": "CapuXNQoDviLvU1PxFiizLgPNQCxrsag1uMeyk6zLVps",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "EDQsjbXJKy8FNpFEmuVxspJTAUwFHqiWTFiAHYC7WkNJ",
+      "owner": "45J2n6KvGjHUutMEknV6PadcAyCwosiJeVMgkv54wfK2",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "EeLKWb12Cxi6GqPasJxctmr2qqDMp33HhozxuW5yCukV",
+      "owner": "HvFdDWS3RqymRAVx1ZdoL2RjiC38r5dtt19Z8op5jqDK",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "EEnK5aGkeDy76kVJrA7Uj3E15ckzkhUXdwvsKPwjYLW3",
+      "owner": "8TPWakvWw4xQbk7uAYdNjZiDKKHgv9GE5GebzsbtUaHr",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "EGic7vukJkvhPRHe3xUJk1MJBKk9Z7wXNYJxFc5FdNsa",
+      "owner": "2rbMgYvzAb3xDk6vXrzKkY3VwsmyDZsJTkvB3JJYsRzA",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "EKCT91TvqVq2RpU7aNLzQ1srJn6jWBCdoCZmQT2AgJ5P",
+      "owner": "HWGoJ1HaMFUiDgfD7FVxMaYJAE2A5JjF7si6CgWSvRFQ",
+      "ownerProgram": "3s1rAymURnacreXreMy718GfqW6kygQsLNka1xDyW8pC",
+      "amountRaw": "0",
+      "label": "program-controlled (3s1rAymURnacreXreMy718GfqW6kygQsLNka1xDyW8pC)",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "Em4tkkatf2SeizBhAm6YN6RwLVtpXyNhGfobiyM4C78J",
+      "owner": "6U91aKa8pmMxkJwBCfPTmUEfZi6dHe7DcFq2ALvB2tbB",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "EP5EJhVudibbafmTRqhx8rkQXRuvVfwaNffMWWVw77ks",
+      "owner": "8L2W2HY6vUjzFd4KA1ZYQQTETZhEDQ3v2U9tUnSuaK6Q",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "ESm5KxVndAKrnpoPxp7t17K9MU2gvMgCsR2BX2azTR5A",
+      "owner": "HRnVbVYcGEtJoMcUEjePaaCGVrjAjpCWcCh5Yw3QUcCa",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "EwvT8Fi5i6YXw6xyHAcozDBvZ6P4xu5zDkY4ac9YUJsk",
+      "owner": "Fk3LqCC65NEsk2CvrKBBN8KChbcnZ1bXc7aGYH5geK4m",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "ExwPpt3V3QtxdMRsUDdebcUXPZgXsvw3z9vDPPRYKm9A",
+      "owner": "FyQyngEhGsRqmh8kdy1nwuXAkw6LvAYQbeNqLhjr4WqH",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "ExZ1qmad8RZ7y2xeYFcgwowPmXeEWLRgWQu3MbAsJcYh",
+      "owner": "TfWqYMSTapn3u5Za5eobFYVBRmgNpKkXvFkjs9Qnuqs",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "5196046955",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "F9fMaAZ3J9yv8ViFaKNAT7qShT8qsx3FFTv5jDC7A2i9",
+      "owner": "C812FoippytpMRDKshD7NLRchzK5qUjdEBHm64diUSq2",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "FEbXWh3Vm42aZmvnDFE7bMa38FiM3aeYEKS1BxHnC3Wi",
+      "owner": "9fPBFThoAbCzYbSMJeZh37oRqTiFW5YsHasQVNYLeL9x",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "FF4qsSnCsb6djrMDTwSVAqQsDzhUYSY7BUxmD6iZFv7k",
+      "owner": "EDRH3BCSVhnyXKYfMk2HnrhyjPMzHcoz97nmwA2CX2XM",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "1000000000",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "Ffvn5FtNqUbezTsp9jr6KTdFjCyhW2FDZ5AA1gtKe3Wv",
+      "owner": "DcbiZ8gzWH5yquzfnkmnhCZdgJN29oCRLe2ALS1T69L8",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "Fh6XVtHrmXgR4Vy3zS1jDXXH8kDBWqn2AsZajT3rqGSE",
+      "owner": "DDYjdok36Ecw6b4ReP68xQhuaY27B5ksXDc1RBxSWxax",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "FhAdHEkbLC3gJhRiWVfRx2v1aNovGJpSgYr4bEX3TWn",
+      "owner": "ARu4n5mFdZogZAravu7CcizaojWnS6oqka37gdLT5SZn",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "FyG2BTxtXMkUJzmCZu3CFVUy9AR5fh6kBwawJQcijuLr",
+      "owner": "Hc3HnUDwspEHqmQ6Wyh4cNC4DrJ6hmph3m87CxuEswML",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "1222306793127",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "G1viHyDL1m2rqQu1FJaNawEztZog8gdaXTfwRFnQhHVP",
+      "owner": "Cz8webq82e7BaoAYiEnvyEXSKvRqfvbAb9iDcJGyXmGr",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "1510000000",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "G2a4t33V45LbmHtbLftS2xVpZ6xgwS11kxF1nQ62ESvA",
+      "owner": "CDnaFfHxBpNm9n4sqF6yvmQAnny6V74wSXctb7bpKgB2",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "G4zmLCHLMek6pbytiCZqWWTgLWLtxF7GgCVFPPxZTiHg",
+      "owner": "8UZJnbBbwUJoUk6VZbZBpm8qkVmFVoKGP2cCSEVcgLTS",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "237761391618",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "G6bb9ALGtuV6rr1faddqd2pHhsyfKkZ3EFAHePEhsjph",
+      "owner": "UUAhspPgUdGuXUnokmxERH1VvNGNh1ouN3mfcbfV8yd",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "GagHxyXfbJckYMRXRQKTQWiWSkrN8NkS6b7RmGDGMBwG",
+      "owner": "AX7cMx4GMxwNt72ZqztYh9zqkZspvdxgVAmTBYcHNVhk",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "1000000000",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "GAqfWmwNmVN2H6j8TKmUxFUYs5Hw4qYbGWGnooUmnj1e",
+      "owner": "3NVMcMBRckyPaeAkUbrfCGyd7NxD79iuHvwfwHwBgHzU",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "Gc5epcqEL2pjTfseoekPdtGRis3RbSJP8Shw3k12SYZ7",
+      "owner": "A7FMMgue4aZmPLLoutVtbC7gJcyqkHybUieiaDg9aaVE",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "GGsA7rykeLhXwvYuS7Mbx12CoCqUFLvnS1jdzhv15EN4",
+      "owner": "HtjveWvqdBV76UbgcDMnzdvMu1c8v4RVndhGkbTB37qH",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "GjD87DCg8FMf1WJLCHMG4poWag6D5VnKENH46vbNrBNj",
+      "owner": "ACxHNHwPkUsMHo3CXubR8MbZQJ7o3xwVaMb24rPQWycY",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "GPasnTJyoAZybPbNpKrFVKRp14mApZCX81FvRAwF95UQ",
+      "owner": "EehosoQsc5qdaypAFEewqRgMd5W9hymmHsm4yAGxJT3P",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "100000",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "Gpg4DYgxULw2e8yvT7Ujaj91d1hhsFQtZBM69cL8eBfg",
+      "owner": "D6d5byBxBcddovgQ2UPUMpPDpJukjyC7C4Hcg3v4FRkZ",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "2049463850861",
+      "label": "Developer Reserve",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "GqBQtKaEGK7nEQHjB24VJf54zxxCoGhwuGsv4j5hAk15",
+      "owner": "5jZedbVqkpRBWcATibm77PXP4VoU1WAwgQ7FjkJfpQU2",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "Grp8uXPCH674rM5Gg6LipgoFtvZouPNwT6uM9nB7tGUF",
+      "owner": "8Yj4AwjjPBkvaQ5XcfcZQsE4LTbc8qm3K4CMUeEay44v",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "Gu6djXy1n53bJgytKWUHbbMwbcwmSgyR8UyBWHPeyjQV",
+      "owner": "ARBeretdx9GASNtHecHBmnvkWEH3yJhYpd2VjczXs3LA",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "GvvKSrYFhtS3dBxXvfNTTXbfHJMBVq5Vnpj4ScVqYdQe",
+      "owner": "7oMN6sms88zD1W918aPvrqNFEkzb9QkxHXSGeHPGBMFW",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "GwVXGD7RyvuxPfQDv8LHNAg8HyLUifKjA6UvvYzZTJqd",
+      "owner": "ESuvjvsQtjuxC4XGsDeMhx8Wp5yjQcCFGncGhupcJbg8",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "781417",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "H1KJLuXYDbqKQUE4ymtcKP6fWSvNNTAr3B4KJn7FYpo",
+      "owner": "D6RRWLVMrwak8sz8sHGKS87k5DpDejzvbL9nzRmhdbY1",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "H5qgBCvGvj1CGaZFWnWVt8i9rKhZdoEXGpPjUxUUx5fz",
+      "owner": "4xDsmeTWPNjgSVSS1VTfzFq3iHZhp77ffPkAmkZkdu71",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "H9SA7jDDATU6xMxja4NjE6ZtfVsPaqdK72rYDQFBDFzj",
+      "owner": "56FvNLzUg7RQ8MXk1voNRm2rAhGYoQWx2RdUhpYpzQNc",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "HbXzJHn2ueQMNqZ4fAwGBxtY3h5i1CV3eEFjTN6kn5De",
+      "owner": "3g5fPhYqCc7ypU5ee6hrUypkgDyxVSohtjjWacK58X7o",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "Hghcb294nXPWmXtGtV7MAXx4M4NxXF26zDahFFSyUUqG",
+      "owner": "FcEtZqVowuhF2hdysy7qxJYRhu1eNZ8ws2JqHUDmPPjE",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "12961147860000",
+      "label": "Discord & Web Faucet Reserve",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "HMkefMTBSV9y8voe7yvTfHSwDtjV55kEVuNx81upEkY4",
+      "owner": "EpaFHKZfrHd5xf7h7s8DA7Wx4B8sjgEER5G2QmoJF6Gw",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "HPfDfE7cSuDJ23ukjcm9TyBSQDpLbBm44WzrTS8FpmQe",
+      "owner": "CQwT1byuHgjKnL6vzmuNaAywKfDBVxDmFVgsQDBWxcWt",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "HpL3zqZPDacyAZTdXu12BDxV75exAUksmvQC7fCZDwjz",
+      "owner": "4paH4rL8g1rexK3eL6WY2ZTi1zhtUEkZSBYjaxJrhzMg",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "Hq3gaYds5JH9Zcao7kkSYh9KFjNj1yUTabNqBtkm7xsp",
+      "owner": "7xnfriWHAPE9FwtMwjHuxHw6ruwgGWwPeA1JRzHMKuL1",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "HQKsWabST6yRqXugjCwoBQhB7eSyfv6YEmLYUBXTtdCy",
+      "owner": "BQ72nSv9f3PRyRKCBnHLVrerrv37CYTHm5h3s9VSGQDV",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "HrDYJrDtwqg7Kd2Mn9xQQ6yqTJwyX8f1RxWp5yLFgj1j",
+      "owner": "2MFoS3MPtvyQ4Wh4M9pdfPjz6UhVoNbFbGJAskCPCj3h",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "HrRKSpZo4J1FSnaqfiZfKsJ7G8d9DZNYcRSFeXRmgf9w",
+      "owner": "AFZmsGB2JdxpFoF3yppFXs7qtAUds41qriPG2UAmBSci",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "HsZLjk41iCrFABzuWJhrWWD48Q62p24HbYVw9bZu4p8W",
+      "owner": "6LXutJvKUw8Q5ue2gCgKHQdAN4suWW8awzFVC6XCguFx",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "Hxp8vPK7DS1yQzY7KSMQnK3xzzDBwVr9GqfZBawgmuWA",
+      "owner": "kAJLFtuFMuvRDrd6bTuFoqFZ9voCoQ4MBvNNuJLGNKa",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "38481683502555",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "J1o6Pfh5RXkNTrMQ9i7epCAXdMjmvPGfhurAcgczUgJJ",
+      "owner": "9Wgko8Nr58B6LVrbqFGo5CHP6XeqL5mgPTovghJQ9i8W",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "502300000000",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "J2F2g6dn2KT2gjGYWzKa3wUWzexYp38YmYnr28PXDSfs",
+      "owner": "BSfQT2AmdxQfpsGQANrcYEUcwta5PWuTfBkHxqsZ3Gz8",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "J83j7KojSkHhygvKgdqeNcLgdCM6TVAoMxHQvmm99z2u",
+      "owner": "D8oJSdqoYk6heQsf36217mDm3Yf95umjnXaJiLYA5ZEz",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "59929099337815",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "J92fgQ3m7bYtzokY1VqfifpdQpg8Ak2mbNTLjFK8aJNh",
+      "owner": "B1dc6PTGLtRmUvYWaWXzsiCh6kqfpC5yRFPwRpH8dy9R",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "798222542218",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "kMVfPCNMeiMMQpdmZewfAy5rvdYqVEMq5mr3X6jWAXC",
+      "owner": "BLjv91TQLRKwApKxpnAsw2AkefA43SW2Xa5Lh1h77E93",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "KxfFvGuYPtSurChMoPnwZXkQcxX8dm8kZ38ZZjdcfrd",
+      "owner": "AvJi2mKqeUz3oRbY8GjSBkWEk3VQdjXaZ9XFnG7S6R5m",
+      "ownerProgram": "LocpQgucEQHbqNABEYvBvwoxCPsSbG91A1QaQhQQqjn",
+      "amountRaw": "19192210751092",
+      "label": "token lock program",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "mcYqzRduB9CEeYappEN7mYXbz1kKccLMvzr5JLSVn55",
+      "owner": "9LSZ6sM5gaZWmcHgbb8Gj7Vb3NDSVj6Nv374n3zyhEQS",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "MFizqPRNZnTo5bhZdWRHpE4cv9TbZhN8na1yhwbKiGv",
+      "owner": "GjQNSQVctLonfMnepDcokqigXjGEq6yWT6Zgsp5F3iv1",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "mY7Ga4ndfMAEoFccuiKJpk422sVqtGa9r5BKdtuN8dM",
+      "owner": "EjfeEN61GrfdiPcffe46DBgqG7PxjnBhBLMKBTZyv9ZR",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "11999999999974",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "nKawSwazMrGNdGhLNfv6p6M2yndTKMvhTXZn9xbAj2z",
+      "owner": "CQYV3c6tVUznL62WSGpaiUVf7pKemTs4ayoyk4miZVwx",
+      "ownerProgram": "LocpQgucEQHbqNABEYvBvwoxCPsSbG91A1QaQhQQqjn",
+      "amountRaw": "19999999999998",
+      "label": "token lock program",
+      "excluded": true
+    },
+    {
+      "tokenAccount": "pLJGsp7y3g5LiGNJLwcEoSag6NR4XvaS4nPvpnVz1jM",
+      "owner": "GxDC9e7SP9mzhDo4re5HbpLa2RW7gB9DtmThx4i4pXSq",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "r3JRheyuHwn6a3TiMgSwjKSuo842qEBcM618Q41q8AH",
+      "owner": "8NQ32SyFKD1d5kenq4oM8Da6C6J9TQSMW1uAgFRveEQr",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "s2KwTAATGQqFmwcYGfYtRHP9uZmbMkM7mJPuQhfh2Ki",
+      "owner": "2ywpH6x7JyNqQzrzg8BcE3N5RJcE4xNa8XuMVgMPGKUz",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "UFmoKt91dpQjzXRQ6h22PL1eH1fTs26YRKD1NBd1sVE",
+      "owner": "8p3qoe8PoiTVxSkGNoq5bVTLnBh2BzmwUPheLB5mtrbP",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "246255569500",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "vP3Cu2FHD4QBnaajJDcLwrqrCi71KT59AVWXFQENDga",
+      "owner": "7ccBd2oebssJT48z6QpNg1XJ6RpYv1FyURwY1JxJHrYE",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "0",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "wLZa8TmKyVLaf57Zpm6HhHmbgGQr92oatQ6qLjDCVss",
+      "owner": "5SEpbdjFK5FxwTvfsGMXVQTD2v4M2c5tyRTxhdsPkgDw",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "1900000000",
+      "label": null,
+      "excluded": false
+    },
+    {
+      "tokenAccount": "Z9dpU87d5cSJStocrogBQWRBA7s6PAA8pQVUFBkVpBp",
+      "owner": "577nPF42rvupYaUZR1JdH7H94S9YsUFzedwYrEhserBA",
+      "ownerProgram": "11111111111111111111111111111111",
+      "amountRaw": "81",
+      "label": null,
+      "excluded": false
+    }
+  ]
+}

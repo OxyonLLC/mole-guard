@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GeoHackers — Evidence Over Assumption</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="GeoHackers is a proof-first community platform that turns real Discord community actions into verifiable, on-chain proofs. Not public yet — but it already hosts CryptoSpades." />
+  <link rel="canonical" href="https://winlew.co/ecosystem/geohackers/" />
+  <meta property="og:title" content="GeoHackers — An Oxyon project" />
+  <meta property="og:description" content="A proof-first community platform built by the same team as WinLEW. Live on XYO’s XL1." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/ecosystem/geohackers/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    .hidden { display: none !important; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8; padding: 0; margin: 0; line-height: 1.7;
+    }
+    html { overflow-x: hidden; }
+    .wlPageShell { max-width: 1000px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin-bottom: 8px; }
+    h1 { font-size: clamp(30px, 5vw, 44px); margin-top: 0; }
+    h2 { font-size: clamp(18px, 2.6vw, 22px); margin-top: 0; }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header.wlHero { text-align: left; margin-bottom: 8px; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624; border-radius: 20px; padding: 26px; margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: 0.85; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid #4e3624; font-weight: 850; font-size: 13px; text-decoration: none; cursor: pointer; color: inherit; font-family: inherit; }
+    .btn.primary { background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22)); }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .ctaRow { display: flex; gap: 10px; flex-wrap: wrap; }
+    .statusPill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; border: 1px solid #4e3624; white-space: nowrap; }
+    .statusPill.soon { background: rgba(255,255,255,.06); color: #f6efe8; }
+    .statusPill.live { background: rgba(45,212,191,.14); color: #7ff0e2; border-color: rgba(45,212,191,.45); }
+    .featureGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-top: 12px; }
+    .featureCard { background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); border: 1px solid #4e3624; border-radius: 16px; padding: 16px; }
+    .featureCard .featureTitle { font-weight: 800; margin-bottom: 6px; color: #f6efe8; }
+    .featureCard p { margin: 0; font-size: 13.5px; }
+    .quoteBlock { border-left: 3px solid #d6a866; padding: 12px 16px; background: rgba(214,168,102,.08); border-radius: 0 12px 12px 0; margin: 14px 0; font-style: italic; font-size: 14.5px; }
+    .notReadyNote { border-left: 3px solid rgba(255,179,71,.5); padding: 10px 14px; background: rgba(255,179,71,.08); border-radius: 0 10px 10px 0; margin-top: 14px; font-size: 13.5px; }
+    .rankLadder { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; align-items: center; }
+    .rankStep { padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.05); border: 1px solid #4e3624; font-size: 12.5px; }
+    .rankArrow { opacity: .5; }
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+    </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+<header class="wlHero" id="about">
+  <div class="wlHeroMain">
+    <span class="wlKicker">🛡️ An Oxyon project · Not public yet</span>
+    <h1 class="wlHeroTitle">GeoHackers<br><span class="wlHeroTitleAccent">Evidence over assumption.</span></h1>
+    <p class="wlHeroSub">GeoHackers is a proof-first community platform for Discord servers: instead of trusting a role or a self-reported claim, real community actions — wallet verification, moderation calls, scam reports, vouches — become cryptographically verifiable, shareable proofs anyone can check.</p>
+    <div class="wlChipRow">
+      <span class="wlChip">🧾 On-chain community proofs</span>
+      <span class="wlChip"><span class="statusPill live">Live on XL1</span></span>
+    </div>
+    <div class="ctaRow" style="justify-content:flex-start;margin-top:16px;">
+      <a class="btn primary" href="/xl1/geohackers/">See what it has done &rarr;</a>
+    </div>
+  </div>
+  <div class="wlHeroSide">
+    <div class="wlEyebrow">Status</div>
+      <div class="wlHeroNote">GeoHackers is running on XYO&rsquo;s XL1 and publishing what it does &mdash; proofs written, how many confirmed, and how long they took. The counts are small and deliberately unflattering; they are a record, not a growth chart.</div>
+  </div>
+</header>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">What is it</div>
+  <h2>Reputation you can actually check, not just believe</h2>
+  <p>The core idea: "if something matters, it should be provable." A GeoHackers-verified server turns actions like linking a wallet, claiming a faucet, moderating fairly, or reporting a scam into a signed, on-chain proof — a shareable link anyone can verify, no login required, without ever trusting the person who made the claim.</p>
+  <p class="quoteBlock">"Evidence Over Assumption."</p>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">How it works</div>
+  <h2>Proofs, not promises</h2>
+  <div class="featureGrid">
+    <div class="featureCard"><div class="featureTitle">🤝 Co-witnessed proofs</div><p>Some actions — like community vouches — need both sides to sign, so no one can fabricate a claim about someone else alone.</p></div>
+    <div class="featureCard"><div class="featureTitle">🎴 Provably fair games</div><p>CryptoSpades, GeoHackers' first game, is built to deal ranked hands from a server-issued seed and replay every move server-side before a score counts. It is not publicly hosted right now. WinLEW's Mole Spades is adapted from it but has no replay verification.</p></div>
+    <div class="featureCard"><div class="featureTitle">🏅 Rank by proof, not vibes</div><p>Members climb a ladder purely from confirmed proof counts, not admin opinion.</p></div>
+  </div>
+  <div class="rankLadder">
+    <span class="rankStep">Initiate</span><span class="rankArrow">→</span>
+    <span class="rankStep">Operative</span><span class="rankArrow">→</span>
+    <span class="rankStep">Guardian</span><span class="rankArrow">→</span>
+    <span class="rankStep">Legend</span>
+  </div>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">GeoHackers & WinLEW</div>
+  <h2>Same builder, and it already shares WinLEW's infrastructure</h2>
+  <p>GeoHackers is a sister project from the same team behind WinLEW — currently hosted alongside WinLEW's own website and services rather than running fully independent infrastructure. That's a hosting detail, not a WinLEW feature: GeoHackers is its own platform, still being finished before it's opened up.</p>
+  <p class="muted">It is an Oxyon community project, run with WinLEW and built by the same team. More about Oxyon at <a href="https://oxyon.io/" target="_blank" rel="noreferrer noopener">oxyon.io ↗</a>.</p>
+  <div class="notReadyNote">CryptoSpades is a GeoHackers project and is not publicly hosted right now; its old Netlify build is retired. Whether it becomes an official $WinLEW game is an open community <a href="/governance/">governance vote</a> — nothing here should be read as a confirmed WinLEW integration yet.</div>
+</div>
+
+<footer>
+  <a href="/">← Back to WinLEW</a> · <a href="/xl1/geohackers/">GeoHackers on XL1</a> · <a href="/governance/">Governance</a>
+</footer>
+</div>
+
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

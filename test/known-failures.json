@@ -1,0 +1,105 @@
+{
+  "_doc": "Known failing tests (CI, 2026-11-12, after the placeholder test env fixed ~150). CI fails on any failure NOT listed here (tools/ci/test-baseline.mjs). Entries may be REMOVED freely; adding one needs the `baseline-expansion-approved` label on the PR. Fix tests rather than adding them.",
+  "entries": [
+    {
+      "id": "test/mobile/androidNotifications.test.mjs :: test/mobile/androidNotifications.test.mjs",
+      "since": "2026-11-12",
+      "reason": "Reads mobile/android/app/src/main/assets/capacitor.plugins.json, a Capacitor build output (gitignored), absent in CI. Fix: run `npx cap sync android` in CI or read the plugin list from source."
+    },
+    {
+      "id": "test/mole/completionSecurity.test.mjs :: test/mole/completionSecurity.test.mjs",
+      "since": "2026-11-12",
+      "reason": "Isolated-runner test (tools/test-audit/policy.cjs stage E): needs WINLEW_TEST_ROOT, the isolation guard and/or supervised browsers, which plain npm test does not provide. Run with npm run test:isolated."
+    },
+    {
+      "id": "test/mole/deploymentPreparation.test.mjs :: deployment routes, Android metadata and private-path denies match actual isolated backend",
+      "since": "2026-11-12",
+      "reason": "Needs the isolated runner's environment (path from WINLEW_TEST_ROOT/staging vars is undefined under plain npm test)."
+    },
+    {
+      "id": "test/mole/deploymentPreparation.test.mjs :: fixed package inventory detects changes, additions and removals without application imports",
+      "since": "2026-11-12",
+      "reason": "Needs the isolated runner's environment (path from WINLEW_TEST_ROOT/staging vars is undefined under plain npm test)."
+    },
+    {
+      "id": "test/mole/phase5Release.test.mjs :: test/mole/phase5Release.test.mjs",
+      "since": "2026-11-12",
+      "reason": "Isolated-runner test (tools/test-audit/policy.cjs stage P5): needs WINLEW_TEST_ROOT, the isolation guard and/or supervised browsers, which plain npm test does not provide. Run with npm run test:isolated."
+    },
+    {
+      "id": "test/nav/dexscreenerLinkTargets.test.mjs :: generic chart links use the pool that renders",
+      "since": "2026-11-12",
+      "reason": "Content drift: src/public/index.html no longer has a DexScreener link; test and page disagree. Decide which is right and update one."
+    },
+    {
+      "id": "test/nav/dexscreenerLinkTargets.test.mjs :: generic chart links use the pool that renders > src/public/index.html links only the Raydium pool",
+      "since": "2026-11-12",
+      "reason": "Content drift: src/public/index.html no longer has a DexScreener link; test and page disagree. Decide which is right and update one."
+    },
+    {
+      "id": "test/nav/indexingHygiene.test.mjs :: every canonical points at the page's own URL",
+      "since": "2026-11-12",
+      "reason": "Content drift: some indexable pages lack, or mis-point, <link rel=canonical>. Real SEO fix pending."
+    },
+    {
+      "id": "test/nav/indexingHygiene.test.mjs :: every indexable page carries exactly one canonical",
+      "since": "2026-11-12",
+      "reason": "Content drift: some indexable pages lack, or mis-point, <link rel=canonical>. Real SEO fix pending."
+    },
+    {
+      "id": "test/nav/landingModuleCounts.test.mjs :: the landing page counts live modules from the filtered set, not the whole registry",
+      "since": "2026-11-12",
+      "reason": "Content drift: index.html module-count logic (publicVisibility filter, hidden #moduleCountLine) changed since the test was written."
+    },
+    {
+      "id": "test/nav/landingModuleCounts.test.mjs :: the landing page hides exactly the modules /modules/ hides",
+      "since": "2026-11-12",
+      "reason": "Content drift: index.html module-count logic (publicVisibility filter, hidden #moduleCountLine) changed since the test was written."
+    },
+    {
+      "id": "test/nav/landingModuleCounts.test.mjs :: the module-count line stays hidden unless both figures resolved",
+      "since": "2026-11-12",
+      "reason": "Content drift: index.html module-count logic (publicVisibility filter, hidden #moduleCountLine) changed since the test was written."
+    },
+    {
+      "id": "test/nav/proxyHeaderAllowlist.test.mjs :: proxies forward only the allowlisted browser header",
+      "since": "2026-11-12",
+      "reason": "src/public/xl1/verify/api-proxy.php has no reviewed inbound-header allowlist (pre-existing; same on main and on R2). Fix belongs in a reviewed relay change."
+    },
+    {
+      "id": "test/nav/proxyHeaderAllowlist.test.mjs :: proxies forward only the allowlisted browser header > no proxy reads an inbound header outside the allowlist",
+      "since": "2026-11-12",
+      "reason": "src/public/xl1/verify/api-proxy.php has no reviewed inbound-header allowlist (pre-existing; same on main and on R2). Fix belongs in a reviewed relay change."
+    },
+    {
+      "id": "test/nav/site-nav.e2e.test.mjs :: nav @ desktop-1440 (1440x900)",
+      "since": "2026-11-12",
+      "reason": "Content drift: at 1440px the short primary link row is visible; the test expects it hidden below 1620px."
+    },
+    {
+      "id": "test/nav/site-nav.e2e.test.mjs :: nav @ desktop-1440 (1440x900) > Homepage — /",
+      "since": "2026-11-12",
+      "reason": "Content drift: at 1440px the short primary link row is visible; the test expects it hidden below 1620px."
+    },
+    {
+      "id": "test/ui/androidCompatibility.test.mjs :: existing Android package matches published integrity metadata",
+      "since": "2026-11-12",
+      "reason": "Isolated-runner test (tools/test-audit/policy.cjs stage E): needs WINLEW_TEST_ROOT, the isolation guard and/or supervised browsers, which plain npm test does not provide. Run with npm run test:isolated. Also reads src/public/jdid93hf8dh/winlew-beta-0.2.1.apk, which is not in git."
+    },
+    {
+      "id": "test/ui/pacMoleWinning.test.mjs :: PacMole real maze clear, calculated score, member settlement and next level",
+      "since": "2026-11-12",
+      "reason": "Isolated-runner test (tools/test-audit/policy.cjs stage GPAC): needs WINLEW_TEST_ROOT, the isolation guard and/or supervised browsers, which plain npm test does not provide. Run with npm run test:isolated. Under the supervisor (CI Isolated job, stage GPAC) it is FLAKY: passed 1 of 2 runs on 2026-11-12 ('all actual maze worms and power globes collected' false), so GPAC is not in tools/ci/isolated-stages.json yet."
+    },
+    {
+      "id": "test/ui/practiceLifecycle.test.mjs :: completed practice rounds bank only synthetic server-authoritative rewards",
+      "since": "2026-11-12",
+      "reason": "Isolated-runner test (tools/test-audit/policy.cjs stage L): needs WINLEW_TEST_ROOT, the isolation guard and/or supervised browsers, which plain npm test does not provide. Run with npm run test:isolated."
+    },
+    {
+      "id": "test/ui/winlew3Journeys.test.mjs :: test/ui/winlew3Journeys.test.mjs",
+      "since": "2026-11-12",
+      "reason": "Browser journey that needs the isolated runner (WINLEW_TEST_ISOLATED/WINLEW_TEST_ROOT/WINLEW_TEST_UI_BROWSER)."
+    }
+  ]
+}

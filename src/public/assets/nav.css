@@ -1,0 +1,819 @@
+/* Shared WinLEW site shell: a short always-visible primary link row, one
+   full grouped menu (desktop AND mobile, both toggle-triggered — see
+   src/public/assets/nav.js's buildTwoLevelNav()), a persistent Dashboard +
+   Connect Wallet account area, and the canonical design tokens. Loads on
+   every page ALONGSIDE that page's own .nav/.navInner/.navLinks/.pill
+   rules — this file adds the behavior + tokens none of them have, so the
+   pattern stays consistent site-wide without duplicating each page's base
+   nav styling. See docs/site-navigation.md and docs/site-design-system.md.
+
+   2026-07-18 design-system unification: every non-arcade page's own
+   `.navInner{max-width:...}` was standardized to a literal 1600px
+   (matching Mole Hub's own arcade grid's max-width, and --wl-content-max
+   below — first tried 1000px, but that wrapped the header onto 2 rows the
+   moment the account area grew a 4th item, see the balance-chip note
+   further down) — previously it ranged 900-1240px per page, which is
+   exactly the "page-specific navigation system" the design
+   doc calls out. Each page's own rule still has to carry the literal value
+   (not `var(--wl-content-max)`) because this stylesheet loads in <head>
+   BEFORE each page's own <style> block, so a shared rule here would always
+   lose the cascade to a page-local one of equal specificity — there's no
+   way to make this file the single source of truth for the value here
+   without also editing every page. Every non-arcade page also now has a
+   Connect Wallet button (`#navWalletConnect`) in `.navRight`, wired via
+   `/assets/wallet-auth.js`'s shared `walletLogin()` — the arcade pages
+   (Quiz/Faucet/Mole Hub) are unaffected, they already had their own. */
+
+/* ── Canonical design tokens ──────────────────────────────────────────────
+   Additive, not a replacement for each page's own --line/--brand/--text/
+   --ring/--shadow locals (still honored where already used) — new shared
+   CSS in this file, and any new page-level work, should prefer these. */
+:root{
+  --wl-bg:#130b08;
+  --wl-bg-elevated:#1b120e;
+  --wl-panel:rgba(255,255,255,.045);
+  --wl-panel-strong:#150d09;
+  --wl-border:rgba(255,255,255,.12);
+  --wl-border-accent:rgba(214,168,102,.34);
+  --wl-gold:#d6a866;
+  --wl-gold-soft:rgba(214,168,102,.20);
+  --wl-text:#f6efe8;
+  /* .72 -> .85 (2026-07-26): muted copy was reading as dim/brownish against
+     the dark brown cards on several pages — this is read sitewide via
+     var(--wl-text-muted), so bumping it here fixes every page that uses it. */
+  --wl-text-muted:rgba(246,239,232,.85);
+  --wl-radius-sm:10px;
+  --wl-radius-md:14px;
+  --wl-radius-lg:22px;
+  --wl-shadow-card:0 22px 80px rgba(0,0,0,.42);
+  --wl-content-max:1600px;
+  --wl-nav-height:64px;
+}
+
+.nav{
+  position:sticky;
+  top:0;
+  z-index:50;
+  container-type:inline-size;
+  background:rgba(19,11,8,.86);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+/* .navInner now has three flex children on standard pages (brand, primary,
+   navRight) instead of two — grow .navPrimary to fill the middle so pills
+   stay anchored against navRight instead of floating with even gaps from
+   justify-content:space-between. Arcade pages (mole-hub/quiz) keep their
+   own 3-column grid nav, untouched by this file. */
+
+/* Nav "Points or wallet balance" chip (2026-07-18 design-system unification)
+   — every non-arcade page's account area. Deliberately sized to match this
+   file's own .pill/.navToggle dimensions (10px 13px padding, 999px radius,
+   13px font), NOT Mole Hub's much larger in-page .walletPill (52px min-
+   height) — the design doc requires every Standard page keep the exact
+   same compact header height as each other; arcade pages are the one
+   documented exception, not a height target to match. */
+.nav .navMetricChip,
+.nav .navBalanceChip,
+.nav .walletPill{
+  box-sizing:border-box;
+  display:inline-flex;flex-direction:column;align-items:flex-start;gap:4px;
+  min-width:0;max-width:190px;flex-shrink:1;
+  min-height:52px;padding:12px 18px;border-radius:18px;
+  background:linear-gradient(180deg, rgba(20,20,28,.84), rgba(8,8,12,.88));
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 16px 44px rgba(0,0,0,.28);
+  color:var(--text, var(--wl-text));font-size:14px;font-weight:950;
+  white-space:nowrap;line-height:1;
+}
+.nav .navMetricKind{
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.12em;
+  line-height:1;
+  opacity:.88;
+  text-transform:uppercase;
+}
+.nav .navMetricAmountRow{
+  display:inline-flex;align-items:center;gap:12px;min-width:0;
+}
+.nav .navMetricChip .walletIcon,
+.nav .navMetricChip .navBalanceIcon,
+.nav .walletPill .walletIcon{
+  display:grid;place-items:center;width:24px;height:24px;border-radius:999px;
+  background:rgba(var(--wl-accent-rgb, 214,168,102), .16);
+  color:var(--wl-accent-text, #f0c989);opacity:1;
+}
+.nav .navMetricChip .walletTicker,
+.nav .navMetricChip .navBalanceTicker,
+.nav .walletPill .walletTicker{
+  opacity:.88;letter-spacing:.18em;font-size:13px;
+}
+.nav #navWalletAmount,
+.nav #navPointsAmount,
+.nav #navPlatformAmount{
+  min-width:0;overflow:hidden;text-overflow:ellipsis;
+}
+/* In-page anchors used by tailored primary-row items (e.g. /modules/#roadmap)
+   would otherwise land with their heading tucked behind the sticky .nav —
+   scroll-padding-top offsets the browser's own anchor-jump/scrollIntoView
+   target by the nav's live measured height (--nav-h, set by setNavHeight()
+   below) so the destination heading is always visible after the jump. */
+html{scroll-padding-top:var(--nav-h, 64px);overflow-x:hidden}
+body{overflow-x:hidden}
+
+/* box-sizing:border-box on .navInner itself — most pages have no global
+   `*{box-sizing:border-box}` reset, so `max-width:1600px` + this file's own
+   `padding:14px 22px` (content-box by default) silently rendered ~44px
+   WIDER than the max-width actually says, since padding was added on top
+   instead of being included in it. Invisible while content stayed well
+   under the available width; became real, visible clipping (brand text
+   and the rightmost account pill both cut off at the edges) the moment
+   content grew close to a real viewport's width — exactly what widening
+   .navInner to 1600px for the 2026-07-18 unification, plus the 4-item
+   account area, finally triggered. */
+.nav .navInner,
+.nav .navInner.navUnified{box-sizing:border-box}
+
+.nav .navInner.navUnified{
+  max-width:var(--wl-content-max);
+  margin:0 auto;
+  padding:14px 32px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:nowrap;
+}
+.nav .navInner.navUnified:not(.navArcade){gap:14px}
+
+.nav .navInner.navUnified > .navPrimary{flex:1 1 auto;display:flex;min-width:0}
+.nav .navInner.navUnified:not(.navArcade) > .navPrimary{gap:8px}
+
+.navPrimary{display:flex;align-items:center;gap:10px;flex-wrap:nowrap;justify-content:center}
+
+.navRight{display:flex;align-items:center;gap:12px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+.nav .navRight > *{min-width:0}
+.nav #navWalletConnect{max-width:180px;overflow:hidden;text-overflow:ellipsis}
+
+.nav .navRight .navProfile{
+  display:inline-flex;align-items:center;gap:6px;
+  background:linear-gradient(180deg, rgba(var(--wl-accent-rgb, 214,168,102), .26), rgba(125,88,55,.24));
+  font-weight:900;white-space:nowrap;
+}
+/* The single full-menu trigger — visible and functional at every viewport
+   width (desktop included), not just mobile. A dead, mobile-only hamburger
+   that silently did nothing on desktop was the exact defect this shell
+   closes out; see docs/site-navigation.md's "Desktop menu behavior". */
+.navToggle{
+  display:inline-flex;
+  align-items:center;justify-content:center;gap:6px;
+  min-height:48px;padding:12px 16px;flex-shrink:0;
+  border-radius:18px;
+  background:linear-gradient(180deg, rgba(28,28,38,.72), rgba(10,10,16,.82));
+  border:1px solid rgba(255,255,255,.10);
+  color:var(--text, var(--wl-text));font-size:14px;font-weight:850;line-height:1;cursor:pointer;
+}
+.navToggle .navToggleLabel{display:inline;font-size:14px}
+.navToggle:hover{background:rgba(255,255,255,.10)}
+.navToggle:focus-visible{outline:none;box-shadow:var(--ring, 0 0 0 3px rgba(214,168,102,.18))}
+.navToggle[aria-expanded="true"]{background:linear-gradient(180deg, rgba(var(--wl-accent-rgb, 214,168,102), .26), rgba(125,88,55,.24));border-color:rgba(var(--wl-accent-rgb, 214,168,102), .42)}
+
+.nav .navPrimary .pill.active,
+.nav .navLinks .pill.active,
+.nav .arcadeLinks .pill.active,
+.nav .navRight .pill.active{
+  /* Richer/darker than the original .20/.24 alpha (2026-07-26) — the washed-
+     out lighter version left less luminance contrast for the text on top. */
+  background:linear-gradient(180deg, rgba(var(--wl-accent-rgb, 214,168,102), .34), rgba(125,88,55,.36));
+  border-color:rgba(var(--wl-accent-rgb, 214,168,102), .42);
+  box-shadow:0 0 0 1px rgba(var(--wl-accent-rgb, 214,168,102), .14), inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+/* ── Full grouped menu panel ──────────────────────────────────────────────
+   Toggle-gated at every width. Mobile: a near-full-width vertical sheet
+   (existing pattern). Desktop (>860px): a wider dropdown mega-menu anchored
+   under the trigger, grouped items laid out in responsive columns so the
+   whole directory is scannable at a glance rather than one long list. */
+/* .navLinks.navFullMenuPanel (not ".nav .navLinks"): nav.js moves this
+   panel to be a direct child of <body> at runtime, specifically to escape
+   .nav as a containing-block ancestor — see the long comment in nav.js's
+   buildTwoLevelNav() for why (short version: backdrop-filter on .nav
+   creates a new containing block for position:fixed descendants per spec,
+   which silently clipped this panel to .nav's own small box instead of
+   the viewport). The two-class selector still safely outranks any page's
+   own unscoped single-class ".navLinks{...}" rule regardless of DOM
+   nesting or load order. */
+.navLinks.navFullMenuPanel{
+  display:none;
+  position:fixed;
+  top:calc(var(--nav-h, 64px) + 8px);
+  left:12px;right:12px;z-index:60;
+  /* flex-wrap:nowrap explicit, not left to inherit: several pages define
+     their own unscoped ".navLinks{flex-wrap:wrap}" for their (now-replaced)
+     desktop pill row. CSS cascades per-property, not per-rule, so even
+     though this whole selector outranks that page-local one, any property
+     THIS rule doesn't set still falls through to it — flex-wrap:wrap
+     combined with flex-direction:column silently turned this vertical
+     mobile panel into newspaper-style columns once its content exceeded
+     max-height, instead of a normal scrolling single column. */
+  flex-direction:column;flex-wrap:nowrap;gap:14px;
+  /* align-items:stretch explicit, same reasoning as flex-wrap above: several
+     pages' own unscoped ".navLinks{align-items:center}" rule (their old
+     desktop pill row) otherwise leaks through on this property alone, since
+     this rule never used to set it. That silently shrank every .navGroup to
+     its own content width and centered it independently — each group a
+     different width, sitting at a different left offset — instead of every
+     group stretching to fill the single-column mobile sheet edge-to-edge,
+     found via a real mobile screenshot during the 2026-07-25 IA refactor. */
+  align-items:stretch;
+  padding:16px;border-radius:16px;
+  background:var(--wl-panel-strong);border:1px solid var(--line, var(--wl-border));
+  box-shadow:var(--shadow, var(--wl-shadow-card));
+  max-height:calc(100vh - var(--nav-h, 64px) - 24px);overflow-y:auto;
+}
+.navLinks.navFullMenuPanel.navOpen{display:flex}
+
+/* min-width:0: a grid item's default min-width:auto has the exact same
+   "won't shrink below content" trap as a flex item's — see the .pill
+   comment below for the concrete symptom this caused. */
+.navGroup{display:flex;flex-direction:column;gap:6px;min-width:0}
+.navGroupTitle{
+  font-size:11px;font-weight:850;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--wl-gold);opacity:.9;padding:0 4px;
+}
+/* min-width:0 overrides the flex-item default of min-width:auto, which
+   otherwise refuses to shrink a pill below its own text's natural
+   (unwrapped) width — exactly what let "Transparency Center"/"Sponsors &
+   Partners" bleed out past their 170px grid column instead of wrapping. */
+/* box-sizing:border-box: the real fix — every page's own ".pill" rule uses
+   the browser default content-box, so width:100% only sized the CONTENT
+   box, and that pill's own padding+border (here: 13px+13px+1px+1px=28px)
+   rendered on top of it, overflowing its 170-221px grid column by exactly
+   that much. min-width:0 (overriding the flex-item default of
+   min-width:auto) and white-space:normal are still needed too — without
+   them a long label like "Transparency Center" refuses to wrap and keeps
+   the pill at its unwrapped intrinsic width regardless of box-sizing. */
+.navGroup .pill{box-sizing:border-box;width:100%;min-width:0;justify-content:flex-start;white-space:normal;text-align:left}
+
+/* Base pill visuals, self-contained: the moved-to-<body> panel (see
+   .navFullMenuPanel above) is no longer a descendant of .nav, so it can no
+   longer inherit that page-local ".nav .pill{...}" rule every page defines
+   for its own on-page pills. Mirrors that same rule's values so a menu
+   pill looks identical whether it's still nested in .nav (.navPrimary) or
+   not (.navFullMenuPanel). */
+.navFullMenuPanel .pill{
+  display:inline-flex;align-items:center;gap:6px;
+  min-height:48px;padding:12px 16px;border-radius:18px;
+  background:linear-gradient(180deg, rgba(28,28,38,.72), rgba(10,10,16,.82));
+  border:1px solid rgba(255,255,255,.10);
+  color:var(--text, var(--wl-text));font-size:14px;font-weight:850;
+  text-decoration:none;margin:0;
+}
+.navFullMenuPanel .pill:hover{background:rgba(255,255,255,.10);text-decoration:none}
+.navFullMenuPanel .pill:focus-visible{outline:none;box-shadow:var(--ring, 0 0 0 3px rgba(214,168,102,.18))}
+
+/* Item-level extras used by the "BEYOND WINLEW" group (buildNavItemNode() in
+   nav.js): a live/beta destination shows a small tag ("Beta"); a not-built-
+   yet one renders as a non-clickable <span> ("Soon") instead of an <a>, so
+   it can never point at a 404; CryptoSpades nests under GeoHackers via
+   navItemIndent rather than being its own top-level item. */
+.navItemLabel{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.navItemTag{
+  flex-shrink:0;font-size:10px;font-weight:850;letter-spacing:.4px;text-transform:uppercase;
+  padding:2px 7px;border-radius:999px;
+  background:rgba(214,168,102,.16);color:var(--wl-gold);
+}
+.navItemSoon{cursor:default;opacity:.62}
+.navItemSoon .navItemTag{background:rgba(255,255,255,.08);color:var(--wl-text-muted)}
+.navFullMenuPanel .pill.navItemSoon:hover{background:linear-gradient(180deg, rgba(28,28,38,.72), rgba(10,10,16,.82))}
+.navItemIndent{margin-left:16px}
+.navItemIndent .navItemLabel::before{content:'↳ ';opacity:.6}
+
+.nav .navBrandShell.arcadeBrand,
+.nav .brandMark.arcadeBrand{
+  display:flex;align-items:center;gap:16px;min-width:0;
+  text-decoration:none;color:var(--wl-text);
+}
+.nav .navBrandShell.arcadeBrand{gap:12px}
+.nav .brandAvatar{
+  box-sizing:border-box;
+  width:64px;height:64px;border-radius:20px;object-fit:cover;flex-shrink:0;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 18px 40px rgba(0,0,0,.34);
+}
+.nav .brandAvatarGlyph{
+  box-sizing:border-box;
+  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  width:64px;height:64px;border-radius:20px;font-size:32px;line-height:1;
+  background:radial-gradient(circle at 35% 30%, rgba(var(--wl-accent-rgb, 214,168,102), .55), rgba(125,88,55,.85));
+  border:1px solid rgba(var(--wl-accent-rgb, 214,168,102), .34);
+  box-shadow:0 18px 40px rgba(0,0,0,.34);
+}
+.nav .arcadeBrand .brandCopy{display:flex;flex-direction:column;gap:4px;min-width:0}
+.nav .arcadeBrand .brandTitle{font-size:40px;line-height:.94;font-weight:1000;letter-spacing:-.05em}
+.nav .arcadeBrand .brandSub{
+  font-size:15px;letter-spacing:.22em;font-weight:900;
+  color:var(--wl-accent-text, #f0c989);line-height:1;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+@media (max-width:860px){
+  .nav .brandAvatar,
+  .nav .brandAvatarGlyph{width:56px;height:56px;border-radius:18px;font-size:28px}
+  .nav .arcadeBrand .brandTitle{font-size:30px}
+  .nav .arcadeBrand .brandSub{font-size:12px;letter-spacing:.18em}
+}
+
+/* On pages that put a nowrap tagline chip inside the brand link, that
+   chip's own natural text width can exceed what's left after the primary
+   row + Profile pill + toggle claim their space in a nowrap navInner row —
+   flex items don't shrink below their content's natural width by default,
+   so the row (and the toggle with it) got pushed wider than the viewport.
+   Cap the tagline instead of letting it dictate the row's minimum width. */
+.nav .brandMark,
+.nav .navBrand{min-width:0}
+.nav .brandMark .chip{max-width:150px;overflow:hidden;text-overflow:ellipsis}
+
+.nav .navPrimary .pill,
+.nav .navRight .pill{
+  box-sizing:border-box;
+  display:inline-flex;
+  align-items:center;
+  min-height:48px;
+  padding:12px 16px;
+  border-radius:18px;
+  background:linear-gradient(180deg, rgba(28,28,38,.72), rgba(10,10,16,.82));
+  border:1px solid rgba(255,255,255,.10);
+  /* Explicit, not left to inherit: #navWalletConnect is a <button>, and this
+     was the one nav pill with no color rule anywhere in its cascade — the
+     exact "Connect wallet" / connected-address text some browsers/webviews
+     render dark instead of white (2026-07-26). */
+  color:var(--text, var(--wl-text));
+  font-weight:850;
+  font-size:14px;
+  white-space:nowrap;
+  line-height:1;
+}
+/* .navPrimary itself has min-width:0 (above) so it CAN shrink below its
+   content's natural width once the row gets tight — but its own children
+   (these pills) are flex items too, and flex items default to
+   min-width:auto (refuse to shrink below their own unwrapped text width)
+   unless told otherwise. Without this, a 5-link primary row on a page with
+   a long label ("Transparency") plus a wide brand block genuinely doesn't
+   fit even at 1440px in the container's ungridded (>1240px container
+   width) mode — the pills overflowed .navPrimary's own box and visually
+   overlapped .navRight instead of the row itself shrinking. Ellipsis is
+   the graceful degradation; it's inert (never visibly truncates) at any
+   width wide enough to show the full label. */
+.nav .navPrimary .pill{min-width:0;overflow:hidden;text-overflow:ellipsis}
+
+/* NOTE ON ORDER: this sits AFTER `.nav .navRight .pill` deliberately.
+   Both selectors have the same specificity, so the later one wins — the
+   first attempt at this lived higher in the file and the generic pill
+   background silently overrode it, which a screenshot caught and
+   reading the CSS did not. */
+/* Sign in — the recovery route, so it is deliberately the most prominent thing
+   in this row for anyone not signed in. It sits BEFORE Connect wallet because
+   that is the order the two actions have to happen in when the one-account
+   rule is on: sign in, then connect. Removed from the DOM entirely once the
+   visitor has a Discord session (see ensureSignInButton in nav.js). */
+.nav .navRight .navSignIn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:linear-gradient(180deg, rgba(88,101,242,.34), rgba(60,70,180,.28));
+  border-color:rgba(120,132,255,.46);
+  color:#eef0ff;font-weight:900;white-space:nowrap;text-decoration:none;
+}
+.nav .navRight .navSignIn:hover{filter:brightness(1.12);text-decoration:none}
+.nav .navRight .navSignIn:focus-visible{outline:2px solid #aab4ff;outline-offset:2px}
+
+/* The wallet chip is a control when there is a session to end — it must look
+   like one. Without the cursor and the hover lift it reads as a readout, and
+   nobody discovers that clicking it disconnects. */
+.nav .navRight .navChipActionable{cursor:pointer;transition:filter .15s ease, border-color .15s ease}
+.nav .navRight .navChipActionable:hover{filter:brightness(1.12);border-color:rgba(var(--wl-accent-rgb, 214,168,102), .55)}
+.nav .navRight .navChipActionable:focus-visible{outline:2px solid #d6a866;outline-offset:2px}
+
+@media (min-width:861px){
+  .navToggle{width:auto}
+  .navLinks.navFullMenuPanel{
+    left:auto;right:12px;top:calc(var(--nav-h, 64px) + 8px);
+    width:min(720px, calc(100vw - 24px));
+    gap:20px 28px;
+    padding:22px;
+  }
+  /* Matches ".navLinks.navFullMenuPanel.navOpen" specificity exactly and
+     wins on source order (this rule loads later) — needed because a plain
+     ".navLinks.navFullMenuPanel{display:grid}" here would lose to that
+     higher-specificity rule and stay display:flex regardless of this
+     media query, the same specificity trap documented throughout this
+     file. Grid, not flex-grow: a flex item's basis only sets its STARTING
+     size before growing to fill the row, so 5 groups at flex:1 1 190px
+     kept negotiating themselves into one overflowing row instead of
+     wrapping at a predictable width — grid's auto-fit/minmax has no such
+     growth-before-wrap ambiguity. */
+  .navLinks.navFullMenuPanel.navOpen{display:grid;grid-template-columns:repeat(auto-fit, minmax(170px, 1fr))}
+}
+
+/* THE PRIMARY QUICK-LINK ROW IS HIDDEN BELOW 1620px (2026-08-20).
+   A row of truncated stubs is not navigation; it is decoration that costs the
+   space real controls need, and it got tighter still when the Sign in button
+   joined .navRight.
+
+   THE NUMBER IS MEASURED, AND 1400 WAS WRONG. 1400px was suggested from
+   eyeballing a screenshot, then checked properly in a headless browser. The
+   five pills need 441px of content width. What .navPrimary actually gets:
+
+     viewport 1400px -> 316px   (125px short — heavy ellipsis)
+     viewport 1450px -> 345px
+     viewport 1500px -> 374px
+     viewport 1550px -> 402px
+     viewport 1600px -> 431px   (still 10px short)
+     viewport 1620px -> ~441px  (fits)
+
+   Hiding below 1400 would therefore have left a squeezed, clipped row across
+   the whole 1400-1620 band — the exact defect being removed, just at wider
+   windows. The breakpoint is set where the row genuinely fits instead.
+
+   Nothing becomes unreachable: the ☰ Menu holds every destination on the site,
+   which is why this same row was already dropped at mobile widths for exactly
+   this reason. To force the original 1400, change the query below to
+   1399.98px; nothing else depends on the value.
+
+   Both selectors are needed. `.nav .navInner.navUnified > .navPrimary` sets
+   display:flex at (0,3,1) specificity near the top of this file, so the plainer
+   `.nav .navInner > .navPrimary` at (0,2,1) alone would lose to it in unified
+   mode — the specificity trap this file already documents twice. */
+@media (max-width:1619.98px){
+  .nav .navInner > .navPrimary,
+  .nav .navInner.navUnified > .navPrimary{display:none}
+}
+
+@media (max-width:860px){
+  .nav .navInner.navUnified{flex-wrap:wrap}
+  .navPrimary{flex-wrap:wrap}
+  /* Even the short primary row is dropped at mobile widths — brand +
+     Dashboard chip + the single menu trigger is the entire always-visible
+     bar; every destination (including Home/Mole Hub/Quiz/Faucet) lives in
+     the full menu. ".nav .navInner > .navPrimary" (not just ".navPrimary")
+     to outrank the unconditional higher-specificity display:flex rule near
+     the top of this file — the same specificity trap already documented
+     for .navLinks below. */
+  /* The primary row is already hidden by the 1400px rule above — every
+     width this block covers is inside that one, so the declaration is
+     not repeated here. */
+  .navToggle .navToggleLabel{display:none}
+  .navToggle{width:48px;padding:0}
+  .navLinks.navFullMenuPanel .pill{width:100%}
+
+  /* .navRight's own flex-shrink:0 (desktop default, above) is correct when
+     it shares a row with brand+primary and has room to spare — but once
+     .navPrimary is hidden above, .navRight is often alone on its row with
+     less width available than its now-4-item content (Dashboard, balance
+     chip, Connect Wallet, Menu) needs at 390px. flex-shrink:0 then means it
+     refuses to shrink and instead overflows the viewport (the 2026-07-18
+     regression this fixes: WinLEW Forge and every other newly-4-item page
+     failed the nav e2e suite's "must not cause horizontal page scroll at
+     390px" check). Allowing it to shrink here lets its own flex-wrap:wrap
+     (set above, unconditionally) actually reflow the 4 children onto a
+     second internal row within the real available width, instead of the
+     row itself growing past the viewport. */
+  .navRight{flex-shrink:1;min-width:0;max-width:100%}
+
+  /* Arcade pages (Mole Hub/Quiz/Faucet — marked .arcadeLinks) keep their
+     own curated row visible at every width, same as desktop — it is NOT
+     toggle-gated. Their Menu trigger is wired (see nav.js's
+     buildTwoLevelNav) to a separate, freshly-built .navFullMenuPanel
+     instead, so the toggle has one unambiguous job everywhere: open the
+     complete site directory. (Previously the toggle was wired to this row
+     itself, which meant it was either a no-op at desktop width — the row
+     was already visible, nothing to reveal — or, at mobile width, revealed
+     the row in place and pushed the header taller instead of floating an
+     overlay like every other page's Menu.) */
+}
+
+/* Body scroll lock while the full menu is open on narrow viewports, where
+   the panel can exceed the viewport height and would otherwise let the
+   page scroll underneath it. Restored the instant the menu closes (see
+   closeMenu() in nav.js — every close path, including outside-click and
+   Escape, removes this class). */
+body.navMenuLock{overflow:hidden}
+
+/* Journeys lead; the established complete directory remains a disclosure. */
+.navLinks.navFullMenuPanel.navOpen{display:block}
+.navJourneys{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.nav .navProductLinks{display:none!important}
+.navRecords{margin-top:16px;border-top:1px solid var(--wl-line,#654a30);padding-top:12px}
+.navRecords > summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:inherit;font-weight:700}
+.navRecords[open]{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
+.navRecords[open] > summary{grid-column:1/-1}
+.navRecords > summary:focus-visible{outline:3px solid #f4bd59;outline-offset:4px}
+@media(max-width:860px){.navJourneys{grid-template-columns:1fr}.navRecords[open]{grid-template-columns:1fr}}
+
+/* ── WinLEW mobile app native bridge (Version 2.4 Mobile Beta) ────────────
+   Safe-area padding is inert (env() resolves to 0px) unless a page's
+   viewport meta tag includes viewport-fit=cover — as of 2026-08-01 that's
+   every page under src/public/ except the three /geoagora/ pre-launch
+   stubs. These values do real work on iOS; on Android they stay 0px except
+   over a display cutout, because Android's WebView never reports the status
+   or navigation bar as a safe area — the native wrapper pads for those
+   itself (MainActivity.java). See src/public/assets/nav.js and
+   docs/mobile-beta.md. */
+.nav{padding-top:env(safe-area-inset-top, 0px)}
+body{padding-bottom:env(safe-area-inset-bottom, 0px)}
+
+.nativeOfflineBanner{
+  position:fixed;left:0;right:0;bottom:0;z-index:80;
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+  background:#3a1414;color:#ffb3b3;font-size:13px;text-align:center;
+  border-top:1px solid rgba(255,255,255,0.12);
+}
+.nativeOfflineBanner.hidden{display:none}
+
+/* Mobile wallet picker — the menu showMobileWalletPicker() builds in
+   /assets/wallet-auth.js when no wallet is injected.
+
+   These rules lived ONLY in mole-hub/css/styles.css, while the JS that creates
+   the element is shared by every page. On /app/ that meant tapping "Connect
+   wallet" appended an unstyled div: without `position:fixed` the inline
+   top/left the picker sets do nothing, so it laid out in normal flow below the
+   fold and looked like the button was dead. Styling belongs with the shared
+   JS. Mole Hub's own copy still loads after this and simply wins there. */
+.walletPickerMenu{
+  position:fixed;z-index:2000;display:flex;flex-direction:column;gap:6px;
+  padding:10px;min-width:200px;border-radius:16px;
+  background:#150d09;border:1px solid var(--wl-border,rgba(255,255,255,.12));
+  box-shadow:0 28px 80px rgba(0,0,0,.42);
+}
+.walletPickerMenu button{
+  display:flex;align-items:center;gap:8px;width:100%;text-align:left;
+  padding:10px 12px;border-radius:12px;border:1px solid transparent;
+  background:transparent;color:var(--wl-text,#f6efe8);font-weight:750;font-size:13px;cursor:pointer;
+}
+.walletPickerMenu button:hover,.walletPickerMenu button:focus{
+  background:rgba(255,255,255,.08);border-color:var(--wl-border,rgba(255,255,255,.12));outline:none;
+}
+
+/* Shown inside the wallet app's in-app browser after a session has been handed
+   back to the native wrapper — see showNativeReturnPrompt() in
+   /assets/wallet-auth.js. The button is a real, tappable fallback, because a
+   wallet browser may refuse to navigate to the co.winlew.app:// scheme; the
+   hint below it covers the case where even that is swallowed. */
+.nativeReturnPrompt{
+  position:fixed;left:0;right:0;bottom:0;z-index:90;
+  padding:16px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  background:var(--wl-bg-elevated,#1b120e);color:var(--wl-text,#f6efe8);
+  border-top:1px solid var(--wl-border-accent,rgba(214,168,102,.34));
+  text-align:center;font-size:14px;line-height:1.5;
+}
+.nativeReturnPromptBtn{
+  display:inline-block;margin-top:10px;padding:10px 22px;
+  background:var(--wl-gold,#d6a866);color:#1a1008;
+  border-radius:999px;font-weight:700;text-decoration:none;
+}
+.nativeReturnPromptHint{margin-top:10px;font-size:12px;opacity:.72}
+
+/* ── Width-aware header collapse ──────────────────────────────────────────
+   Viewport-only breakpoints are not sufficient for "Desktop site" on a
+   phone, browser zoom, or a narrow split-screen desktop window: those can
+   present a desktop-ish viewport while leaving very little practical space
+   for the header itself. Container queries let the shell respond to its
+   own usable width instead of assuming "desktop viewport means desktop
+   room". */
+@container (max-width:1240px){
+  .nav .navInner.navUnified{
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) auto;
+    align-items:start;
+    gap:16px;
+    padding:14px 20px;
+  }
+  .nav .navInner.navUnified > .navBrandShell,
+  .nav .navInner.navUnified > .brandMark.arcadeBrand{
+    grid-column:1;
+    grid-row:1;
+  }
+  .nav .navInner.navUnified > .navRight{
+    grid-column:2;
+    grid-row:1;
+    justify-self:end;
+    gap:10px;
+    max-width:100%;
+  }
+  .nav .navInner.navUnified > .navPrimary,
+  .nav .navInner.navUnified > .arcadeLinks{
+    grid-column:1 / -1;
+    grid-row:2;
+    justify-content:flex-start;
+    flex-wrap:wrap;
+  }
+}
+
+@container (max-width:1060px){
+  .nav .navInner.navUnified{
+    grid-template-columns:minmax(0, 1fr);
+    gap:12px;
+    padding:12px 16px;
+  }
+  .nav .navInner.navUnified > .navBrandShell,
+  .nav .navInner.navUnified > .brandMark.arcadeBrand{
+    grid-column:1;
+    grid-row:1;
+  }
+  .nav .navInner.navUnified > .navPrimary,
+  .nav .navInner.navUnified > .arcadeLinks{
+    display:none;
+  }
+  .nav .navInner.navUnified > .navRight{
+    grid-column:1;
+    grid-row:2;
+    justify-self:stretch;
+    justify-content:flex-start;
+    flex-shrink:1;
+    gap:8px;
+  }
+  .nav .brandAvatar,
+  .nav .brandAvatarGlyph{width:56px;height:56px;border-radius:18px;font-size:28px}
+  .nav .arcadeBrand .brandTitle{font-size:30px}
+  .nav .arcadeBrand .brandSub{font-size:12px;letter-spacing:.18em}
+  .navToggle .navToggleLabel{display:none}
+  .navToggle{width:48px;padding:0}
+}
+
+@container (max-width:720px){
+  .nav .navMetricChip,
+  .nav .navBalanceChip,
+  .nav .walletPill{
+    max-width:160px;
+    min-height:50px;
+    padding:10px 12px;
+    gap:8px;
+  }
+  .nav .navMetricKind{font-size:9px;letter-spacing:.1em}
+  .nav #navWalletConnect{max-width:150px}
+}
+
+@container (max-width:540px){
+  .nav .arcadeBrand .brandSub{display:none}
+}
+
+/* ── Shared site footer ───────────────────────────────────────────────────
+   Built by nav.js's buildSiteFooter() from the exact same NAV_GROUPS data
+   as the mega-menu, injected as the last child of <body> on every page that
+   loads nav.js — a discoverability fallback for anyone who scrolled past
+   the header and won't scroll back up, or never noticed the Menu toggle at
+   all. A handful of pages already have their own small page-local
+   <footer> with a one-line copyright note (see src/public/index.html) —
+   left untouched; this one is a distinct, later element, so both can
+   coexist without a markup change to those pages. */
+.wlSiteFooter{
+  box-sizing:border-box;
+  margin-top:56px;
+  padding:40px 32px 28px;
+  border-top:1px solid var(--wl-border);
+  background:var(--wl-bg-elevated);
+}
+.wlSiteFooterGrid{
+  box-sizing:border-box;
+  max-width:var(--wl-content-max);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
+  gap:28px 24px;
+}
+.wlSiteFooterGroup{display:flex;flex-direction:column;gap:9px;min-width:0}
+.wlSiteFooterGroupTitle{
+  font-size:11px;font-weight:850;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--wl-gold);opacity:.9;margin-bottom:2px;
+}
+.wlSiteFooterGroup a,
+.wlSiteFooterGroup .navItemSoon{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--wl-text-muted);
+  font-size:14px;font-weight:650;
+  text-decoration:none;
+  min-width:0;white-space:nowrap;
+}
+.wlSiteFooterGroup a:hover,
+.wlSiteFooterGroup a:focus-visible{color:var(--wl-text);text-decoration:underline}
+.wlSiteFooterBottom{
+  box-sizing:border-box;
+  max-width:var(--wl-content-max);
+  margin:32px auto 0;
+  padding-top:20px;
+  border-top:1px solid rgba(255,255,255,.08);
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;
+}
+.wlSiteFooterBrand{font-weight:900;color:var(--wl-gold);text-decoration:none;font-size:15px}
+.wlSiteFooterBrand:hover{text-decoration:underline}
+.wlSiteFooterBottom span{color:var(--wl-text-muted);font-size:13px}
+.wlSiteFooterCredit a{color:var(--wl-gold);text-decoration:none}
+.wlSiteFooterCredit a:hover{text-decoration:underline}
+
+@media (max-width:640px){
+  .wlSiteFooter{padding:32px 20px 22px}
+  .wlSiteFooterGrid{grid-template-columns:repeat(2, minmax(0, 1fr));gap:24px 16px}
+  .wlSiteFooterGroup a{white-space:normal}
+  .wlSiteFooterBottom{flex-direction:column;align-items:flex-start;gap:8px}
+}
+
+/* ── Mobile menu-toggle visibility bump ───────────────────────────────────
+   At ≤860px (and the equivalent narrow-container case below) the toggle
+   collapses to an icon-only 48px square — the label text stays hidden on
+   purpose (re-showing it here risks reintroducing the exact 390px
+   horizontal-overflow regression documented above, "2026-07-18 regression
+   this fixes"). Visibility is bumped by color/weight/icon-size instead,
+   which costs no extra width: a persistent gold tint (previously gold only
+   applied once opened, via [aria-expanded="true"]) so the one button that
+   holds the entire site directory doesn't visually blend into the plain
+   dark Dashboard/wallet pills next to it, plus a larger glyph to fill the
+   same fixed box. */
+@media (max-width:860px){
+  .navToggle{
+    background:linear-gradient(180deg, rgba(var(--wl-accent-rgb, 214,168,102), .30), rgba(125,88,55,.32));
+    border-color:rgba(var(--wl-accent-rgb, 214,168,102), .55);
+    box-shadow:0 4px 16px rgba(var(--wl-accent-rgb, 214,168,102), .22);
+  }
+  .navToggle .navToggleIcon{font-size:20px}
+}
+
+@container (max-width:1060px){
+  .navToggle{
+    background:linear-gradient(180deg, rgba(var(--wl-accent-rgb, 214,168,102), .30), rgba(125,88,55,.32));
+    border-color:rgba(var(--wl-accent-rgb, 214,168,102), .55);
+    box-shadow:0 4px 16px rgba(var(--wl-accent-rgb, 214,168,102), .22);
+  }
+  .navToggle .navToggleIcon{font-size:20px}
+}
+
+/* ── The sync chooser ───────────────────────────────────────────────────────
+   Shown when the deployment can offer more than one identity provider, so the
+   sign-in pill stops being a Discord-only door. A direct child of <body>, not
+   of .nav, for the reason documented elsewhere in this file: .nav is a CSS
+   containing block, and position:fixed inside it is measured against the nav
+   rather than the viewport. nav.js sets top/right from the pill's rect. */
+.navSyncChooser{
+  position:fixed;z-index:1200;
+  min-width:232px;max-width:min(300px, calc(100vw - 16px));
+  display:flex;flex-direction:column;gap:6px;
+  padding:12px;border-radius:14px;
+  background:var(--wl-panel-strong, #14161d);
+  border:1px solid var(--wl-border, rgba(255,255,255,.14));
+  box-shadow:var(--wl-shadow-card, 0 18px 44px rgba(0,0,0,.5));
+  color:var(--wl-text, #f4f5f8);
+}
+.navSyncChooserTitle{font-size:12.5px;font-weight:900;color:var(--wl-text, #f4f5f8);margin-bottom:2px}
+.navSyncChooserNote{font-size:11.5px;line-height:1.4;color:var(--wl-text-muted, #c7ccd8);margin-top:2px}
+.navSyncOption{
+  display:flex;align-items:center;gap:9px;width:100%;
+  padding:9px 12px;border-radius:10px;cursor:pointer;
+  font:inherit;font-weight:900;font-size:14px;text-align:left;
+  /* Buttons do not inherit color — a recurring cause of black-on-dark text on
+     this site. Both color and background are stated outright. */
+  color:#eef0ff;
+  background:linear-gradient(180deg, rgba(88,101,242,.34), rgba(60,70,180,.28));
+  border:1px solid rgba(120,132,255,.46);
+}
+.navSyncOption:hover{filter:brightness(1.14)}
+.navSyncOption:focus-visible{outline:2px solid #aab4ff;outline-offset:2px}
+
+/* Disconnect is a way out, not an invitation — it must not compete with the
+   thing above it for the same click. Muted, and separated by a hairline so it
+   reads as a different kind of item from the providers. */
+.navSyncOption.navSyncLeave{
+  margin-top:4px;padding-top:11px;
+  border:1px solid transparent;border-top:1px solid var(--wl-border, rgba(255,255,255,.14));
+  border-radius:0 0 10px 10px;
+  background:none;color:var(--wl-text-muted, #c7ccd8);font-weight:800;font-size:13.5px;
+}
+.navSyncOption.navSyncLeave:hover{background:rgba(255,255,255,.06);color:var(--wl-text, #f4f5f8);filter:none}
+
+/* The settled state: everything is attached, so the pill's only remaining job
+   is ending the session. Deliberately quieter than the Discord-blue sync pill
+   — at this point it is housekeeping, not a call to action. */
+.nav .navRight .navSignIn.navSignInDone{
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+  border-color:var(--wl-border, rgba(255,255,255,.16));
+  color:var(--wl-text, #f4f5f8);font-weight:800;
+}
+
+/* Sync outcome — shown on whatever page an OAuth round trip landed on, for the
+   pages that do not render the message themselves. Fixed to the bottom so it
+   cannot push a layout around on arrival. */
+.wlSyncOutcome{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:20px;z-index:1300;
+  display:flex;align-items:flex-start;gap:12px;
+  max-width:min(92vw,520px);padding:13px 14px 13px 16px;
+  border-radius:14px;
+  background:var(--wl-panel-strong, #14161d);
+  border:1px solid var(--wl-border, rgba(255,255,255,.14));
+  box-shadow:var(--wl-shadow-card, 0 18px 44px rgba(0,0,0,.5));
+  color:var(--wl-text, #f4f5f8);font-size:14px;font-weight:650;line-height:1.5;
+}
+.wlSyncOutcome[data-kind="error"]{border-color:rgba(214,168,102,.55)}
+.wlSyncOutcomeClose{
+  flex:0 0 auto;margin-left:auto;padding:2px 6px;border-radius:8px;
+  border:1px solid transparent;background:none;cursor:pointer;
+  /* Buttons do not inherit color — stated outright, as everywhere else here. */
+  color:var(--wl-text-muted, #c7ccd8);font:inherit;font-size:14px;line-height:1;
+}
+.wlSyncOutcomeClose:hover{background:rgba(255,255,255,.08);color:var(--wl-text, #f4f5f8)}

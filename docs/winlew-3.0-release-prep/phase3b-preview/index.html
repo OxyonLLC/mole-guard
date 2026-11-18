@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" data-api-mode="isolated">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>WinLEW 3.0 — Isolated Homepage Candidate</title>
+  <meta name="description" content="A nonproduction homepage candidate connecting WinLEW's existing participation ecosystem.">
+  <meta property="og:title" content="WinLEW — Let's EveryOne Win">
+  <meta property="og:description" content="Play. Earn. Participate. Prove.">
+  <link rel="stylesheet" href="phase2-prototype/styles.css">
+  <link rel="stylesheet" href="homepage.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="prototype-notice" role="status"><strong>Phase 3B candidate</strong><span>Isolated · read-only public data · not approved for upload or deployment</span></div>
+  <header class="site-header" data-header>
+    <a class="brand" href="#top" aria-label="WinLEW homepage candidate">
+      <img src="../../images/avatars/winlew-logo-128.png" alt="" width="42" height="42">
+      <span><b>WINLEW</b><small>LET'S EVERYONE WIN</small></span>
+    </a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a class="active" href="#top">Home</a><a href="#play">Play</a><a href="#earn">Earn</a><a href="#community">Community</a><a href="#token">$WinLEW</a><a href="#proof">Proof</a><a href="#build">Build</a>
+    </nav>
+    <a class="account-utility" href="/verify/profile.html"><span class="account-dot" aria-hidden="true"></span><span><small>ACCOUNT</small>Connect / Profile</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle><span class="sr-only">Open navigation</span><span aria-hidden="true">☰</span></button>
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation" hidden data-mobile-menu>
+      <a href="#top">Home <span>Start here</span></a><a href="#play">Play <span>Games & quiz</span></a><a href="#earn">Earn <span>Claims & rewards</span></a><a href="#community">Community <span>People & governance</span></a><a href="#token">$WinLEW <span>Economy & addresses</span></a><a href="#proof">Proof <span>Identity & evidence</span></a><a href="#build">Build <span>Modules & experiments</span></a><a class="mobile-account" href="/verify/profile.html">Connect / Profile</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero section" id="top">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> COMMUNITY ECONOMY · PARTICIPATION PLATFORM</p>
+        <h1>Let's EveryOne <em>Win.</em></h1>
+        <p class="hero-line">Play. Earn. Participate. Prove.</p>
+        <p class="hero-description">WinLEW is where community activity becomes visible utility—through games, rewards, identity, governance, and evidence anyone can inspect.</p>
+        <div class="hero-actions"><a class="button primary" href="#live">Enter WinLEW <span aria-hidden="true">↓</span></a><a class="button secondary" href="#token">Explore $WinLEW</a></div>
+        <div class="principles"><span>Utility &gt; Hype</span><span>Proof of Value</span><span>Built in public</span></div>
+      </div>
+      <figure class="hero-visual"><img src="../../images/mole-dirt-hero.webp" alt="The WinLEW mole in a futuristic suit, joining personality with real technology" width="1600" height="900"><figcaption><span class="pulse" aria-hidden="true"></span> Community first. Evidence always.</figcaption></figure>
+    </section>
+
+    <section class="section compact-top" id="live" aria-labelledby="live-title">
+      <div class="section-heading split-heading"><div><p class="eyebrow">ACT · LIVE RIGHT NOW</p><h2 id="live-title">Choose your next move.</h2></div><p class="data-note">Each status resolves independently from an existing read-only source. A failed request stays unavailable—it never becomes a guess.</p></div>
+      <div class="live-grid">
+        <a class="live-card game" href="/mole-hub/"><img src="../../mole-hub/assets/diglew-card-600.webp" alt="DigLEW running game artwork" loading="lazy"><span class="status live">Live</span><div><small>PLAY NOW</small><h3>Enter the Mole Hub</h3><p>Eight browser games. Guest play available.</p><b>Choose a game →</b></div></a>
+        <a class="live-card" href="/quiz/" data-source-card="quiz"><span class="card-symbol">?</span><span class="status unknown" data-state>Checking</span><div><small>QUIZ</small><h3 data-title>Current cycle</h3><p data-summary>Checking the existing quiz-cycle source.</p><b>Take the quiz →</b></div><footer data-freshness>Source: Quiz cycle API</footer></a>
+        <a class="live-card" href="/faucet/" data-source-card="faucet"><span class="card-symbol">↧</span><span class="status unknown" data-state>Checking</span><div><small>FAUCET</small><h3 data-title>Claim status</h3><p data-summary>Checking the public distribution record.</p><b>Open faucet →</b></div><footer data-freshness>Source: Faucet global stats</footer></a>
+        <a class="live-card" href="/governance/" data-source-card="governance"><span class="card-symbol">🏛</span><span class="status unknown" data-state>Checking</span><div><small>GOVERNANCE</small><h3 data-title>Community voice</h3><p data-summary>Checking existing proposal records.</p><b>View governance →</b></div><footer data-freshness>Source: Governance proposals API</footer></a>
+        <a class="live-card" href="/events/" data-source-card="events"><span class="card-symbol">◉</span><span class="status unknown" data-state>Checking</span><div><small>COMMUNITY</small><h3 data-title>Events</h3><p data-summary>Checking server-classified event records.</p><b>See community activity →</b></div><footer data-freshness>Source: Events status API</footer></a>
+      </div>
+    </section>
+
+    <section class="journey-band" aria-labelledby="journey-title">
+      <div class="section-heading centered"><p class="eyebrow">ONE CONNECTED EXPERIENCE</p><h2 id="journey-title">From curious to contributing.</h2><p>Start anywhere. The system should always show what comes next and what evidence exists.</p></div>
+      <ol class="journey-flow"><li class="current"><span>01</span><b>Understand</b><small>What WinLEW is</small></li><li><span>02</span><b>Act</b><small>Pick an experience</small></li><li><span>03</span><b>Connect</b><small>Wallet or Discord</small></li><li><span>04</span><b>Participate</b><small>Play, learn, govern</small></li><li><span>05</span><b>Earn</b><small>Eligible rewards</small></li><li><span>06</span><b>Prove</b><small>Inspect the record</small></li></ol>
+    </section>
+
+    <section class="section" id="play" aria-labelledby="do-title">
+      <div class="section-heading split-heading"><div><p class="eyebrow">PARTICIPATE</p><h2 id="do-title">One ecosystem. Many ways in.</h2></div><p>Existing products keep their routes and logic. The homepage makes their relationship legible.</p></div>
+      <div class="path-grid">
+        <article><span class="path-number">01</span><div class="path-icon">🎮</div><p class="eyebrow">PLAY</p><h3>Games with personality.</h3><p>Mole Hub brings eight browser games together with guest play, score history, and eligible reward paths.</p><a href="/mole-hub/">Explore Mole Hub →</a><small>Also: <a href="/quiz/">Quiz</a> · <a href="/leaderboards/">Leaderboards</a> · <a href="/xl1/arcade/">XL1 Arcade</a></small></article>
+        <article id="earn"><span class="path-number">02</span><div class="path-icon">↧</div><p class="eyebrow">EARN</p><h3>Participation, recognized.</h3><p>Faucet claims, quiz redemption, HODL rewards, contributions, giveaways, and bounties remain distinct and honest.</p><a href="/faucet/">Check the faucet →</a><small>Also: <a href="/hodl/">HODL</a> · <a href="/contribute/">Contribute</a> · <a href="/giveaways/">Records</a></small></article>
+        <article id="community"><span class="path-number">03</span><div class="path-icon">🤝</div><p class="eyebrow">COMMUNITY</p><h3>People are the utility.</h3><p>Discord, events, governance, proposals, news, bots, partners, and the people behind the work.</p><a href="/events/">See community events →</a><small>Also: <a href="/governance/">Governance</a> · <a href="/news/">News</a> · <a href="/who-we-are/">Who we are</a></small></article>
+        <article><span class="path-number">04</span><div class="path-icon">✓</div><p class="eyebrow">PROVE</p><h3>Claims lead to evidence.</h3><p>Identity, Proof of Value, transparency, burns, status, policies, and public records belong in one trust journey.</p><a href="/proof-of-value/">Understand Proof of Value →</a><small>Also: <a href="/verify/">Verify</a> · <a href="/transparency/">Transparency</a> · <a href="/health/">Status</a></small></article>
+      </div>
+    </section>
+
+    <section class="identity-section" aria-labelledby="identity-title">
+      <div class="identity-layout">
+        <div class="identity-copy"><p class="eyebrow">CONNECT · YOUR WINLEW IDENTITY</p><h2 id="identity-title">Your activity should make sense together.</h2><p>Wallet ownership, Discord identity, games, quiz, faucet, rewards, streaks, and governance can meet in your profile—without pretending every local game save already follows you across devices.</p><div class="identity-path"><span>Wallet</span><span>Discord</span><span>Activity</span><b>Profile</b><strong>Proof of Value</strong></div><div class="hero-actions"><a class="button primary" href="/verify/">Connect & verify</a><a class="button secondary" href="/verify/profile.html">Open profile</a></div></div>
+        <article class="account-map"><header><img src="../../images/avatars/mole-guard-128.png" alt="" width="48" height="48"><div><small>ACCOUNT MODEL</small><h3>One profile, truthful boundaries.</h3></div></header><ul><li><b>Guest</b><span>Play first; local state may remain on this device.</span></li><li><b>Wallet</b><span>Prove ownership with a signature, never a transaction.</span></li><li><b>Discord</b><span>Connect community identity and eligible role state.</span></li><li><b>Profile</b><span>View server-backed participation, history, and proof.</span></li></ul></article>
+      </div>
+    </section>
+
+    <section class="section token-section" id="token" aria-labelledby="token-title">
+      <div class="section-heading split-heading"><div><p class="eyebrow">$WINLEW ECONOMY</p><h2 id="token-title">Numbers should show their work.</h2></div><p>Every value identifies its source and freshness. Missing data is labeled missing.</p></div>
+      <div class="economy-grid">
+        <article data-metric="price"><small>PRICE</small><b data-value>Unavailable</b><span data-meta>Awaiting price source</span></article>
+        <article data-metric="liquidity"><small>LIQUIDITY</small><b data-value>Unavailable</b><span data-meta>Awaiting market source</span></article>
+        <article data-metric="burn"><small>BURN PROGRESS</small><b data-value>Unavailable</b><span data-meta>Awaiting burn source</span></article>
+        <article data-metric="supply"><small>CIRCULATING SUPPLY</small><b data-value>Unavailable</b><span data-meta>Never substituted with total supply</span></article>
+        <article data-metric="modules"><small>LIVE MODULES</small><b data-value>Unavailable</b><span data-meta>Awaiting canonical registry</span></article>
+      </div>
+      <div class="economy-links"><a href="/transparency/">Transparency Center</a><a href="/burn/">Burn evidence</a><a href="/whitepaper/">Whitepaper</a><a href="/links/">Official market links</a><a href="/news/the-fake-winlew/">Fake-token warning</a></div>
+    </section>
+
+    <section class="proof-section" id="proof" aria-labelledby="proof-title">
+      <div class="section-heading centered narrow"><p class="eyebrow">PROVE · DON'T TRUST, VERIFY</p><h2 id="proof-title">A claim is only the beginning.</h2><p>WinLEW earns confidence by making the source easier to reach than the slogan.</p></div>
+      <div class="evidence-grid">
+        <article><header><span class="status live">Live system</span><b>Token burns</b></header><dl><div><dt>Claim</dt><dd>Confirmed burns permanently remove tokens.</dd></div><div><dt>State</dt><dd data-evidence-state="burn">Checking source</dd></div><div><dt>Evidence</dt><dd><a href="/burn/">Burn Center ledger and transaction links</a></dd></div><div><dt>Timestamp</dt><dd data-evidence-time="burn">Provided only by source</dd></div></dl></article>
+        <article><header><span class="status beta">Beta concept</span><b>Proof of Value</b></header><dl><div><dt>Claim</dt><dd>Participation should matter more than wallet size.</dd></div><div><dt>State</dt><dd>Server-produced score displayed in Profile; formula pending backend audit.</dd></div><div><dt>Evidence</dt><dd><a href="/proof-of-value/">Philosophy</a> · <a href="/verify/profile.html">Profile implementation</a></dd></div><div><dt>Timestamp</dt><dd>Per-profile calculation freshness must come from backend.</dd></div></dl></article>
+        <article><header><span class="status unknown" data-health-state>Checking</span><b>Platform status</b></header><dl><div><dt>Claim</dt><dd>First-party routes can report their current reachability.</dd></div><div><dt>State</dt><dd data-health-summary>Checking health source.</dd></div><div><dt>Evidence</dt><dd><a href="/health/">Health Center checks</a></dd></div><div><dt>Timestamp</dt><dd data-health-time>Awaiting source</dd></div></dl></article>
+      </div>
+    </section>
+
+    <section class="section community-record" aria-labelledby="record-title">
+      <div class="section-heading split-heading"><div><p class="eyebrow">COMMUNITY RECORD</p><h2 id="record-title">Activity that does not disappear.</h2></div><p>Events and governance are records, not engagement theater.</p></div>
+      <div class="record-grid"><article data-record="events"><span>EVENTS</span><b data-value>Unavailable</b><p data-summary>No event count is inferred.</p><a href="/events/">Open event records →</a></article><article data-record="governance"><span>GOVERNANCE</span><b data-value>Unavailable</b><p data-summary>No proposal count is inferred.</p><a href="/governance/">Open governance →</a></article><article><span>NEWS</span><b>Permanent record</b><p>Official updates stay linkable, dated, and reviewable.</p><a href="/news/">Read latest news →</a></article></div>
+    </section>
+
+    <section class="bridge-section" id="build" aria-labelledby="bridge-title">
+      <div class="bridge-warm"><p class="eyebrow">BUILT HERE</p><h2 id="bridge-title">WinLEW proves utility through people.</h2><p>Community, games, identity, rewards, governance, and public proof make the technology useful now.</p><div class="bridge-links"><a href="/modules/">Modules</a><a href="/roadmap/">Roadmap</a><a href="/xl1/">XL1 Control Center</a></div></div><div class="bridge-line" aria-hidden="true"><i></i><span>→</span></div><div class="bridge-cool"><img src="../../oxyon/assets/logo-mark.png" alt="Oxyon logo" width="58" height="58"><p class="eyebrow">GROWING BEYOND HERE</p><h3>Oxyon develops independent infrastructure.</h3><p>Technology explored through WinLEW can serve broader systems without replacing the WinLEW community or economy.</p><a href="https://oxyon.io/" rel="noopener noreferrer">Explore Oxyon <span>↗</span></a></div>
+    </section>
+
+    <section class="final-cta"><img src="../../images/avatars/mole-guard-128.png" alt="The Mole Guard" width="82" height="82"><p class="eyebrow">LET'S EVERYONE WIN</p><h2>Find something to do.<br>Leave something worth proving.</h2><div><a class="button primary" href="/mole-hub/">Start playing</a><a class="button secondary" href="/verify/">Connect & verify</a></div><p>Utility &gt; Hype · Proof of Value — not Proof of Wealth</p></section>
+  </main>
+
+  <footer class="site-footer"><div class="brand footer-brand"><img src="../../images/avatars/winlew-logo-128.png" alt="" width="42" height="42"><span><b>WINLEW</b><small>UTILITY &gt; HYPE</small></span></div><nav aria-label="Footer"><a href="/news/">News</a><a href="/policies/">Policies</a><a href="/health/">Status</a><a href="/contact/">Contact</a><a href="/links/">Official links</a></nav><p class="prototype-footer">Phase 3B isolated candidate · No upload or deployment authorized</p></footer>
+
+  <script src="phase2-prototype/app.js"></script>
+  <script src="adapters.js"></script>
+  <script src="homepage.js"></script>
+</body>
+</html>

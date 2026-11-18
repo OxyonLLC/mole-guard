@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <title>WinLEW Community Events</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="WinLEW community events — quiz tournaments, AMAs, giveaways, and partnership activity, honestly labeled as verified, upcoming, or planned." />
+  <link rel="canonical" href="https://winlew.co/events/" />
+  <meta property="og:title" content="WinLEW Community Events" />
+  <meta property="og:description" content="Real events only — verified history and honestly-labeled upcoming activity." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/events/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    .hidden { display: none !important; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      padding: 0;
+      margin: 0;
+      line-height: 1.7;
+    }
+    /* overflow-x:hidden lives on html only, not body — body also has its
+       own max-width+margin:auto (a narrower, centered box), and body-level
+       overflow-x:hidden clips ANY child to body's own box, silently
+       defeating .nav's intentional full-bleed edge-to-edge extension past
+       that box (see assets/nav.css / docs/site-navigation.md). html's own
+       overflow-x:hidden already fully covers the "no page-level horizontal
+       scroll" job (it's the true root scroller/clipper), so body doesn't
+       need a second, narrower copy — found 2026-07-18 when the nav's
+       account area grew wide enough to actually need that bled space and
+       the clip became visibly wrong instead of an invisible no-op. */
+    html { overflow-x: hidden; }
+    /* Event prose is escaped free text from eventsData.js, so a contract
+       address, a signature or a long URL cannot be broken by the browser's
+       normal rules — it renders wider than its card and, because html has
+       overflow-x:hidden, gets CLIPPED rather than producing a scrollbar. That
+       is why it looked fine in an overflow check and broken on a phone
+       (reported 2026-08-16: 451px of text in a 326px box).
+       `anywhere` breaks the token; it does not affect ordinary words. */
+    .card p, .card li, .card td { overflow-wrap: anywhere; }
+
+    .wlPageShell { max-width: 1000px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin-bottom: 8px; }
+    h1 { font-size: clamp(30px, 5vw, 44px); margin-top: 0; }
+    h2 { font-size: clamp(18px, 2.6vw, 22px); margin-top: 0; }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header.wlHero { text-align: left; margin-bottom: 8px; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624; border-radius: 20px; padding: 26px; margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: 0.85; }
+    code { background: #2e1f16; padding: 2px 6px; border-radius: 6px; font-size: 0.9em; word-break: break-all; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid #4e3624; font-weight: 850; font-size: 13px; text-decoration: none; cursor: pointer; color: inherit; font-family: inherit; }
+    .btn.primary { background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22)); }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .status-note { border-left: 3px solid #d6a866; padding: 10px 14px; background: rgba(214,168,102,.08); border-radius: 0 10px 10px 0; margin-top: 14px; font-size: 14px; }
+    .disclaimer { margin: 10px 0; font-size: 13px; }
+
+    .tabRow { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+    /* .pill has no base style outside .nav (same site-wide gap fixed on
+       /governance/ 2026-07-17) — these were rendering as bare unstyled
+       <button> elements. */
+    .tabRow .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 14px; border-radius: 999px;
+      background: rgba(255,255,255,.06); border: 1px solid #4e3624;
+      font-size: 13px; font-weight: 850; font-family: inherit; color: inherit;
+      cursor: pointer; opacity: 0.75;
+      transition: opacity .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .tabRow .pill:hover { background: rgba(255,255,255,.10); opacity: 0.95; }
+    .tabRow .pill.active {
+      opacity: 1;
+      background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22));
+      border-color: rgba(214,168,102,.4);
+    }
+
+    /* Two columns from 900px. The single column made a seven-event page nearly
+       6,000px on a desktop monitor, which buried the completed events the
+       "All" default exists to surface. */
+    .eventGrid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 14px; position: relative; align-items: start; }
+    @media (min-width: 900px) { .eventGrid { grid-template-columns: 1fr 1fr; } }
+    .eventCard {
+      background: linear-gradient(180deg, rgba(27,18,14,.92), rgba(19,12,9,.96));
+      border: 1px solid #4e3624; border-radius: 18px; padding: 20px;
+      box-shadow: 0 12px 32px rgba(0,0,0,.24);
+      position: relative;
+      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+    .eventCard:hover { transform: translateY(-2px); border-color: rgba(214,168,102,.3); box-shadow: 0 18px 44px rgba(0,0,0,.3); }
+    .eventCard.featured { border-color: rgba(214,168,102,.4); box-shadow: 0 18px 44px rgba(0,0,0,.3); }
+    .eventHead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
+    .eventCard h3 { margin: 0; font-size: 17px; }
+    .eventMeta { font-size: 12px; opacity: 0.75; margin-top: 4px; }
+    .eventSummary { margin: 12px 0; }
+    .eventLinks { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .featuredBadge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 800; border: 1px solid rgba(214,168,102,.34); background: rgba(214,168,102,.14); color: #d6a866; white-space: nowrap; margin-bottom: 8px; }
+
+    .statusPill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; border: 1px solid #4e3624; white-space: nowrap; }
+    .statusPill.upcoming { background: rgba(85,150,240,.14); color: #86b8ff; border-color: rgba(85,150,240,.3); }
+    .statusPill.live { background: rgba(85,240,165,.14); color: #55f0a5; border-color: rgba(85,240,165,.3); }
+    .statusPill.completed { background: rgba(255,255,255,.06); color: #f6efe8; }
+    .statusPill.cancelled, .statusPill.postponed { background: rgba(255,107,138,.12); color: #ff8fa3; border-color: rgba(255,107,138,.3); }
+
+    /* ══ EVENT POSTERS ═══════════════════════════════════════════════════
+       Every card leads with a 5:2 banner. Three of seven events have REAL
+       artwork; the rest get a CSS poster built from the event's own type, so
+       nothing here is a generated placeholder pretending an event had a
+       graphic it never had. The fallback is deliberately typographic — a glyph
+       and the category name — rather than imagery that could imply a scene. */
+    .eventPoster {
+      position: relative; aspect-ratio: 5 / 2; border-radius: 14px; overflow: hidden;
+      border: 1px solid #4e3624; background: #1b120e; margin-bottom: 14px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .eventPoster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* THE FALLBACK HAS TO CARRY ITSELF. A single glyph floating in a 5:2 box
+       read as an empty banner — worse than no banner at all — and it collapses
+       entirely on any device without an emoji font (this project's own build
+       Chromium is one: `fc-list | grep -c emoji` returns 0). So the TEXT is the
+       artwork: the category set large in the display colour, with the glyph as
+       an accent beside it and a woven gold hatch behind. Nothing here implies
+       an event looked like anything; it names what kind of event it was. */
+    .eventPoster.isFallback {
+      flex-direction: column; gap: 2px; padding: 14px 16px;
+      align-items: flex-start; justify-content: flex-end;
+    }
+    .eventPoster.isFallback::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background:
+        repeating-linear-gradient(135deg, rgba(214,168,102,.07) 0 2px, transparent 2px 12px),
+        repeating-linear-gradient(45deg, rgba(214,168,102,.05) 0 2px, transparent 2px 16px);
+      mask-image: linear-gradient(120deg, #000 10%, transparent 75%);
+      -webkit-mask-image: linear-gradient(120deg, #000 10%, transparent 75%);
+    }
+    .eventPoster .posterGlyph {
+      position: absolute; right: 14px; top: 10px;
+      font-size: clamp(26px, 5vw, 42px); line-height: 1; opacity: .55;
+    }
+    .eventPoster .posterKind {
+      position: relative; z-index: 1;
+      font-size: clamp(19px, 3.4vw, 30px); font-weight: 900; line-height: 1.05;
+      color: #e7c18f; letter-spacing: -.01em; text-shadow: 0 2px 12px rgba(0,0,0,.6);
+    }
+    .eventPoster .posterLabel {
+      position: relative; z-index: 1;
+      font-size: 10.5px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(246,239,232,.66);
+    }
+    /* On real artwork the label sits over the image, so it keeps its shadow. */
+    .eventPoster:not(.isFallback) .posterLabel {
+      position: absolute; left: 12px; bottom: 10px;
+      text-shadow: 0 2px 8px rgba(0,0,0,.85); color: rgba(246,239,232,.92);
+    }
+    /* Per-category grounds. Colour is decoration only — the label above and the
+       status pill carry the meaning, so nothing depends on hue. */
+    .eventPoster.t-giveaway { background: radial-gradient(circle at 30% 25%, rgba(214,168,102,.34), rgba(27,18,14,.98) 70%); }
+    .eventPoster.t-liquidity-program { background: radial-gradient(circle at 70% 30%, rgba(85,150,240,.30), rgba(19,12,9,.98) 72%); }
+    .eventPoster.t-partnership-event { background: radial-gradient(circle at 50% 30%, rgba(120,220,170,.26), rgba(19,12,9,.98) 72%); }
+    .eventPoster.t-quiz-tournament { background: radial-gradient(circle at 35% 30%, rgba(180,130,240,.28), rgba(19,12,9,.98) 72%); }
+    .eventPoster.t-game-competition { background: radial-gradient(circle at 60% 28%, rgba(255,140,90,.26), rgba(19,12,9,.98) 72%); }
+    .eventPoster.t-ama, .eventPoster.t-community-meetup { background: radial-gradient(circle at 45% 30%, rgba(240,200,120,.24), rgba(19,12,9,.98) 72%); }
+    .eventPoster.t-announcement, .eventPoster.t-hackathon, .eventPoster.t-sponsored-trivia { background: radial-gradient(circle at 50% 30%, rgba(214,168,102,.22), rgba(19,12,9,.98) 72%); }
+
+    /* ══ STATUS ══════════════════════════════════════════════════════════
+       Never colour alone: every pill carries a glyph AND a word. */
+    .statusPill.live { position: relative; }
+    .liveDot {
+      width: 7px; height: 7px; border-radius: 50%; background: #55f0a5;
+      box-shadow: 0 0 0 0 rgba(85,240,165,.6); animation: livePulse 2.2s ease-out infinite;
+    }
+    @keyframes livePulse {
+      0% { box-shadow: 0 0 0 0 rgba(85,240,165,.55); }
+      70% { box-shadow: 0 0 0 9px rgba(85,240,165,0); }
+      100% { box-shadow: 0 0 0 0 rgba(85,240,165,0); }
+    }
+    /* A completed event is HISTORY, not dead content — so it is desaturated a
+       little, never dimmed into looking disabled. */
+    .eventCard.isCompleted .eventPoster { filter: saturate(.72); }
+    .eventCard.isCompleted { border-color: rgba(78,54,36,.9); }
+
+    /* ══ REWARD CALLOUT ══════════════════════════════════════════════════ */
+    .rewardBar {
+      display: flex; align-items: flex-start; gap: 10px; margin: 12px 0;
+      padding: 11px 13px; border-radius: 12px;
+      background: linear-gradient(90deg, rgba(214,168,102,.14), rgba(125,88,55,.08));
+      border: 1px solid rgba(214,168,102,.30);
+    }
+    .rewardBar .rewardIcon { font-size: 17px; line-height: 1.3; }
+    .rewardBar .rewardLabel { font-size: 10.5px; font-weight: 900; letter-spacing: .10em; text-transform: uppercase; color: #f0c989; }
+    .rewardBar .rewardValue { font-size: 14.5px; font-weight: 800; }
+    .rewardBar .rewardNote { font-size: 12.5px; opacity: .82; margin-top: 3px; }
+
+    /* ══ COUNTDOWN ═══════════════════════════════════════════════════════
+       Rendered only when a real startIso exists and is in the future. */
+    .countdown { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0 4px; }
+    /* flex:1 with a small basis so all three units sit on ONE row at 390px —
+       they wrapped to two rows at the original fixed min-width, which read as a
+       layout fault rather than a countdown. */
+    .cdUnit { flex: 1 1 0; min-width: 0; text-align: center; padding: 8px 6px; border-radius: 12px; background: rgba(255,255,255,.05); border: 1px solid #4e3624; }
+    .countdown { max-width: 320px; }
+    .cdUnit .n { font-size: 19px; font-weight: 900; color: #e7c18f; font-variant-numeric: tabular-nums; }
+    .cdUnit .l { font-size: 10px; letter-spacing: .06em; text-transform: uppercase; opacity: .75; }
+
+    /* ══ STAT CARDS ══════════════════════════════════════════════════════ */
+    .statStrip { display: grid; grid-template-columns: repeat(auto-fit, minmax(132px, 1fr)); gap: 10px; margin-top: 6px; }
+    .statCard {
+      padding: 13px 14px; border-radius: 14px; text-align: left;
+      background: linear-gradient(180deg, rgba(27,18,14,.9), rgba(19,12,9,.96));
+      border: 1px solid #4e3624;
+    }
+    .statCard .k { font-size: 11px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; opacity: .85; }
+    .statCard .n { font-size: 26px; font-weight: 900; color: #e7c18f; line-height: 1.15; font-variant-numeric: tabular-nums; }
+    .statCard .s { font-size: 11.5px; opacity: .75; }
+    .statCard.isLive { border-color: rgba(85,240,165,.34); background: linear-gradient(180deg, rgba(20,44,32,.55), rgba(19,12,9,.96)); }
+
+    /* ══ FEATURE PANEL (live, else next up) ══════════════════════════════ */
+    /* align-items:start, not center: the text column is much taller than a 5:2
+       banner, and centering left a large dead band above and below the art. */
+    .featurePanel { display: grid; grid-template-columns: 1.05fr .95fr; gap: 20px; align-items: start; }
+    @media (max-width: 820px) { .featurePanel { grid-template-columns: 1fr; } }
+    .featurePanel .eventPoster { margin-bottom: 0; position: sticky; top: 84px; }
+    @media (max-width: 820px) { .featurePanel .eventPoster { position: static; } }
+
+    /* ══ TIMELINE ════════════════════════════════════════════════════════ */
+    .timeline { margin: 6px 0 0; padding: 0 0 0 4px; list-style: none; }
+    .tlYear { font-size: 12px; font-weight: 900; letter-spacing: .12em; color: #e7c18f; margin: 14px 0 6px; text-transform: uppercase; }
+    .tlItem { position: relative; padding: 0 0 12px 20px; border-left: 1px solid rgba(214,168,102,.28); }
+    .tlItem:last-child { border-left-color: transparent; }
+    .tlItem::before { content: ""; position: absolute; left: -4.5px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: #d6a866; }
+    .tlItem.isLive::before { background: #55f0a5; }
+    .tlItem .tlDate { font-size: 11.5px; opacity: .72; }
+    .tlItem .tlName { font-size: 14px; font-weight: 800; }
+
+    /* ══ EMPTY STATES ════════════════════════════════════════════════════ */
+    .emptyState { text-align: center; padding: 26px 18px; border: 1px dashed rgba(214,168,102,.30); border-radius: 16px; background: rgba(255,255,255,.02); }
+    .emptyState .eyes { font-size: 30px; line-height: 1; }
+    .emptyState h3 { margin: 8px 0 4px; font-size: 16px; }
+    .emptyState p { margin: 0 auto 12px; font-size: 13.5px; max-width: 46ch; opacity: .85; }
+
+    /* ══ KEEPING CARDS SHORT ═════════════════════════════════════════════
+       Event prose is long-form free text and always will be — the campaign's
+       eligibility field alone is a full paragraph. Clamping the summary and
+       folding the rest into a <details> took the mobile page from ~18,000px to
+       something a thumb can actually get through. Nothing is truncated away:
+       the full text is in the DOM inside the disclosure, so browser find and
+       screen readers still reach it. */
+    .clamp3, .clamp4 {
+      display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .clamp3 { -webkit-line-clamp: 3; line-clamp: 3; }
+    .clamp4 { -webkit-line-clamp: 4; line-clamp: 4; }
+    .eventDetails { margin: 10px 0 4px; border-top: 1px solid rgba(78,54,36,.75); padding-top: 8px; }
+    .eventDetails > summary {
+      cursor: pointer; font-size: 12.5px; font-weight: 850; color: #d6a866;
+      list-style: none; padding: 4px 0;
+    }
+    .eventDetails > summary::-webkit-details-marker { display: none; }
+    .eventDetails > summary::before { content: "▸ "; }
+    .eventDetails[open] > summary::before { content: "▾ "; }
+    .eventDetails > summary:focus-visible { outline: 2px solid #d6a866; outline-offset: 2px; border-radius: 6px; }
+    .eventDetails p { font-size: 13px; }
+
+    /* ══ FOCUS + MOTION ══════════════════════════════════════════════════ */
+    .tabRow .pill:focus-visible, .btn:focus-visible, a:focus-visible { outline: 2px solid #d6a866; outline-offset: 2px; border-radius: 8px; }
+    @media (prefers-reduced-motion: reduce) {
+      .liveDot { animation: none; }
+      .eventCard, .eventCard:hover { transition: none; transform: none; }
+    }
+
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+<header class="wlHero" id="about">
+  <div class="wlHeroBanner"><img src="/images/page-headers/events.png" alt="Community Events — join events, compete, and earn exclusive rewards" loading="lazy" /></div>
+  <div class="wlHeroMain">
+    <span class="wlKicker">🎉 Evidence-based record · Not a promotional calendar</span>
+    <h1 class="wlHeroTitle">Community Events<br><span class="wlHeroTitleAccent">Real events, real evidence.</span></h1>
+    <p class="wlHeroSub">Quiz tournaments, AMAs, giveaways, and partnership activity. Events with no public evidence are never listed as confirmed — real-time announcements happen in Discord and our X Community first; this page is the permanent, verifiable record.</p>
+    <div class="wlChipRow">
+      <span class="wlChip">🎉 Evidence-based</span>
+      <span class="wlChip">💬 Discord-first</span>
+      <span class="wlChip">🏆 Real results only</span>
+    </div>
+    <div class="ctaRow" style="justify-content:flex-start;margin-top:16px;">
+      <a class="btn primary" href="#eventGrid">View Events ↓</a>
+      <a class="btn" href="/community/">💬 Follow in Discord ↗</a>
+      <a class="btn" href="https://x.com/i/communities/1890899109684683068" target="_blank" rel="noreferrer">𝕏 Join the X Community ↗</a>
+    </div>
+  </div>
+  <div class="wlHeroSide">
+    <div class="wlEyebrow">This calendar</div>
+    <!-- Same four counters the page always had, as stat cards. The ids are
+         unchanged so app.js keeps filling them. -->
+    <div class="statStrip">
+      <div class="statCard" id="statCardLive"><div class="k">🟢 Live</div><div class="n" id="heroEventsLive">—</div><div class="s">Right now</div></div>
+      <div class="statCard"><div class="k">🟡 Upcoming</div><div class="n" id="heroEventsUpcoming">—</div><div class="s">On the schedule</div></div>
+      <div class="statCard"><div class="k">🏆 Completed</div><div class="n" id="heroEventsCompleted">—</div><div class="s">With evidence</div></div>
+      <div class="statCard"><div class="k">🔴 Called off</div><div class="n" id="heroEventsCancelled">—</div><div class="s">Cancelled/postponed</div></div>
+    </div>
+    <div class="wlHeroNote">Completed events always link to public evidence — nothing here is invented to make the calendar look busier.</div>
+  </div>
+</header>
+
+<!-- Whatever is happening NOW, or next. Hidden entirely when there is
+     neither, rather than leaving a large empty "Live" band on the page. -->
+<div class="box wlIn hidden" id="featureBox">
+  <div class="wlEyebrow" id="featureEyebrow">Live now</div>
+  <div class="featurePanel" id="featurePanel"></div>
+</div>
+
+<div class="box wlIn">
+  <h2>Events</h2>
+  <!-- ALL IS THE DEFAULT (2026-08-20). It used to open on "Upcoming", so the
+       completed events — the ones carrying the evidence this page exists for —
+       were invisible unless a visitor thought to click. The whole record now
+       shows first, newest activity at the top. -->
+  <p class="muted" style="margin-top:0;font-size:13.5px;">See what&rsquo;s happening underground — and what already did.</p>
+  <div class="tabRow" id="eventTabs" role="tablist" aria-label="Filter events by status">
+    <button class="pill tab active" data-bucket="all" type="button" role="tab" aria-selected="true">🗂️ All</button>
+    <button class="pill tab" data-bucket="live" type="button" role="tab" aria-selected="false">🟢 Live</button>
+    <button class="pill tab" data-bucket="upcoming" type="button" role="tab" aria-selected="false">🟡 Upcoming</button>
+    <button class="pill tab" data-bucket="completed" type="button" role="tab" aria-selected="false">🏆 Completed</button>
+    <button class="pill tab" data-bucket="cancelledOrPostponed" type="button" role="tab" aria-selected="false">🔴 Cancelled / Postponed</button>
+  </div>
+  <div id="eventGrid" class="eventGrid" aria-live="polite">
+    <div class="muted">Loading…</div>
+  </div>
+</div>
+
+<!-- The permanent record, as a shape you can take in at a glance. Built from
+     the SAME event records above — never from news articles, and never from
+     anything without a date. -->
+<div class="box wlIn hidden" id="timelineBox">
+  <div class="wlEyebrow">📜 The dig site</div>
+  <h2>WinLEW event history</h2>
+  <p class="muted" style="margin-top:0;font-size:13.5px;">The event ends. The receipts don&rsquo;t.</p>
+  <ul class="timeline" id="eventTimeline"></ul>
+</div>
+
+<div class="box wlIn">
+  <div class="featurePanel">
+    <div class="eventPoster t-quiz-tournament" role="img" aria-label="Quiz tournaments — coming soon">
+      <span class="posterGlyph" aria-hidden="true">🧠</span>
+      <span class="posterLabel">Quiz Tournament</span>
+    </div>
+    <div>
+      <span class="statusPill upcoming">🟡 Coming soon</span>
+      <h2 style="margin-top:10px;">Quiz tournaments</h2>
+      <p class="muted" style="margin:6px 0 12px;">Same engine. Same points. New competition.</p>
+      <!-- The status line stays as blunt as it was. A teaser card that let
+           someone believe a tournament is scheduled would be the exact failure
+           this page exists to avoid. -->
+      <div class="status-note" style="margin-top:0;font-size:13.5px;">
+        <strong>No verified quiz tournament has run yet.</strong> Nothing is scheduled, and nothing above is a tournament.
+      </div>
+      <p class="muted" style="font-size:13px;margin-top:12px;">Tournaments reuse the exact same quiz engine and points system already live at <a href="/quiz/">/quiz/</a> — there is no second scoring system. When one runs, it will appear above with its own rules, eligibility and results, cross-linked to the regular quiz leaderboard.</p>
+      <a class="btn primary" href="/quiz/">🧠 Practise in the quiz →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="/">← Back to WinLEW</a> · <a href="/partners/">Sponsors & Partners</a> · <a href="/transparency/">Transparency Center</a> · <a href="/burn/">Burn Center</a>
+</footer>
+</div>
+
+<script src="/assets/wallet-auth.js"></script>
+<script src="./js/app.js"></script>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

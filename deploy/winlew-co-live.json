@@ -1,0 +1,15 @@
+{
+  "_comment": "What is LIVE on winlew.co for files uploaded by hand (Network Solutions File Manager). Change a listed file and this entry in the SAME PR, then upload only a file whose sha256 equals the entry (node src/scripts/check-live-manifest.mjs). sha256 is of the file with LF line endings, which is the bytes uploaded. Never revert a file to one of its 'superseded' hashes without a rollback note.",
+  "files": {
+    "src/public/xl1/verify/api-proxy.php": {
+      "htdocs": "xl1/verify/api-proxy.php",
+      "sha256": "4f774777fb170f029b34ed36eeffecdaafc9f2c22797b219391bd0aa21fc918f",
+      "release": "R2 (PR #29, 62f14a0)",
+      "deployedUtc": "2026-11-12T13:50:07Z",
+      "rollback": "File Manager: api-proxy.php -> api-proxy.php.r2-failed, then api-proxy.php.bak-20261112 -> api-proxy.php (one rename per page load)",
+      "superseded": {
+        "940c930e72d4eab35228818f6d958f78e977b7e07f40046bcea307cd876fbbf7": "pre-R2 baseline; serves the verify-client fallback as text/html (members stuck on 'Loading verification...')"
+      }
+    }
+  }
+}

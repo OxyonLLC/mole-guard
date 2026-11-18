@@ -1,0 +1,185 @@
+/* WinLEW theme for the /xl1/ participation pages (2026-10-23 XL1 experience sprint).
+   Loaded after oxyon.css and xl1.css: it re-maps their tokens onto WinLEW 3.0's warm palette
+   (assets/experience.css) so these pages read as WinLEW, and adds the few pieces the hub and
+   arcade need. Oxyon's own pages stay on oxyon.io in Oxyon's colours. */
+:root {
+  --bg: #0c0907;
+  --graphite: #15100c;
+  --panel: #1b130d;
+  --plate-hi: #2a1d12;
+  --plate-lo: #1b130d;
+  --hairline: rgba(255, 226, 178, .10);
+  --hairline-strong: rgba(235, 177, 83, .26);
+  --text: #fff9ef;
+  --muted: #c9bca9;
+  --faint: #9c8f7c;
+  --gold: #f4bd59;
+  --gold-dim: #c87821;
+  --wl-amber: #ff9f32;
+  --wl-green: #78d9a0;
+  --wl-cool: #86b8e8;
+}
+body.xl1-shell { background: radial-gradient(1200px 600px at 50% -200px, rgba(244, 189, 89, .10), transparent 70%), var(--bg); }
+
+/* Brand: the WinLEW mole and wordmark in place of Oxyon's mark. */
+.brand .brand-mark { border-radius: 50%; }
+.brand-word { letter-spacing: .04em; font-weight: 700; }
+
+/* "How it works" steps. */
+.steps { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); counter-reset: step; }
+.steps li { position: relative; padding: 14px 14px 14px 52px; border: 1px solid var(--hairline); border-radius: 14px; background: var(--panel); color: var(--muted); font-size: .95rem; line-height: 1.45; }
+.steps li strong { display: block; color: var(--text); margin-bottom: 2px; }
+.steps li::before { counter-increment: step; content: counter(step); position: absolute; left: 14px; top: 14px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: rgba(244, 189, 89, .16); color: var(--gold); font-weight: 700; font-size: .85rem; }
+
+/* Account strip: who you are, and what's missing before rewards can be paid. */
+.account-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 18px; padding: 12px 14px; border: 1px solid var(--hairline-strong); border-radius: 14px; background: rgba(244, 189, 89, .06); }
+.account-strip .doc-note { margin: 0; flex: 1 1 260px; }
+.account-strip .cta-row { margin: 0; }
+
+/* Plain rules list (eligibility, what is and isn't true). */
+.rules { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.rules li { padding-left: 26px; position: relative; color: var(--muted); line-height: 1.5; }
+.rules li::before { content: "✓"; position: absolute; left: 4px; color: var(--wl-green); font-weight: 700; }
+.rules li.no::before { content: "✕"; color: #ff887d; }
+.rules li strong { color: var(--text); }
+
+/* Collapsible technical detail. */
+details.more { margin-top: 14px; border: 1px solid var(--hairline); border-radius: 12px; background: var(--panel); }
+details.more > summary { cursor: pointer; padding: 12px 14px; color: var(--text); font-weight: 600; list-style: none; }
+details.more > summary::-webkit-details-marker { display: none; }
+details.more > summary::after { content: "+"; float: right; color: var(--gold); }
+details.more[open] > summary::after { content: "−"; }
+details.more > .more-body { padding: 0 14px 14px; color: var(--muted); line-height: 1.55; }
+details.more > .more-body p { margin: 8px 0; }
+
+/* Game card states: "earns XL1" vs "play only". */
+.chip.chip-earn { background: rgba(120, 217, 160, .14); color: var(--wl-green); border-color: rgba(120, 217, 160, .32); }
+.chip.chip-play { background: rgba(134, 184, 232, .12); color: var(--wl-cool); border-color: rgba(134, 184, 232, .3); }
+
+/* Hub: action tiles and the honest network strip. */
+.tiles { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 18px; }
+.tile { display: flex; flex-direction: column; gap: 6px; padding: 16px; border: 1px solid var(--hairline); border-radius: 16px; background: var(--panel); color: var(--text); text-decoration: none; transition: border-color .15s ease, transform .15s ease; }
+.tile:hover, .tile:focus-visible { border-color: var(--hairline-strong); transform: translateY(-1px); }
+.tile h3 { margin: 0; font-size: 1.1rem; }
+.tile p { margin: 0; color: var(--muted); line-height: 1.45; font-size: .95rem; }
+.tile .tile-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.tile .card-action { margin-top: auto; color: var(--gold); font-weight: 600; }
+.tile.primary { border-color: var(--hairline-strong); background: linear-gradient(160deg, rgba(244, 189, 89, .12), var(--panel) 60%); }
+.net-strip { margin-top: 18px; padding: 14px; border: 1px solid var(--hairline); border-radius: 14px; background: var(--panel); }
+.net-strip ol { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.net-strip li { display: flex; justify-content: space-between; gap: 10px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.net-strip li strong { color: var(--text); font-weight: 600; }
+.net-strip li.ours strong { color: var(--gold); }
+.net-strip .src { margin-top: 10px; font-size: .85rem; color: var(--faint); }
+.built-by { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline; }
+
+@media (prefers-reduced-motion: reduce) { .tile { transition: none; } .tile:hover { transform: none; } }
+
+/* xl1.css styles every span in .figures as a small uppercase label; a number nested in a value or
+   a sentence ("<span id=cap>20</span> XL1", "Up to <span>5</span> minutes") must stay inline. */
+.figures .v span:not(.v), .figures p span:not(.v) { display: inline; margin: 0; font: inherit; letter-spacing: inherit; text-transform: none; color: inherit; }
+.figures strong, .figures .v { color: var(--text); }
+/* Phones: the three reward figures side by side, so the games are one short scroll away. */
+@media (max-width: 560px) {
+  .product-hero .figures { gap: 8px; margin-top: 22px; }
+  .product-hero .figures > div { flex: 1 1 0; min-width: 0; padding: 12px 10px; }
+  .product-hero .figures .v { font-size: 1.25rem; }
+  .product-hero .figures .k { font-size: .58rem; letter-spacing: .1em; margin-bottom: 6px; }
+  .product-hero .figures p { font-size: .74rem; }
+  .product-hero h1 { font-size: clamp(1.9rem, 8vw, 2.4rem); }
+}
+.account-strip .doc-note { border: 0; background: none; padding: 0; box-shadow: none; }
+
+/* "New to XL1? Start here" (2026-10-24 onboarding sprint). The arcade's guide is one <details>:
+   a single line when closed, so a returning player goes straight to the games. */
+.start-guide { margin-top: 14px; border: 1px solid var(--hairline-strong); border-radius: 16px; background: linear-gradient(160deg, rgba(244, 189, 89, .10), var(--panel) 55%); }
+.start-guide > summary { cursor: pointer; list-style: none; padding: 14px 16px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; }
+.start-guide > summary::-webkit-details-marker { display: none; }
+.start-guide > summary::after { content: "+"; margin-left: auto; color: var(--gold); font-weight: 700; }
+.start-guide[open] > summary::after { content: "−"; }
+.start-title { color: var(--text); font-weight: 700; font-size: 1.05rem; }
+.start-sub { color: var(--muted); font-size: .9rem; }
+.start-steps { list-style: none; margin: 0; padding: 0 16px 4px; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.start-steps > li { padding: 14px; border: 1px solid var(--hairline); border-radius: 14px; background: var(--panel); color: var(--muted); font-size: .93rem; line-height: 1.5; }
+.start-steps > li[data-state="current"] { border-color: var(--gold-dim); }
+.start-steps > li[data-state="done"] .start-n { background: var(--wl-green); color: #0c1a12; }
+.start-steps h3 { margin: 0 0 8px; color: var(--text); font-size: 1rem; display: flex; align-items: center; gap: 10px; }
+.start-n { flex: none; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--gold); color: #17130a; font-size: .85rem; font-weight: 800; }
+.start-steps p { margin: 0 0 8px; }
+.start-steps strong, .start-steps em { color: var(--text); }
+.start-steps .cta-row { margin: 10px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.start-fine { font-size: .84rem; color: var(--faint); }
+.start-fine a, .start-steps p a, .wallet-list a { color: var(--gold); }
+.start-help { margin: 6px 16px 14px; color: var(--muted); font-size: .93rem; }
+.start-help a { color: var(--gold); font-weight: 600; }
+.platform-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 10px; }
+.platform-tabs button { min-height: 44px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--hairline-strong); background: transparent; color: var(--muted); font: inherit; font-size: .88rem; cursor: pointer; }
+.platform-tabs button[aria-selected="true"] { background: var(--gold); border-color: var(--gold); color: #17130a; font-weight: 700; }
+.platform-tabs button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.wallet-list { list-style: none; margin: 0 0 8px; padding: 0; display: grid; gap: 8px; }
+.wallet-list li { display: grid; gap: 2px; padding: 10px 12px; border: 1px solid var(--hairline); border-radius: 12px; }
+.wallet-list li > a { font-size: 1rem; display: inline-block; padding: 4px 0; }
+.wallet-list span { font-size: .86rem; }
+
+/* The hub's four ways in: two across on a phone, four on a wide screen. */
+.start-band h2 { margin: 0 0 4px; }
+.start-links { display: grid; gap: 10px; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 14px; }
+.start-links a { display: grid; gap: 2px; padding: 14px; border: 1px solid var(--hairline); border-radius: 14px; background: var(--panel); color: var(--text); text-decoration: none; transition: border-color .15s, transform .15s; }
+.start-links a:hover, .start-links a:focus-visible { border-color: var(--hairline-strong); transform: translateY(-1px); }
+.start-links span { font-size: 1.4rem; line-height: 1; margin-bottom: 4px; }
+.start-links small { color: var(--muted); font-size: .84rem; }
+@media (max-width: 760px) { .start-links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Community: one invitation where questions come up, not on every block. */
+.community-band { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 24px; padding: 20px; border: 1px solid var(--hairline-strong); border-radius: 18px; background: linear-gradient(160deg, rgba(134, 184, 232, .10), var(--panel) 60%); }
+.community-band > div { flex: 1 1 420px; }
+.community-band h2 { margin: 0 0 6px; }
+.community-band .lede { margin: 0; }
+.community-band .cta-row { margin: 0; }
+@media (prefers-reduced-motion: reduce) { .start-links a { transition: none; } .start-links a:hover { transform: none; } }
+.start-swipe { display: none; margin: 0 14px 6px; color: var(--faint); font-size: .8rem; }
+/* On a phone the three steps sit side by side and swipe (the next one peeks in), so the open
+   guide costs about one card's height rather than three. */
+@media (max-width: 560px) {
+  .start-guide > summary { padding: 12px 14px; }
+  .start-steps { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 86%; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; padding: 0 14px 8px; gap: 8px; scroll-padding: 0 14px; }
+  .start-steps > li { padding: 12px; scroll-snap-align: start; }
+  .start-swipe { display: block; }
+  .start-help { margin: 4px 14px 12px; }
+}
+
+/* Arcade layout (2026-10-24): your rewards right under your account; the rules and the ledger
+   list fold; games two across on a phone. */
+.my-rewards { margin-top: 14px; padding: 16px; border: 1px solid var(--hairline-strong); border-radius: 16px; background: linear-gradient(160deg, rgba(120, 217, 160, .08), var(--panel) 60%); }
+.my-rewards-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.my-rewards-head h2 { margin: 0; font-size: 1.25rem; }
+.my-rewards .figures { margin-top: 12px; gap: 8px; }
+.my-rewards .figures > div { flex: 1 1 0; min-width: 0; padding: 12px 10px; }
+.my-rewards .figures strong { font-size: 1.3rem; }
+.my-rewards .cta-row { margin: 12px 0 0; }
+.my-rewards .doc-note { margin: 10px 0 0; }
+.my-rewards details.more { margin-top: 10px; }
+/* Signed out (or signed in with a wallet only): one line, not empty boxes. */
+.my-rewards[data-account="signed-out"] #held-stats, .my-rewards[data-account="signed-out"] .cta-row, .my-rewards[data-account="signed-out"] #held-more,
+.my-rewards[data-account="wallet-login"] #held-stats, .my-rewards[data-account="wallet-login"] .cta-row, .my-rewards[data-account="wallet-login"] #held-more { display: none; }
+
+.section-fold > summary { cursor: pointer; list-style: none; display: block; padding: 18px 48px 18px 18px; border: 1px solid var(--hairline); border-radius: 16px; background: var(--panel); position: relative; }
+.section-fold > summary::-webkit-details-marker { display: none; }
+.section-fold > summary::after { content: "+" / ""; position: absolute; right: 18px; top: 18px; color: var(--gold); font-size: 1.4rem; font-weight: 700; }
+.section-fold[open] > summary::after { content: "\2212" / ""; }
+.section-fold > summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.section-fold .fold-open { display: block; margin-top: 6px; color: var(--gold); font-weight: 600; font-size: .9rem; }
+.section-fold[open] .fold-open { display: none; }
+.section-fold .fold-sub { display: block; color: var(--muted); font-size: .95rem; line-height: 1.45; }
+.section-fold[open] > summary { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.section-fold .fold-body { padding: 4px 2px 0; }
+
+@media (max-width: 560px) {
+  #games .game-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 22px; }
+  #games .game-card .in-card { padding: 10px 11px 12px; }
+  #games .game-card h3 { font-size: 1rem; margin: 6px 0 0; }
+  #games .game-card .in-card > header { flex-wrap: wrap; gap: 4px; }
+  #games .game-card .in-card p, #games .game-card .card-action { display: none; }
+  #games .game-card .card-kind { font-size: .6rem; }
+  #games .game-card .chip { font-size: .6rem; padding: 2px 6px; }
+}

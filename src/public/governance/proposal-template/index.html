@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <title>Proposal Template — WinLEW Governance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="Every field a real WinLEW governance proposal carries, and the rules each one has to satisfy — the reference behind the proposals you see on the Governance page." />
+  <meta property="og:title" content="Proposal Template — WinLEW Governance" />
+  <meta property="og:description" content="The full field-by-field structure of a WinLEW governance proposal, including the extra requirements for burn-program proposals." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://winlew.co/governance/proposal-template/" />
+  <link rel="canonical" href="https://winlew.co/governance/proposal-template/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      padding: 0; margin: 0; line-height: 1.7;
+    }
+    html { overflow-x: hidden; }
+    .wlPageShell { max-width: 900px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin-bottom: 8px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); margin-top: 0; }
+    h2 { font-size: clamp(18px, 2.6vw, 22px); margin-top: 0; }
+    h3 { font-size: 16px; margin-top: 18px; }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624; border-radius: 20px; padding: 26px; margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: .85; }
+    .fine { font-size: 13px; }
+    code { background: #2e1f16; padding: 2px 6px; border-radius: 6px; font-size: .9em; word-break: break-word; }
+    pre { background: #241811; border: 1px solid #4e3624; border-radius: 12px; padding: 16px; overflow-x: auto; font-size: 12.5px; line-height: 1.6; }
+    pre code { background: none; padding: 0; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid #4e3624; font-weight: 850; font-size: 13px; text-decoration: none; color: inherit; }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .ctaRow { display: flex; flex-wrap: wrap; gap: 10px; }
+    .status-note { border-left: 3px solid #d6a866; padding: 10px 14px; background: rgba(214,168,102,.08); border-radius: 0 10px 10px 0; margin-top: 14px; font-size: 14px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #4e3624; vertical-align: top; }
+    th { color: #e7c18f; }
+    .scrollX { overflow-x: auto; }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+
+<header class="wlHero">
+  <div class="wlEyebrow">Reference · Governance v1</div>
+  <h1>Proposal template</h1>
+  <p class="muted">Every field a real WinLEW governance proposal carries, and the rule each one has to satisfy. This is the reference behind the proposals shown on the Governance page — published so anyone can check that a live proposal is complete and honestly filled in.</p>
+  <div class="status-note">
+    <strong>You do not need this to take part.</strong> To put an idea forward, use
+    <a href="/governance/submit/">Submit a Proposal</a> or <code>/mole propose</code> in Discord — both are plain forms
+    that land in the maintainer review queue. This page is the underlying structure a maintainer fills in when an
+    approved idea becomes a real, votable proposal.
+  </div>
+  <div class="ctaRow" style="margin-top:16px;">
+    <a class="btn" href="/governance/rules/">← Governance rules</a>
+    <a class="btn" href="/governance/submit/">Submit a proposal →</a>
+  </div>
+</header>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Structure</div>
+  <h2>The proposal record</h2>
+  <p>Every field below is validated before a proposal can go live — missing or invalid fields are caught immediately rather than reaching the page.</p>
+  <pre><code>{
+  id: "short-kebab-case-id-with-year",   // must be unique — checked automatically
+  schemaVersion: 1,
+  title: "Plain-language title",
+  summary: "One or two sentences — this is what shows on the Governance landing page card.",
+  fullDescription: "The full proposal text. What is being proposed, and why.",
+  author: "Display name or handle",
+  authorType: "maintainer",              // or "community-member" / "system"
+  category: "features",                  // one of the 14 fixed categories
+  governanceMode: "advisory",            // advisory / community-approved /
+                                         // maintainer-ratified / binding-within-defined-policy
+  status: "draft",                       // start here — every later status must be a
+                                         // legal transition from the current one
+
+  createdIso: "2026-01-01T00:00:00Z",
+  discussionStartIso: null,              // set once Discord discussion opens
+  votingStartIso: null,                  // null means "not yet open for a vote", and
+                                         // choices are not required until it is set
+  votingEndIso: null,
+  executionDeadlineIso: null,            // only if approval implies a deadline for
+                                         // maintainer action
+
+  eligibilityRule: {
+    authenticatedUser: true,
+    verifiedWallet: true,
+    minWinlewBalance: 1_000_000,         // matches the standard minimum unless this
+                                         // proposal has an explicit, documented reason
+                                         // to differ
+    proposalSpecificOverride: null,
+  },
+  votingMethod: "one-wallet-one-vote",
+  choices: null,                         // e.g. ["Yes", "No"] once voting is scheduled —
+                                         // required (2 or more, no duplicates) only once
+                                         // the proposal is actually voteable
+  quorumRule: { type: "fixed", minVotes: 0 },
+                                         // set a real number before going active — never a
+                                         // fabricated percentage of "all holders"
+  approvalThresholdOverride: null,       // leave null to use the standard >50%
+                                         // (or >2/3 for governance-rules proposals)
+  snapshotRule: "per-proposal-boundary-first-check-lock-in",
+
+  supportingEvidence: [],                // [{ label, url }]
+  relatedPlatformPages: [],              // e.g. ["/quiz/", "/burn/"]
+  financialImpact: "None.",
+  tokenImpact: "None.",
+  securityConsiderations: "",
+  risks: "",
+  alternativesConsidered: "",
+  implementationPlan: "",
+  maintainerPosition: null,              // filled in once a maintainer has reviewed it
+
+  finalResults: null,                    // required once the proposal reaches a closed state
+  finalDecision: null,
+  executionStatus: "not-applicable",     // not-applicable / pending / in-progress /
+                                         // completed / failed / declined
+  executionEvidence: [],                 // required (1 or more) once status is "executed"
+  cancellationOrRejectionReason: null,
+
+  lastUpdatedIso: "2026-01-01T00:00:00Z",
+  publicNotes: "",
+  burnDetails: null,                     // REQUIRED if category is "burn-program"
+
+  discussionUrl: "https://discord.gg/PSCrBzqdbE",
+  metadata: {},                          // optional extras only — nothing load-bearing
+}</code></pre>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Extra requirement</div>
+  <h2>If the category is <code>burn-program</code></h2>
+  <p>Burn proposals carry a required extra block. A burn proposal without it is not valid:</p>
+  <pre><code>burnDetails: {
+  proposedAmountDisplay: "e.g. 5,000,000 WinLEW",
+  proposedSource:        "e.g. staged/held burn-wallet balance",
+  proposedBenchmark:     "e.g. tied to the August 1 annual benchmark",
+  reason:                "Why this burn, why now.",
+  effectOnGoal:          "How this moves the long-term 100M goal — reference the Burn
+                          Center's live progress, don't restate a stale number.",
+  executionAuthority:    "Maintainer, after safety review",
+                         // never anything implying automatic or on-chain execution
+  executionDeadline:     "e.g. within 30 days of approval, or null",
+}</code></pre>
+  <div class="status-note">
+    <strong>Never write a number here as if it were the canonical current burn total.</strong>
+    The proposal page fetches that live from the <a href="/burn/">Burn Center</a>. This block should
+    only ever contain the <em>proposed</em> new amount and its rationale.
+  </div>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Rules</div>
+  <h2>Drafting reminders</h2>
+  <ul>
+    <li><strong>Do not fabricate a vote result.</strong> Results and final decisions stay empty until a real vote actually happens and closes.</li>
+    <li><strong>Do not advance the status early.</strong> A proposal stays in draft, review, or discussion until it is genuinely ready, and every status change must be a legal transition from wherever it currently is.</li>
+    <li><strong>Label examples as examples.</strong> If a record is a template or demonstration rather than a real proposal, it must say "Example — Not Open for Voting" directly in the title and stay at draft, never active.</li>
+  </ul>
+  <p class="fine muted">These are the same standards the audit trail on the Governance page is held to: no invented history, no proposal that looks more advanced than it is.</p>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Related</div>
+  <h2>Where to go next</h2>
+  <div class="ctaRow">
+    <a class="btn" href="/governance/rules/">Full governance rules</a>
+    <a class="btn" href="/governance/">Proposals &amp; results</a>
+    <a class="btn" href="/governance/submit/">Submit a proposal</a>
+    <a class="btn" href="/burn/">Burn Center</a>
+  </div>
+</div>
+
+<footer style="margin-top:40px;font-size:12px;opacity:.75;text-align:center;">
+  <a href="/governance/">← Back to Governance</a>
+</footer>
+
+</div>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

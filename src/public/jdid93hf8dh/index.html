@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>WinLEW Android Beta</title>
+  <!-- Unlisted, and kept out of search results. Deliberately NOT added to
+       robots.txt: a Disallow line would publish the path to anyone who reads
+       it. noindex works without announcing where "here" is. -->
+  <meta name="robots" content="noindex,nofollow,noarchive" />
+  <meta name="referrer" content="no-referrer" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <style>
+    :root{--bg:#130b08;--bg2:#24150d;--line:rgba(255,255,255,.12);--text:#f6efe8;--muted:rgba(246,239,232,.82);--brand:#d6a866}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:radial-gradient(1000px 620px at 10% 0%, rgba(214,168,102,.10), transparent 60%), linear-gradient(180deg,var(--bg) 0%,var(--bg2) 52%,#130b08 100%);min-height:100vh}
+    .wrap{max-width:720px;margin:0 auto;padding:28px 20px 60px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.02));border:1px solid var(--line);border-radius:22px;padding:22px;margin-bottom:16px}
+    h1{font-size:clamp(28px,5vw,42px);margin:0 0 6px;line-height:1.05}
+    h2{font-size:18px;margin:0 0 10px}
+    .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);font-weight:900;margin-bottom:8px}
+    p{line-height:1.7;color:var(--muted);margin:0 0 12px}
+    .dl{display:block;text-align:center;padding:18px;border-radius:16px;background:linear-gradient(180deg,#e0b473,#c9974f);color:#1a1008;font-weight:900;font-size:19px;text-decoration:none;margin:6px 0 10px}
+    .meta{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13px;color:var(--muted)}
+    .meta dt{color:var(--brand);font-weight:800}
+    .meta dd{margin:0;word-break:break-all;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    ol{padding-left:20px;color:var(--muted);line-height:1.8}
+    .warn{border-left:3px solid #d98c8c;padding:10px 0 10px 14px;margin:14px 0}
+    .warn strong{color:#f0c9c9}
+    code{background:rgba(0,0,0,.34);padding:2px 6px;border-radius:6px;font-size:.92em}
+    .fine{font-size:12.5px;color:rgba(246,239,232,.6);line-height:1.65}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="eyebrow">Private beta · unlisted</div>
+      <h1>WinLEW Android Beta</h1>
+      <p>
+        The WinLEW app, for testers. It's a native shell around
+        <strong>winlew.co</strong> — the same site, the same account, the same wallet. Nothing is
+        duplicated inside the app, so anything fixed on the website is fixed here immediately.
+      </p>
+      <a class="dl" href="/jdid93hf8dh/winlew-beta-0.2.1.apk" download>⬇ Download APK · 25 MB</a>
+      <dl class="meta">
+        <dt>Version</dt><dd>0.2.1 (build 201)</dd>
+        <dt>Requires</dt><dd>Android 5.1 or newer</dd>
+        <dt>Signed by</dt><dd>CN=WinLEW · 93b567cc7530391044a8fcff03c8627ea0ecb6a5417051bbbbbf925e31f877a6</dd>
+        <dt>SHA-256</dt><dd>cbe67a8de3f14a4dadde8019db24e30e052be94ae618ed2dd32a1a7d891d10d7</dd>
+      </dl>
+      <p class="fine" style="margin-top:12px">
+        <strong>0.2.1 changes nothing you can see, and you do not have to install it.</strong> It is a
+        rebuild of 0.2.0 — same permissions, same code, same signing key. It exists so the version on
+        this page matches the current source. If notifications weren't reaching you on 0.2.0, this
+        build will not fix that: the cause is your phone's battery manager stopping the app, so allow
+        <strong>Auto Start</strong> and <strong>Background running</strong> for WinLEW in Android's
+        App Info instead.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Before you install — read this</h2>
+      <div class="warn">
+        <p>
+          <strong>Install only the file from this page.</strong> Check that the SHA-256 above matches
+          what you downloaded. If anyone sends you a "WinLEW APK" through any other channel — a DM,
+          another site, a forwarded file — do not install it, whoever it appears to be from. Crypto
+          communities are targeted with exactly this trick.
+        </p>
+        <p>
+          Android will say the app is from an unknown source. That is expected for a beta installed
+          outside the Play Store, and is not a warning about this build specifically.
+        </p>
+      </div>
+      <p class="fine">
+        This is a signed release build — not debuggable, and signed with WinLEW’s own key rather than the shared Android debug key, so a modified copy cannot carry a matching signature. Verifying the checksum is still the way to be certain you have the real one.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Installing</h2>
+      <ol>
+        <li>Download the APK on the phone itself.</li>
+        <li>Open it. Android will warn about installing from an unknown source — allow it for your browser or files app.</li>
+        <li>Install, then open <strong>WinLEW</strong>.</li>
+      </ol>
+      <p class="fine">
+        Installing over an earlier beta keeps your data. The app never asks for a seed phrase or
+        private key, and it can't move your tokens — it only ever opens winlew.co and your own
+        wallet's official app.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>What we need you to try</h2>
+      <ol>
+        <li><strong>Connect a wallet</strong> from the app’s home screen. It opens Phantom/Solflare to sign, then should return you to WinLEW already signed in.</li>
+        <li><strong>Then close the app and reopen it.</strong> It should come straight back signed in, with one tap to claim — no wallet round trip. That is the whole point; tell us if it asks you to connect again.</li>
+        <li>If it doesn't return automatically, <strong>switch back to WinLEW yourself</strong> — it should finish signing you in within a few seconds. Please say which of the two happened.</li>
+        <li>Check the top and bottom of the screen — nothing should sit under the clock or the gesture bar.</li>
+        <li>Use the back button around the app and the menu.</li>
+      </ol>
+      <p>
+        Report anything odd in the WinLEW Discord. Screenshots help enormously, and "it did nothing"
+        is a useful report — that's the case we most need to know about.
+      </p>
+      <p class="fine">
+        Known: iOS isn't available yet. If you've already claimed the faucet more than 10 times,
+        verify at <a href="/verify/" style="color:var(--brand)">winlew.co/verify/</a> in your normal
+        mobile browser rather than in the app for now.
+      </p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <title>Governance Rules — WinLEW</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="The full WinLEW Governance v1 rules: eligibility, voting method, vote privacy, quorum, approval thresholds, anti-abuse, execution boundaries, and known limitations." />
+  <meta property="og:title" content="Governance Rules — WinLEW" />
+  <meta property="og:description" content="Eligibility, voting method, privacy, quorum, thresholds, execution boundaries, and the limitations we do not paper over." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://winlew.co/governance/rules/" />
+  <link rel="canonical" href="https://winlew.co/governance/rules/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      padding: 0; margin: 0; line-height: 1.7;
+    }
+    html { overflow-x: hidden; }
+    .wlPageShell { max-width: 900px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin-bottom: 8px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); margin-top: 0; }
+    h2 { font-size: clamp(18px, 2.6vw, 22px); margin-top: 0; }
+    h3 { font-size: 16px; margin-top: 18px; }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624; border-radius: 20px; padding: 26px; margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: .85; }
+    .fine { font-size: 13px; }
+    code { background: #2e1f16; padding: 2px 6px; border-radius: 6px; font-size: .9em; word-break: break-word; }
+    pre { background: #241811; border: 1px solid #4e3624; border-radius: 12px; padding: 14px; overflow-x: auto; font-size: 13px; line-height: 1.5; }
+    pre code { background: none; padding: 0; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid #4e3624; font-weight: 850; font-size: 13px; text-decoration: none; color: inherit; }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .ctaRow { display: flex; flex-wrap: wrap; gap: 10px; }
+    .status-note { border-left: 3px solid #d6a866; padding: 10px 14px; background: rgba(214,168,102,.08); border-radius: 0 10px 10px 0; margin-top: 14px; font-size: 14px; }
+    .toc { columns: 2; column-gap: 26px; font-size: 14px; }
+    @media (max-width: 640px) { .toc { columns: 1; } }
+    .toc a { display: block; padding: 3px 0; }
+    .docMeta { font-size: 13px; opacity: .8; margin-top: 6px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #4e3624; vertical-align: top; }
+    th { color: #e7c18f; }
+    .scrollX { overflow-x: auto; }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+
+<header class="wlHero">
+  <div class="wlEyebrow">Reference · Governance v1</div>
+  <h1>Governance rules</h1>
+  <p class="muted">The complete rules the <a href="/governance/">Governance</a> page runs on — eligibility, how votes are counted and kept private, quorum, approval thresholds, anti-abuse, and the hard boundary between a passed vote and anything actually executing.</p>
+  <p class="docMeta">Governance Module v1 · last substantive update 2026-07-20 (v1.1 hardening 2026-07-12) · applies to <code>/governance/</code>, <code>/governance/proposal/</code>, <code>/governance/submit/</code></p>
+  <div class="ctaRow" style="margin-top:16px;">
+    <a class="btn" href="/governance/">← Back to Governance</a>
+    <a class="btn" href="/governance/proposal-template/">Proposal template →</a>
+  </div>
+</header>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Contents</div>
+  <nav class="toc">
+    <a href="#purpose">Purpose</a>
+    <a href="#scope">Scope</a>
+    <a href="#eligibility">Eligibility</a>
+    <a href="#voting-method">Voting method and weighting</a>
+    <a href="#lifecycle">Proposal lifecycle</a>
+    <a href="#categories">Proposal categories</a>
+    <a href="#modes">Governance modes</a>
+    <a href="#privacy">Vote privacy</a>
+    <a href="#vote-change">Vote-change rule</a>
+    <a href="#quorum">Quorum</a>
+    <a href="#threshold">Approval threshold</a>
+    <a href="#anti-abuse">Anti-abuse and uniqueness</a>
+    <a href="#publishing">Proposal publishing</a>
+    <a href="#burn">Burn proposal handling</a>
+    <a href="#feature">Feature proposal handling</a>
+    <a href="#ratification">Maintainer ratification</a>
+    <a href="#emergency">Emergency boundaries</a>
+    <a href="#execution">Execution boundaries</a>
+    <a href="#archive">Historical archive</a>
+    <a href="#security">Security model</a>
+    <a href="#hardening">Security hardening review</a>
+    <a href="#limitations">Known limitations</a>
+  </nav>
+</div>
+
+<div class="box wlIn" id="purpose">
+  <div class="wlEyebrow">Section 1</div>
+  <h2>Purpose</h2>
+  <p>Gives verified $WinLEW holders a structured, server-verified, permanent, public way to weigh in on community, feature, reward, and burn-program decisions — fulfilling the original roadmap's Phase 5 promise ("$WinLEW holders vote on feature proposals," "$WinLEW holders vote on token-burn schedules") without pretending a website vote executes a treasury or burn transaction by itself.</p>
+</div>
+
+<div class="box wlIn" id="scope">
+  <div class="wlEyebrow">Section 2</div>
+  <h2>Scope</h2>
+  <p>Governance v1 applies to <strong>WinLEW community matters only</strong>. It explicitly does <strong>not</strong> govern:</p>
+  <ul>
+    <li>Oxyon Wallet (formerly GeoWallet) custody or signing architecture</li>
+    <li>GeoAgora marketplace policy</li>
+    <li>GeoJustice adjudication systems</li>
+    <li>Oxyon architecture or philosophy</li>
+    <li>Private keys, security controls, legal compliance obligations</li>
+    <li>Emergency responses to active threats</li>
+    <li>Infrastructure secrets</li>
+    <li>Individual moderation cases</li>
+    <li>Any decision belonging to an independent product</li>
+  </ul>
+  <p class="fine muted">Those are separate products with their own boundaries. A WinLEW governance vote has no authority over them.</p>
+</div>
+
+<div class="box wlIn" id="eligibility">
+  <div class="wlEyebrow">Section 3</div>
+  <h2>Eligibility</h2>
+  <p>Checked <strong>server-side, every time</strong> — never trusted from the browser, never cached indefinitely (60s TTL only, to avoid hammering RPC). The default v1 rule lives in exactly one canonical place, <code>GOVERNANCE_CONFIG</code>:</p>
+  <ol>
+    <li>Authenticated with the shared WinLEW session (the same login as Dashboard/Quiz/Faucet — no second auth flow).</li>
+    <li>A verified, linked Solana wallet — reusing the exact wallet-link functions the Dashboard already uses, and the same link that unlocks Discord's <em>Verified WinLEW Holders</em> Linked Role. See <a href="/governance/#eligibility">How to unlock voting</a> for the <code>/mole link</code> → <a href="/verify/">/verify/</a> → select-role walkthrough. No new wallet connector was built for governance.</li>
+    <li>That wallet holds at least <strong>1 WinLEW</strong>. Checked with the same on-chain balance function the Transparency Center and Burn Center already use.</li>
+    <li>To buy <strong>additional weight</strong> on top of that free vote, the wallet must hold at least <strong>1,000,000 WinLEW</strong>.
+      <br><em>History, because the number moved twice:</em> the bar was 1 WinLEW until 2026-07-17, when it was raised to 1,000,000 at the project owner's request — a near-zero formality was not a meaningful bar. That was right about amplification and wrong about access: it also removed the free vote from every holder under a million tokens, which had been the reason to verify at all. On 2026-08-06 the gate was split so both hold: verifying earns a vote, and 1,000,000 earns the ability to raise it.</li>
+    <li>One verified wallet = one vote.</li>
+  </ol>
+  <div class="status-note">A failed RPC balance check returns <strong>eligibility unknown</strong>, never a false "not eligible" — the page renders "Eligibility temporarily unavailable." A network problem must never look like a rejection.</div>
+</div>
+
+<div class="box wlIn" id="voting-method">
+  <div class="wlEyebrow">Section 4</div>
+  <h2>Voting method and weighting</h2>
+  <p><strong>Every eligible verified wallet gets one free vote on every proposal.</strong> Beyond that free vote, a wallet may add <strong>up to 10 further votes</strong> on the same proposal through the Governance Vote Fund — so the most any single wallet can ever carry on one proposal is <strong>11</strong>. Results are tallied by that weight.</p>
+  <ul>
+    <li><strong>The free vote is never for sale and never required to be topped up.</strong> Verified eligibility alone gets you a full vote.</li>
+    <li>Additional votes cost <strong>$1 USD each</strong>, charged in WinLEW. The token amount is derived from a <strong>3-day average price</strong>, and if two price sources disagree by more than 15% the <em>more conservative</em> price is used instead of the plain average — so a temporary price spike or a broken feed cannot quietly make votes cheap.</li>
+    <li>The cap of 10 is enforced <strong>where the vote is stored</strong>, not only where weight is calculated, so no caller can smuggle a larger weight into a stored vote.</li>
+  </ul>
+
+  <h3>Why capped, and not unlimited token weighting</h3>
+  <p>This platform has no historical-balance <em>indexer</em> — there is no way to answer "what did every wallet hold at block N" after the fact. Every live-balance feature (Transparency Center, Burn Center, governance) reads the <em>current</em> on-chain balance. Given that constraint, the options were:</p>
+  <ol>
+    <li><strong>Unlimited token-weighted voting on current balance</strong> — rejected, and still rejected. It would let one large holder trivially control every decision. A hard cap of 10 extra votes is what keeps the largest possible voice at 11× the smallest rather than unbounded.</li>
+    <li><strong>One free vote per verified wallet, with nothing purchasable</strong> — how governance launched, and the safest possible starting point.</li>
+    <li><strong>One free vote plus capped, priced additional votes</strong> — adopted 2026-07-28. It lets someone express strength of feeling and fund the reserves at the same time, without letting a balance alone decide an outcome.</li>
+  </ol>
+  <div class="status-note">Anyone can take part meaningfully without spending anything. Buying weight is optional, capped, and visible: the <a href="/leaderboards/">participation board</a> shows how many proposals each voter took part in — never how anyone voted.</div>
+
+  <h3>Snapshot rule (v1.1, 2026-07-12)</h3>
+  <p>Eligibility is no longer purely "live at whatever moment you happen to check." Each proposal has a snapshot boundary (defaulting to when voting opens). The <em>first</em> successful eligibility check for a wallet on that proposal, at or after the boundary, is recorded immutably and reused for every later check on that same proposal-and-wallet pair — so a wallet cannot change its own recorded eligibility by acquiring or disposing of tokens after that first check.</p>
+  <div class="status-note">This is deliberately <strong>not</strong> presented as a full chain-wide historical snapshot. A wallet never checked before voting closes simply never gets one. See <a href="#limitations">Known limitations</a>.</div>
+</div>
+
+<div class="box wlIn" id="lifecycle">
+  <div class="wlEyebrow">Section 5</div>
+  <h2>Proposal lifecycle</h2>
+  <p>There are 17 defined statuses with an explicit map of valid transitions between them, so a proposal can never jump silently between states. For example <code>draft</code> → <code>executed</code> is not a legal transition; it must pass through <code>review</code>, <code>discussion</code>, <code>scheduled</code>, <code>active</code>, <code>passed</code>, <code>awaiting-ratification</code>/<code>approved-for-execution</code>, <code>executing</code>, then <code>executed</code>. <code>archived</code> is a true terminal state.</p>
+  <p>Every status change records a timestamp, the actor or system, the previous status, the new status, and a reason. In v1 there is no admin UI, so that record is a maintainer's public commit history and message rather than a separate audit-log feature — see <a href="#publishing">Proposal publishing</a>.</p>
+</div>
+
+<div class="box wlIn" id="categories">
+  <div class="wlEyebrow">Section 6</div>
+  <h2>Proposal categories</h2>
+  <p>A fixed, controlled list of <strong>14 categories</strong>: Community, Features, Quiz, Faucet, Games, Events, Rewards, Proof of Value, Burn Program, Treasury Allocation, Partnerships, Grants, Governance Rules, Platform Policy.</p>
+  <p class="fine muted">No free-form categories, so terminology never fragments across proposals.</p>
+</div>
+
+<div class="box wlIn" id="modes">
+  <div class="wlEyebrow">Section 7</div>
+  <h2>Governance modes</h2>
+  <p>Every proposal declares one of four modes. Governance is never presented as uniformly "binding":</p>
+  <ul>
+    <li><strong>advisory</strong> — informs a maintainer decision, no other effect.</li>
+    <li><strong>community-approved</strong> — the community's approval is the deciding factor for a low-stakes action a maintainer then carries out.</li>
+    <li><strong>maintainer-ratified</strong> — passing is necessary but not sufficient; a maintainer still ratifies before anything happens.</li>
+    <li><strong>binding-within-defined-policy</strong> — the closest to "binding" v1 offers, and even this never means automatic execution. See <a href="#execution">Execution boundaries</a>.</li>
+  </ul>
+</div>
+
+<div class="box wlIn" id="privacy">
+  <div class="wlEyebrow">Section 8</div>
+  <h2>Vote privacy</h2>
+  <ul>
+    <li>An individual's vote <strong>choice is never made public</strong> — not during voting, not after close. Only the authenticated voter can see their own choice.</li>
+    <li>Aggregate results (counts, percentages, quorum, outcome) are always public.</li>
+    <li>The results calculation never returns a per-wallet mapping. This is tested directly: the privacy test asserts that no wallet address ever appears in a serialized results payload.</li>
+    <li>Never exposed anywhere in governance: session tokens, Discord OAuth data, IP addresses, device identifiers, internal anti-abuse markers, or private moderation data.</li>
+  </ul>
+</div>
+
+<div class="box wlIn" id="vote-change">
+  <div class="wlEyebrow">Section 9</div>
+  <h2>Vote-change rule</h2>
+  <p>A voter <strong>may update their choice until voting closes</strong> — the latest valid choice replaces the prior one. This is enforced by construction rather than by duplicate-detection logic: votes are stored keyed by wallet address within a proposal, so a second vote from the same wallet overwrites the first entry. The original cast time is preserved alongside the time of the latest change.</p>
+</div>
+
+<div class="box wlIn" id="quorum">
+  <div class="wlEyebrow">Section 10</div>
+  <h2>Quorum</h2>
+  <p>Proposal-specific, expressed as a fixed count of eligible votes — <strong>never a percentage of all holders</strong>. This platform does not have reliable total-holder-count data, and inventing one to make a quorum look rigorous would be fabricating a figure.</p>
+</div>
+
+<div class="box wlIn" id="threshold">
+  <div class="wlEyebrow">Section 11</div>
+  <h2>Approval threshold</h2>
+  <ul>
+    <li>Simple proposals: <strong>greater than 50%</strong> of valid votes cast. Strictly greater — a 50/50 tie does not pass, and that is tested directly.</li>
+    <li>Governance-rules proposals: <strong>more than two-thirds</strong>. Also strictly greater — exactly two-thirds does not pass, also tested directly.</li>
+    <li>An individual proposal may set an explicit threshold override if it genuinely needs a different bar. Absent that, the two rules above are the only defaults, and they are defined in exactly one place in the code.</li>
+  </ul>
+</div>
+
+<div class="box wlIn" id="anti-abuse">
+  <div class="wlEyebrow">Section 12</div>
+  <h2>Anti-abuse and uniqueness</h2>
+  <div class="scrollX">
+  <table>
+    <tr><th>Attack</th><th>Why it fails</th></tr>
+    <tr><td>Duplicate votes</td><td>Impossible by construction — wallet-keyed storage, see <a href="#vote-change">Vote-change rule</a>.</td></tr>
+    <tr><td>Voting for another user</td><td>Impossible — the wallet is always resolved server-side from the session, never accepted from the client request body.</td></tr>
+    <tr><td>Session replay / client-side eligibility bypass</td><td>Eligibility is re-checked server-side on every single vote request. It is never cached client-side or trusted from a prior response.</td></tr>
+    <tr><td>Concurrent submissions</td><td>Every read-modify-write happens synchronously within one request handler, with no <code>await</code> between the read and the write, so two near-simultaneous requests cannot interleave. Tested with two concurrent votes from different wallets (both preserved) and two from the same wallet (exactly one survives — a vote change, not a duplicate).</td></tr>
+    <tr><td>Voting outside the window, or on a cancelled proposal</td><td>The vote path checks votable status and the voting window independently of whatever the frontend believes.</td></tr>
+    <tr><td>Malformed choices</td><td>Any choice not in the proposal's own list is rejected.</td></tr>
+    <tr><td>Duplicate proposal IDs</td><td>Checked against the seeded data by a dedicated test.</td></tr>
+    <tr><td>Result manipulation by frontend code</td><td>Impossible — the results calculation is the only source of truth and runs server-side. The frontend only ever displays what the API returns.</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="box wlIn" id="publishing">
+  <div class="wlEyebrow">Section 13</div>
+  <h2>Proposal publishing</h2>
+  <p>There is no CMS and no unauthenticated public proposal-creation endpoint. Real proposals are a maintainer-edited record, published the same way burn events, partners, and events already are: edit the file, run the validation test to confirm the record is valid, commit, push.</p>
+  <p>v1.1 added a <a href="/governance/submit/">community submission review queue</a> that lets anyone with a verified wallet submit a proposal <em>idea</em> for maintainer review — but a submission can never publish itself. Turning an approved submission into a real proposal is still that same manual, maintainer-owned step.</p>
+  <h3>Discord notification (added 2026-07-17)</h3>
+  <p>Every successful submission also best-effort-posts a summary to a Discord webhook. A webhook outage never fails the submission itself, because the record is durably written before the notification is attempted.</p>
+  <p>Because a submission's title and summary are user-supplied free text — unlike every other value this platform's webhook messages contain, which are all server-resolved — the payload explicitly blocks mention parsing. A submitter cannot embed <code>@everyone</code>, <code>@here</code>, or a role mention in their own title or summary and have it actually fire, while the one legitimate system-controlled "credit the submitter" mention still works. This is covered by its own test.</p>
+</div>
+
+<div class="box wlIn" id="burn">
+  <div class="wlEyebrow">Section 14</div>
+  <h2>Burn proposal handling</h2>
+  <p>A burn-program proposal must carry a burn-details object — proposed amount, source, benchmark or date, reason, effect on the 100M goal, execution authority, and execution deadline — and this is enforced at the data-model level. The proposal detail page fetches the <strong>canonical, live</strong> Burn Center totals rather than ever restating a second hardcoded figure, so it shows current verified-burned, staged, and remaining-to-target alongside the proposal's own ask.</p>
+  <p><strong>A successful vote never executes a burn.</strong> The lifecycle is exactly:</p>
+  <pre><code>Proposal → Vote → Result → Maintainer safety review → Approved for execution
+  → Separate, manually authorized burn transaction (outside this system)
+  → On-chain confirmation → Burn Center event → Governance execution record</code></pre>
+  <p>No signing capability, private key handling, or transaction-broadcast code exists anywhere in Governance v1 — see <a href="#execution">Execution boundaries</a>. A "Donate to Burn" flow is explicitly <strong>not</strong> implemented.</p>
+  <div class="ctaRow" style="margin-top:12px;"><a class="btn" href="/burn/">Burn Center — verified on-chain history ↗</a></div>
+</div>
+
+<div class="box wlIn" id="feature">
+  <div class="wlEyebrow">Section 15</div>
+  <h2>Feature proposal handling</h2>
+  <p>A feature proposal captures problem, proposed change, community benefit, affected systems, scope, risks, estimated effort, dependencies, alternatives, and success criteria as fields on the proposal record.</p>
+  <p>A vote never forces an unsafe or impossible implementation. After passage a maintainer classifies it — accepted, accepted-pending-prerequisites, requires-revision, unable-to-execute, or rejected-on-safety-or-legal-grounds — and <strong>any refusal requires a public reason</strong>.</p>
+</div>
+
+<div class="box wlIn" id="ratification">
+  <div class="wlEyebrow">Section 16</div>
+  <h2>Maintainer ratification</h2>
+  <p>The <em>maintainer-ratified</em> and <em>binding-within-defined-policy</em> modes both require a human decision after a vote closes, reflected in the awaiting-ratification → approved-for-execution transition. <strong>There is no code path that skips this step.</strong></p>
+</div>
+
+<div class="box wlIn" id="emergency">
+  <div class="wlEyebrow">Section 17</div>
+  <h2>Emergency boundaries</h2>
+  <p>Governance has no relationship to incident response. An active security threat is handled entirely outside governance, by maintainers, exactly as established platform-wide. A vote-gated emergency response would be a contradiction: emergencies need speed, not a multi-day voting window.</p>
+</div>
+
+<div class="box wlIn" id="execution">
+  <div class="wlEyebrow">Section 18 · read this one</div>
+  <h2>Execution boundaries</h2>
+  <p><strong>No signing, no treasury access, and no burn-execution capability exists anywhere in Governance v1.</strong> Concretely:</p>
+  <ul>
+    <li>Casting a vote only ever writes to the local vote store. That path has no access to any keypair, no import of a signing library, and no code that constructs or broadcasts a transaction.</li>
+    <li>Every governance route is either read-only against on-chain state (balance lookups for eligibility, the canonical burn totals) or read/write only against the local vote store.</li>
+    <li>A passed proposal's execution status and evidence are filled in <strong>after the fact</strong>, once a maintainer has manually executed something outside this system and supplied evidence — a transaction signature or a commit link. This is the same pattern the Burn Center already uses for its own confirmed events.</li>
+  </ul>
+</div>
+
+<div class="box wlIn" id="archive">
+  <div class="wlEyebrow">Section 19</div>
+  <h2>Historical archive</h2>
+  <p>Rejected, quorum-not-met, and cancelled proposals are <strong>never deleted</strong>. They remain visible in the governance archive exactly like passed and executed ones. Governance credibility requires preserving the unsuccessful decisions too.</p>
+</div>
+
+<div class="box wlIn" id="security">
+  <div class="wlEyebrow">Section 20</div>
+  <h2>Security model</h2>
+  <ul>
+    <li>All identity and wallet resolution reuses existing infrastructure already proven by use elsewhere on the platform — no second implementation of session handling, wallet linking, verification status, or balance lookup.</li>
+    <li>Rate limiting on every route, matching every other mutating route on the site.</li>
+    <li>A content-safety floor rejects raw <code>&lt;script</code> in text fields at the data-model level — defense in depth, since the render layer escapes everything regardless.</li>
+    <li>Tests confirm that no sensitive field — private key, secret key, seed phrase, keypair, Discord token, bot token, session token, or IP address — ever appears in a vote-cast or results response.</li>
+  </ul>
+</div>
+
+<div class="box wlIn" id="hardening">
+  <div class="wlEyebrow">Section 21</div>
+  <h2>Security hardening review (2026-07-17)</h2>
+  <p class="muted">Prompted by the project owner's explicit request to audit governance for exploit vectors — "evidence over assumptions" — rather than trust the design documents at face value. Findings were verified against the actual code, not against this document's prior claims.</p>
+
+  <h3>Verified solid, not merely asserted</h3>
+  <p>Vote casting and submission creation really do read-check-write synchronously with no <code>await</code> in between; both have concurrent-write tests rather than a comment claiming safety. Submission detail and withdraw routes return "not found" to non-owners, never a distinguishing "not yours". The maintainer gate has no bypass path, and maintainers vote through the identical eligibility path as anyone else — no special-cased privilege. RPC-failure handling never collapses to a false "ineligible" and never caches a failure.</p>
+
+  <h3>Fixed</h3>
+  <p>The proposal-submission Discord webhook now explicitly guards against mention-injection from user-supplied free text.</p>
+
+  <h3>Not fixed, deliberately — documented instead</h3>
+  <p>Wallet linking has no check preventing a Discord account from relinking to a different wallet at any time, and the v1.1 snapshot lock-in records only the <em>first</em> balance check at or after a proposal's boundary — it has no minimum holding duration. In principle a wallet could be funded briefly right at a proposal's snapshot boundary and drained afterward. <strong>This is now weaker than it was between 2026-07-17 and 2026-08-06, and that is a deliberate trade.</strong> While voting required 1,000,000 WinLEW, funding a wallet briefly at a snapshot boundary cost a million tokens per vote. With the free-vote bar back at 1, that cost is gone — a sybil vote now costs a Discord account and a verified wallet, not a large holding. What it buys is capped at one vote, purchased weight still requires 1,000,000 held, and quorum still has to be met. The bar was moved to restore a deliberate incentive; the cost is that low-value sybil voting is cheaper, and this page says so rather than leaving it for someone else to find.</p>
+  <p>A duration-based fix is not buildable without a historical-balance indexer this platform does not have. Rather than ship a partial heuristic that could falsely exclude a genuine holder who happens to re-verify near a snapshot boundary, the limitation is stated plainly here and on the <a href="/governance/">Governance page</a> itself.</p>
+
+  <h3>Structural, not a bug</h3>
+  <p>Wallet-based one-vote can never fully prevent one person controlling multiple funded wallets and Discord accounts. No KYC exists or is planned. This was already true before the review; it is stated explicitly rather than left implicit.</p>
+</div>
+
+<div class="box wlIn" id="limitations">
+  <div class="wlEyebrow">Section 22</div>
+  <h2>Known limitations</h2>
+  <ol>
+    <li><strong>No full chain-wide historical holder snapshot.</strong> v1.1 added a narrower, honest per-proposal eligibility lock-in, but there is still no indexer that can answer "what did every wallet hold at block N." A wallet never checked before voting closes never gets a recorded snapshot at all.</li>
+    <li><strong>No maintainer review UI for the submission queue yet.</strong> The community can submit and track their own drafts, and the review API is fully built and tested, but there is no dedicated admin page — maintainers act through the API directly.</li>
+    <li><strong>No on-chain execution automation, by design.</strong> See <a href="#execution">Execution boundaries</a>. This is a permanent v1 boundary, not a temporary gap.</li>
+    <li><strong>No admin UI for status transitions.</strong> Status changes are commits, not a dashboard action — matching how burn events, partners, and events already work.</li>
+    <li><strong>Only one real, seeded proposal existed at launch</strong> (the Governance Launch record itself, informational). No fabricated voting history. The first real community vote will be the platform's actual first governance test.</li>
+  </ol>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Related</div>
+  <h2>Where to go next</h2>
+  <div class="ctaRow">
+    <a class="btn" href="/governance/">Governance — proposals &amp; results</a>
+    <a class="btn" href="/governance/submit/">Submit a proposal</a>
+    <a class="btn" href="/governance/proposal-template/">Proposal template</a>
+    <a class="btn" href="/burn/">Burn Center</a>
+    <a class="btn" href="/transparency/">Transparency Center</a>
+  </div>
+</div>
+
+<footer style="margin-top:40px;font-size:12px;opacity:.75;text-align:center;">
+  <a href="/governance/">← Back to Governance</a>
+</footer>
+
+</div>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

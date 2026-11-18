@@ -1,0 +1,114 @@
+Options -Indexes -MultiViews
+DirectoryIndex index.html index.htm
+
+# APK distribution stays explicit; never sniff the package as page content.
+<IfModule mod_mime.c>
+AddType application/vnd.android.package-archive .apk
+</IfModule>
+<IfModule mod_headers.c>
+<FilesMatch "\.(html|js|css)$">
+Header set Cache-Control "no-cache, must-revalidate"
+</FilesMatch>
+<FilesMatch "^latest\.json$">
+Header set Cache-Control "no-store"
+</FilesMatch>
+<FilesMatch "\.apk$">
+Header set X-Content-Type-Options "nosniff"
+</FilesMatch>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Historical development evidence and credential include files never belong
+# to the public response surface. PHP includes still work server-side.
+RewriteRule (^|/)\.tmp-audit(?:\.zip)?(/|$) - [F,L,NC]
+RewriteRule (^|/)log(/|$) - [F,L,NC]
+RewriteRule (^|/)(api-proxy-secret\.php|api-proxy-upstream\.php|\.env[^/]*|[^/]+\.(bak|before|patch|r2-failed)(-[0-9A-Za-z._-]+)?|[^/]+-bak\.html?)$ - [F,L,NC]
+
+# --- Never serve server logs -------------------------------------------
+# The web host writes its OWN access logs into /log/, inside the document
+# root. On 2026-08-03 /log/x-access_log.2026-02-27 was publicly
+# downloadable: 46 visitor IP addresses with timestamps and user agents.
+#
+# Deleting the file is not a fix — the server recreates it, and the live
+# copy was already larger (44,265 bytes) than the one that had been
+# committed to the repo, so it is actively being written. Blocking the
+# path is what actually holds.
+RewriteRule ^log(/|$) - [F,L]
+
+# Keep this file minimal on shared hosting.
+# Do NOT force HTTPS here because many shared hosts/CDN setups
+# already terminate SSL upstream, which can cause redirect loops.
+
+# --- 301 vs 302: which rules are permanent ---------------------------------
+# Everything here was 302 (temporary), including retirements that are never
+# coming back. A 302 tells a search engine to keep indexing the OLD URL, so
+# /treasury/ and the three /mole-hub/ aliases were competing with the pages
+# they redirect to instead of handing over their ranking.
+#
+# Four rules below are now 301, chosen deliberately rather than sweeping the
+# file: /treasury/ (the page was retired, its stub file deleted) and
+# /gaming-hub/, /game-hub/, /gamehub/ (three older spellings of one route).
+# Those are permanent.
+#
+# The rest stay 302 on purpose. /verify, /health, /discord-bots and the
+# /geoagora legacy paths all point at LIVE routes that could plausibly move
+# again — and a 301 is cached hard by browsers, so undoing one means waiting
+# out every visitor's cache. Temporary is the honest answer where the answer
+# really is temporary.
+
+# Redirect only legacy direct requests to the new subdirectories.
+RewriteCond %{THE_REQUEST} \s/+verify(?:\.html)?[\s?] [NC]
+RewriteRule ^verify(?:\.html)?$ /verify/ [R=302,L,NC]
+
+RewriteCond %{THE_REQUEST} \s/+discord-bots(?:\.html)?[\s?] [NC]
+RewriteRule ^discord-bots(?:\.html)?$ /discord-bots/ [R=302,L,NC]
+
+RewriteCond %{THE_REQUEST} \s/+health(?:\.html)?[\s?] [NC]
+RewriteRule ^health(?:\.html)?$ /health/ [R=302,L,NC]
+# /mole-hub/ is the canonical games route. Three older names still exist as
+# static JS redirect stubs (game-hub, gamehub, gaming-hub — each as both a
+# directory and a root .html). Only gaming-hub had a server rule, so the other
+# two redirected purely in JavaScript. These make all three behave the same and
+# redirect before any HTML is served; the stubs stay as the fallback for a host
+# without mod_rewrite, and are marked noindex so they can't compete with
+# /mole-hub/ in search results.
+RewriteCond %{THE_REQUEST} \s/+gaming-hub(?:/|\.html)?[\s?] [NC]
+RewriteRule ^gaming-hub(?:\.html)?/?$ /mole-hub/ [R=301,L,NC]
+
+RewriteCond %{THE_REQUEST} \s/+game-hub(?:/|\.html)?[\s?] [NC]
+RewriteRule ^game-hub(?:\.html)?/?$ /mole-hub/ [R=301,L,NC]
+
+RewriteCond %{THE_REQUEST} \s/+gamehub(?:/|\.html)?[\s?] [NC]
+RewriteRule ^gamehub(?:\.html)?/?$ /mole-hub/ [R=301,L,NC]
+
+# The Treasury page was retired in favor of the Transparency Center — the
+# static redirect-stub file (src/public/treasury/index.html) was removed,
+# so this server-level rule is now the only thing keeping old /treasury/
+# links (bookmarks, external posts) from 404ing.
+RewriteCond %{THE_REQUEST} \s/+treasury(?:/|\.html)?[\s?] [NC]
+RewriteRule ^treasury(?:\.html)?/?$ /transparency/ [R=301,L,NC]
+
+RewriteCond %{THE_REQUEST} \s/+geoagora(?:\.html)?[\s?] [NC]
+RewriteRule ^geoagora(?:\.html)?$ /geoagora/ [R=302,L,NC]
+
+# --- Oxyon: the technology moved home (2026-10-04) -------------------------
+# oxyon.io is now the canonical home of Oxyon and of the XL1 producers and
+# their dashboards. "Oxyon builds. WinLEW rewards." -- WinLEW keeps its own
+# XL1 Control Center, GeoHackers, CryptoSpades and the faucet.
+#
+# 301 where the move is permanent: /oxyon/ was only a mirror of oxyon.io, and
+# the four producer pages now live at oxyon.io/xl1/. Paths are kept, so
+# /oxyon/wallet/privacy/ lands on oxyon.io/wallet/privacy/ (the Chrome store
+# listing still links the old address). /future/ was a teaser, not a mirror,
+# so it stays 302 -- it may come back as something else.
+#
+# /xl1/latest.json is NOT redirected: the producers' auto-updaters read it.
+RewriteRule ^oxyon/?$ https://oxyon.io/ [R=301,L,NC]
+RewriteRule ^oxyon/(.+)$ https://oxyon.io/$1 [R=301,L,NC]
+RewriteRule ^future/lab(/.*)?$ https://oxyon.io/labs/ [R=302,L,NC]
+RewriteRule ^future(/.*)?$ https://oxyon.io/ [R=302,L,NC]
+RewriteRule ^xl1/(rbpi3|windows|compare|race)/?(index\.html)?$ https://oxyon.io/xl1/$1/ [R=301,L,NC]
+
+</IfModule>

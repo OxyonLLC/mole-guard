@@ -1,0 +1,7 @@
+node_modules/
+yarn.lock
+.yarnrc.yml
+.yarn/
+pnpm-lock.yaml
+.env
+npm-debug.log*

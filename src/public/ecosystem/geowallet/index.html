@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Oxyon Wallet (formerly GeoWallet) — A Multichain Wallet Built for the XYO Ecosystem</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="Oxyon Wallet, formerly GeoWallet, is a non-custodial wallet for Ethereum, Polygon, Optimism, Base, Solana, and XL1, with a built-in transaction-safety engine called GeoShield and wallet-to-wallet messages on XL1." />
+  <link rel="canonical" href="https://winlew.co/ecosystem/geowallet/" />
+  <meta property="og:title" content="Oxyon Wallet (formerly GeoWallet)" />
+  <meta property="og:description" content="A non-custodial, multi-chain wallet built by the same team as WinLEW, with GeoShield transaction-safety built in." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/ecosystem/geowallet/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    .hidden { display: none !important; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8; padding: 0; margin: 0; line-height: 1.7;
+    }
+    html { overflow-x: hidden; }
+    .wlPageShell { max-width: 1000px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin-bottom: 8px; }
+    h1 { font-size: clamp(30px, 5vw, 44px); margin-top: 0; }
+    h2 { font-size: clamp(18px, 2.6vw, 22px); margin-top: 0; }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header.wlHero { text-align: left; margin-bottom: 8px; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624; border-radius: 20px; padding: 26px; margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: 0.85; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid #4e3624; font-weight: 850; font-size: 13px; text-decoration: none; cursor: pointer; color: inherit; font-family: inherit; }
+    .btn.primary { background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22)); }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .ctaRow { display: flex; gap: 10px; flex-wrap: wrap; }
+    .statusPill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; border: 1px solid #4e3624; white-space: nowrap; }
+    .statusPill.beta { background: rgba(85,150,240,.14); color: #86b8ff; border-color: rgba(85,150,240,.3); }
+    .featureGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-top: 12px; }
+    .featureCard { background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); border: 1px solid #4e3624; border-radius: 16px; padding: 16px; }
+    .featureCard .featureTitle { font-weight: 800; margin-bottom: 6px; color: #f6efe8; }
+    .featureCard p { margin: 0; font-size: 13.5px; }
+    .techChipRow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .techChip { padding: 6px 11px; border-radius: 999px; background: rgba(255,255,255,.05); border: 1px solid #4e3624; font-size: 12.5px; }
+    .quoteBlock { border-left: 3px solid #d6a866; padding: 12px 16px; background: rgba(214,168,102,.08); border-radius: 0 12px 12px 0; margin: 14px 0; font-style: italic; font-size: 14.5px; }
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+<header class="wlHero" id="about">
+  <div class="wlHeroMain">
+    <span class="wlKicker">🔐 An Oxyon project · Beta · Live today</span>
+    <h1 class="wlHeroTitle">Oxyon Wallet<br><span class="wlHeroTitleAccent">One wallet, every chain that matters here.</span></h1>
+    <p class="wlHeroSub">A non-custodial wallet for Ethereum, Polygon, Optimism, Base, Solana, and XL1 — built by the team behind WinLEW and Oxyon. Formerly GeoWallet: same wallet, same keys, new name. It ships today as a browser extension and a web app, with a native mobile app in development, all sharing one codebase.</p>
+    <div class="wlChipRow">
+      <span class="wlChip">🔓 Non-custodial</span>
+      <span class="wlChip">🛡️ GeoShield built in</span>
+      <span class="wlChip">📱 Web · Extension · Mobile</span>
+    </div>
+    <div class="ctaRow" style="justify-content:flex-start;margin-top:16px;">
+      <a class="btn primary" href="https://wallet.oxyon.io/">Launch Oxyon Wallet (Beta) →</a>
+      <a class="btn" href="#geoshield">What is GeoShield? ↓</a>
+    </div>
+  </div>
+  <div class="wlHeroSide">
+    <div class="wlEyebrow">At a glance</div>
+    <div class="wlHeroStatGrid">
+      <div class="wlStat"><div class="n">6</div><div class="l">Chains supported</div></div>
+      <div class="wlStat"><div class="n"><span class="statusPill beta">Beta</span></div><div class="l">Current status</div></div>
+    </div>
+    <div class="wlHeroNote">The browser extension is the most proven surface today; the web app at wallet.oxyon.io runs the same screens. The native mobile app is still in development.</div>
+  </div>
+</header>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">What is it</div>
+  <h2>A wallet built around one identity, not six separate apps</h2>
+  <p>Oxyon Wallet (formerly GeoWallet) is a non-custodial, multi-chain wallet: your keys stay with you, and one wallet covers Ethereum, Polygon, Optimism, Base, Solana, and XL1 (the XYO Layer One chain) instead of juggling a different app per chain. It's built for the XYO ecosystem first, but works as a general-purpose EVM + Solana wallet for anyone.</p>
+  <p class="muted">The exact same app ships three ways — as a browser-based PWA, a Chrome extension with a MetaMask-compatible provider, and a native iOS/Android app via Capacitor (in development) — so you pick whichever fits how you actually use a wallet.</p>
+</div>
+
+<div class="box wlIn" id="geoshield">
+  <div class="wlEyebrow">The reason to trust it</div>
+  <h2>GeoShield: it would rather say "I don't know" than say "safe" wrongly</h2>
+  <p>GeoShield is Oxyon Wallet's built-in transaction-safety engine. Before you sign anything — a swap, a token approval, a signature request — it decodes exactly what that transaction actually does, on-device, and shows you a plain verdict:</p>
+  <div class="featureGrid">
+    <div class="featureCard"><div class="featureTitle">🔴 Red</div><p>A known-dangerous pattern — like an unlimited token approval — decoded and flagged clearly.</p></div>
+    <div class="featureCard"><div class="featureTitle">🟠 Orange</div><p>"Cannot verify." GeoShield's own rule is to confess when it doesn't recognize something, never guess that it's safe.</p></div>
+    <div class="featureCard"><div class="featureTitle">🟡 Yellow</div><p>Understood, but worth a second look before signing.</p></div>
+    <div class="featureCard"><div class="featureTitle">🟢 Green</div><p>Fully decoded and recognized as an expected, low-risk action.</p></div>
+  </div>
+  <p class="quoteBlock">"Decode-or-confess" is architectural law inside Oxyon Wallet: unknown calldata is never shown as safe just because it's unfamiliar — the exact opposite of how most wallet-drainer scams get people to sign away their tokens.</p>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Under the hood</div>
+  <h2>Built as one monorepo, not three separate projects</h2>
+  <p class="muted">A TypeScript/React/Vite web app, a Chrome MV3 extension, and a Capacitor-wrapped mobile app all share the same core packages — including the vault (AES-GCM encryption with a very high PBKDF2 iteration count) and an "Exposure Ledger" that finds your active token approvals across chains and gives you the exact calldata to revoke them.</p>
+  <div class="techChipRow">
+    <span class="techChip">TypeScript</span>
+    <span class="techChip">React + Vite</span>
+    <span class="techChip">Chrome MV3 extension</span>
+    <span class="techChip">Capacitor mobile</span>
+    <span class="techChip">EIP-1193 provider</span>
+  </div>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Oxyon Wallet & WinLEW</div>
+  <h2>Built by the same people, not the same product</h2>
+  <p>Oxyon Wallet isn't a WinLEW feature — it's an <a href="https://oxyon.io/products/oxyon-wallet" target="_blank" rel="noopener">Oxyon</a> product, built by the team behind WinLEW. It launched as GeoWallet and took the Oxyon name when Oxyon became the home for the technology we build; your recovery phrase and addresses did not change. WinLEW links to it here because it's a genuinely useful wallet for anyone holding $WinLEW or interacting with the XYO/XL1 ecosystem, not because WinLEW built it.</p>
+</div>
+
+<footer>
+  <a href="/">← Back to WinLEW</a> · <a href="/whitepaper/">Whitepaper</a> · <a href="/governance/">Governance</a>
+</footer>
+</div>
+
+<script src="/assets/wallet-auth.js"></script>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

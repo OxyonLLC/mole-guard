@@ -1,0 +1,129 @@
+{
+  "generatedAt": "2026-10-09T14:51:16.301Z",
+  "methodology": "Deterministic local nine-source harness; no production or external endpoint contacted.",
+  "iterations": {
+    "concurrentColdRequests": 12,
+    "warmRequests": 1
+  },
+  "latencyMs": {
+    "coldConcurrentBatch": 58.23,
+    "warm": 0.096
+  },
+  "payload": {
+    "bytes": 2216,
+    "priorMeasuredBytes": 185800,
+    "reductionPercent": 98.81
+  },
+  "sourceCalls": {
+    "price": 1,
+    "burn": 1,
+    "transparency": 1,
+    "modules": 1,
+    "quiz": 1,
+    "faucet": 1,
+    "governance": 1,
+    "events": 1,
+    "health": 1
+  },
+  "assertions": {
+    "oneUnderlyingCallPerSourceDuringConcurrentColdBatch": true,
+    "concurrentSourceDataAndCacheMetadataIdentical": true,
+    "forbiddenPersonalizedOrSensitiveKeys": [],
+    "itemCount": 9,
+    "responseUnder16KiB": true
+  },
+  "sample": {
+    "ok": true,
+    "schemaVersion": 1,
+    "generatedAt": "2026-10-09T14:51:16.300Z",
+    "items": {
+      "price": {
+        "state": "live",
+        "priceUsd": 0.00001234,
+        "liquidityUsd": 123456,
+        "sourceAt": "2026-10-09T18:00:00.000Z",
+        "cachedAt": "2026-10-09T14:51:16.282Z",
+        "expiresAt": "2026-10-09T14:52:16.282Z",
+        "servedAt": "2026-10-09T14:51:16.300Z",
+        "evidence": "/links/"
+      },
+      "burn": {
+        "state": "live",
+        "percentOfTarget": 42.5,
+        "sourceAt": "2026-10-09T18:00:00.000Z",
+        "cachedAt": "2026-10-09T14:51:16.282Z",
+        "expiresAt": "2026-10-09T14:52:16.282Z",
+        "servedAt": "2026-10-09T14:51:16.300Z",
+        "evidence": "/burn/"
+      },
+      "transparency": {
+        "state": "live",
+        "circulatingSupplyOk": true,
+        "circulatingDisplay": "862000000",
+        "sourceAt": "2026-10-09T18:00:00.000Z",
+        "cachedAt": "2026-10-09T14:51:16.297Z",
+        "expiresAt": "2026-10-09T14:52:16.297Z",
+        "servedAt": "2026-10-09T14:51:16.300Z",
+        "evidence": "/transparency/"
+      },
+      "modules": {
+        "state": "live",
+        "visibleCount": 29,
+        "liveCount": 18,
+        "sourceAt": "2026-10-09T18:00:00.000Z",
+        "cachedAt": "2026-10-09T14:51:16.252Z",
+        "expiresAt": "2026-10-09T14:52:16.252Z",
+        "servedAt": "2026-10-09T14:51:16.300Z",
+        "evidence": "/modules/"
+      },
+      "quiz": {
+        "state": "live",
+        "cycleEndMs": 1791655200000,
+        "sourceAt": "2026-10-09T18:00:00.000Z",
+        "cachedAt": "2026-10-09T14:51:16.251Z",
+        "expiresAt": "2026-10-09T14:52:16.251Z",
+        "servedAt": "2026-10-09T14:51:16.300Z",
+        "evidence": "/quiz/"
+      },
+      "faucet": {
+        "state": "live",
+        "totalConfirmedCount": 321,
+        "sourceAt": "2026-10-09T18:00:00.000Z",
+        "cachedAt": "2026-10-09T14:51:16.267Z",
+        "expiresAt": "2026-10-09T14:52:16.267Z",
+        "servedAt": "2026-10-09T14:51:16.300Z",
+        "evidence": "/faucet/"
+      },
+      "governance": {
+        "state": "live",
+        "proposalCount": 4,
+        "activeCount": 1,
+        "sourceAt": "2026-10-09T18:00:00.000Z",
+        "cachedAt": "2026-10-09T14:51:16.251Z",
+        "expiresAt": "2026-10-09T14:52:16.251Z",
+        "servedAt": "2026-10-09T14:51:16.300Z",
+        "evidence": "/governance/"
+      },
+      "events": {
+        "state": "live",
+        "liveCount": 1,
+        "upcomingCount": 2,
+        "sourceAt": "2026-10-09T18:00:00.000Z",
+        "cachedAt": "2026-10-09T14:51:16.251Z",
+        "expiresAt": "2026-10-09T14:52:16.251Z",
+        "servedAt": "2026-10-09T14:51:16.300Z",
+        "evidence": "/events/"
+      },
+      "health": {
+        "state": "live",
+        "reachableCount": 18,
+        "totalCount": 19,
+        "sourceAt": "2026-10-09T18:00:00.000Z",
+        "cachedAt": "2026-10-09T14:51:16.298Z",
+        "expiresAt": "2026-10-09T14:52:16.298Z",
+        "servedAt": "2026-10-09T14:51:16.300Z",
+        "evidence": "/health/"
+      }
+    }
+  }
+}

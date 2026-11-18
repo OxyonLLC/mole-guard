@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GeoProof — A Shared Language for Verifiable Evidence (Coming Soon)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="GeoProof is a shared proof protocol: it defines how an observation becomes evidence a complete stranger can verify. Not public yet." />
+  <link rel="canonical" href="https://winlew.co/ecosystem/geoproof/" />
+  <meta property="og:title" content="GeoProof — An Oxyon project" />
+  <meta property="og:description" content="A shared proof protocol built by the same team as WinLEW. Coming soon." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/ecosystem/geoproof/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    .hidden { display: none !important; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8; padding: 0; margin: 0; line-height: 1.7;
+    }
+    html { overflow-x: hidden; }
+    .wlPageShell { max-width: 1000px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin-bottom: 8px; }
+    h1 { font-size: clamp(30px, 5vw, 44px); margin-top: 0; }
+    h2 { font-size: clamp(18px, 2.6vw, 22px); margin-top: 0; }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header.wlHero { text-align: left; margin-bottom: 8px; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624; border-radius: 20px; padding: 26px; margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: 0.85; }
+    .statusPill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; border: 1px solid #4e3624; white-space: nowrap; }
+    .statusPill.soon { background: rgba(255,255,255,.06); color: #f6efe8; }
+    .pipelineRow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; align-items: center; }
+    .pipelineStep { padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.05); border: 1px solid #4e3624; font-size: 12.5px; }
+    .pipelineArrow { opacity: .5; }
+    .featureGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-top: 12px; }
+    .featureCard { background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); border: 1px solid #4e3624; border-radius: 16px; padding: 16px; }
+    .featureCard .featureTitle { font-weight: 800; margin-bottom: 6px; color: #f6efe8; }
+    .featureCard p { margin: 0; font-size: 13.5px; }
+    .quoteBlock { border-left: 3px solid #d6a866; padding: 12px 16px; background: rgba(214,168,102,.08); border-radius: 0 12px 12px 0; margin: 14px 0; font-style: italic; font-size: 14.5px; }
+    .notReadyNote { border-left: 3px solid rgba(255,179,71,.5); padding: 10px 14px; background: rgba(255,179,71,.08); border-radius: 0 10px 10px 0; margin-top: 14px; font-size: 13.5px; }
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+<header class="wlHero" id="about">
+  <div class="wlHeroMain">
+    <span class="wlKicker">🧬 An Oxyon project · Not public yet</span>
+    <h1 class="wlHeroTitle">GeoProof<br><span class="wlHeroTitleAccent">A shared language for turning claims into evidence.</span></h1>
+    <p class="wlHeroSub">GeoProof is a protocol, not an app: it's the shared rulebook that several of these sister projects use to turn a raw observation into a signed, tamper-evident proof — one that a complete stranger can verify without trusting the observer, the checker, or anyone in between.</p>
+    <div class="wlChipRow">
+      <span class="wlChip">🔁 Observe → Sign → Anchor → Replay</span>
+      <span class="wlChip">🤖 Usable by AI coding agents</span>
+      <span class="wlChip"><span class="statusPill soon">Coming Soon</span></span>
+    </div>
+  </div>
+  <div class="wlHeroSide">
+    <div class="wlEyebrow">Status</div>
+    <div class="wlHeroNote">GeoProof already has a working live demo and a real tool server behind the scenes — it's just not ready to be exposed publicly yet.</div>
+  </div>
+</header>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">What is it</div>
+  <h2>The rulebook underneath the proofs, not a proof itself</h2>
+  <p>Rather than each sister project inventing its own way to sign and verify evidence, GeoProof defines one shared lifecycle every one of them can use: an event gets observed, signed, given a receipt, anchored, and can later be replayed to check nothing was tampered with. It doesn't reimplement any cryptography itself — it defines the shape and the rules, and leans on proven tooling underneath.</p>
+  <div class="pipelineRow">
+    <span class="pipelineStep">Observe</span><span class="pipelineArrow">→</span>
+    <span class="pipelineStep">Sign</span><span class="pipelineArrow">→</span>
+    <span class="pipelineStep">Receipt</span><span class="pipelineArrow">→</span>
+    <span class="pipelineStep">Anchor</span><span class="pipelineArrow">→</span>
+    <span class="pipelineStep">Replay</span>
+  </div>
+  <p class="quoteBlock">"An observation becomes evidence a complete stranger can verify — without trusting the observer, the verifier, or [the team] itself."</p>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Standout details</div>
+  <h2>Built to be checked, not just trusted</h2>
+  <div class="featureGrid">
+    <div class="featureCard"><div class="featureTitle">🧪 A live tamper test</div><p>Its own demo lets you swap in a forged proof and watch verification correctly fail — never a false "verified."</p></div>
+    <div class="featureCard"><div class="featureTitle">🤖 Works with AI coding tools</div><p>Exposes real tools that AI coding assistants can call directly to produce and check tamper-evident audit trails — genuinely required to authenticate first, unlike most tools like it.</p></div>
+    <div class="featureCard"><div class="featureTitle">📐 Cross-language test vectors</div><p>A fixed set of known-good answers so any implementation, in any language, can verify its own math matches the reference.</p></div>
+  </div>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">GeoProof & WinLEW</div>
+  <h2>Foundational, not front-facing</h2>
+  <p>GeoProof isn't something you'd use directly — it's the shared plumbing a few of these other sister projects (like GeoPresence) are built on top of. It comes from the same builder as WinLEW, with no confirmed WinLEW-specific integration today.</p>
+  <p class="muted">It is Oxyon's proof protocol, built by the team behind WinLEW. The specification's status is on <a href="https://oxyon.io/products/geoproof" target="_blank" rel="noreferrer noopener">oxyon.io ↗</a>.</p>
+  <div class="notReadyNote">Nothing on this page is a promise of a launch date. Check back, or watch WinLEW's own announcement channels for when GeoProof actually opens up.</div>
+</div>
+
+<footer>
+  <a href="/">← Back to WinLEW</a> · <a href="/whitepaper/">Whitepaper</a> · <a href="/governance/">Governance</a>
+</footer>
+</div>
+
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

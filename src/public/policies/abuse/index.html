@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>WinLEW Abuse &amp; Enforcement</title>
+  <meta name="description" content="How WinLEW detects coordinated faucet abuse, how a decision is actually made, what each signal can and cannot prove, and how to appeal." />
+  <link rel="canonical" href="https://winlew.co/policies/abuse/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    :root{--bg:#130b08;--bg2:#24150d;--panel:rgba(255,255,255,.05);--line:rgba(255,255,255,.12);--text:#f6efe8;--muted:rgba(246,239,232,.85);--brand:#d6a866;--shadow:0 28px 80px rgba(0,0,0,.42);--radius:24px}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:radial-gradient(1000px 620px at 10% 0%, rgba(214,168,102,.10), transparent 60%), linear-gradient(180deg, var(--bg) 0%, var(--bg2) 52%, #130b08 100%)}
+    /* Same missing-<a>-colour defect fixed on /leaderboards/, /health/ and
+       /policies/ on 2026-08-04. This subpage was missed by that sweep because
+       the sweep enumerated top-level folders and never descended into
+       /policies/abuse/. Without a rule here, inline links fell back to the
+       browser default rgb(0,0,238) — 1.92:1 against this card, under the 4.5:1
+       WCAG AA needs. .pill/.btn set their own colour at higher specificity. */
+    a{color:var(--brand)}
+    a:hover{color:#f0c989}
+    .wrap{max-width:1080px;margin:0 auto;padding:22px}
+    .nav{position:sticky;top:0;background:rgba(19,11,8,.86);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
+    .navInner{max-width:1600px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .navBrand{text-decoration:none;color:inherit;font-weight:950}
+    .navLinks{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .pill,.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 13px;border-radius:999px;text-decoration:none;background:rgba(255,255,255,.06);border:1px solid var(--line);color:inherit;font-weight:850;cursor:pointer;font:inherit}
+    .btn{border-radius:14px}
+    .pill:hover,.btn:hover{background:rgba(255,255,255,.10)}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.02));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-bottom:16px}
+    h1{font-size:clamp(32px,4vw,54px);margin:0 0 10px;line-height:1.02}
+    h2{font-size:clamp(20px,2.4vw,26px);margin:0 0 10px}
+    h3{font-size:clamp(16px,1.8vw,19px);margin:18px 0 6px}
+    .muted{color:var(--muted);line-height:1.7}
+    .lead{font-size:18px;line-height:1.7;color:var(--muted)}
+    .wq{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+    @media (max-width:760px){.wq{grid-template-columns:1fr}}
+    .wqCard{padding:18px;border:1px solid var(--line);border-radius:18px;background:rgba(0,0,0,.18)}
+    .wqCard .k{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:900}
+    .sig{border:1px solid var(--line);border-radius:18px;background:rgba(0,0,0,.18);padding:18px;margin-top:12px}
+    .sig .can{color:#bfe8c4}
+    .sig .cant{color:#f0c9c9}
+    .steps{counter-reset:s;list-style:none;padding:0;margin:14px 0 0}
+    .steps li{counter-increment:s;position:relative;padding:0 0 0 44px;margin:0 0 16px;line-height:1.7;color:var(--muted)}
+    .steps li::before{content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;background:rgba(214,168,102,.18);border:1px solid rgba(214,168,102,.45);color:#ffe6b0;font-weight:900;display:grid;place-items:center}
+    .note{border-left:3px solid var(--brand);padding:10px 0 10px 14px;margin:16px 0;color:var(--muted);line-height:1.7}
+    .fine{font-size:13px;color:rgba(246,239,232,.62);line-height:1.7}
+    table{width:100%;border-collapse:collapse;margin-top:12px;font-size:15px}
+    th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+    th{color:var(--brand);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+    .tableWrap{overflow-x:auto}
+    code{background:rgba(0,0,0,.32);padding:2px 6px;border-radius:6px;font-size:.92em}
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div class="navInner">
+      <a class="navBrand" href="/">WinLEW</a>
+      <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+      <div class="navRight">
+        <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+        <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+        <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+        <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="card wlGlow">
+      <div class="wlEyebrow">Enforcement, in the open</div>
+      <h1>Abuse &amp; Enforcement</h1>
+      <p class="lead">
+        The faucet gives away real tokens. A handful of people running several accounts each can
+        drain what was meant for a community, and everyone else quietly gets less. This page says
+        exactly what we look at, what each signal can and cannot prove, who decides, and how to
+        argue back — because a rule you cannot inspect is not a rule, it is a mood.
+      </p>
+      <p class="muted">
+        Nothing here is retroactive punishment for using WinLEW a lot. Claiming often is not abuse.
+        Having friends who also claim is not abuse. Running several identities to multiply what one
+        person receives is.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>The short version</h2>
+      <div class="wq">
+        <div class="wqCard">
+          <div class="k">Who decides</div>
+          <p class="muted">A human moderator. Every detection tool is advisory — none of them can ban anyone. A person looks at the evidence and makes the call, and their name is on it.</p>
+        </div>
+        <div class="wqCard">
+          <div class="k">What counts</div>
+          <p class="muted">Operating more than one identity to take more than one share: multiple Discord accounts or wallets claiming as if they were separate people.</p>
+        </div>
+        <div class="wqCard">
+          <div class="k">When it triggers</div>
+          <p class="muted">Verification is asked for after 10 lifetime claims. Everything stronger requires converging evidence from more than one independent signal, reviewed by hand.</p>
+        </div>
+        <div class="wqCard">
+          <div class="k">Where to argue</div>
+          <p class="muted">Open a ticket in <a href="/community/">Discord</a>. You will be told what was found. Every action is reversible, and reversing one costs us nothing but a command.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>How we detect it</h2>
+      <p class="muted">
+        Three independent signals. None is proof on its own, and we say so below rather than
+        pretending otherwise — a detector you over-trust is how honest people get punished.
+      </p>
+
+      <div class="sig">
+        <h3>1. Claim counts</h3>
+        <p class="muted">How many times a wallet, and the Discord account behind it, has ever claimed. Counted separately and we take the higher of the two: counting only the wallet would be reset by making a new one, counting only the account would forget older records.</p>
+        <p class="muted"><span class="can">◆ Can show:</span> that an identity has taken a lot, and is a reasonable point to ask who it belongs to.</p>
+        <p class="muted"><span class="cant">◆ Cannot show:</span> anything at all about abuse. A loyal daily user is the top of this list, which is why crossing it asks you to verify rather than accusing you of something.</p>
+      </div>
+
+      <div class="sig">
+        <h3>2. On-chain funding links</h3>
+        <p class="muted">Solana records who paid for a wallet's very first transaction — who brought the account into existence. That fact is permanent, public, and cannot be revised afterwards, which is what makes it useful: a fresh wallet still has to get its first lamports from somewhere.</p>
+        <p class="muted"><span class="can">◆ Can show:</span> that one wallet created another. This is why a ban follows funding edges — otherwise it would be defeated by making a new keypair, which takes a second.</p>
+        <p class="muted"><span class="cant">◆ Cannot show:</span> that two wallets are one person. A friend setting up your wallet looks identical. So does an exchange withdrawal, which points at the exchange and not at you. Wallets that merely transacted early are recorded separately and a ban never follows those.</p>
+      </div>
+
+      <div class="sig">
+        <h3>3. Claiming together, repeatedly</h3>
+        <p class="muted">Accounts that arrive within minutes of each other on <em>separate days</em>. A single shared burst is never reported: a faucet announcement makes everybody claim at once, and flagging that would bury the real thing in noise.</p>
+        <p class="muted"><span class="can">◆ Can show:</span> coordination. Three accounts arriving in the same order, minutes apart, several days running, is a pattern that coincidence has to work hard to explain.</p>
+        <p class="muted"><span class="cant">◆ Cannot show:</span> who is behind them. Friends who ping each other when the faucet refills produce exactly this shape.</p>
+      </div>
+
+      <div class="note">
+        <strong>What we do not collect.</strong> No location, no GPS, no device fingerprinting, no
+        browser tracking. Everything above uses public blockchain data and our own records of claims
+        you made on purpose. If that ever changes, this page changes first, and it will say so here.
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>How a decision is actually made</h2>
+      <ol class="steps">
+        <li><strong>A signal flags something.</strong> Nothing happens. Flagging is not a finding, and the tools cannot act on their own.</li>
+        <li><strong>A moderator looks.</strong> By hand, at the actual evidence, including everything that argues against the suspicion.</li>
+        <li><strong>It gets recorded for review first.</strong> A suspicion can be written down without refusing anybody anything, so a pattern can be watched over time rather than acted on in a bad five minutes.</li>
+        <li><strong>Action needs more than one signal agreeing.</strong> A funding link on its own is not enough. Repeated co-timing on its own is not enough. Independent signals pointing the same way is the bar.</li>
+        <li><strong>You are told, and you can argue.</strong> Ask and you will be shown what was found. If we got it wrong, saying so costs us one command and no pride.</li>
+      </ol>
+      <p class="muted">
+        Where the evidence is on-chain, you can check it yourself without trusting us — every
+        transaction cited is public on Solscan, and we would rather you verified than believed.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>What can actually happen</h2>
+      <div class="tableWrap">
+        <table>
+          <thead><tr><th>Action</th><th>What it does</th><th>What it takes</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Verify prompt</strong></td>
+              <td>After 10 lifetime claims, one signature proving the wallet is yours. No tokens move, nothing is spent, your cooldown is untouched.</td>
+              <td>Automatic. Not a penalty and not a suspicion — everybody crosses it eventually.</td>
+            </tr>
+            <tr>
+              <td><strong>Review record</strong></td>
+              <td>A written note against a wallet. Refuses nothing and changes nothing you experience.</td>
+              <td>A moderator's judgement that something is worth watching.</td>
+            </tr>
+            <tr>
+              <td><strong>Faucet ban</strong></td>
+              <td>Refuses faucet claims from that wallet, and from wallets it created — otherwise a ban is defeated by making a new one.</td>
+              <td>Converging evidence, reviewed by a person. Reversible at any time.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" style="margin-top:14px">
+        A faucet ban affects the faucet. It is not a Discord ban, it does not touch tokens you
+        already hold, it cannot move or freeze anything in your wallet, and nobody at WinLEW can —
+        we never hold your keys.
+      </p>
+      <p class="fine">
+        We publish the method, not a list of names. Telling everyone which wallet tripped what would
+        hand the next person a checklist for avoiding it, and would put an accusation in public
+        before the person accused had a chance to answer it.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Where this sits with governance</h2>
+      <p class="muted">
+        Governance decides direction — what WinLEW does, what it funds, what it becomes. It is not a
+        vote on whether the published rules apply to a particular person this evening. Those are
+        different things, and mixing them would make both worse: enforcement by popularity contest
+        is neither fair to the accused nor fast enough to matter.
+      </p>
+      <p class="muted">
+        So the split is: <strong>governance writes the rules, operations applies them.</strong> When
+        something is actively draining a shared pot, an operational safeguard can go in first — but
+        it gets written down here, it is reversible, and it is open to challenge like anything else.
+        A safeguard that could not be questioned afterwards would be exactly the thing this page
+        exists to prevent.
+      </p>
+      <p class="muted">
+        If you think a rule on this page is the wrong rule — not that it was misapplied, but that it
+        should not exist — that is a governance question and it belongs in
+        <a href="/governance/">governance</a>. Rules should be arguable. That is the point of
+        writing them down.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>If you think we got it wrong</h2>
+      <p class="muted">
+        Open a ticket in the <a href="/community/">WinLEW Discord</a>. Say which wallet, and ask what
+        was found. There is no appeal form, no waiting period, and no cost — a moderator will show
+        you the evidence and undo it if it does not hold up.
+      </p>
+      <p class="muted">
+        We would rather occasionally miss someone than wrongly refuse somebody honest. The tools on
+        this page are built to fail in that direction on purpose, and where they cannot, we would
+        rather you told us.
+      </p>
+      <p class="fine">
+        Related: <a href="/discord-bots/terms.html">Terms of Service</a> ·
+        <a href="/discord-bots/privacy.html">Privacy Policy</a> ·
+        <a href="/policies/">All policies</a> ·
+        <a href="/transparency/">Transparency Center</a>
+      </p>
+    </section>
+  </div>
+
+  <script src="/assets/wallet-auth.js"></script>
+  <script defer src="/assets/nav.js"></script>
+  <script>
+    document.getElementById('navWalletConnect')?.addEventListener('click', (e) => {
+      window.WinLEWAuth.walletLogin({ triggerBtn: e.currentTarget, onSuccess: () => window.location.reload() });
+    });
+    if (window.WinLEWAuth.getAuth().session) window.WinLEWAuth.setConnectedUi(window.WinLEWAuth.getCachedWallet() || 'connected');
+    window.WinLEWAuth.refreshWalletBalance();
+  </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <rect width="1600" height="900" rx="40" fill="#1A110C"/>
+  <rect x="8" y="8" width="1584" height="884" rx="32" stroke="rgba(255,255,255,0.12)"/>
+  <circle cx="260" cy="170" r="220" fill="#7D5837" opacity="0.22"/>
+  <circle cx="1300" cy="210" r="240" fill="#D6A866" opacity="0.18"/>
+  <circle cx="980" cy="640" r="260" fill="#6E4328" opacity="0.22"/>
+  <path d="M0 680C170 620 320 600 470 630C610 658 770 732 930 734C1110 736 1290 620 1600 660V900H0V680Z" fill="#6B4428"/>
+  <path d="M0 760C170 724 330 724 500 754C700 790 860 858 1030 852C1200 846 1376 774 1600 794V900H0V760Z" fill="#835434"/>
+  <circle cx="1198" cy="602" r="98" fill="#3A1E10"/>
+  <circle cx="1274" cy="574" r="17" fill="#EFE8E0"/>
+  <circle cx="1290" cy="622" r="36" fill="#EBC0BF"/>
+  <circle cx="1230" cy="540" r="18" fill="#D8C2F1"/>
+  <circle cx="1268" cy="578" r="7" fill="#1A110C"/>
+  <path d="M740 510C676 450 612 420 550 416C492 413 440 435 384 498" stroke="#6AC7E8" stroke-width="10" stroke-linecap="round"/>
+  <path d="M660 562C620 522 575 506 530 510" stroke="#8CE27D" stroke-width="10" stroke-linecap="round"/>
+  <text x="110" y="210" fill="#F5F0EA" font-family="Arial, Helvetica, sans-serif" font-size="86" font-weight="900">WINLEW GAMING HUB</text>
+  <text x="114" y="298" fill="#E8D0B0" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="600">DigLEW • Pac-Mole • built for winlew.co</text>
+  <text x="112" y="398" fill="#FBBF24" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700">Play • Learn • Compete</text>
+</svg>

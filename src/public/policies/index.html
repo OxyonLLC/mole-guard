@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>WinLEW Policies &amp; Legal</title>
+  <meta name="description" content="Every WinLEW Terms of Service and Privacy Policy in one place — the website and all five Discord bots." />
+  <link rel="canonical" href="https://winlew.co/policies/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    :root{--bg:#130b08;--bg2:#24150d;--panel:rgba(255,255,255,.05);--line:rgba(255,255,255,.12);--text:#f6efe8;--muted:rgba(246,239,232,.85);--brand:#d6a866;--shadow:0 28px 80px rgba(0,0,0,.42);--radius:24px}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:radial-gradient(1000px 620px at 10% 0%, rgba(214,168,102,.10), transparent 60%), linear-gradient(180deg, var(--bg) 0%, var(--bg2) 52%, #130b08 100%)}
+    /* Same missing-<a>-colour defect found on /leaderboards/ 2026-08-04: with no
+       rule here, inline links fell back to the browser default rgb(0,0,238) on a
+       near-black card — 1.92:1, under the 4.5:1 WCAG AA needs. .pill/.btn/.navBrand
+       set their own colour at higher specificity and are unaffected. */
+    a{color:var(--brand)}
+    a:hover{color:#f0c989}
+    .wrap{max-width:1080px;margin:0 auto;padding:22px}
+    .nav{position:sticky;top:0;background:rgba(19,11,8,.86);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
+    .navInner{max-width:2000px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .navBrand{text-decoration:none;color:inherit;font-weight:950}
+    .navLinks{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .pill,.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 13px;border-radius:999px;text-decoration:none;background:rgba(255,255,255,.06);border:1px solid var(--line);color:inherit;font-weight:850;cursor:pointer;font:inherit}
+    .btn{border-radius:14px}
+    .pill:hover,.btn:hover{background:rgba(255,255,255,.10)}
+    .pill.active{background:linear-gradient(180deg, rgba(214,168,102,.30), rgba(214,168,102,.14));border-color:rgba(214,168,102,.5);color:#ffe6b0}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.02));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+    h1{font-size:clamp(32px,4vw,54px);margin:0 0 10px;line-height:1.02}
+    h2{font-size:clamp(18px,2.2vw,22px);margin:0}
+    .muted{color:var(--muted);line-height:1.7}
+    .policyGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+    @media (max-width:760px){.policyGrid{grid-template-columns:1fr}}
+    .policyCard{padding:18px;border:1px solid var(--line);border-radius:18px;background:rgba(0,0,0,.18);display:flex;flex-direction:column;gap:10px}
+    .policyHead{display:flex;align-items:center;gap:12px}
+    .policyIcon{width:44px;height:44px;border-radius:14px;object-fit:cover;border:1px solid rgba(214,168,102,.3);flex-shrink:0}
+    .policyIcon.emoji{display:inline-flex;align-items:center;justify-content:center;font-size:24px;background:linear-gradient(180deg, rgba(214,168,102,.22), rgba(214,168,102,.08))}
+    .policyCard p{margin:0;font-size:13px}
+    .policyLinks{margin-top:auto;padding-top:4px;display:flex;gap:8px;flex-wrap:wrap}
+    .policyLinks .btn{font-size:13px;padding:8px 12px}
+    .fine{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.7}
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div class="navInner">
+      <a class="navBrand" href="/">WinLEW</a>
+      <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+      <div class="navRight">
+        <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+        <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+        <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+        <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <section class="card wlGlow" style="margin-bottom:16px;">
+      <div class="wlHeroBanner" style="margin-bottom:16px;"><img src="/images/page-headers/policies.png" alt="Policies — all legal and platform policies in one place" loading="lazy" /></div>
+      <div class="wlEyebrow">Every document, one place</div>
+      <h1>Policies &amp; Legal</h1>
+      <p class="muted">
+        The WinLEW website and each of its five Discord bots publish their own Terms of Service and
+        Privacy Policy. They're all collected here — the same documents each bot links from its
+        Discord profile. Want to see what the bots actually do first? Visit the
+        <a href="/discord-bots/">Discord Bots hub</a>.
+      </p>
+    </section>
+
+    <div class="policyGrid">
+      <div class="policyCard">
+        <div class="policyHead">
+          <span class="policyIcon emoji">🌐</span>
+          <div><h2>WinLEW Website</h2><p class="muted">winlew.co itself</p></div>
+        </div>
+        <p class="muted">The general Terms and Privacy Policy covering the website — verification, the faucet, quizzes, games, governance, and everything else on winlew.co.</p>
+        <div class="policyLinks">
+          <a class="btn" href="/discord-bots/terms.html">📜 Terms of Service</a>
+          <a class="btn" href="/discord-bots/privacy.html">🔒 Privacy Policy</a>
+        </div>
+      </div>
+
+      <div class="policyCard">
+        <div class="policyHead">
+          <img class="policyIcon" src="/images/avatars/mole-guard-128.png" alt="The Mole Guard" />
+          <div><h2>The Mole Guard</h2><p class="muted">Wallet verification bot</p></div>
+        </div>
+        <p class="muted">The official WinLEW wallet verification system — one-time signature, role metadata sync, no custody.</p>
+        <div class="policyLinks">
+          <a class="btn" href="/discord-bots/terms-mole.html">📜 Terms</a>
+          <a class="btn" href="/discord-bots/privacy-mole.html">🔒 Privacy</a>
+        </div>
+      </div>
+
+      <div class="policyCard">
+        <div class="policyHead">
+          <img class="policyIcon" src="/images/avatars/utility-bot-128.png" alt="WinLEW Utility Bot" />
+          <div><h2>WinLEW Utility Bot</h2><p class="muted">Community companion bot</p></div>
+        </div>
+        <p class="muted">The day-to-day WinLEW companion — faucets, quizzes, announcements, and community interactions.</p>
+        <div class="policyLinks">
+          <a class="btn" href="/discord-bots/terms-utility.html">📜 Terms</a>
+          <a class="btn" href="/discord-bots/privacy-utility.html">🔒 Privacy</a>
+        </div>
+      </div>
+
+      <div class="policyCard">
+        <div class="policyHead">
+          <img class="policyIcon" src="/images/avatars/watch-dog-128.png" alt="WinLEW Watch Dog" />
+          <div><h2>WinLEW Watch Dog</h2><p class="muted">Monitoring &amp; alerts bot</p></div>
+        </div>
+        <p class="muted">A protective layer for the ecosystem — the Watch Dog barks when services go offline, metrics drift, or issues arise.</p>
+        <div class="policyLinks">
+          <a class="btn" href="/discord-bots/terms-watchdog.html">📜 Terms</a>
+          <a class="btn" href="/discord-bots/privacy-watchdog.html">🔒 Privacy</a>
+        </div>
+      </div>
+
+      <div class="policyCard">
+        <div class="policyHead">
+          <img class="policyIcon" src="/images/avatars/geohacker-128.png" alt="GeoHackers" />
+          <div><h2>GeoHackers</h2><p class="muted">XL1 companion bot</p></div>
+        </div>
+        <p class="muted">The WinLEW ecosystem's XL1 companion — wallet verification, on-chain game integrations, and XL1 asset interactions from Discord.</p>
+        <div class="policyLinks">
+          <a class="btn" href="/discord-bots/terms-geohackers.html">📜 Terms</a>
+          <a class="btn" href="/discord-bots/privacy-geohackers.html">🔒 Privacy</a>
+        </div>
+      </div>
+
+      <div class="policyCard">
+        <div class="policyHead">
+          <img class="policyIcon" src="/images/avatars/geoagora-128.png" alt="GeoAgora" />
+          <div><h2>GeoAgora</h2><p class="muted">Marketplace bot</p></div>
+        </div>
+        <p class="muted">The WinLEW ecosystem's marketplace bot — browse listings, manage watch alerts, and check wallet/profile status from Discord.</p>
+        <div class="policyLinks">
+          <a class="btn" href="/discord-bots/terms-geoagora.html">📜 Terms</a>
+          <a class="btn" href="/discord-bots/privacy-geoagora.html">🔒 Privacy</a>
+        </div>
+      </div>
+    </div>
+
+    <section class="card" style="margin-top:16px;">
+      <div class="policyHead">
+        <span class="policyIcon emoji">🛡️</span>
+        <div><h2>Abuse &amp; Enforcement</h2><p class="muted">How we detect coordinated abuse, and how we decide</p></div>
+      </div>
+      <p class="muted" style="margin-top:10px">
+        The faucet gives away real tokens, so a few people running several accounts each take what
+        was meant for everybody. This is the whole method in the open — what we look at, what each
+        signal genuinely proves and what it does not, who decides, and how to argue back. It also
+        says what we deliberately don't collect: no location, no device fingerprinting, no tracking.
+      </p>
+      <div class="policyLinks" style="margin-top:12px">
+        <a class="btn" href="/policies/abuse/">🛡️ Abuse &amp; Enforcement</a>
+      </div>
+    </section>
+
+    <p class="fine">
+      🚫💰 <strong>We do not pay for promotion.</strong> No KOLs, influencers, callers, or promo packages — anyone claiming
+      to be paid by WinLEW is lying. See <a href="/no-thank-you/promotions/">No Paid Promotion</a>.
+    </p>
+
+    <p class="fine">
+      Questions about any policy? Ask in the <a href="/community/">WinLEW Discord</a>.
+    </p>
+  </div>
+
+  <script src="/assets/wallet-auth.js"></script>
+  <script defer src="/assets/nav.js"></script>
+  <script>
+    document.getElementById('navWalletConnect')?.addEventListener('click', (e) => {
+      window.WinLEWAuth.walletLogin({ triggerBtn: e.currentTarget, onSuccess: () => window.location.reload() });
+    });
+    if (window.WinLEWAuth.getAuth().session) window.WinLEWAuth.setConnectedUi(window.WinLEWAuth.getCachedWallet() || 'connected');
+    window.WinLEWAuth.refreshWalletBalance();
+  </script>
+</body>
+</html>

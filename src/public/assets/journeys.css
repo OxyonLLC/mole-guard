@@ -1,0 +1,38 @@
+.experience{margin:0;background:#0c0907;color:#fff9ef;font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}
+.experience *{box-sizing:border-box}
+.experience a{color:#f4bd59}
+.experience a:focus-visible,.experience button:focus-visible,.experience summary:focus-visible{outline:3px solid #f4bd59;outline-offset:4px}
+.experience .nav{position:sticky;top:0;z-index:100;background:#15100cf5;border-bottom:1px solid #654a30}
+.experience .navInner{display:flex;align-items:center;gap:14px;max-width:1600px;padding:12px 24px;margin:auto}
+.experience .navBrand{display:flex;text-decoration:none;min-width:110px}
+.experience .brandTitle{font-weight:900}.experience .brandSub{font-size:10px}
+.experience .navRight{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.experience .pill{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;border:1px solid #654a30;border-radius:14px;color:inherit;background:#21170f;text-decoration:none;font:inherit;cursor:pointer}
+.experience .pill.active{background:#f4bd5926}.experience .navToggle{min-height:44px;padding:8px 12px;border-radius:12px;color:inherit;background:#21170f;border:1px solid #654a30;font:inherit;cursor:pointer}
+.journey-main{max-width:1180px;margin:auto;padding:48px 24px 64px}
+.journey-hero{display:grid;grid-template-columns:1.6fr 1fr;gap:32px;align-items:center;margin-bottom:40px}
+.journey-hero img{width:100%;max-height:340px;object-fit:cover;border-radius:24px}
+.journey-hero h1{font:700 clamp(36px,5vw,64px)/1.1 Georgia,serif;margin:12px 0 20px}
+.journey-hero p{max-width:65ch;color:#c9bca9}
+.journey-eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:#f4bd59;font-weight:800}
+.journey-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.journey-actions a{display:inline-flex;align-items:center;min-height:44px;border:1px solid #654a30;padding:10px 16px;border-radius:14px;text-decoration:none}
+.journey-actions a:first-child{color:#15100c;background:#f4bd59;font-weight:800}
+.journey-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.journey-card,.journey-note{padding:24px;border:1px solid #654a30;border-radius:20px;background:linear-gradient(150deg,#21170f,#15100c)}
+.journey-card h2{font-size:22px;margin:16px 0 8px}.journey-card p{color:#c9bca9}
+.journey-card a{display:inline-flex;align-items:center;min-height:44px;font-weight:700}
+.journey-card small{display:block;margin-top:12px;color:#c9bca9}
+.journey-state{display:inline-flex;align-items:center;border:1px solid #8c7760;border-radius:20px;padding:4px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#fff9ef}
+.journey-note{margin-top:28px}.journey-note h2{margin-top:0}.journey-note p{max-width:85ch;color:#c9bca9}
+.journey-note.cool{border-color:#496b8e;background:#111b29}.journey-note.cool a{color:#a3d1ff}
+.journey-note code{overflow-wrap:anywhere}.journey-note dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.journey-note dt{font-weight:800}.journey-note dd{margin:8px 0;color:#c9bca9}
+.journey-footer{max-width:1180px;margin:auto;padding:24px;border-top:1px solid #654a30}.journey-footer nav{display:flex;gap:16px;flex-wrap:wrap}.journey-footer a{min-height:44px;display:inline-flex;align-items:center}.journey-footer p{color:#c9bca9;font-size:13px}
+.experience .navPrimary{gap:6px}.experience .navPrimary .pill{font-size:14px;padding:8px 10px}
+.experience .navBalanceChip{display:none!important}
+@media(min-width:1101px){.experience .nav .navInner.navUnified > .navPrimary{display:flex!important}}
+.experience .hero-visual img{height:clamp(360px,50vw,600px);object-fit:cover}
+.experience .hero{min-height:680px}
+@media(max-width:1100px){.experience .navPrimary{display:none!important}.journey-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.experience .hero{min-height:auto}.journey-main{padding:32px 16px}.journey-hero{grid-template-columns:1fr;gap:20px}.journey-hero img{max-height:220px}.journey-grid{grid-template-columns:1fr}.journey-note dl{grid-template-columns:1fr}.experience .navInner{padding:10px 12px;gap:8px;flex-wrap:wrap}.experience .navRight{gap:6px}.journey-card,.journey-note{padding:20px}.experience .navRight .pill{font-size:13px;padding:8px}.experience .navBrand{min-width:80px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}

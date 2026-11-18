@@ -1,0 +1,73 @@
+services:
+  moleguard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: moleguard-winlew:dev
+    container_name: moleguard-winlew-dev
+    restart: unless-stopped
+    working_dir: /app
+    command: npm run dev:all
+    env_file:
+      - .env
+      - ./src/faucet/.env
+      - ./src/quiz/.env
+    environment:
+      NODE_ENV: development
+      # dev-all.js reloads the mounted .env with override:true at startup,
+      # which would otherwise clobber these with .env's 127.0.0.1 values
+      # meant for local (non-Docker) dev. RUNNING_IN_DOCKER tells it to
+      # restore them after that reload instead.
+      RUNNING_IN_DOCKER: "true"
+      # Docker must bind servers to all container interfaces so host port mapping works.
+      HOST: 0.0.0.0
+      WEB_HOST: 0.0.0.0
+      PUBLIC_HOST: 0.0.0.0
+      WATCHDOG_HOST: 0.0.0.0
+      PORT: ${PORT:-8787}
+      PUBLIC_PORT: ${PUBLIC_PORT:-8788}
+      WATCHDOG_PORT: ${WATCHDOG_PORT:-8790}
+      # Keep ngrok on by default because dev:all currently expects it.
+      # Run with NGROK_ENABLED=false docker compose up --build for local-only mode.
+      NGROK_ENABLED: ${NGROK_ENABLED:-true}
+      # GeoHackers is its own docker-compose project on this same PC, publishing
+      # api on 8791 and verify on 127.0.0.1:8793 (loopback-only by design, since
+      # reaching it from outside is meant to be the proxy's job). .env points
+      # GEOHACKERS_*_LOCAL_URL at 127.0.0.1 for the bare `yarn dev:all` workflow,
+      # where this process runs directly on the host -- but 127.0.0.1 inside
+      # THIS container is the container itself, so once Mole-Guard also moved
+      # into Docker (this file), the /geohackers-verify and /geohackers-api
+      # proxies in src/mole/web.js started timing out instead of reaching it.
+      # host.docker.internal (mapped below via extra_hosts) is what actually
+      # reaches the host's 127.0.0.1 from inside a container on Docker Desktop.
+      # Override these two if GeoHackers instead runs on a different machine
+      # reachable by its own URL (e.g. a Tailscale funnel).
+      GEOHACKERS_API_LOCAL_URL: http://host.docker.internal:8791
+      GEOHACKERS_VERIFY_LOCAL_URL: http://host.docker.internal:8793
+    ports:
+      - "${PORT:-8787}:${PORT:-8787}"
+      - "${PUBLIC_PORT:-8788}:${PUBLIC_PORT:-8788}"
+      - "${WATCHDOG_PORT:-8790}:${WATCHDOG_PORT:-8790}"
+    volumes:
+      - .:/app
+      - moleguard_node_modules:/app/node_modules
+      - ./data:/app/data
+      - ./data-watchdog:/app/data-watchdog
+      - ./src/data:/app/src/data
+      - ./src/quiz/data:/app/src/quiz/data
+      - ./src/faucet/data:/app/src/faucet/data
+      - ./src/watchdog/data-watchdog:/app/src/watchdog/data-watchdog
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    stdin_open: true
+    tty: true
+    networks:
+      default: {}
+      geo-mole-net: {}
+
+volumes:
+  moleguard_node_modules:
+
+networks:
+  geo-mole-net:
+    external: true

@@ -1,0 +1,161 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Producer comparison — WinLEW · XL1</title>
+<meta name="description" content="Compare the public telemetry published by WinLEW's two XL1 block producers.">
+<!--
+  Pulls each participating operator's own public status JSON and renders them
+  side by side. No push, no shared network, no access granted either
+  direction -- every row here is something that operator already chose to
+  publish, at a URL they control.
+
+  To add an operator: append { name, url } to SOURCES below. Their URL just
+  needs to serve the same "schema": 1 shape our own nodes publish (see
+  ../data/README.md for what that projection promises and withholds). A
+  source that is unreachable or on a different schema version shows as its
+  own row's error, never breaks the rest of the table.
+-->
+<style>
+  /* Table and status styles for this page; layout, type and chrome come from atmosphere.css. */
+  :root {
+    color-scheme: light dark;
+    --bg:#f6f7f9; --panel:#fff; --line:#e3e6ea; --fg:#12151a; --muted:#5a6472;
+    --ok:#1a7f47; --warn:#b4690e; --bad:#c0392b; --accent:#2b6f6a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0e1013; --panel:#171a1f; --line:#262b33; --fg:#e6e9ee; --muted:#9aa4b2;
+            --ok:#4ec97f; --warn:#e0a341; --bad:#ff8a7a; --accent:#5fc9c0; }
+  }
+  .pill { font-size:11px; padding:2px 9px; border-radius:999px; border:1px solid var(--line); color:var(--muted) }
+  .status-pill { display:inline-flex; align-items:center; gap:6px; padding:2px 9px 2px 7px; border-radius:999px;
+    font-size:11px; font-weight:700; letter-spacing:.03em; border:1px solid transparent }
+  .status-pill .dot { width:6px; height:6px; border-radius:50%; background:currentColor; flex:none }
+  .status-pill.online { color:var(--ok); border-color:color-mix(in srgb,var(--ok) 40%,transparent) }
+  .status-pill.stale { color:var(--warn); border-color:color-mix(in srgb,var(--warn) 40%,transparent) }
+  .status-pill.offline { color:var(--bad); border-color:color-mix(in srgb,var(--bad) 40%,transparent) }
+  @media (prefers-reduced-motion:no-preference) { .status-pill.online .dot { animation:pulse-dot 2.2s ease-in-out infinite } }
+  @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:.35} }
+  .spacer { flex:1 }
+  main { max-width:1100px; margin:0 auto; padding:20px }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:12px; overflow:hidden }
+  table { width:100%; border-collapse:collapse; font-size:13px }
+  th, td { padding:10px 12px; text-align:left; border-bottom:1px solid var(--line); white-space:nowrap }
+  th { color:var(--muted); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.04em }
+  tbody tr:last-child td { border-bottom:none }
+  tbody tr:hover { background:color-mix(in srgb, var(--accent) 6%, transparent) }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums }
+  td.name { font-weight:600 }
+  .sub { color:var(--muted); font-size:12px }
+  .error-row td { color:var(--bad) }
+</style>
+<script>document.documentElement.classList.add('xl1-js')</script>
+<link rel="stylesheet" href="/xl1/shared/atmosphere.css?v=cc0927"><link rel="stylesheet" href="/xl1/shared/shell.css?v=cc0927"><style>.compare-page{padding-top:22px}.compare-page .panel{overflow:auto}.compare-page table{min-width:900px}.compare-page .hero{padding-bottom:30px}.compare-page .hero h1{font-size:clamp(38px,6vw,68px)}@media(max-width:660px){.compare-page{padding-top:12px}}</style>
+<body class="xl1-shell">
+<a class="skip" href="#main">Skip to content</a><header class="site"><div class="wrap"><a class="brand" href="/xl1/"><span class="mark">◆</span> XL1 <small>by WinLEW</small></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="xl1-nav">Menu</button><nav class="site" id="xl1-nav" aria-label="XL1"><a href="/xl1/">Overview</a><a href="/xl1/#producers" aria-current="page">Producers</a><a href="/xl1/#projects">Projects</a><a href="/xl1/#proofs">Proofs</a><a href="/xl1/#learn">Learn</a></nav></div></header>
+<main class="wrap compare-page" id="main"><div class="breadcrumbs"><a href="/">WinLEW</a><span>/</span><a href="/xl1/">XL1</a><span>/</span>Producer comparison</div><section class="hero"><div class="hero-kicker">Public telemetry</div><h1>Producer comparison.</h1><p>Two independent feeds, viewed side by side. A stale or unreachable source is labeled instead of being silently treated as current.</p><div class="pillrow"><span class="status-pill online" id="overall"><span class="dot" aria-hidden="true"></span>checking</span><span class="sub" id="updated">—</span></div></section>
+  <div class="panel" tabindex="0" aria-label="Scrollable producer comparison">
+    <table>
+      <thead>
+        <tr>
+          <th>Producer</th>
+          <th>Status</th>
+          <th>Network</th>
+          <th class="num">Rank</th>
+          <th class="num">Share</th>
+          <th class="num">Blocks 24h</th>
+          <th class="num">Blocks today</th>
+          <th class="num">Blocks total</th>
+          <th class="num">Reward (XL1)</th>
+          <th>Last block</th>
+        </tr>
+      </thead>
+      <tbody id="rows">
+        <tr><td colspan="10" class="sub">Loading…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+<footer class="site"><div class="wrap">
+  Each row is fetched directly from that operator's own published <code>/api/public</code> projection —
+  see <a href="../data/README.md" target="_blank" rel="noopener">what it promises and withholds</a>.
+  A row over 30 minutes stale is flagged rather than silently kept. Independent community project —
+  not affiliated with, endorsed by, or supported by XYO Network.
+</div></footer>
+<script>
+"use strict"
+const $ = (id) => document.getElementById(id)
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]))
+const num = (n) => (n === null || n === undefined) ? '—' : Number(n).toLocaleString()
+
+// Operators sharing their data here. Order is display order; add yours by
+// appending { name, url } with a URL serving the same schema:1 shape.
+const SOURCES = [
+  { name: 'Windows',        url: 'https://raw.githubusercontent.com/LewSales/xl1-status-data/main/windows.json' },
+  { name: 'Raspberry Pi 3B+', url: 'https://raw.githubusercontent.com/LewSales/xl1-status-data/main/rbpi3.json' },
+]
+
+const STALE_MS = 30 * 60 * 1000
+
+async function fetchOne(src) {
+  const res = await fetch(src.url + (src.url.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store' })
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  const d = await res.json()
+  if (!d.schema) throw new Error('no schema field -- not a /api/public document')
+  return d
+}
+
+function rowHtml(src, d, err) {
+  if (err) {
+    return `<tr class="error-row"><td class="name">${esc(src.name)}</td>
+      <td><span class="status-pill offline"><span class="dot" aria-hidden="true"></span>unreachable</span></td>
+      <td colspan="8">${esc(err.message)}</td></tr>`
+  }
+  const age = Date.now() - new Date(d.generatedAt).getTime()
+  const stale = age > STALE_MS
+  const p = d.producer ?? {}
+  const b = p.blocks ?? {}
+  const statusClass = stale ? 'stale' : (d.status === 'ok' ? 'online' : 'offline')
+  const statusText = stale ? 'stale' : (d.status ?? 'unknown')
+  const rank = (p.rank && p.producers) ? `${p.rank} / ${p.producers}` : '—'
+  const share = (p.sharePercent ?? null) !== null ? `${p.sharePercent}%` : '—'
+  const lastBlock = p.lastBlockUrl
+    ? `<a href="${esc(p.lastBlockUrl)}" target="_blank" rel="noopener">${num(p.lastBlock)}</a>`
+    : num(p.lastBlock)
+  const name = p.url
+    ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(d.label ?? src.name)}</a>`
+    : esc(d.label ?? src.name)
+  return `<tr>
+    <td class="name">${name}</td>
+    <td><span class="status-pill ${statusClass}"><span class="dot" aria-hidden="true"></span>${esc(statusText)}</span></td>
+    <td>${esc(d.chain?.networkName ?? d.chain?.network ?? '—')}</td>
+    <td class="num">${rank}</td>
+    <td class="num">${share}</td>
+    <td class="num">${num(b.day24h)}</td>
+    <td class="num">${num(b.today)}</td>
+    <td class="num">${num(b.total)}</td>
+    <td class="num">${esc(p.rewardXl1 ?? '—')}</td>
+    <td>${lastBlock}</td>
+  </tr>`
+}
+
+async function tick(force) {
+  // Same reasoning as every other page here: a tab can load hidden a moment
+  // before becoming the foreground tab, and that first load must not be the
+  // one skipped, or the page never shows anything until a real
+  // hidden-to-visible transition happens to fire.
+  if (document.hidden && !force) return
+  const results = await Promise.allSettled(SOURCES.map(fetchOne))
+  $('rows').innerHTML = results.map((r, i) =>
+    rowHtml(SOURCES[i], r.status === 'fulfilled' ? r.value : null, r.status === 'rejected' ? r.reason : null)
+  ).join('')
+  const anyOk = results.some((r) => r.status === 'fulfilled')
+  $('overall').className = 'status-pill ' + (anyOk ? 'online' : 'offline')
+  $('overall').innerHTML = `<span class="dot" aria-hidden="true"></span>${anyOk ? 'live' : 'all unreachable'}`
+  $('updated').textContent = 'updated ' + new Date().toLocaleTimeString()
+}
+
+tick(true)
+setInterval(tick, 30000)
+document.addEventListener('visibilitychange', () => { if (!document.hidden) tick() })
+</script>
+<script src="/xl1/shared/shell.js?v=cc0927" defer></script><script src="/xl1/shared/navigation.js?v=cc0927" defer></script>

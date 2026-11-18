@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8" />
+  <!-- SUPERSEDED LANDING PAGE — kept, not deleted, but excluded from search.
+       Nothing links here; it is reachable only by typing the path. It still
+       carries claims the live site has moved past: "MemeFi" positioning,
+       Pump.fun presented as the active buy route (the token graduated
+       2026-07-22), and a winlew.token explorer-search capability. Flagged in
+       WINLEW_PUBLIC_CONTENT_AUDIT.md for the owner to delete — noindex only,
+       because removing a page is the owner's call. Added 2026-08-04. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>$WinLEW — Proof of Value on Solana</title>
+  <meta name="description" content="$WinLEW is a MemeFi project on Solana introducing Proof of Value — rewarding knowledge and skills through trivia, games, and engagement." />
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="$WinLEW — Proof of Value" />
+  <meta property="og:description" content="Not wealth. Knowledge & skills. Trivia, games, engagement. Built on Solana." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co" />
+  <meta property="og:image" content="http://winlew.co/images/WinLEW-Pill.png" /> 
+
+  <style>
+    :root{
+      --bg:#05060a;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.10);
+      --text:#e9eefc;
+      --muted:rgba(233,238,252,.75);
+      --brand:#67e8f9;
+      --brand2:#a78bfa;
+      --gold:#fbbf24;
+      --line:rgba(255,255,255,.12);
+      --shadow: 0 20px 70px rgba(0,0,0,.55);
+      --radius: 22px;
+      --max: 1100px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(103,232,249,.18), transparent 60%),
+        radial-gradient(1100px 680px at 80% 20%, rgba(167,139,250,.18), transparent 55%),
+        radial-gradient(900px 600px at 60% 85%, rgba(251,191,36,.10), transparent 60%),
+        linear-gradient(180deg, #04050a 0%, #060718 50%, #05060a 100%);
+      overflow-x:hidden;
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:22px}
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; padding:14px 0;
+    }
+    .logo{
+      display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:.3px;
+    }
+    .badge{
+      font-size:12px; padding:6px 10px; border-radius:999px;
+      background: linear-gradient(90deg, rgba(103,232,249,.18), rgba(167,139,250,.18));
+      border:1px solid var(--line);
+      color:var(--muted);
+    }
+    .navlinks{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px; border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      text-decoration:none;
+      transition: transform .12s ease, background .12s ease;
+      font-weight:650;
+      font-size:13px;
+    }
+    .pill:hover{transform: translateY(-1px); background: rgba(255,255,255,.10)}
+    .hero{
+      padding:34px 0 22px;
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 920px){
+      .hero{grid-template-columns:1fr}
+      .navlinks{justify-content:flex-start}
+    }
+    .card{
+      background: var(--panel);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(700px 220px at 30% 0%, rgba(103,232,249,.22), transparent 55%),
+                  radial-gradient(700px 240px at 70% 0%, rgba(167,139,250,.22), transparent 55%);
+      filter: blur(18px);
+      opacity:.8;
+      pointer-events:none;
+    }
+    .card > *{position:relative}
+    .heroLeft{padding:26px}
+    .kicker{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:13px; color:var(--muted);
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      padding:8px 12px;
+      border-radius: 999px;
+      margin-bottom:14px;
+    }
+    h1{
+      margin:0 0 10px;
+      font-size: clamp(32px, 4.2vw, 54px);
+      line-height:1.02;
+      letter-spacing:-.6px;
+    }
+    .sub{
+      color:var(--muted);
+      font-size: 16px;
+      line-height:1.6;
+      max-width: 62ch;
+      margin: 10px 0 18px;
+    }
+    .ctaRow{display:flex; gap:10px; flex-wrap:wrap}
+    .btn{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      text-decoration:none;
+      padding:12px 14px;
+      border-radius: 14px;
+      font-weight:800;
+      letter-spacing:.2px;
+      display:inline-flex; align-items:center; gap:10px;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.22)}
+    .btn.primary{
+      background: linear-gradient(90deg, rgba(103,232,249,.22), rgba(167,139,250,.22));
+      border-color: rgba(255,255,255,.22);
+    }
+    .miniRow{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:16px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .miniRow span{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+    }
+    .heroRight{padding:22px}
+    .panelTitle{font-weight:900; letter-spacing:.2px; margin:2px 0 10px}
+    .caBox{
+      border:1px dashed rgba(255,255,255,.22);
+      background: rgba(0,0,0,.22);
+      border-radius: 16px;
+      padding:14px;
+    }
+    .caLabel{color:var(--muted); font-size:12px; margin-bottom:8px}
+    .caRow{
+      display:flex; gap:10px; align-items:center;
+      flex-wrap:wrap;
+    }
+    .ca{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      line-height:1.4;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      padding:10px 12px;
+      border-radius: 12px;
+      overflow:auto;
+      max-width: 100%;
+      flex: 1 1 420px;
+    }
+    .copyBtn{
+      cursor:pointer;
+      flex: 0 0 auto;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      font-weight:900;
+    }
+    .copyBtn:hover{background: rgba(255,255,255,.12)}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+      margin: 18px 0 10px;
+    }
+    @media (max-width: 920px){ .grid{grid-template-columns: 1fr} }
+    .tile{padding:18px}
+    .tile h3{margin:0 0 8px; font-size:16px}
+    .tile p{margin:0; color:var(--muted); line-height:1.55; font-size:14px}
+    .links{
+      margin: 18px 0 40px;
+      padding: 18px;
+    }
+    .linksGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+      margin-top:12px;
+    }
+    @media (max-width: 920px){ .linksGrid{grid-template-columns: 1fr} }
+    .linkBtn{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+      padding:12px 12px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      text-decoration:none;
+      font-weight:800;
+    }
+    .linkBtn small{color:var(--muted); font-weight:650}
+    .linkBtn:hover{background: rgba(255,255,255,.10)}
+    footer{
+      padding: 26px 0 42px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .glow{
+      color: var(--text);
+      text-shadow: 0 0 22px rgba(103,232,249,.25);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="nav">
+      <div class="logo">
+        <span class="badge">MemeFi • Proof of Value</span>
+        <span class="glow">$WinLEW</span>
+      </div>
+      <div class="navlinks">
+        <a class="pill" href="https://solscan.io/token/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump">Token Contract</a>
+        <a class="pill" href="https://solscan.io/account/H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg">PumpFun Contract</a>
+        <a class="pill" href="https://solscan.io/account/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx">Raydium Contract</a>
+        <a class="pill" href="#what">What is it?</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="card heroLeft">
+        <div class="kicker">🚀 Built on Solana<br>Rewarding Knowledge & Skill</div>
+        <h1>Proof of Value.<br/>Not Proof of Wealth.</h1>
+        <p class="sub">
+          <strong>$WinLEW</strong> is a Solana-based community project built around
+participation, learning, and transparency.<strong> Proof of Value</strong> —
+          a unique mechanism designed to reward individuals based on their <strong>knowledge and skills</strong> through
+          trivia, games, and engagement as involvement matters
+        </p>
+
+
+      <div class="linksGrid">
+      
+        <a class="btn primary" href="https://pump.fun/coin/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer">
+          <div>🧑‍🚀 Buy Now <br><small><center> (Pump.Fun)</center></small></div><div>↗</div>
+        </a>
+        <a class="btn primary" href="https://raydium.io/swap/?inputMint=sol&outputMint=DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer">
+          <div>💱 Swap Now <br><small><center> (Raydium)</center></small></div><div>↗</div>
+        </a>
+        <a class="btn primary" href="https://rugcheck.xyz/tokens/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer">
+          <div>🛡️ RugCheck <br><small><center> (Risk View)</center></small></div><div>↗</div>
+        </a>
+        <a class="btn primary" href="https://dexscreener.com/solana/h3hoytv5tg6a2uzqsjhncidgwcwx4h3kdnewfjmlmgfg" target="_blank" rel="noreferrer">
+          <div>📈 DexScreener<br><small><center> (Pump.Fun)</center></small></div><div>↗</div>
+        </a>
+        <a class="btn primary" href="https://dexscreener.com/solana/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer">
+          <div>📊 DexScreener<br><small><center> (Raydium)</center></small></div><div>↗</div>
+       </a>
+        <a class="btn primary" href="https://discord.gg/7mZ2JP87JS" target="_blank" rel="noreferrer">
+          <div>💬 Discord<br><small><center> (Join US)</center></small></div><div>↗</div>
+        </a>
+        <a class="btn primary" href="https://www.geckoterminal.com/solana/pools/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer">
+          <div>🦎 Coin Gecko<br><small><center> (Tracking)</center></small></div><div>↗</div>
+        </a>
+        <a class="btn primary" href="https://coinmarketcap.com/dexscan/solana/H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg/" target="_blank" rel="noreferrer">
+          <div>🌐 Coin MC<br><small><center> (Listing)</center></small></div><div>↗</div>
+        </a>
+        <a class="btn primary" href="https://x.com/i/communities/1890899109684683068" target="_blank" rel="noreferrer">
+          <div>🐾 LewCrew<br><small><center> (X Community)</center></small></div><div>↗</div>
+        </a>
+        <a class="btn primary" href="https://x.com/WinLewToken" target="_blank" rel="noreferrer">
+          <div>𝕏 Faucet<br><small><center> (@WinLEWToken)</center></small></div><div>↗</div>
+        </a>
+        <a class="btn primary" href="https://x.com/LetEveryOneWin" target="_blank" rel="noreferrer">
+          <div>𝕏 Token<br><small><center> (@LetEveryOneWin)</center></small></div><div>↗</div>
+        </a>
+        <a class="btn primary" href="https://x.com/LewSales" target="_blank" rel="noreferrer">
+          <div>𝕏 Developer<br><small><center> (@LewSales)</center></small></div><div>↗</div>
+        </a>
+        <a class="btn primary href="http://discord.winlew.co" target="_blank" rel="noreferrer">
+          <div>🔗 Services<br><small><center> (Discord Bots)</center></small></div><div>↗</div>
+        </a>        
+        <a class="btn primary" href="http://health.winlew.co" target="_blank" rel="noreferrer">
+          <div>🔗 Health<br><small><center> (Discord Bots)</center></small></div><div>↗</div>
+        </a>
+        <a class="btn primary" href="http://verify.winlew.co" target="_blank" rel="noreferrer">
+          <div>🔗 Verification<br><small><center> (Discord Bots)</center></small></div><div>↗</div>
+        </a>
+
+      </div>
+
+        <div class="miniRow">
+          <span>🧠 Trivia + Games</span>
+          <span>🧰 Utility-first culture</span>
+          <span>🤝 Community-forward</span>
+        </div>
+      </div>
+
+      <div class="card heroRight" id="contract">
+        <div class="panelTitle">Contract Address</div>
+        <div class="caBox">
+                       <div class="caLabel"></div>
+            
+          <div class="caRow">
+            <div id="ca" class="ca">The Contract Address<br><a class="btn primary" href="https://solscan.io/token/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer">📈 Token Contract On SolScan</a></div>
+                      <div class="caLabel"></div>
+          <div class="caRow">
+            <div id="ca" class="ca">The PumpFun Address<br><a class="btn primary" href="https://solscan.io/account/H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg" target="_blank" rel="noreferrer">🧑‍🚀 Pump.Fun Contract On SolScan</a></div>
+                      <div class="caLabel"></div>
+          <div class="caRow">
+            <div id="ca" class="ca">How To Help 🤝<br> Deposit<strong> winlew & Solana </strong><br><a class="btn primary" href="https://raydium.io/liquidity/increase/?mode=add&pool_id=5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer">💱 Add Liquidity</a></div>
+                    <div class="caLabel"></div>
+          </div>  
+          </div>          
+          </div>
+          </div>
+
+        <div class="grid" style="grid-template-columns:1fr; margin-top:14px;">
+          <div class="tile card" style="box-shadow:none;">
+            <h3> Domain Name (winlew.token)</h3>
+            <p>
+              Simplify asset discovery:<br> Simply type winlew.token into your <a href="https://solscan.io/token/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump">block explorer. </a>
+               By using this domain instead of pasting long contract addresses, we make the onboarding process seamless and intuitive.
+                <img class="banner" src="images/solscan-domain.png" alt="WinLEW Domain Name" />
+            </p>
+          </div>
+        </div>
+
+
+
+
+
+
+      </div>
+    </section>
+
+    <section id="what" class="grid">
+      <div class="card tile">
+        <h3>🧠 Earn by contribution</h3>
+        <p>We’re building an ecosystem where participation matters — learning, playing, and showing up.</p>
+      </div>
+      <div class="card tile">
+        <h3>🛠️ Utility on purpose</h3>
+        <p>Trivia + games + engagement tools — designed to create momentum without fake hype.</p>
+      </div>
+      <div class="card tile">
+        <h3>🤝 Community-first growth</h3>
+        <p>Not chasing whales — building with the people who actually stick around and help.</p>
+      </div>
+    </section>
+
+    <section id="links" class="card links">
+      <div class="panelTitle">Official Links</div>
+      <div style="color:var(--muted); font-size:14px; line-height:1.5;">
+      </div>
+      <div class="linksGrid">
+
+
+
+        <a class="linkBtn" href="https://solscan.io/token/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer">
+          <div>🧩 Token Contract<small>( SolScan )</small></div><div>↗</div>
+        </a>
+
+        <a class="linkBtn" href="https://solscan.io/account/H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg" target="_blank" rel="noreferrer">
+          <div>🧩 Pump.Fun Contract<small>( SolScan )</small></div><div>↗</div>
+        </a>
+
+        <a class="linkBtn" href="https://solscan.io/account/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer">
+          <div>🧩 Raydium Contract<small>( SolScan )</small></div><div>↗</div>
+        </a>
+        <a class="linkBtn" href="https://pump.fun/coin/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer">
+          <div>🧑‍🚀 Buy Now <small>( Pump.Fun )</small></div><div>↗</div>
+        </a>
+        <a class="linkBtn" href="https://raydium.io/liquidity/increase/?mode=add&pool_id=5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer">
+          <div>💱 Swap Now <small>( Raydium )</small></div><div>↗</div>
+        </a>
+        <a class="linkBtn" href="https://raydium.io/liquidity/increase/?mode=add&pool_id=5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer">
+          <div>💱 Add Liquidity <small>( Raydium )</small></div><div>↗</div>
+        </a>
+        <a class="linkBtn" href="https://dexscreener.com/solana/h3hoytv5tg6a2uzqsjhncidgwcwx4h3kdnewfjmlmgfg" target="_blank" rel="noreferrer">
+          <div>📈 DexScreener A <small>( Pump.Fun )</small></div><div>↗</div>
+        </a>
+        <a class="linkBtn" href="https://dexscreener.com/solana/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer">
+          <div>📊 DexScreener B <small>( Raydium  )</small></div><div>↗</div>
+
+        <a class="linkBtn" href="https://www.geckoterminal.com/solana/pools/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer">
+          <div>🦎 GeckoTerminal <small>( Tracking )</small></div><div>↗</div>
+        </a>
+        <a class="linkBtn" href="https://coinmarketcap.com/dexscan/solana/H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg/" target="_blank" rel="noreferrer">
+          <div>🌐 CoinMarketCap <small>( Listing )</small></div><div>↗</div>
+        </a>
+                <a class="linkBtn" href="https://rugcheck.xyz/tokens/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer">
+          <div>🛡️ RugCheck <small>( Risk Viewer )</small></div><div>↗</div>
+        </a>
+        <a class="linkBtn" href="https://discord.gg/7mZ2JP87JS" target="_blank" rel="noreferrer">
+          <div>💬 Discord <small>( Join )</small></div><div>↗</div>
+        </a>
+        <a class="linkBtn" href="https://x.com/LetEveryOneWin" target="_blank" rel="noreferrer">
+          <div>𝕏 Account (Token) <small>( @etEveryOneWin )</small></div><div>↗</div>
+        </a>
+        <a class="linkBtn" href="https://x.com/WinLEWToken" target="_blank" rel="noreferrer">
+          <div>𝕏 Account (Faucet) <small>( @WinLEWToken )</small></div><div>↗</div>
+        </a>
+        <a class="linkBtn" href="https://x.com/LewSales" target="_blank" rel="noreferrer">
+          <div>𝕏 Account (Dev) <small>( @LewSales )</small></div><div>↗</div>
+        </a>
+        <a class="linkBtn" href="http://discord.winlew.co" target="_blank" rel="noreferrer">
+          <div>🔗 Services <small>( Discord Bots )</small></div><div>↗</div>
+        </a>        
+        <a class="linkBtn" href="http://health.winlew.co" target="_blank" rel="noreferrer">
+          <div>🔗 Health <small>( Discord Bots )</small></div><div>↗</div>
+        </a>
+        <a class="linkBtn" href="http://verify.winlew.co" target="_blank" rel="noreferrer">
+          <div>🔗 Verification <small>( Discord Bots )</small></div><div>↗</div>
+        </a>
+        <a class="linkBtn" href="https://x.com/i/communities/1890899109684683068" target="_blank" rel="noreferrer">
+          <div>🐾 LewCrew <small>( 𝕏 Community )</small></div><div>↗</div>
+        </a>
+                <a class="linkBtn" href="https://t.me/LetsEveryOneWin" target="_blank" rel="noreferrer">
+          <div>📢 TeleGram<small>( Closed Chat )</small></div><div>↗</div>
+        </a>
+        <a class="linkBtn" href="https://winlew.co/GeoAgora" target="_blank" rel="noreferrer">
+          <div>🏪 GeoAgora<small>( Under Construction )</small></div><div>↗</div>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <div>Built for clarity. Built for community. Built to ship.</div>
+      <div style="margin-top:6px;">© <span id="year"></span> WinLEW • <span class="glow">#LetsEveryOneWin</span></div>
+    </footer>
+  </div>
+
+  <script>
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Copy CA
+    const btn = document.getElementById("copyBtn");
+    btn.addEventListener("click", async () => {
+      const text = document.getElementById("ca").textContent.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = "Copied ✅";
+        setTimeout(() => (btn.textContent = "Copy"), 1400);
+      } catch (e) {
+        btn.textContent = "Copy failed";
+        setTimeout(() => (btn.textContent = "Copy"), 1400);
+      }
+    });
+  </script>
+</body>
+</html>
+

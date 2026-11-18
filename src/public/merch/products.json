@@ -1,0 +1,259 @@
+{
+  "config": {
+    "xyoCheckoutMode": "linkout",
+    "xyoStoreUrl": "https://shop.xyo.network",
+    "currency": "USD",
+    "catalogLastVerified": "2026-08-04",
+    "holderDiscount": {
+      "pctPerMillionWinlew": 1,
+      "capPct": 15,
+      "appliesToSection": "winlew"
+    }
+  },
+  "sections": [
+    {
+      "id": "winlew",
+      "title": "$WinLEW Drops",
+      "subtitle": "Sold and shipped by WinLEW. Checkout opens shortly.",
+      "fulfilledBy": "winlew"
+    },
+    {
+      "id": "xyo",
+      "title": "Official XYO Gear",
+      "subtitle": "Fulfilled by the official XYO store — checkout completes on shop.xyo.network.",
+      "fulfilledBy": "xyo"
+    }
+  ],
+  "products": [
+    {
+      "id": "winlew-genesis-tee",
+      "section": "winlew",
+      "name": "$WinLEW First Tee Shirt",
+      "price": 40.0,
+      "description": "Black first-run tee with the WinLEW wordmark on the front and ecosystem artwork on the back.",
+      "image": "/merch/img/winlew-first-tee-shirt-900.jpg",
+      "hasOptions": true,
+      "options": {
+        "size": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "2XL"
+        ]
+      },
+      "checkout": {
+        "paypal": true,
+        "crypto": {
+          "provider": "hosted-link",
+          "url": "TODO_PASTE_NOWPAYMENTS_OR_COINBASE_COMMERCE_LINK"
+        }
+      }
+    },
+    {
+      "id": "winlew-logo-tee",
+      "section": "winlew",
+      "name": "$WinLEW Logo Tee",
+      "price": 40.0,
+      "description": "Gold LEW logo artwork with a floating Bitcoin mark, stacked coins, and mining rigs.",
+      "image": null,
+      "hasOptions": true,
+      "options": {
+        "size": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "2XL"
+        ]
+      },
+      "checkout": {
+        "paypal": true,
+        "crypto": {
+          "provider": "hosted-link",
+          "url": "TODO_PASTE_NOWPAYMENTS_OR_COINBASE_COMMERCE_LINK"
+        }
+      }
+    },
+    {
+      "id": "winlew-builder-tee",
+      "section": "winlew",
+      "name": "$WinLEW Builder Tee",
+      "price": 40.0,
+      "description": "Builder mole artwork with helmet, blueprints, and shovel in a tunnel build scene.",
+      "image": null,
+      "hasOptions": true,
+      "options": {
+        "size": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "2XL"
+        ]
+      },
+      "checkout": {
+        "paypal": true,
+        "crypto": {
+          "provider": "hosted-link",
+          "url": "TODO_PASTE_NOWPAYMENTS_OR_COINBASE_COMMERCE_LINK"
+        }
+      }
+    },
+    {
+      "id": "winlew-est-2024-tee",
+      "section": "winlew",
+      "name": "$WinLEW EST 2024 Tee",
+      "price": 40.0,
+      "description": "Plain black tee with the gold WinLEW wordmark and EST 2024 front graphic.",
+      "image": "/merch/img/winlew-est-2024-900.jpg",
+      "hasOptions": true,
+      "options": {
+        "size": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "2XL"
+        ]
+      },
+      "checkout": {
+        "paypal": true,
+        "crypto": {
+          "provider": "hosted-link",
+          "url": "TODO_PASTE_NOWPAYMENTS_OR_COINBASE_COMMERCE_LINK"
+        }
+      }
+    },
+    {
+      "id": "winlew-solana-mole-tee",
+      "section": "winlew",
+      "name": "$WinLEW Solana Mole Tee",
+      "price": 40.0,
+      "description": "Gold-on-black Solana Mole artwork with tooling, circuitry, and the Solana mark.",
+      "image": "/merch/img/winlew-solana-mole-900.jpg",
+      "hasOptions": true,
+      "options": {
+        "size": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "2XL"
+        ]
+      },
+      "checkout": {
+        "paypal": true,
+        "crypto": {
+          "provider": "hosted-link",
+          "url": "TODO_PASTE_NOWPAYMENTS_OR_COINBASE_COMMERCE_LINK"
+        }
+      }
+    },
+    {
+      "id": "xyo-hat-curved-bill",
+      "section": "xyo",
+      "name": "XYO Hat (Curved Bill)",
+      "price": 35.0,
+      "image": "/merch/img/xyo-hat-curved-bill.jpg",
+      "hasOptions": false,
+      "storeProductId": 134,
+      "productUrl": "https://shop.xyo.network/xyo-hat-curved-bill/",
+      "addToCartUrl": "https://shop.xyo.network/cart.php?action=add&product_id=134"
+    },
+    {
+      "id": "xl1-hat-curved-bill",
+      "section": "xyo",
+      "name": "XL1 Hat (Curved Bill)",
+      "price": 35.0,
+      "image": "/merch/img/xl1-hat-curved-bill.jpg",
+      "hasOptions": false,
+      "storeProductId": 133,
+      "productUrl": "https://shop.xyo.network/xl1-hat-curved-bill/",
+      "addToCartUrl": "https://shop.xyo.network/cart.php?action=add&product_id=133"
+    },
+    {
+      "id": "xyo-network-original-tee",
+      "section": "xyo",
+      "name": "XYO Network Original Tee",
+      "price": 35.0,
+      "image": "/merch/img/xyo-network-original-tee.jpg",
+      "hasOptions": true,
+      "storeProductId": 123,
+      "productUrl": "https://shop.xyo.network/xyo-network-original-tee/"
+    },
+    {
+      "id": "xyo-tee-orange-edition",
+      "section": "xyo",
+      "name": "XYO Tee Orange Edition",
+      "price": 20.0,
+      "image": "/merch/img/xyo-tee-orange-edition.jpg",
+      "hasOptions": true,
+      "storeProductId": 122,
+      "productUrl": "https://shop.xyo.network/xyo-t-shirt-orange-edition/"
+    },
+    {
+      "id": "xyo-everywhere-i-go-hoodie",
+      "section": "xyo",
+      "name": "XYO Everywhere I Go Hoodie (Unisex)",
+      "price": 65.0,
+      "image": "/merch/img/xyo-everywhere-i-go-hoodie.jpg",
+      "hasOptions": true,
+      "storeProductId": 119,
+      "productUrl": "https://shop.xyo.network/everywhere-i-go-hoodie-unisex/"
+    },
+    {
+      "id": "xyo-joggers-unisex",
+      "section": "xyo",
+      "name": "XYO Joggers (Unisex)",
+      "price": 65.0,
+      "image": "/merch/img/xyo-joggers-unisex.jpg",
+      "hasOptions": true,
+      "storeProductId": 120,
+      "productUrl": "https://shop.xyo.network/xyo-joggers-unisex/"
+    },
+    {
+      "id": "xyo-network-cap-flat-bill",
+      "section": "xyo",
+      "name": "XYO Network Cap (Flat Bill)",
+      "price": 35.0,
+      "image": "/merch/img/xyo-network-cap-flat-bill.jpg",
+      "hasOptions": false,
+      "storeProductId": 118,
+      "productUrl": "https://shop.xyo.network/xyo-network-cap-flat-bill/",
+      "addToCartUrl": "https://shop.xyo.network/cart.php?action=add&product_id=118"
+    },
+    {
+      "id": "xyo-dual-plated-coin-original",
+      "section": "xyo",
+      "name": "XYO Dual Plated Coin (Original)",
+      "price": 75.0,
+      "image": "/merch/img/xyo-dual-plated-coin-original.png",
+      "hasOptions": false,
+      "storeProductId": 117,
+      "productUrl": "https://shop.xyo.network/xyo-dual-plated-coin-original/",
+      "addToCartUrl": "https://shop.xyo.network/cart.php?action=add&product_id=117"
+    },
+    {
+      "id": "xyo-geohacker-coin",
+      "section": "xyo",
+      "name": "XYO Geohacker Coin",
+      "price": 75.0,
+      "image": "/merch/img/xyo-geohacker-coin.png",
+      "hasOptions": false,
+      "storeProductId": 124,
+      "productUrl": "https://shop.xyo.network/xyo-geohacker-coin/",
+      "addToCartUrl": "https://shop.xyo.network/cart.php?action=add&product_id=124"
+    }
+  ],
+  "linkouts": [
+    {
+      "label": "Shop all XYO",
+      "url": "https://shop.xyo.network/shop-all/"
+    },
+    {
+      "label": "SentinelX hardware",
+      "url": "https://shop.xyo.network/sentinelx/"
+    }
+  ]
+}

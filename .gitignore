@@ -1,0 +1,151 @@
+# ─── Secrets — NEVER commit ──────────────────────────────────────────────────
+# All env files (real values). Templates (*.example) are kept.
+.env
+.env*
+!.env*.example
+# Keypairs / private keys / wallets (e.g. src/faucet/bot-keypair.json).
+**/*keypair*
+# ...except the loader SOURCE, which holds no key material (it reads the
+# file named by BOT_KEYPAIR_PATH at call time). Exactly this path, nothing else.
+!src/faucet/keypair.js
+**/*secret*
+# ...but the secret SCANNER is not a secret. The rule above excluded
+# src/scripts/scan-secrets.js, so the tool CI depends on would never have been
+# committed, and every push would have failed with a confusing "module not
+# found". Caught before the first commit; a test asserts it stays tracked
+# (test/ci/workflowHygiene.test.mjs).
+!src/scripts/scan-secrets.js
+*.pem
+*.key
+id_rsa*
+**/wallet*.json
+# Vanity-address grinding output. `solana-keygen grind` names its result after
+# the PUBKEY it found (e.g. WenB2q…CUNT.json), which matches none of the
+# patterns above — so without this line a live mint private key would sit in
+# the repo as an ordinary-looking untracked .json, one `git add -A` away from
+# being published. Ignore the directory, not a filename shape.
+vanity/
+**/vanity/
+# Timestamped backups written by src/scripts/clean-airdrop-list.js (and the
+# same convention used by hand elsewhere, e.g. src/faucet/.env.bak-*). These are
+# point-in-time copies of data files; the cleaned version is what belongs in
+# git, and the backup is a local undo, not history.
+*.bak-*
+
+# ─── Dependencies / build ────────────────────────────────────────────────────
+node_modules/
+# npm is the package manager (decided 2026-08-08). yarn.lock and package-lock
+# both existed and resolved DIFFERENT trees — security patches landed in one and
+# not the other, which is invisible until something is exploited. These are
+# ignored so a stray `yarn install` cannot quietly reintroduce a second source
+# of truth; test/ci/workflowHygiene.test.mjs fails if one is ever committed.
+yarn.lock
+.yarnrc.yml
+.yarn/
+dist/
+build/
+# Public Build journey is source, not a generated build directory.
+!src/public/build/
+!src/public/build/index.html
+*.tsbuildinfo
+
+# ─── Runtime data (regenerable; large; may hold sensitive content) ───────────
+data/
+src/data/
+# Keep the XL1 directory guard deployable while continuing to ignore runtime
+# payloads placed beside it.
+!src/public/xl1/data/
+src/public/xl1/data/*
+!src/public/xl1/data/index.html
+!src/public/xl1/data/.htaccess
+data-watchdog/
+**/snapshots/
+backups/
+**/backups/
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+exports/
+reports/runtime/
+
+# ─── Archives / backups ──────────────────────────────────────────────────────
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.rar
+
+# ─── Logs / OS / editor ──────────────────────────────────────────────────────
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Bare legacy env (real secrets — no dot prefix)
+src/faucet/_legacy/env
+**/_legacy/env
+
+# ─── Throwaway dev artifacts (do not commit; the auto-sync tool sweeps these) ─
+# Render-check screenshots written by Playwright verification runs.
+src/public/.tmp-shots/
+# One-off scratch/verification scripts.
+*.tmp.mjs
+# Local verification/release artifacts and one-off hosting helper are not source.
+.test-tmp/
+.codex-phase3b-sftp.mjs
+# Manual "-old" backup copies (e.g. .htaccess-old).
+*-old
+# Per-machine Claude Code settings.
+.claude/settings.local.json
+
+# Beta APK drop — the page is versioned, the 41 MB binary is not.
+# Upload the .apk to the host by hand alongside the page; committing it would
+# add 41 MB to every future clone, permanently, on every rebuild.
+src/public/jdid93hf8dh/*.apk
+
+# Never ship server logs from the public directory. A tracked access log
+# (46 visitor IPs) was found publicly downloadable at winlew.co/log/ on
+# 2026-08-03 — see WINLEW_PUBLIC_CONTENT_AUDIT.md.
+src/public/log/
+src/public/.tmp-shots/
+src/public/.tmp-audit/
+
+src/faucet/user_bans.json
+# Runtime marker of the last tweet relayed to Discord. Shipping it made every fresh
+# install re-announce months of old tweets; a missing file is a quiet first run.
+src/faucet/lastTweet.json
+
+# Downloaded tooling. The ngrok binary was committed on 2026-08-15 and is 31.4 MB
+# — larger than every other object in this repo's history combined-ish, and every
+# clone pays for it forever. Nothing references it from the repo; the launcher in
+# tools/launchers/ does not. Binaries belong on the machine, not in the history.
+.tools/
+
+# XL1 distributor recovery material (server-only external file)
+**/sender.js
+!src/xl1-arcade/sender.js
+
+# The GeoHackers verify proxy upstream names the bot machine's Tailscale Funnel
+# address. Like verify/api-proxy-secret.php it stays on disk and on the host, but
+# never in git. Template: src/public/xl1/verify/api-proxy-upstream.example.php
+src/public/xl1/verify/api-proxy-upstream.php
+
+# Built Android packages never go in git (16 MB binaries; debug builds must not be
+# published either: they are debuggable and debug-signed).
+*.apk
+*.aab
+test-results.jsonl
+test-output.txt
+base-known-failures.json
+
+# Runtime faucet data: Discord ids, wallets, IP bans. Never in git (the live copies are in MongoDB;
+# src/faucet/storage.js falls back to empty defaults when these are missing).
+src/faucet/faucet_claims.json
+src/faucet/ip_bans.json
+src/faucet/airdrops.json
+src/faucet/registrations.json
+src/faucet/subscriptions.json

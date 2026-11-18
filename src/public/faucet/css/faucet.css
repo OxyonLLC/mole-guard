@@ -1,0 +1,87 @@
+/* Faucet-page extras layered on top of the shared Gaming-Hub theme
+   (styles.css). Keep this small — reuse hub variables/classes (.card,
+   .pill, .muted, .wrap, .statGrid, .statBox, .cardHead). */
+
+.hidden { display: none !important; }
+.fine { font-size: 12px; margin-top: 12px; }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+
+.faucetHero {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 18px;
+  margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.noticeCard {
+  background: rgba(124, 92, 255, 0.12);
+  border-color: rgba(124, 92, 255, 0.3);
+}
+.noticeCard p { margin: 0; }
+
+.cardHead {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap; margin-bottom: 14px;
+}
+.cardHead h2 { margin: 0; font-size: clamp(20px, 3vw, 28px); }
+
+.statGrid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+}
+@media (max-width: 720px) { .statGrid { grid-template-columns: repeat(2, 1fr); } }
+.statBox {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px; padding: 14px; text-align: center;
+}
+.statVal { font-size: clamp(15px, 2.4vw, 20px); font-weight: 900; word-break: break-word; }
+.statLbl { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+
+.claimStateArea {
+  padding: 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-weight: 700;
+  line-height: 1.6;
+}
+.claimStateArea.state-eligible { border-color: rgba(85, 240, 165, 0.4); background: rgba(85, 240, 165, 0.1); }
+.claimStateArea.state-progress { border-color: rgba(255, 179, 71, 0.4); background: rgba(255, 179, 71, 0.1); }
+.claimStateArea.state-error { border-color: rgba(255, 107, 138, 0.4); background: rgba(255, 107, 138, 0.1); }
+.claimStateArea .ok { color: #55f0a5; }
+.claimStateArea .warn { color: #ffb347; }
+.claimStateArea .bad { color: #ff6b8a; }
+.claimStateArea a { color: inherit; text-decoration: underline; }
+
+#claimBtn:disabled { opacity: 0.55; cursor: not-allowed; color: var(--text, #f6efe8); }
+
+/* Distribution stats + claim history (added 2026-07-18) — same .tabRow/
+   .lbTable pattern quiz/css/quiz.css already uses for its Web vs Discord
+   section, so the two pages read as one visual system. Relies on .pill
+   already having a real base style from mole-hub/css/styles.css (unlike the
+   premium.css pages elsewhere on the site, where bare .pill has no style at
+   all and needs its own fix — not a problem here). */
+.tabRow { display: flex; gap: 8px; flex-wrap: wrap; }
+.platformTab { cursor: pointer; opacity: 0.7; }
+.platformTab.active { opacity: 1; }
+
+.lbWrap { overflow-x: auto; margin-top: 14px; }
+.lbTable { width: 100%; border-collapse: collapse; font-size: 14px; }
+.lbTable th, .lbTable td {
+  text-align: left; padding: 8px 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+}
+.lbTable th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.4px; opacity: 0.7; }
+.lbTable td.num, .lbTable th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+.sourceTag {
+  display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px;
+  border-radius: 999px; font-size: 11px; font-weight: 800;
+  border: 1px solid rgba(255, 255, 255, 0.14); background: rgba(255, 255, 255, 0.05);
+}
+.sourceTag.web { color: #86b8ff; border-color: rgba(85, 150, 240, 0.3); background: rgba(85, 150, 240, 0.12); }
+.sourceTag.discord { color: #c7b1ff; border-color: rgba(124, 92, 255, 0.3); background: rgba(124, 92, 255, 0.12); }

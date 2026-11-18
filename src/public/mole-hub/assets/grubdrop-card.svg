@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" fill="none">
+  <defs>
+    <radialGradient id="gdCaveGlow" cx="42%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#5a3a20"/>
+      <stop offset="55%" stop-color="#2c1a10"/>
+      <stop offset="100%" stop-color="#120a06"/>
+    </radialGradient>
+    <linearGradient id="gdBoardPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a2416"/>
+      <stop offset="100%" stop-color="#1c0f08"/>
+    </linearGradient>
+    <radialGradient id="gdGrubBody" cx="38%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#fff6e0"/>
+      <stop offset="55%" stop-color="#f2d9a8"/>
+      <stop offset="100%" stop-color="#d9b578"/>
+    </radialGradient>
+    <radialGradient id="gdGoldBody" cx="38%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#fff6d0"/>
+      <stop offset="55%" stop-color="#ffd65e"/>
+      <stop offset="100%" stop-color="#c98f1e"/>
+    </radialGradient>
+    <linearGradient id="gdWorm" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a3e675"/>
+      <stop offset="100%" stop-color="#4f8f34"/>
+    </linearGradient>
+    <radialGradient id="gdCapGrad" cx="35%" cy="25%" r="75%">
+      <stop offset="0%" stop-color="#ff9d6a"/>
+      <stop offset="60%" stop-color="#e0663f"/>
+      <stop offset="100%" stop-color="#a5402a"/>
+    </radialGradient>
+    <linearGradient id="gdCrystal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#bff2ff"/>
+      <stop offset="55%" stop-color="#6fb8ff"/>
+      <stop offset="100%" stop-color="#7a5fe0"/>
+    </linearGradient>
+    <radialGradient id="gdCoin" cx="38%" cy="34%" r="65%">
+      <stop offset="0%" stop-color="#fff3c8"/>
+      <stop offset="55%" stop-color="#f0c04c"/>
+      <stop offset="100%" stop-color="#b9812a"/>
+    </radialGradient>
+    <radialGradient id="gdMoleHead" cx="35%" cy="28%" r="75%">
+      <stop offset="0%" stop-color="#a9825c"/>
+      <stop offset="100%" stop-color="#5c4028"/>
+    </radialGradient>
+    <filter id="gdSoftGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="14" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="675" rx="28" fill="url(#gdCaveGlow)"/>
+
+  <!-- roots -->
+  <g stroke="#4a2f18" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.55">
+    <path d="M60 0 C 40 90, 120 150, 70 240"/>
+    <path d="M1150 0 C 1170 100, 1080 160, 1130 260"/>
+    <path d="M0 640 C 90 600, 140 660, 220 630"/>
+  </g>
+  <!-- ambient crystal glow dots -->
+  <circle cx="130" cy="120" r="60" fill="#7ad4ff" opacity="0.10"/>
+  <circle cx="1080" cy="500" r="80" fill="#ffcf6a" opacity="0.10"/>
+  <circle cx="980" cy="140" r="46" fill="#c99dff" opacity="0.10"/>
+
+  <!-- board panel, partially visible, tucked to the right -->
+  <g transform="translate(430 90)">
+    <rect width="700" height="500" rx="26" fill="url(#gdBoardPanel)" stroke="#5a3a20" stroke-width="4"/>
+    <g opacity="0.9">
+      <!-- a satisfying near-match cluster of collectibles, generously spaced -->
+      <g transform="translate(120 110)"><circle r="52" fill="url(#gdGrubBody)"/><circle cx="-18" cy="-10" r="12" fill="#fff"/><circle cx="18" cy="-10" r="12" fill="#fff"/><circle cx="-14" cy="-6" r="6" fill="#3a2a12"/><circle cx="22" cy="-6" r="6" fill="#3a2a12"/><path d="M-14 20 Q0 34 14 20" stroke="#8a5a2c" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+      <g transform="translate(250 90)"><path d="M-40 -40 Q -40 -85 0 -85 Q 40 -85 40 -40 A 40 30 0 0 1 -40 -40Z" fill="url(#gdCapGrad)"/><rect x="-16" y="-38" width="32" height="42" rx="12" fill="#f4e6c8"/><circle cx="-18" cy="-58" r="6" fill="#ffe8c8"/><circle cx="10" cy="-70" r="5" fill="#ffe8c8"/></g>
+      <g transform="translate(370 130) rotate(-10)"><path d="M-46 26 Q -14 -40 22 -6 Q 46 18 42 -14" stroke="url(#gdWorm)" stroke-width="26" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="38" cy="-14" r="6" fill="#fff"/><circle cx="38" cy="-14" r="3" fill="#2d1a10"/></g>
+      <g transform="translate(500 100)" filter="url(#gdSoftGlow)"><path d="M0 -58 L 34 -14 L 20 56 L -20 56 L -34 -14 Z" fill="url(#gdCrystal)"/></g>
+      <g transform="translate(160 260)" filter="url(#gdSoftGlow)"><circle r="46" fill="url(#gdCoin)"/><path d="M-20 -14 L -10 16 L0 -4 L10 16 L20 -14" stroke="#7a4e12" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+      <g transform="translate(320 280)" filter="url(#gdSoftGlow)">
+        <circle r="52" fill="url(#gdGoldBody)"/>
+        <path d="M-16 -40 L -10 -56 L -2 -42 L 2 -56 L 10 -42 L 16 -56 L 20 -40Z" fill="#ffe98a" stroke="#a5720f" stroke-width="2"/>
+        <circle cx="-18" cy="-10" r="11" fill="#fff"/><circle cx="18" cy="-10" r="11" fill="#fff"/><circle cx="-14" cy="-6" r="6" fill="#5a3a08"/><circle cx="22" cy="-6" r="6" fill="#5a3a08"/>
+        <path d="M-14 20 Q0 34 14 20" stroke="#7a530c" stroke-width="4" fill="none" stroke-linecap="round"/>
+      </g>
+      <g transform="translate(480 260) rotate(8)"><path d="M-40 24 Q -12 -34 20 -4 Q 40 14 38 -12" stroke="url(#gdWorm)" stroke-width="24" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="34" cy="-12" r="5" fill="#fff"/><circle cx="34" cy="-12" r="2.6" fill="#2d1a10"/></g>
+      <g transform="translate(590 200)"><circle r="44" fill="url(#gdGrubBody)"/><circle cx="-15" cy="-8" r="10" fill="#fff"/><circle cx="15" cy="-8" r="10" fill="#fff"/><circle cx="-12" cy="-5" r="5" fill="#3a2a12"/><circle cx="18" cy="-5" r="5" fill="#3a2a12"/></g>
+    </g>
+  </g>
+
+  <!-- the mole, reaching toward the board -->
+  <g transform="translate(210 420)">
+    <ellipse cx="0" cy="150" rx="150" ry="26" fill="#000" opacity="0.28"/>
+    <!-- reaching arm -->
+    <path d="M70 40 Q 190 -10 250 -60" stroke="#5c4028" stroke-width="30" stroke-linecap="round" fill="none"/>
+    <circle cx="250" cy="-60" r="22" fill="#c9a377"/>
+    <!-- ears -->
+    <circle cx="-58" cy="-96" r="30" fill="#6b4a30"/>
+    <circle cx="58" cy="-96" r="30" fill="#6b4a30"/>
+    <!-- head -->
+    <circle cx="0" cy="-40" r="118" fill="url(#gdMoleHead)"/>
+    <!-- snout -->
+    <ellipse cx="0" cy="34" rx="52" ry="38" fill="#c9a377"/>
+    <ellipse cx="0" cy="24" rx="13" ry="9" fill="#3a2a1a"/>
+    <!-- happy eyes -->
+    <path d="M-58 -58 Q -40 -80 -22 -58" stroke="#20140a" stroke-width="11" fill="none" stroke-linecap="round"/>
+    <path d="M22 -58 Q 40 -80 58 -58" stroke="#20140a" stroke-width="11" fill="none" stroke-linecap="round"/>
+    <!-- open happy mouth -->
+    <ellipse cx="0" cy="66" rx="18" ry="13" fill="#3a1c14"/>
+    <!-- cheeks -->
+    <ellipse cx="-70" cy="18" rx="16" ry="10" fill="#e68c78" opacity="0.4"/>
+    <ellipse cx="70" cy="18" rx="16" ry="10" fill="#e68c78" opacity="0.4"/>
+  </g>
+
+  <!-- sparkle accents -->
+  <g fill="#ffe6a0" opacity="0.9">
+    <path d="M300 60 l6 20 20 6 -20 6 -6 20 -6 -20 -20 -6 20 -6Z"/>
+    <path d="M1080 260 l5 16 16 5 -16 5 -5 16 -5 -16 -16 -5 16 -5Z"/>
+    <path d="M980 560 l5 16 16 5 -16 5 -5 16 -5 -16 -16 -5 16 -5Z"/>
+  </g>
+  <!-- No baked-in wordmark on purpose: none of the other game thumbnails
+       have one (the card already shows the title as real HTML next to the
+       thumb), and .catalog-thumb's object-fit:cover crops this 16:9 SVG to
+       whatever narrower box the card actually renders it in — an earlier
+       version had "Grub Drop / A WinLEW Underground Original" text near
+       the bottom-left corner, which that crop chopped down to a
+       confusing orphaned "ORIGINAL" watermark in the live card. -->
+</svg>

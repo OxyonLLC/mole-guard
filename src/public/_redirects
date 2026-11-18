@@ -1,0 +1,15 @@
+ /gaming-hub       /mole-hub/   301
+ /gaming-hub/      /mole-hub/   301
+ /gaming-hub.html  /mole-hub/   301
+ /game-hub         /mole-hub/   301
+ /game-hub/        /mole-hub/   301
+ /game-hub.html    /mole-hub/   301
+ /gamehub          /mole-hub/   301
+ /gamehub/         /mole-hub/   301
+ /gamehub.html     /mole-hub/   301
+/.tmp-audit/* /404.html 404!
+/.tmp-audit.zip /404.html 404!
+/log/* /404.html 404!
+/verify/api-proxy-secret.php /404.html 404!
+/xl1/verify/api-proxy-upstream.php /404.html 404!
+/*    /index.html   200

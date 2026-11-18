@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <title>Submit a Proposal — WinLEW Governance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="Submit a WinLEW governance proposal idea for maintainer review. Submitting creates a reviewable draft only — it never publishes or activates a vote." />
+  <link rel="canonical" href="https://winlew.co/governance/submit/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    .hidden { display: none !important; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      padding: 0;
+      margin: 0;
+      line-height: 1.7;
+    }
+    /* overflow-x:hidden lives on html only, not body — see the identical
+       fix + rationale in the 6 top-level pages this was found on
+       (docs/site-navigation.md's 2026-07-18 entry). */
+    html { overflow-x: hidden; }
+    .wlPageShell { max-width: 1000px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin-bottom: 8px; }
+    h1 { font-size: clamp(26px, 5vw, 38px); margin-top: 0; }
+    h2 { font-size: clamp(16px, 2.4vw, 19px); margin-top: 0; }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header.wlHero { text-align: left; margin-bottom: 8px; }
+    .box { background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98)); border: 1px solid #4e3624; border-radius: 20px; padding: 24px; margin: 18px 0; box-shadow: 0 18px 54px rgba(0,0,0,.32); }
+    .muted { opacity: 0.85; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid #4e3624; font-weight: 850; font-size: 13.5px; text-decoration: none; cursor: pointer; color: inherit; font-family: inherit; }
+    .btn.primary { background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22)); }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .btn:disabled { opacity: .5; cursor: not-allowed; filter: none; }
+    .noticeStrong { border-left: 3px solid #d6a866; padding: 12px 16px; background: rgba(214,168,102,.10); border-radius: 0 10px 10px 0; font-size: 14px; }
+    .noticeWarn { border-left: 3px solid #ff8fa3; padding: 10px 14px; background: rgba(255,107,138,.08); border-radius: 0 10px 10px 0; font-size: 13.5px; margin-top: 10px; }
+
+    .stepList { counter-reset: step; list-style: none; padding-left: 0; margin: 10px 0 0; }
+    .stepList li { counter-increment: step; position: relative; padding-left: 34px; margin-bottom: 10px; font-size: 13.5px; }
+    .stepList li::before { content: counter(step); position: absolute; left: 0; top: 0; width: 22px; height: 22px; border-radius: 7px; background: rgba(214,168,102,.14); border: 1px solid rgba(214,168,102,.3); color: #d6a866; font-weight: 800; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+
+    .catList { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .catChip { font-size: 12px; padding: 6px 11px; border-radius: 999px; background: rgba(255,255,255,.04); border: 1px solid #4e3624; }
+
+    .modeGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+    @media (max-width: 640px) { .modeGrid { grid-template-columns: 1fr; } }
+    .modeCard { background: rgba(255,255,255,.04); border: 1px solid #4e3624; border-radius: 12px; padding: 12px 14px; }
+    .modeCard .m { font-size: 12px; color: #e7c18f; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 4px; font-weight: 800; }
+    .modeCard .d { font-size: 13px; }
+
+    label { display: block; font-size: 12.5px; text-transform: uppercase; letter-spacing: .4px; color: #e7c18f; margin: 16px 0 6px; }
+    label:first-of-type { margin-top: 4px; }
+    label .req { color: #ff8fa3; }
+    label .limit { text-transform: none; letter-spacing: 0; color: rgba(246,239,232,.85); font-size: 11.5px; }
+    input[type=text], textarea, select {
+      width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 10px;
+      background: rgba(255,255,255,.04); border: 1px solid #4e3624; color: #f6efe8;
+      font-family: inherit; font-size: 14px;
+    }
+    textarea { resize: vertical; min-height: 70px; }
+    input:focus, textarea:focus, select:focus { outline: none; border-color: rgba(214,168,102,.5); }
+    .charCount { font-size: 11px; opacity: .6; text-align: right; margin-top: 2px; }
+
+    .signedOutBlock, .verifyBlock { text-align: center; padding: 20px 0; }
+    .formStatus { margin-top: 14px; font-size: 13.5px; }
+    .formStatus.error { color: #ff8fa3; }
+    .formStatus.ok { color: #7de8a8; }
+
+    .draftList { display: grid; gap: 10px; margin-top: 10px; }
+    .draftRow { background: rgba(255,255,255,.04); border: 1px solid #4e3624; border-radius: 12px; padding: 12px 14px; }
+    .draftHead { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    .draftTitle { font-weight: 800; }
+    .statusPill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 800; border: 1px solid #4e3624; white-space: nowrap; }
+    .statusPill.submitted, .statusPill.under-review { background: rgba(85,150,240,.14); color: #86b8ff; border-color: rgba(85,150,240,.3); }
+    .statusPill.revision-requested { background: rgba(255,196,102,.14); color: #ffc466; border-color: rgba(255,196,102,.3); }
+    .statusPill.approved-for-drafting { background: rgba(85,240,165,.14); color: #55f0a5; border-color: rgba(85,240,165,.3); }
+    .statusPill.rejected, .statusPill.withdrawn, .statusPill.archived { background: rgba(255,255,255,.06); color: #f6efe8; }
+    .draftMeta { font-size: 12px; opacity: .7; margin-top: 4px; }
+    .draftReason { font-size: 13px; margin-top: 8px; background: rgba(255,255,255,.03); border-radius: 8px; padding: 8px 10px; }
+
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+<header class="wlHero" id="about">
+  <div class="wlHeroBanner"><img src="/images/page-headers/governance-submit.png" alt="Submit a Proposal — share your ideas and help shape the future" loading="lazy" /></div>
+  <div class="wlHeroMain">
+    <span class="wlKicker">📝 Community submission queue · Reviewed, not automatic</span>
+    <h1 class="wlHeroTitle">Submit a Proposal<br><span class="wlHeroTitleAccent">Your idea, formally on the record.</span></h1>
+    <p class="wlHeroSub">Any verified wallet can submit an idea for maintainer review — no minimum balance required to submit (that bar only applies to voting once a proposal goes live). Submitting creates a reviewable draft only; it never schedules or activates a vote by itself.</p>
+    <div class="wlChipRow">
+      <span class="wlChip">✅ Verified wallet required</span>
+      <span class="wlChip">💬 Posts to Discord</span>
+      <span class="wlChip">👀 Maintainer-reviewed</span>
+    </div>
+    <div class="ctaRow" style="justify-content:flex-start;margin-top:16px;">
+      <a class="btn" href="/governance/">← Back to Governance</a>
+      <a class="btn" href="/governance/#eligibility">Voting eligibility →</a>
+    </div>
+  </div>
+  <div class="wlHeroSide">
+    <div class="wlEyebrow">Limits</div>
+    <div class="wlHeroStatGrid">
+      <div class="wlStat"><div class="n">5</div><div class="l">Max open drafts</div></div>
+      <div class="wlStat"><div class="n">24h</div><div class="l">Duplicate-title window</div></div>
+      <div class="wlStat"><div class="n">14</div><div class="l">Categories</div></div>
+      <div class="wlStat"><div class="n">4</div><div class="l">Governance modes</div></div>
+    </div>
+    <div class="wlHeroNote">Every field is validated server-side — private keys, seed phrases, raw HTML, and treasury/burn-execution instructions are all rejected outright and never stored.</div>
+  </div>
+</header>
+
+<div class="box wlGlow wlIn">
+  <div class="wlEyebrow">Read first</div>
+  <h2>Submitting is not publishing</h2>
+  <div class="noticeStrong">
+    This creates a reviewable draft in a maintainer queue only. It never becomes a real, votable proposal by
+    itself — no vote is scheduled or activated automatically. A maintainer reviews every submission and, if
+    it's approved, hand-drafts and separately publishes the real proposal to <a href="/governance/">/governance/</a>.
+    You'll see the review status here the whole way through.
+  </div>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">What happens next</div>
+  <h2>After you submit</h2>
+  <ol class="stepList">
+    <li>Your submission is checked for required fields, length limits, and unsafe content (private keys, seed phrases, executable links, treasury/burn instructions) — anything that trips a check is rejected with a specific reason, nothing is silently stripped.</li>
+    <li>A summary posts to the project's Discord automatically, so the community can see new ideas coming in — this never exposes anything beyond your title, category, and summary.</li>
+    <li>It enters the maintainer review queue. You'll see its status here as <strong>Submitted → Under review</strong>.</li>
+    <li>A maintainer either requests a revision (with a reason, and you can resubmit), rejects it (with a reason), or marks it <strong>Approved for drafting</strong>.</li>
+    <li>Approval means a maintainer intends to hand-author a real proposal from your idea — publishing that proposal to <a href="/governance/">/governance/</a> is still a separate, manual step this queue has no path to trigger automatically.</li>
+  </ol>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Reference</div>
+  <h2>Governance modes</h2>
+  <p class="muted">Pick the mode you think best fits your idea — a maintainer may adjust it during review.</p>
+  <div class="modeGrid">
+    <div class="modeCard"><div class="m">Advisory</div><div class="d">Informs a maintainer decision — no other automatic effect.</div></div>
+    <div class="modeCard"><div class="m">Community-approved</div><div class="d">The community's approval is the deciding factor for a low-stakes action a maintainer then carries out.</div></div>
+    <div class="modeCard"><div class="m">Maintainer-ratified</div><div class="d">Passing is necessary but not sufficient — a maintainer still ratifies before anything happens.</div></div>
+    <div class="modeCard"><div class="m">Binding within policy</div><div class="d">The closest to "binding" this system offers — even this never means automatic execution. See <a href="/governance/#rules">execution boundaries</a>.</div></div>
+  </div>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Reference</div>
+  <h2>Categories</h2>
+  <div class="catList">
+    <span class="catChip">Community</span><span class="catChip">Features</span><span class="catChip">Quiz</span>
+    <span class="catChip">Faucet</span><span class="catChip">Games</span><span class="catChip">Events</span>
+    <span class="catChip">Rewards</span><span class="catChip">Proof of Value</span><span class="catChip">Burn Program</span>
+    <span class="catChip">Treasury Allocation</span><span class="catChip">Partnerships</span><span class="catChip">Grants</span>
+    <span class="catChip">Governance Rules</span><span class="catChip">Platform Policy</span>
+  </div>
+</div>
+
+<div id="signedOutBlock" class="box wlIn signedOutBlock hidden">
+  <h2>Sign in to submit</h2>
+  <p class="muted">Submitting a proposal needs your WinLEW session and a verified linked wallet, so every submission has a real, accountable author.</p>
+  <p><a class="btn primary" href="/verify/">Go to Verify →</a></p>
+</div>
+
+<div id="unverifiedBlock" class="box wlIn verifyBlock hidden">
+  <h2>Verify a wallet to submit</h2>
+  <p class="muted">You're signed in, but submitting a proposal needs a verified linked wallet first — see <a href="/governance/#eligibility">how to unlock voting</a> for the same wallet-linking steps, with screenshots.</p>
+  <p><a class="btn primary" href="/verify/">Verify a wallet →</a></p>
+</div>
+
+<div id="formBlock" class="box wlIn hidden">
+  <h2>Proposal details</h2>
+  <p class="muted" style="margin-top:0;">Up to 5 open drafts at a time, and no exact-duplicate title within 24 hours — both to keep the review queue meaningful, not a spam target.</p>
+  <form id="submitForm">
+    <label>Title <span class="req">*</span> <span class="limit" id="limitTitle"></span></label>
+    <input type="text" id="fTitle" maxlength="200" required />
+
+    <label>Category <span class="req">*</span></label>
+    <select id="fCategory" required></select>
+
+    <label>Requested governance mode <span class="req">*</span></label>
+    <select id="fMode" required></select>
+
+    <label>Summary <span class="req">*</span> <span class="limit" id="limitSummary"></span></label>
+    <textarea id="fSummary" maxlength="1000" required></textarea>
+
+    <label>What problem does this address? <span class="req">*</span> <span class="limit" id="limitProblem"></span></label>
+    <textarea id="fProblem" maxlength="3000" required></textarea>
+
+    <label>What's the proposed outcome? <span class="req">*</span> <span class="limit" id="limitProposedOutcome"></span></label>
+    <textarea id="fProposedOutcome" maxlength="3000" required></textarea>
+
+    <label>Community benefit <span class="limit" id="limitCommunityBenefit"></span></label>
+    <textarea id="fCommunityBenefit" maxlength="1500"></textarea>
+
+    <label>Affected systems <span class="limit" id="limitAffectedSystems"></span></label>
+    <textarea id="fAffectedSystems" maxlength="1000" placeholder="e.g. Quiz, Faucet, Burn Program"></textarea>
+
+    <label>Risks <span class="limit" id="limitRisks"></span></label>
+    <textarea id="fRisks" maxlength="1500"></textarea>
+
+    <label>Alternatives considered <span class="limit" id="limitAlternatives"></span></label>
+    <textarea id="fAlternatives" maxlength="1500"></textarea>
+
+    <label>Supporting evidence <span class="limit" id="limitSupportingEvidence"></span></label>
+    <textarea id="fSupportingEvidence" maxlength="2000" placeholder="Links to Discord discussion, polls, data, etc."></textarea>
+
+    <div class="noticeWarn">
+      Don't include private keys, seed phrases, API secrets, raw HTML/links designed to execute, or
+      instructions to move treasury funds or trigger a burn — submissions containing any of that are
+      rejected automatically and never stored as written.
+    </div>
+
+    <p style="margin-top:18px;">
+      <button type="submit" class="btn primary" id="submitBtn">Submit for review</button>
+    </p>
+    <div id="formStatus" class="formStatus"></div>
+  </form>
+</div>
+
+<div class="box wlIn" id="myDraftsBox">
+  <h2>My submissions</h2>
+  <div id="draftList" class="draftList"><p class="muted">Sign in to see your submitted drafts.</p></div>
+</div>
+
+<!-- /mole propose is the direct Discord counterpart of this form and lands in
+     the same maintainer review queue (src/mole/commands.js). -->
+<div class="box wlIn">
+  <div class="wlEyebrow">Prefer Discord?</div>
+  <h2>You can submit from Discord too</h2>
+  <p class="muted"><code>/mole propose</code> submits a proposal for maintainer review without leaving Discord. It enters the same queue, with the same validation and the same review steps described above — it is another way in, not a shortcut past anything.</p>
+  <div class="ctaRow" style="margin-top:14px;"><a class="btn" href="/community/">Open Discord ↗</a></div>
+</div>
+
+<footer style="margin-top:40px;font-size:12px;opacity:.75;text-align:center;">
+  <a href="/governance/">← Back to Governance</a>
+</footer>
+</div>
+
+<script src="/assets/wallet-auth.js"></script>
+<script src="./js/app.js"></script>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

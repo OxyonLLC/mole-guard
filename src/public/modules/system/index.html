@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <title>How Module Status Works — WinLEW</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="What every status word on the WinLEW modules page means, how progress numbers are derived, and the automated checks that stop a shipped-or-not claim from drifting." />
+  <meta property="og:title" content="How Module Status Works — WinLEW" />
+  <meta property="og:description" content="Ten controlled status words, no vibes-based percentages, and a validator that fails the build if a claim drifts." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://winlew.co/modules/system/" />
+  <meta property="og:image" content="https://winlew.co/images/mole-dirt-square.png" />
+  <link rel="canonical" href="https://winlew.co/modules/system/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      padding: 0; margin: 0; line-height: 1.7;
+    }
+    html { overflow-x: hidden; }
+    .wlPageShell { max-width: 900px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin-bottom: 8px; }
+    h1 { font-size: clamp(28px, 5vw, 40px); margin-top: 0; }
+    h2 { font-size: clamp(18px, 2.6vw, 22px); margin-top: 0; }
+    h3 { font-size: 16px; margin-top: 18px; }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624; border-radius: 20px; padding: 26px; margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: .85; }
+    .fine { font-size: 13px; }
+    code { background: #2e1f16; padding: 2px 6px; border-radius: 6px; font-size: .9em; word-break: break-word; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid #4e3624; font-weight: 850; font-size: 13px; text-decoration: none; color: inherit; }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .ctaRow { display: flex; flex-wrap: wrap; gap: 10px; }
+    .status-note { border-left: 3px solid #d6a866; padding: 10px 14px; background: rgba(214,168,102,.08); border-radius: 0 10px 10px 0; margin-top: 14px; font-size: 14px; }
+    .toc { columns: 2; column-gap: 26px; font-size: 14px; }
+    @media (max-width: 640px) { .toc { columns: 1; } }
+    .toc a { display: block; padding: 3px 0; }
+    .docMeta { font-size: 13px; opacity: .8; margin-top: 6px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #4e3624; vertical-align: top; }
+    th { color: #e7c18f; }
+    .scrollX { overflow-x: auto; }
+    td code { white-space: nowrap; }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks"></div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+
+<header class="wlHero">
+  <div class="wlEyebrow">Reference · Modules &amp; Roadmap</div>
+  <h1>How module status works</h1>
+  <p class="muted">Every card on the <a href="/modules/">Modules</a> page carries a status word and sometimes a percentage. This page explains exactly what those mean, where they come from, and what stops them from quietly going stale — so you can judge how much weight to put on them.</p>
+  <p class="docMeta">Applies to <code>/modules/</code> and every <code>/modules/*</code> detail page · system introduced 2026-07-12</p>
+  <div class="ctaRow" style="margin-top:16px;">
+    <a class="btn" href="/modules/">← Back to Modules</a>
+    <a class="btn" href="/roadmap/">Roadmap →</a>
+  </div>
+</header>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Contents</div>
+  <nav class="toc">
+    <a href="#why">Why this exists</a>
+    <a href="#vocabulary">The ten status words</a>
+    <a href="#ongoing">"Live" vs "ongoing"</a>
+    <a href="#progress">Where percentages come from</a>
+    <a href="#roadmap">How the roadmap is mapped</a>
+    <a href="#bridge">The Cross-Chain Bridge decision</a>
+    <a href="#validation">What the validator catches</a>
+    <a href="#source">One source, every page</a>
+  </nav>
+</div>
+
+<div class="box">
+  <h2 id="why">Why this exists</h2>
+  <p>Module and roadmap status used to live in several places at once — the homepage, a prototype modules page, and six individually hand-written detail pages. They drifted. Several still said <code>WARMING</code>, <code>LOCKED</code> or <code>COMING SOON</code> for systems that had already fully shipped: the Burn Center, Governance, Community Events and the Transparency Center.</p>
+  <p>That is the failure this system exists to prevent. There is now <strong>one registry</strong> that every surface reads from, a fixed vocabulary it must use, and an automated check that fails if the registry contradicts itself.</p>
+  <div class="status-note">The honest summary: status on this site is a claim we make about our own work. This page is how you check that the claim is disciplined rather than decorative.</div>
+</div>
+
+<div class="box">
+  <h2 id="vocabulary">The ten status words</h2>
+  <p>A module can only ever carry one of these ten values — never a vague word like "warming", "soon", "almost" or "in build".</p>
+  <div class="scrollX">
+    <table>
+      <thead><tr><th>Status</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr><td><code>live</code></td><td>Shipped, working, publicly reachable today.</td></tr>
+        <tr><td><code>beta</code></td><td>Working but not fully validated or rolled out — for example an Android beta, or an iOS build that has not been verified.</td></tr>
+        <tr><td><code>partial</code></td><td>Some real, documented sub-items are done and others are not. The card lists which.</td></tr>
+        <tr><td><code>ongoing</code></td><td>Not a software deliverable at all — a recurring activity.</td></tr>
+        <tr><td><code>planned</code></td><td>Named in the roadmap, not started.</td></tr>
+        <tr><td><code>deferred</code></td><td>Named in the roadmap, intentionally not scheduled. Not cancelled — see the Bridge section below.</td></tr>
+        <tr><td><code>blocked</code></td><td>Waiting on an external dependency that does not exist yet.</td></tr>
+        <tr><td><code>retired</code></td><td>Was live, deliberately taken down.</td></tr>
+        <tr><td><code>historical</code></td><td>An early concept superseded by something real. Kept as a record, not an active roadmap item.</td></tr>
+        <tr><td><code>internal</code></td><td>Real and live, but architecture rather than a place you can visit. No card is shown for these.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="box">
+  <h2 id="ongoing">"Live" vs "ongoing" — a distinction we refuse to blur</h2>
+  <p>A module's status describes <strong>the software</strong>. A separate flag marks whether the <strong>activity</strong> it enables is a recurring programme that never reaches "100%".</p>
+  <p>Governance is the clearest example: the voting software is fully shipped, so its status is <code>live</code> — while individual proposals and votes are an ongoing programme, so it also carries an ongoing-operation flag. The Burn Center is the same shape: the software is finished, the burns continue.</p>
+  <div class="status-note">A <code>live</code> module with ongoing activity is <em>not</em> an incomplete module. Conflating the two would let us either overstate finished software or understate a finished system because its programme continues — so the registry keeps them as separate fields.</div>
+</div>
+
+<div class="box">
+  <h2 id="progress">Where percentages come from</h2>
+  <ul>
+    <li><strong>100%</strong> — fully shipped, nothing left undone.</li>
+    <li><strong>No percentage shown</strong> — there is no honest number to give. Most planned, deferred and beta modules sit here, and the card simply omits it rather than inventing one.</li>
+    <li><strong>Any other number</strong> — derived from an explicit, documented checklist of sub-items, and the card says what they are. Quests &amp; Progression shows 40% because 2 of its 5 documented sub-items are complete.</li>
+  </ul>
+  <div class="status-note">There are no arbitrary percentages here. If a number cannot be traced to a counted list of sub-items, it is left off entirely.</div>
+</div>
+
+<div class="box">
+  <h2 id="roadmap">How the roadmap is mapped</h2>
+  <p>Every phase of the original roadmap is reconciled, item by item, against what is real today. Each item is stated independently and linked to its module where one exists.</p>
+  <p><strong>A phase is never flattened to "complete" while any of its items are not.</strong> Phase 5 is deliberately marked ongoing rather than complete, because the Cross-Chain Bridge is deferred and Platform v2 enhancements are not started — even though Governance v1, inside that same phase, is fully complete.</p>
+</div>
+
+<div class="box">
+  <h2 id="bridge">The Cross-Chain Bridge decision</h2>
+  <p>The Bridge is <code>deferred</code>. That word is doing precise work, so here is exactly what it means and does not mean.</p>
+  <p><strong>On record, 2026-07-12:</strong> the Cross-Chain Bridge commitment is <strong>retained</strong> on the original roadmap. The commitment remains accepted, and implementation is intentionally postponed while WinLEW completes and operates its current community, governance, reward and transparency systems.</p>
+  <ul>
+    <li>It does <strong>not</strong> mean cancelled.</li>
+    <li>It does <strong>not</strong> mean in progress.</li>
+    <li>It is <strong>not</strong> marked "removed from scope" — that stronger label is reserved for a real, recorded decision, and no such decision exists.</li>
+  </ul>
+  <div class="status-note">This one is guarded in code. Automated tests fail loudly if the Bridge is ever silently marked live or retired, deleted from the registry, dropped from the Phase 5 mapping, or flipped to "complete" or "removed from scope" without a new, separate, explicitly recorded decision.</div>
+</div>
+
+<div class="box">
+  <h2 id="validation">What the validator catches</h2>
+  <p>A validation step runs against the registry as part of the test suite. It fails — loudly, blocking the change — when any of the following is true:</p>
+  <ul>
+    <li>a module id or route is duplicated;</li>
+    <li>a status value is not one of the ten words above;</li>
+    <li>a progress number falls outside 0–100;</li>
+    <li>a module marked <code>live</code> has no route;</li>
+    <li>a "related module" reference points at a module that does not exist;</li>
+    <li>a roadmap item references a module that does not exist;</li>
+    <li><strong>a module's route does not resolve to a real page on this site</strong>;</li>
+    <li>a retired or historical module's route collides with a live one's.</li>
+  </ul>
+  <p class="fine muted">That third-from-last check is the one that matters most to a reader: a module cannot claim to be live and link somewhere that does not exist.</p>
+</div>
+
+<div class="box">
+  <h2 id="source">One source, every page</h2>
+  <p>The Modules page and the homepage's roadmap grid both fetch the same computed status payload at load time and render entirely from it — the same approach the Governance, Partners and Events pages already use. Nothing is rewritten at runtime; the registry is only ever edited by a person, in source control, and every edit goes through the validation above.</p>
+  <p>The individual detail pages own their own longer explanations, screenshots and narrative. What they are <em>not</em> allowed to own is status, progress, route or dates — those come from the registry alone, so the same claim cannot say two different things in two places.</p>
+  <h2 style="margin-top:22px;">Where to go next</h2>
+  <div class="ctaRow">
+    <a class="btn" href="/modules/">Modules — current status</a>
+    <a class="btn" href="/roadmap/">Roadmap</a>
+    <a class="btn" href="/governance/rules/">Governance rules</a>
+    <a class="btn" href="/transparency/">Transparency Center</a>
+    <a class="btn" href="/health/">Health / Status</a>
+  </div>
+</div>
+
+<footer style="margin-top:40px;font-size:12px;opacity:.75;text-align:center;">
+  <a href="/modules/">← Back to Modules</a>
+</footer>
+
+</div>
+<script src="/assets/wallet-auth.js"></script>
+<script>
+  (function () {
+    var A = window.WinLEWAuth;
+    if (!A) return;
+    document.getElementById('navWalletConnect')?.addEventListener('click', function (e) {
+      A.walletLogin({ triggerBtn: e.currentTarget, onSuccess: function () { window.location.reload(); } });
+    });
+    if (A.getAuth().session) A.setConnectedUi(A.getCachedWallet() || 'connected');
+    A.refreshWalletBalance();
+  })();
+</script>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBarLaunch"
+            android:launchMode="singleTask"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- Deep-link return path, e.g. co.winlew.app://auth-callback?session=...
+                 The scheme string lives in strings.xml as custom_url_scheme,
+                 where Capacitor generated it; until now nothing referenced it,
+                 so the appUrlOpen listener in src/public/assets/nav.js could
+                 never actually fire. Registering it makes the wallet
+                 session hand-off implementable — it does not implement it.
+
+                 This is an exported entry point: any app, or any web page the
+                 user taps a link on, can now launch WinLEW with a URL of its
+                 choosing. That is safe as it stands only because the listener
+                 parses and logs, and nothing else. Anything added there must
+                 treat the payload as attacker-controlled — in particular a
+                 session token arriving this way is unauthenticated until the
+                 server has verified it.
+
+                 launchMode is singleTask, so on an already-running app this
+                 arrives via onNewIntent rather than a fresh launch;
+                 BridgeActivity handles both. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="@string/custom_url_scheme" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
+        </provider>
+    </application>
+
+    <!-- Permissions -->
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--
+      DECLARED REDUNDANTLY, ON PURPOSE — and the reason it was first added was
+      WRONG, so the correction is recorded here rather than quietly dropped.
+
+      It was added on 2026-08-16 believing notifications were failing because
+      POST_NOTIFICATIONS was missing. It was not missing: @capacitor/local-
+      notifications declares it in its OWN AndroidManifest.xml (along with
+      RECEIVE_BOOT_COMPLETED and WAKE_LOCK) and Android's manifest merger folds
+      that into the app at build time. Notifications had the permission all
+      along.
+
+      The real cause was OEM battery management killing the app so the scheduled
+      AlarmManager alarm never ran. A tester confirmed it by allowing Auto Start
+      and Background running in App Info, after which notifications fired
+      normally. No manifest entry can fix that — the user has to grant it.
+
+      Kept because an explicit declaration documents a requirement the app
+      genuinely depends on, and stops it silently disappearing if the plugin is
+      ever swapped. It changes nothing at runtime.
+    -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+</manifest>

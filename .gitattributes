@@ -1,0 +1,36 @@
+# Normalize line endings for source/text files going forward. This does not
+# rewrite existing file content — git only applies eol conversion when a
+# file is actually re-added/modified, so pre-existing files keep whatever
+# line endings they already have until they're next touched. Prevents the
+# CRLF/LF drift that repeatedly required manual fixes across quiz.css,
+# nav.js, and health/index.html in one sprint alone.
+* text=auto eol=lf
+
+*.js text eol=lf
+*.mjs text eol=lf
+*.cjs text eol=lf
+*.ts text eol=lf
+*.jsx text eol=lf
+*.tsx text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.php text eol=lf
+
+# Windows-only scripts genuinely need CRLF.
+*.bat text eol=crlf
+
+# Binary assets — never touch line endings.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg binary
+*.ico binary
+*.webmanifest binary
+*.jar binary
+*.apk binary
+*.aab binary

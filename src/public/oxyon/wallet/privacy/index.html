@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacy Policy &middot; Oxyon Wallet</title>
+  <meta name="description" content="Oxyon Wallet (formerly GeoWallet) privacy policy: local storage, self-custody wallet data, messaging, browser permissions, and blockchain network requests." />
+  <link rel="canonical" href="https://oxyon.io/wallet/privacy/" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <meta name="theme-color" content="#0a0a0c" />
+</head>
+<body>
+
+  <header class="nav">
+    <a class="brand" href="/">
+      <img class="brand-mark" src="/assets/logo-mark.png" srcset="/assets/logo-mark.png 1x, /assets/logo-mark@2x.png 2x" alt="" aria-hidden="true" width="28" height="28" />
+      OXYON
+    </a>
+    <nav>
+      <a href="/products/oxyon-wallet">Oxyon Wallet</a>
+      <a href="/wallet/support/">Support</a>
+      <a href="/wallet/privacy/">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="product-hero">
+      <p class="crumb"><a href="/products/oxyon-wallet">Oxyon Wallet</a> &nbsp;/&nbsp; Privacy</p>
+      <h1>Oxyon Wallet Privacy Policy</h1>
+      <p class="status">Last updated: 2 October 2026 · Oxyon Wallet was formerly GeoWallet</p>
+      <div class="doc">
+      <p class="doc-note">Oxyon Wallet is a <strong>self-custodial</strong> wallet (browser extension and web app). It does not have user accounts, does not run analytics, and does not collect, sell, or share personal information. Your keys and recovery phrase are generated and stored <strong>only on your own device</strong>.</p>
+
+      <h2>What we store, and where</h2><ul class="doc-list"><li><strong>Your recovery phrase and private keys</strong> are encrypted with your password and stored locally in your browser. They are <strong>never</strong> transmitted to us or anyone else. We cannot see, recover, or reset them.</li><li><strong>Local preferences</strong> such as selected networks, custom RPC URLs, address book labels, and optional API keys are stored locally in your browser only.</li><li><strong>Messaging data</strong> — your message inbox, the senders you have accepted or blocked, and how far the wallet has scanned — is stored locally in your browser only. Private messages are kept in their encrypted form and decrypted in memory only while the wallet is unlocked.</li><li>Optional <strong>fingerprint unlock</strong> uses your device's WebAuthn authenticator to wrap your password locally; no biometric data leaves your device.</li></ul>
+
+      <h2>Network requests</h2><p>Like any wallet, Oxyon Wallet must talk to public infrastructure to function. These requests may expose your public wallet address and IP address to the endpoint you are contacting.</p><ul class="doc-list"><li><strong>Blockchain RPC endpoints</strong> — to read balances and broadcast transactions that you approve.</li><li><strong>XL1 RPC and the XL1 data lake</strong> — to send messages and to find messages sent to your address. The browser extension checks for new messages in the background every few minutes, using only your public XL1 address.</li><li><strong>CoinGecko</strong> — to display token prices in USD.</li><li><strong>Alchemy / Etherscan</strong> — only if enabled or configured, to show NFTs and transaction history.</li><li><strong>WalletConnect / Reown relay</strong> — only if enabled, to connect to mobile dApps.</li></ul><p>We do not add tracking parameters, identifiers, or analytics to these requests.</p>
+
+      <h2>Messages you send</h2><ul class="doc-list"><li><strong>Public messages</strong> are written to the XL1 public blockchain and its data lake. They are <strong>permanent and readable by anyone</strong>, and cannot be edited or deleted — by you or by us.</li><li><strong>Private messages</strong> are end-to-end encrypted on your device so only the recipient's wallet can read them. Like every blockchain transaction, the sender and recipient addresses, the time, the size, and any XL1 attached remain publicly visible.</li><li><strong>Enabling private messages</strong> publishes your wallet's messaging public key on XL1 so others can encrypt to you. It never publishes your recovery phrase, private keys, or signing key.</li><li>Never send secrets, passwords, or recovery phrases in a message.</li></ul>
+
+      <h2>Permissions</h2><ul class="doc-list"><li><code>storage</code> — to keep your encrypted vault, inbox, and local settings on your device.</li><li><code>tabs</code> — to identify which site is making a connection or signing request so approvals and responses go to the correct page.</li><li><code>alarms</code> — to check for new messages every few minutes.</li><li><code>notifications</code> — to tell you when a message arrives from someone you know. Notifications never include the message text, and first-time senders never trigger one.</li><li>Host permissions / content scripts — to inject the wallet provider so decentralized apps can request a connection. You approve every connection and signature.</li></ul>
+
+      <h2>What we never do</h2><ul class="doc-list"><li>We never collect or transmit your recovery phrase, private keys, or password.</li><li>We never run third-party analytics, advertising, or trackers.</li><li>We never sell or share your data.</li></ul>
+
+      <h2>Data deletion</h2><p>Using <strong>Reset</strong> in the wallet, removing the extension, or clearing browser data permanently deletes locally stored Oxyon Wallet data from your device. Because nothing is stored on our servers, there is nothing for us to delete on your behalf. Messages and transactions already written to a public blockchain cannot be deleted by anyone.</p>
+
+      <h2>Children</h2><p>Oxyon Wallet is not directed to children under 16.</p>
+
+      <h2>Changes</h2><p>We may update this policy; material changes will be reflected by the “Last updated” date above.</p>
+
+      <h2>Contact</h2><p>Questions or requests: <a href="https://discord.gg/PSCrBzqdbE" rel="noopener noreferrer" target="_blank">the WinLEW community Discord</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="plate">
+      <p class="plate-name">OXYON</p>
+      <p class="plate-role">OXYON WALLET &middot; PRIVACY</p>
+      <hr />
+      <p class="plate-line">SELF-CUSTODY. NEVER SHARE YOUR RECOVERY PHRASE.</p>
+      <nav class="plate-nav">
+        <a href="/products/oxyon-wallet">Oxyon Wallet</a>
+        <a href="/wallet/support/">Support</a>
+        <a href="/wallet/privacy/">Privacy</a>
+        <a href="https://discord.gg/PSCrBzqdbE" rel="noopener">Community</a>
+      </nav>
+      <p class="plate-copy">&copy; <span id="year"></span> Oxyon</p>
+    </div>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

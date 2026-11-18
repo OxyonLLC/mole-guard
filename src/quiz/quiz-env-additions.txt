@@ -1,0 +1,6 @@
+Add these to src/quiz/.env if they are missing:
+
+WINLEW_MINT=DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump
+SOLANA_RPC=https://api.mainnet-beta.solana.com
+# Optional if you want a dedicated RPC for payouts:
+# QUIZ_PAYOUT_RPC_URL=https://api.mainnet-beta.solana.com

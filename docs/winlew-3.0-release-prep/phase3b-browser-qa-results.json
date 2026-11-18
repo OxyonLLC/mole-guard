@@ -1,0 +1,775 @@
+{
+  "generatedAt": "2026-10-09T15:25:19.553Z",
+  "boundary": "Local fixture-backed preview only; no production/backend contact.",
+  "engines": {
+    "chrome": {
+      "pages": [
+        {
+          "scenario": "live",
+          "viewport": "desktop",
+          "summaryRequestCount": 1,
+          "legacyRequestCount": 0,
+          "stateText": [
+            "Live",
+            "Live record",
+            "Active",
+            "Live"
+          ],
+          "healthText": "Source live",
+          "metricMeta": [
+            "Source updated 10/9/2026, 12:00:00 PM",
+            "Source: Primary market status",
+            "Source updated 10/9/2026, 12:00:00 PM",
+            "Calculated 10/9/2026, 12:00:00 PM",
+            "Canonical registry · Source updated 10/9/2026, 12:00:00 PM"
+          ],
+          "overflow": {
+            "scrollWidth": 1440,
+            "clientWidth": 1440
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        },
+        {
+          "scenario": "live",
+          "viewport": "tablet",
+          "summaryRequestCount": 1,
+          "legacyRequestCount": 0,
+          "stateText": [
+            "Live",
+            "Live record",
+            "Active",
+            "Live"
+          ],
+          "healthText": "Source live",
+          "metricMeta": [
+            "Source updated 10/9/2026, 12:00:00 PM",
+            "Source: Primary market status",
+            "Source updated 10/9/2026, 12:00:00 PM",
+            "Calculated 10/9/2026, 12:00:00 PM",
+            "Canonical registry · Source updated 10/9/2026, 12:00:00 PM"
+          ],
+          "overflow": {
+            "scrollWidth": 768,
+            "clientWidth": 768
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        },
+        {
+          "scenario": "live",
+          "viewport": "mobile",
+          "summaryRequestCount": 1,
+          "legacyRequestCount": 0,
+          "stateText": [
+            "Live",
+            "Live record",
+            "Active",
+            "Live"
+          ],
+          "healthText": "Source live",
+          "metricMeta": [
+            "Source updated 10/9/2026, 12:00:00 PM",
+            "Source: Primary market status",
+            "Source updated 10/9/2026, 12:00:00 PM",
+            "Calculated 10/9/2026, 12:00:00 PM",
+            "Canonical registry · Source updated 10/9/2026, 12:00:00 PM"
+          ],
+          "overflow": {
+            "scrollWidth": 390,
+            "clientWidth": 390
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        },
+        {
+          "scenario": "partial",
+          "viewport": "desktop",
+          "summaryRequestCount": 1,
+          "legacyRequestCount": 0,
+          "stateText": [
+            "Live",
+            "Live record",
+            "Active",
+            "Unavailable"
+          ],
+          "healthText": "Source live",
+          "metricMeta": [
+            "Source updated 10/9/2026, 12:00:00 PM",
+            "Source: Primary market status",
+            "Source updated 10/9/2026, 12:00:00 PM",
+            "Calculated 10/9/2026, 12:00:00 PM",
+            "Canonical registry · Source updated 10/9/2026, 12:00:00 PM"
+          ],
+          "overflow": {
+            "scrollWidth": 1440,
+            "clientWidth": 1440
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        },
+        {
+          "scenario": "stale",
+          "viewport": "desktop",
+          "summaryRequestCount": 1,
+          "legacyRequestCount": 0,
+          "stateText": [
+            "Live",
+            "Live record",
+            "Active",
+            "Live"
+          ],
+          "healthText": "Source live",
+          "metricMeta": [
+            "Stale snapshot · source updated 10/9/2026, 12:00:00 PM",
+            "Source: Primary market status",
+            "Stale snapshot · source updated 10/9/2026, 12:00:00 PM",
+            "Calculated 10/9/2026, 12:00:00 PM",
+            "Canonical registry · Source updated 10/9/2026, 12:00:00 PM"
+          ],
+          "overflow": {
+            "scrollWidth": 1440,
+            "clientWidth": 1440
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        },
+        {
+          "scenario": "unavailable",
+          "viewport": "desktop",
+          "summaryRequestCount": 1,
+          "legacyRequestCount": 0,
+          "stateText": [
+            "Unavailable",
+            "Unavailable",
+            "Unavailable",
+            "Unavailable"
+          ],
+          "healthText": "Unavailable",
+          "metricMeta": [
+            "Current price unavailable",
+            "Current liquidity unavailable",
+            "Current burn progress unavailable",
+            "Circulating supply unavailable; total supply not substituted",
+            "Module registry unavailable"
+          ],
+          "overflow": {
+            "scrollWidth": 1440,
+            "clientWidth": 1440
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        },
+        {
+          "scenario": "timeout",
+          "viewport": "desktop",
+          "summaryRequestCount": 1,
+          "legacyRequestCount": 0,
+          "stateText": [
+            "Unavailable",
+            "Unavailable",
+            "Unavailable",
+            "Unavailable"
+          ],
+          "healthText": "Unavailable",
+          "metricMeta": [
+            "Current price unavailable",
+            "Current liquidity unavailable",
+            "Current burn progress unavailable",
+            "Circulating supply unavailable; total supply not substituted",
+            "Module registry unavailable"
+          ],
+          "overflow": {
+            "scrollWidth": 1440,
+            "clientWidth": 1440
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        },
+        {
+          "scenario": "malformed",
+          "viewport": "desktop",
+          "summaryRequestCount": 1,
+          "legacyRequestCount": 0,
+          "stateText": [
+            "Unavailable",
+            "Unavailable",
+            "Unavailable",
+            "Unavailable"
+          ],
+          "healthText": "Unavailable",
+          "metricMeta": [
+            "Current price unavailable",
+            "Current liquidity unavailable",
+            "Current burn progress unavailable",
+            "Circulating supply unavailable; total supply not substituted",
+            "Module registry unavailable"
+          ],
+          "overflow": {
+            "scrollWidth": 1440,
+            "clientWidth": 1440
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        }
+      ],
+      "keyboard": {
+        "samples": [
+          {
+            "tag": "A",
+            "text": "Skip to content",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "WINLEW\nLET'S EVERYONE WIN",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "Home",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "Play",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "Earn",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "Community",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "$WinLEW",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "Proof",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "Build",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "ACCOUNT\nConnect / Profile",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "ENTER WINLEW\n↓",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "EXPLORE $WINLEW",
+            "visible": true,
+            "focusVisible": true
+          }
+        ],
+        "allVisible": true,
+        "allFocusVisible": true
+      },
+      "mobileNav": {
+        "expanded": "true",
+        "hidden": false,
+        "targets": [
+          {
+            "width": 44,
+            "height": 44
+          },
+          {
+            "width": 344,
+            "height": 50
+          },
+          {
+            "width": 344,
+            "height": 50
+          },
+          {
+            "width": 344,
+            "height": 50
+          },
+          {
+            "width": 344,
+            "height": 50
+          },
+          {
+            "width": 344,
+            "height": 50
+          },
+          {
+            "width": 344,
+            "height": 50
+          },
+          {
+            "width": 344,
+            "height": 50
+          },
+          {
+            "width": 344,
+            "height": 50
+          }
+        ],
+        "allAtLeast44": true
+      },
+      "accessibility": {
+        "duplicateIds": [],
+        "unlabeledImages": 0,
+        "unlabeledButtons": 0,
+        "emptyLinks": 0,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        },
+        "headingSkips": 0
+      },
+      "reflow": [
+        {
+          "label": "200-percent",
+          "method": "WCAG equivalent CSS viewport width 640px",
+          "scrollWidth": 640,
+          "clientWidth": 640
+        },
+        {
+          "label": "400-percent",
+          "method": "WCAG equivalent CSS viewport width 320px",
+          "scrollWidth": 320,
+          "clientWidth": 320
+        }
+      ],
+      "reducedMotion": {
+        "mediaMatches": true,
+        "transitionDuration": "1e-05s",
+        "animationDuration": "1e-05s"
+      },
+      "assertions": {
+        "oneSummaryRequestEveryLoad": true,
+        "noLegacyRequests": true,
+        "noHorizontalOverflow": true,
+        "noConsoleErrors": true,
+        "noPageErrors": true,
+        "keyboardVisible": true,
+        "keyboardFocusVisible": true,
+        "mobileMenuWorks": true,
+        "mobileTargetsAtLeast44": true,
+        "reducedMotionApplied": true,
+        "structuralAccessibility": true,
+        "liveRendersLive": true,
+        "partialIsCardScoped": true,
+        "staleIsExplicit": true,
+        "unavailableRendersUnavailable": true,
+        "timeoutRendersUnavailable": true,
+        "malformedRendersUnavailable": true
+      }
+    },
+    "edge": {
+      "pages": [
+        {
+          "scenario": "live",
+          "viewport": "desktop",
+          "summaryRequestCount": 1,
+          "legacyRequestCount": 0,
+          "stateText": [
+            "Live",
+            "Live record",
+            "Active",
+            "Live"
+          ],
+          "healthText": "Source live",
+          "metricMeta": [
+            "Source updated 10/9/2026, 12:00:00 PM",
+            "Source: Primary market status",
+            "Source updated 10/9/2026, 12:00:00 PM",
+            "Calculated 10/9/2026, 12:00:00 PM",
+            "Canonical registry · Source updated 10/9/2026, 12:00:00 PM"
+          ],
+          "overflow": {
+            "scrollWidth": 1440,
+            "clientWidth": 1440
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        },
+        {
+          "scenario": "live",
+          "viewport": "tablet",
+          "summaryRequestCount": 1,
+          "legacyRequestCount": 0,
+          "stateText": [
+            "Live",
+            "Live record",
+            "Active",
+            "Live"
+          ],
+          "healthText": "Source live",
+          "metricMeta": [
+            "Source updated 10/9/2026, 12:00:00 PM",
+            "Source: Primary market status",
+            "Source updated 10/9/2026, 12:00:00 PM",
+            "Calculated 10/9/2026, 12:00:00 PM",
+            "Canonical registry · Source updated 10/9/2026, 12:00:00 PM"
+          ],
+          "overflow": {
+            "scrollWidth": 768,
+            "clientWidth": 768
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        },
+        {
+          "scenario": "live",
+          "viewport": "mobile",
+          "summaryRequestCount": 1,
+          "legacyRequestCount": 0,
+          "stateText": [
+            "Live",
+            "Live record",
+            "Active",
+            "Live"
+          ],
+          "healthText": "Source live",
+          "metricMeta": [
+            "Source updated 10/9/2026, 12:00:00 PM",
+            "Source: Primary market status",
+            "Source updated 10/9/2026, 12:00:00 PM",
+            "Calculated 10/9/2026, 12:00:00 PM",
+            "Canonical registry · Source updated 10/9/2026, 12:00:00 PM"
+          ],
+          "overflow": {
+            "scrollWidth": 390,
+            "clientWidth": 390
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        },
+        {
+          "scenario": "partial",
+          "viewport": "desktop",
+          "summaryRequestCount": 1,
+          "legacyRequestCount": 0,
+          "stateText": [
+            "Live",
+            "Live record",
+            "Active",
+            "Unavailable"
+          ],
+          "healthText": "Source live",
+          "metricMeta": [
+            "Source updated 10/9/2026, 12:00:00 PM",
+            "Source: Primary market status",
+            "Source updated 10/9/2026, 12:00:00 PM",
+            "Calculated 10/9/2026, 12:00:00 PM",
+            "Canonical registry · Source updated 10/9/2026, 12:00:00 PM"
+          ],
+          "overflow": {
+            "scrollWidth": 1440,
+            "clientWidth": 1440
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        },
+        {
+          "scenario": "stale",
+          "viewport": "desktop",
+          "summaryRequestCount": 1,
+          "legacyRequestCount": 0,
+          "stateText": [
+            "Live",
+            "Live record",
+            "Active",
+            "Live"
+          ],
+          "healthText": "Source live",
+          "metricMeta": [
+            "Stale snapshot · source updated 10/9/2026, 12:00:00 PM",
+            "Source: Primary market status",
+            "Stale snapshot · source updated 10/9/2026, 12:00:00 PM",
+            "Calculated 10/9/2026, 12:00:00 PM",
+            "Canonical registry · Source updated 10/9/2026, 12:00:00 PM"
+          ],
+          "overflow": {
+            "scrollWidth": 1440,
+            "clientWidth": 1440
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        },
+        {
+          "scenario": "unavailable",
+          "viewport": "desktop",
+          "summaryRequestCount": 1,
+          "legacyRequestCount": 0,
+          "stateText": [
+            "Unavailable",
+            "Unavailable",
+            "Unavailable",
+            "Unavailable"
+          ],
+          "healthText": "Unavailable",
+          "metricMeta": [
+            "Current price unavailable",
+            "Current liquidity unavailable",
+            "Current burn progress unavailable",
+            "Circulating supply unavailable; total supply not substituted",
+            "Module registry unavailable"
+          ],
+          "overflow": {
+            "scrollWidth": 1440,
+            "clientWidth": 1440
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        },
+        {
+          "scenario": "timeout",
+          "viewport": "desktop",
+          "summaryRequestCount": 1,
+          "legacyRequestCount": 0,
+          "stateText": [
+            "Unavailable",
+            "Unavailable",
+            "Unavailable",
+            "Unavailable"
+          ],
+          "healthText": "Unavailable",
+          "metricMeta": [
+            "Current price unavailable",
+            "Current liquidity unavailable",
+            "Current burn progress unavailable",
+            "Circulating supply unavailable; total supply not substituted",
+            "Module registry unavailable"
+          ],
+          "overflow": {
+            "scrollWidth": 1440,
+            "clientWidth": 1440
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        },
+        {
+          "scenario": "malformed",
+          "viewport": "desktop",
+          "summaryRequestCount": 1,
+          "legacyRequestCount": 0,
+          "stateText": [
+            "Unavailable",
+            "Unavailable",
+            "Unavailable",
+            "Unavailable"
+          ],
+          "healthText": "Unavailable",
+          "metricMeta": [
+            "Current price unavailable",
+            "Current liquidity unavailable",
+            "Current burn progress unavailable",
+            "Circulating supply unavailable; total supply not substituted",
+            "Module registry unavailable"
+          ],
+          "overflow": {
+            "scrollWidth": 1440,
+            "clientWidth": 1440
+          },
+          "consoleErrors": [],
+          "pageErrors": []
+        }
+      ],
+      "keyboard": {
+        "samples": [
+          {
+            "tag": "A",
+            "text": "Skip to content",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "WINLEW\nLET'S EVERYONE WIN",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "Home",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "Play",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "Earn",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "Community",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "$WinLEW",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "Proof",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "Build",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "ACCOUNT\nConnect / Profile",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "ENTER WINLEW\n↓",
+            "visible": true,
+            "focusVisible": true
+          },
+          {
+            "tag": "A",
+            "text": "EXPLORE $WINLEW",
+            "visible": true,
+            "focusVisible": true
+          }
+        ],
+        "allVisible": true,
+        "allFocusVisible": true
+      },
+      "mobileNav": {
+        "expanded": "true",
+        "hidden": false,
+        "targets": [
+          {
+            "width": 44,
+            "height": 44
+          },
+          {
+            "width": 344,
+            "height": 50
+          },
+          {
+            "width": 344,
+            "height": 50
+          },
+          {
+            "width": 344,
+            "height": 50
+          },
+          {
+            "width": 344,
+            "height": 50
+          },
+          {
+            "width": 344,
+            "height": 50
+          },
+          {
+            "width": 344,
+            "height": 50
+          },
+          {
+            "width": 344,
+            "height": 50
+          },
+          {
+            "width": 344,
+            "height": 50
+          }
+        ],
+        "allAtLeast44": true
+      },
+      "accessibility": {
+        "duplicateIds": [],
+        "unlabeledImages": 0,
+        "unlabeledButtons": 0,
+        "emptyLinks": 0,
+        "landmarks": {
+          "header": true,
+          "nav": true,
+          "main": true,
+          "footer": true
+        },
+        "headingSkips": 0
+      },
+      "reflow": [
+        {
+          "label": "200-percent",
+          "method": "WCAG equivalent CSS viewport width 640px",
+          "scrollWidth": 640,
+          "clientWidth": 640
+        },
+        {
+          "label": "400-percent",
+          "method": "WCAG equivalent CSS viewport width 320px",
+          "scrollWidth": 320,
+          "clientWidth": 320
+        }
+      ],
+      "reducedMotion": {
+        "mediaMatches": true,
+        "transitionDuration": "1e-05s",
+        "animationDuration": "1e-05s"
+      },
+      "assertions": {
+        "oneSummaryRequestEveryLoad": true,
+        "noLegacyRequests": true,
+        "noHorizontalOverflow": true,
+        "noConsoleErrors": true,
+        "noPageErrors": true,
+        "keyboardVisible": true,
+        "keyboardFocusVisible": true,
+        "mobileMenuWorks": true,
+        "mobileTargetsAtLeast44": true,
+        "reducedMotionApplied": true,
+        "structuralAccessibility": true,
+        "liveRendersLive": true,
+        "partialIsCardScoped": true,
+        "staleIsExplicit": true,
+        "unavailableRendersUnavailable": true,
+        "timeoutRendersUnavailable": true,
+        "malformedRendersUnavailable": true
+      }
+    }
+  },
+  "assertionsPassed": true
+}

@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>MODULE-05 — Utility Expansion | WinLEW</title>
+  <meta name="description" content="Utility tools that expand the ecosystem: dashboards, bots, integrations." />
+  <link rel="canonical" href="https://winlew.co/modules/utility-expansion.html" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <meta property="og:title" content="MODULE-05 — Utility Expansion — WinLEW" />
+  <meta property="og:description" content="Utility tools that expand the ecosystem: dashboards, bots, integrations." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/modules/utility-expansion.html" />
+  <meta property="og:image" content="https://winlew.co/images/TheMoleGuard.png" />
+  <style>
+    :root{
+      --bg:#130b08;
+      --bg2:#24150d;
+      --panel:rgba(255,255,255,.05);
+      --panel2:rgba(255,255,255,.08);
+      --line:rgba(255,255,255,.12);
+      --text:#f6efe8;
+      --muted:rgba(246,239,232,.85);
+      --brand:#d6a866;
+      --brand2:#7d5837;
+      --good:#d8c392;
+      --warn:#f1c27d;
+      --bad:#ff9b7a;
+      --shadow:0 28px 80px rgba(0,0,0,.42);
+      --radius:24px;
+      --ring:0 0 0 3px rgba(214,168,102,.18);
+      --max:1140px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1000px 620px at 10% 0%, rgba(214,168,102,.10), transparent 60%),
+        radial-gradient(900px 640px at 100% 8%, rgba(125,88,55,.18), transparent 55%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 52%, #130b08 100%);
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--max);margin:0 auto;padding:22px}
+    .nav{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(19,11,8,.88), rgba(19,11,8,.58));
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .navInner{
+      max-width:2000px;margin:0 auto;padding:14px 32px;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    }
+    .navBrand{text-decoration:none;color:var(--text);font-weight:950}
+    .glow{text-shadow:0 0 18px rgba(214,168,102,.18)}
+    .navLinks{display:flex;gap:10px;flex-wrap:wrap}
+    .pill,.btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 13px;border-radius:999px;text-decoration:none;font-weight:850;
+      background:rgba(255,255,255,.06);border:1px solid var(--line);
+      transition:transform .12s ease,background .12s ease,border-color .12s ease;
+    }
+    .btn{border-radius:14px}
+    .pill:hover,.btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.20)}
+    .pill:focus,.btn:focus{outline:none;box-shadow:var(--ring)}
+    .btn.primary{
+      background:linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22));
+      border-color:rgba(255,255,255,.18);
+    }
+    .btn.ghost{background:rgba(0,0,0,.18)}
+    .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;padding-top:18px}
+    @media (max-width:980px){.grid{grid-template-columns:1fr}}
+    .card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .card::before{
+      content:"";position:absolute;inset:-2px;pointer-events:none;opacity:.8;
+      background:
+        radial-gradient(740px 230px at 20% 0%, rgba(214,168,102,.18), transparent 55%),
+        radial-gradient(700px 230px at 82% 0%, rgba(125,88,55,.18), transparent 55%);
+      filter: blur(18px);
+    }
+    .card > *{position:relative}
+    .heroCopy,.heroPanel,.sectionWrap{padding:24px}
+    .kicker{
+      display:inline-flex;gap:10px;align-items:center;
+      font-size:13px;color:var(--muted);
+      border:1px solid var(--line);background:rgba(0,0,0,.22);
+      padding:8px 12px;border-radius:999px;margin-bottom:14px;
+      flex-wrap:wrap;
+    }
+    h1{margin:0 0 10px;font-size:clamp(34px,4.2vw,56px);line-height:1.02;letter-spacing:-.8px}
+    .sub{color:var(--muted);font-size:16px;line-height:1.7;max-width:58ch}
+    .miniRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .miniRow span{
+      padding:8px 10px;border-radius:999px;border:1px solid var(--line);
+      background:rgba(0,0,0,.18);color:var(--muted);font-size:13px;
+    }
+    .actions,.navActions{display:flex;gap:10px;flex-wrap:wrap}
+    .actions{margin-top:18px}
+    .sectionTitle{font-weight:950;letter-spacing:.2px;font-size:16px;margin:18px 0 10px}
+    .statusRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .statusBadge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;border:1px solid var(--line);
+      background:rgba(0,0,0,.18);font-size:13px;font-weight:850;color:var(--muted);
+    }
+    .statusBadge strong{color:var(--text)}
+    .statusBadge .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+    .statusBadge.online .dot{background:var(--good)}
+    .statusBadge.warming .dot{background:var(--warn)}
+    .statusBadge.locked .dot{background:rgba(255,255,255,.55)}
+    .statusBadge.coming .dot{background:#c7b1ff}
+    .statusBadge.historical .dot{background:rgba(255,255,255,.35)}
+    .heroPanel .panelTitle{display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:950;margin:2px 0 10px}
+    .muted{color:var(--muted)}
+    .note{
+      padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.12);
+      color:var(--muted);font-size:14px;line-height:1.6;
+    }
+    .shipList{display:grid;gap:10px;margin-top:14px}
+    .shipItem{
+      display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;
+      padding:12px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);
+    }
+    .shipDot{width:10px;height:10px;border-radius:50%;margin-top:6px;background:rgba(214,168,102,.85);box-shadow:0 0 16px rgba(214,168,102,.18)}
+    .overview{
+      margin-top:14px;padding:14px 16px;border-radius:18px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.12);
+    }
+    .overview strong{display:block;margin-bottom:6px}
+    .detailGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    @media (max-width:980px){.detailGrid{grid-template-columns:1fr}}
+    .detailCard{padding:18px}
+    .detailCard h3{margin:0 0 8px;font-size:17px}
+    .detailCard p{margin:0;color:var(--muted);line-height:1.65;font-size:14px}
+    .footerNote{margin-top:16px}
+    footer{padding:22px 0 42px;color:var(--muted);font-size:13px}
+  </style>
+  <link rel="stylesheet" href="/assets/nav.css" />
+</head>
+<body>
+  <div class="nav">
+    <div class="navInner">
+      <a class="navBrand" href="/">WinLEW</a>
+      <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+      <div class="navRight">
+        <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+        <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+        <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+        <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="grid">
+      <div class="card heroCopy">
+        <div class="kicker">🧰 Historical concept • superseded by shipped modules</div>
+        <h1><span class="glow">MODULE-05</span><br/>Utility Expansion <small style="font-size:0.5em;opacity:.7;">(original concept)</small></h1>
+        <p class="sub">This was an early, abstract module concept from before WinLEW's real feature set existed. What it described — dashboards, transparency tooling, integrations — has since shipped as concrete, individually verified systems: the <a href="/transparency/">Transparency Center</a>, <a href="/burn/">Burn Center</a>, <a href="/events/">Community Events</a>, and <a href="/partners/">Sponsors &amp; Partners</a>. This page is kept as a historical record, not an active roadmap item — see the current, accurate status for all of these at <a href="/modules/">/modules/</a>.</p>
+
+        <div class="statusRow">
+          <span class="statusBadge historical"><span class="dot"></span><strong>Status:</strong> HISTORICAL</span>
+          <span class="statusBadge"><strong>Superseded by:</strong> Transparency, Burn, Events, Partners</span>
+        </div>
+
+        <div class="miniRow">
+          <span>🪵 Main-site dirt theme</span>
+          <span>🛡️ Consistent public branding</span>
+          <span>🔗 Discord bot legal pages stay separate</span>
+        </div>
+
+        <div class="actions">
+          <a class="btn ghost" href="/#roadmap">← Back to Roadmap</a>
+          <a class="btn" href="/">🏠 Main site</a>
+          <a class="btn" href="/verify/">🧩 Verify</a>
+          <a class="btn primary" href="/modules/community-ops.html">Community Ops →</a>
+        </div>
+
+        <div class="note footerNote">Discord-facing policy and legal pages intentionally live under /discord-bots/ with their own visual treatment so the app agreements stay explicit and easy to review.</div>
+      </div>
+
+      <div class="card heroPanel">
+        <div class="panelTitle">
+          <div>What actually shipped instead</div>
+          <div class="muted" style="font-size:13px;">HISTORICAL</div>
+        </div>
+
+        <div class="shipList">
+          <div class="shipItem"><div class="shipDot"></div><div><a href="/transparency/">Transparency Center</a> — live, verifiable holdings/wallet data</div></div>
+<div class="shipItem"><div class="shipDot"></div><div><a href="/burn/">Burn Center</a> — verified, on-chain-evidenced burn records</div></div>
+<div class="shipItem"><div class="shipDot"></div><div><a href="/events/">Community Events</a> — live events platform, ongoing program</div></div>
+<div class="shipItem"><div class="shipDot"></div><div><a href="/partners/">Sponsors &amp; Partners</a> — structured, evidence-backed partner directory</div></div>
+<div class="shipItem"><div class="shipDot"></div><div><a href="/verify/profile.html">Dashboard</a> — stats, history, and participation insights, live today</div></div>
+        </div>
+
+        <div class="overview">
+          <strong>Quick summary</strong>
+          <div class="muted">Superseded — see <a href="/modules/">/modules/</a> for the current, accurate status of everything WinLEW has built.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="sectionTitle">Why this page is kept</div>
+    <section class="detailGrid">
+      <div class="card detailCard">
+              <h3>Preserving roadmap history</h3>
+              <p>This concept predates the real platform and used vague statuses ("coming soon") the current Modules system deliberately avoids. It's kept as a record of what was originally imagined, not deleted.</p>
+            </div>
+<div class="card detailCard">
+              <h3>No longer an active roadmap item</h3>
+              <p>Nothing here is being built under this name. The real systems it envisioned are already shipped and individually tracked at <a href="/modules/">/modules/</a>.</p>
+            </div>
+<div class="card detailCard">
+              <h3>One canonical source of truth</h3>
+              <p>Current module status lives in one validated registry, not duplicated across pages like this one — see docs/modules-system.md.</p>
+            </div>
+    </section>
+
+    <footer>
+      <div>Built for clarity. Built for community. Built to ship.</div>
+      <div style="margin-top:6px;">© <span id="year"></span> WinLEW • <span class="glow">#LetsEveryOneWin</span></div>
+    </footer>
+  </div>
+
+<script>
+  const y = document.getElementById("year");
+  if (y) y.textContent = new Date().getFullYear();
+</script>
+<script src="/assets/wallet-auth.js"></script>
+<script>
+  (function () {
+    const { getAuth, setConnectedUi, walletLogin, getCachedWallet, refreshWalletBalance } = window.WinLEWAuth;
+    document.getElementById('navWalletConnect')?.addEventListener('click', (e) => void walletLogin({ triggerBtn: e.currentTarget, onSuccess: () => window.location.reload() }));
+    if (getAuth().session) setConnectedUi(getCachedWallet() || 'connected');
+    refreshWalletBalance();
+  })();
+</script>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

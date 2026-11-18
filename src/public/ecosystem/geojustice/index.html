@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GeoJustice — Explainable Trust for On-Chain Contracts (Coming Soon)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="GeoJustice discovers, verifies, and scores XYO/XL1 smart contracts and collections, and publishes exact evidence for every trust decision it makes. Not public yet." />
+  <link rel="canonical" href="https://winlew.co/ecosystem/geojustice/" />
+  <meta property="og:title" content="GeoJustice — An Oxyon project" />
+  <meta property="og:description" content="An evidence-first trust registry for XYO/XL1 contracts, built by the same team as WinLEW. Coming soon." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/ecosystem/geojustice/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    .hidden { display: none !important; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8; padding: 0; margin: 0; line-height: 1.7;
+    }
+    html { overflow-x: hidden; }
+    .wlPageShell { max-width: 1000px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin-bottom: 8px; }
+    h1 { font-size: clamp(30px, 5vw, 44px); margin-top: 0; }
+    h2 { font-size: clamp(18px, 2.6vw, 22px); margin-top: 0; }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header.wlHero { text-align: left; margin-bottom: 8px; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624; border-radius: 20px; padding: 26px; margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: 0.85; }
+    .statusPill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; border: 1px solid #4e3624; white-space: nowrap; }
+    .statusPill.soon { background: rgba(255,255,255,.06); color: #f6efe8; }
+    .featureGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-top: 12px; }
+    .featureCard { background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); border: 1px solid #4e3624; border-radius: 16px; padding: 16px; }
+    .featureCard .featureTitle { font-weight: 800; margin-bottom: 6px; color: #f6efe8; }
+    .featureCard p { margin: 0; font-size: 13.5px; }
+    .quoteBlock { border-left: 3px solid #d6a866; padding: 12px 16px; background: rgba(214,168,102,.08); border-radius: 0 12px 12px 0; margin: 14px 0; font-style: italic; font-size: 14.5px; }
+    .notReadyNote { border-left: 3px solid rgba(255,179,71,.5); padding: 10px 14px; background: rgba(255,179,71,.08); border-radius: 0 10px 10px 0; margin-top: 14px; font-size: 13.5px; }
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+<header class="wlHero" id="about">
+  <div class="wlHeroMain">
+    <span class="wlKicker">⚖️ An Oxyon project · Not public yet</span>
+    <h1 class="wlHeroTitle">GeoJustice<br><span class="wlHeroTitleAccent">Exact evidence, not a guess dressed up as a score.</span></h1>
+    <p class="wlHeroSub">GeoJustice discovers, verifies, and scores XYO/XL1 smart contracts and NFT collections across chains, exchanges, and code repositories — and for every claim it makes, it publishes the exact evidence behind it. Deliberately not a wallet, a marketplace, or an AI best-guess tool.</p>
+    <div class="wlChipRow">
+      <span class="wlChip">🔍 Evidence-first scoring</span>
+      <span class="wlChip">🧾 Every claim is checkable</span>
+      <span class="wlChip"><span class="statusPill soon">Coming Soon</span></span>
+    </div>
+  </div>
+  <div class="wlHeroSide">
+    <div class="wlEyebrow">Status</div>
+    <div class="wlHeroNote">GeoJustice is real and already working behind the scenes — it's just not ready to be exposed publicly yet.</div>
+  </div>
+</header>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">What is it</div>
+  <h2>Trust you can retrace, not just take on faith</h2>
+  <p>GeoJustice is being built as the canonical source of explainable trust decisions for contracts, collections, operators, and releases in the XYO/XL1 ecosystem. Every verdict it produces traces back to a preserved piece of evidence — never a fuzzy AI guess and never a self-reported claim taken at face value.</p>
+  <p class="quoteBlock">"GeoJustice becomes the canonical source of explainable trust decisions for assets, contracts, collections, operators, and releases."</p>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">What it's for</div>
+  <h2>The system that produces the trust other tools consume</h2>
+  <div class="featureGrid">
+    <div class="featureCard"><div class="featureTitle">📋 Human + machine dossiers</div><p>A readable explanation and a machine-checkable decision for every contract or collection it evaluates.</p></div>
+    <div class="featureCard"><div class="featureTitle">🔁 Deterministic under replay</div><p>Run the same evidence through it twice, get the same answer twice — trust that doesn't drift.</p></div>
+    <div class="featureCard"><div class="featureTitle">⛓️ Release anchoring</div><p>Attests release artifacts on-chain, so "this is the exact build that shipped" is provable, not just claimed.</p></div>
+  </div>
+  <p class="quoteBlock">"If GeoWallet is a consumer of trust, GeoJustice should be the system that produces, explains, and publishes that trust."</p>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">GeoJustice & WinLEW</div>
+  <h2>Same builder, separate project</h2>
+  <p>GeoJustice is a sister project from the same team behind WinLEW, not a WinLEW feature — its focus is XYO/XL1 contract and collection trust more broadly, with no confirmed WinLEW-specific integration today.</p>
+  <p class="muted">It is an Oxyon project, built by the team behind WinLEW. Its current status is on <a href="https://oxyon.io/products/geojustice" target="_blank" rel="noreferrer noopener">oxyon.io ↗</a>.</p>
+  <div class="notReadyNote">Nothing on this page is a promise of a launch date. Check back, or watch WinLEW's own announcement channels for when GeoJustice actually opens up.</div>
+</div>
+
+<footer>
+  <a href="/">← Back to WinLEW</a> · <a href="/whitepaper/">Whitepaper</a> · <a href="/governance/">Governance</a>
+</footer>
+</div>
+
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>WinLEW Health</title>
+  <meta name="description" content="WinLEW service health and routing status." />
+  <link rel="canonical" href="https://winlew.co/health/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    :root{--bg:#130b08;--bg2:#24150d;--panel:rgba(255,255,255,.05);--line:rgba(255,255,255,.12);--text:#f6efe8;--muted:rgba(246,239,232,.85);--brand:#d6a866;--shadow:0 28px 80px rgba(0,0,0,.42);--radius:24px}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:radial-gradient(1000px 620px at 10% 0%, rgba(214,168,102,.10), transparent 60%), linear-gradient(180deg, var(--bg) 0%, var(--bg2) 52%, #130b08 100%)}
+    /* Same missing-<a>-colour defect found on /leaderboards/ 2026-08-04: with no
+       rule here, inline links fell back to the browser default rgb(0,0,238) on a
+       near-black card — 1.92:1, under the 4.5:1 WCAG AA needs. .pill/.btn/.navBrand
+       set their own colour at higher specificity and are unaffected. */
+    a{color:var(--brand)}
+    a:hover{color:#f0c989}
+    .wrap{max-width:1080px;margin:0 auto;padding:22px}
+    .nav{position:sticky;top:0;background:rgba(19,11,8,.86);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
+    .navInner{max-width:2000px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .navBrand{text-decoration:none;color:inherit;font-weight:950}
+    .navLinks{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .pill,.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 13px;border-radius:999px;text-decoration:none;background:rgba(255,255,255,.06);border:1px solid var(--line);color:inherit;font-weight:850}
+    .btn{border-radius:14px}
+    .pill:hover,.btn:hover{background:rgba(255,255,255,.10)}
+    .hero,.grid{display:grid;gap:16px}
+    .hero{grid-template-columns:1fr .95fr;padding-top:18px}
+    .grid{grid-template-columns:repeat(3,1fr)}
+    @media (max-width: 980px){.hero,.grid{grid-template-columns:1fr}}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.02));
+      border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;
+      transition:transform .16s ease, border-color .16s ease;
+    }
+    .card:hover{transform:translateY(-2px);border-color:rgba(214,168,102,.28)}
+    h1{font-size:clamp(32px,4vw,54px);margin:0 0 10px;line-height:1.02}
+    .muted{color:var(--muted);line-height:1.7}
+    .status{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:999px;border:1px solid rgba(85,240,165,.3);background:rgba(85,240,165,.12);color:#55f0a5;font-weight:900}
+    .dot{width:10px;height:10px;border-radius:50%;background:#55f0a5;box-shadow:0 0 16px rgba(85,240,165,.45)}
+    /* Bot liveness lights. Three states on purpose — grey is NOT a soft red.
+       Grey means no heartbeat was ever received (nobody wired it up); red
+       means it checked in before and has stopped. Merging them would train
+       everyone to ignore the light on day one. */
+    .botRow{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+    .botRow:last-child{border-bottom:none}
+    .botLight{width:14px;height:14px;border-radius:50%;flex:none;background:#6b6b6b;box-shadow:0 0 10px rgba(0,0,0,.4) inset}
+    .botLight.up{background:#3ddc84;box-shadow:0 0 14px rgba(61,220,132,.6)}
+    .botLight.down{background:#ff5f6d;box-shadow:0 0 14px rgba(255,95,109,.6)}
+    .botName{font-weight:800}
+    .botWhen{font-size:12px;color:rgba(246,239,232,.7)}
+    .stat{font-size:28px;font-weight:950;margin-top:8px}
+    ul{margin:12px 0 0;padding-left:18px}
+
+    .routeRow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+    .routeRow:last-child{border-bottom:none}
+    .routeRow code{font-size:14px;font-weight:800;color:var(--text)}
+    .routeStatus{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:800;color:#55f0a5}
+    .routeStatus.down{color:#ff8fa3}
+    .status.down{border-color:rgba(255,107,138,.3);background:rgba(255,107,138,.12);color:#ff8fa3}
+    .status.down .dot{background:#ff8fa3;box-shadow:0 0 16px rgba(255,107,138,.45)}
+    .cardIcon{font-size:22px;margin-bottom:6px;display:block}
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div class="navInner">
+      <a class="navBrand" href="/">WinLEW</a>
+      <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+      <div class="navRight">
+        <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+        <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+        <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+        <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <section class="hero">
+      <div class="wlHeroBanner"><img src="/images/page-headers/health.png" alt="Health / Status — check system status and platform health" loading="lazy" /></div>
+      <div class="card wlGlow" id="about">
+        <div class="status" id="topStatus"><span class="dot"></span> Checking routes…</div>
+        <h1>Health<br><span class="wlHeroTitleAccent">Routing status, first-party.</span></h1>
+        <p class="muted">
+          Every WinLEW service runs on one first-party domain — no subdomains, no third-party status host.
+          Each route below is checked live, over loopback, on every page load — not a hardcoded claim.
+        </p>
+        <div class="wlChipRow">
+          <span class="wlChip">🌐 First-party routes</span>
+          <span class="wlChip">🔒 SSL-safe</span>
+          <span class="wlChip">🟢 Live checked</span>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
+          <a class="btn primary" href="#routes">View Routes ↓</a>
+          <a class="btn" href="/verify/">Open verify</a>
+          <a class="btn" href="/discord-bots/">Open Discord bot hub</a>
+        </div>
+      </div>
+      <div class="card" id="botLights">
+        <div class="wlEyebrow">Bot status</div>
+        <p class="muted" style="font-size:12px;margin:4px 0 10px;">
+          Each bot reports in on its own. A light is only green because the bot
+          said so — nothing here is inferred from the website being up.
+        </p>
+        <div id="botLightRows"><div class="muted">Checking…</div></div>
+      </div>
+      <div class="card" id="routes">
+        <div class="wlEyebrow">System snapshot</div>
+        <div class="wlHeroStatGrid" style="margin-bottom:14px;">
+          <div class="wlStat"><div class="n" id="healthRouteCount">—</div><div class="l">Checks</div></div>
+          <div class="wlStat"><div class="n" id="healthReachablePct">—</div><div class="l">Healthy</div></div>
+        </div>
+        <div class="wlEyebrow" style="margin-top:4px;">Pages</div>
+        <div id="routeListPages">
+          <div class="muted">Checking…</div>
+        </div>
+        <div class="wlEyebrow" style="margin-top:14px;">Data APIs</div>
+        <p class="muted" style="font-size:12px;margin:2px 0 0;">Checked one level deeper than a page load — each must also report <code>ok:true</code> in its own response, not just HTTP 200.</p>
+        <div id="routeListApis">
+          <div class="muted">Checking…</div>
+        </div>
+        <div class="wlHeroNote" style="margin-top:14px;" id="healthCheckedAt">Checking live status — each route above is fetched over loopback by the server itself, not asserted statically.</div>
+      </div>
+    </section>
+    <section class="grid">
+      <!-- These three used to describe the 2025 move off subdomains in the
+           present tense ("ready for shared hosting", "so you are not dependent
+           on subdomain SSL support"), addressed to the maintainer rather than
+           to a visitor. That migration is finished — no subdomain URL appears
+           anywhere in src/public/ any more — so they now describe what each
+           area does today. -->
+      <div class="card wlLift">
+        <span class="cardIcon" aria-hidden="true">🌐</span>
+        <div style="font-weight:950;">Website</div>
+        <p class="muted">Every page, game, and reward flow is served from <code>winlew.co</code> itself, so a link never depends on a separate host staying alive or its certificate staying valid.</p>
+      </div>
+      <div class="card wlLift">
+        <span class="cardIcon" aria-hidden="true">🔐</span>
+        <div style="font-weight:950;">Verification flow</div>
+        <p class="muted">Wallet selection, desktop-to-phone handoff, and Discord Linked Roles all run through <a href="/verify/">/verify/</a> — one verification that the Dashboard, Quiz, Faucet, and Governance all read from.</p>
+      </div>
+      <div class="card wlLift">
+        <span class="cardIcon" aria-hidden="true">🤖</span>
+        <div style="font-weight:950;">Discord bot hub</div>
+        <p class="muted">Bot documentation, commands, and legal pages live under <a href="/discord-bots/">/discord-bots/</a>, and the bots' own help commands link back to these same first-party routes.</p>
+      </div>
+    </section>
+    <section class="card" style="margin-top:16px;">
+      <div class="wlEyebrow">What this page is not</div>
+      <div style="font-weight:950;">Scope</div>
+      <ul class="muted">
+        <li>It reports whether these routes <strong>respond correctly right now</strong>, checked from the server over loopback each time you load it. It is not a historical uptime record — there is no stored history behind it, and it does not claim an uptime percentage.</li>
+        <li>A red check means that route was failing at the moment you loaded this page. Reloading re-runs every check from scratch.</li>
+        <li>Data APIs are held to a higher bar than pages: an API must also report success <em>inside</em> its own response body, so a route that returns HTTP 200 while its underlying lookup failed is still counted as unhealthy.</li>
+      </ul>
+    </section>
+  </div>
+  <script src="/assets/wallet-auth.js"></script>
+  <script src="./js/app.js"></script>
+  <script defer src="/assets/nav.js"></script>
+</body>
+</html>

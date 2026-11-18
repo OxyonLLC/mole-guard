@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <link rel="canonical" href="https://winlew.co/hodl/" />
+  <title>WinLEW HODL Rewards</title>
+  <meta name="description" content="HODL Rewards: verified WinLEW holders receive 0.10% to 0.15% of their balance each Tuesday, depending on how many days they took part. Capped, from a fixed community allocation. Nothing is deposited or locked." />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <style>
+    :root{--bg:#140d09;--line:rgba(255,255,255,.12);--text:#f7efe6;--muted:rgba(247,239,230,.82);--brand:#d6a866;--ok:#8fd6a0}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);background:radial-gradient(1100px 680px at 10% 0%, rgba(214,168,102,.12), transparent 55%),linear-gradient(180deg,#110906 0%,#1e120b 100%)}
+    a{color:#f0c989;text-decoration-color:rgba(240,201,137,.45)}
+    a:hover{color:#ffe0ad}
+    .wrap{max-width:960px;margin:0 auto;padding:24px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:0 28px 80px rgba(0,0,0,.38)}
+    h1{margin:0 0 10px;font-size:clamp(34px,4vw,54px);line-height:1.02}
+    h2{margin:32px 0 8px;font-size:clamp(21px,2.4vw,28px)}
+    p{color:var(--muted);line-height:1.7}
+    .eyebrow{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#f0c989}
+    .tuesday{display:inline-block;margin:4px 0 0;padding:6px 14px;border-radius:999px;font-weight:900;letter-spacing:.08em;
+      background:linear-gradient(90deg,rgba(214,168,102,.3),rgba(214,168,102,.16));border:1px solid rgba(214,168,102,.5)}
+    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:18px 0 0}
+    .stat{padding:16px;border-radius:18px;border:1px solid var(--line);background:rgba(0,0,0,.2)}
+    .stat b{display:block;font-size:24px;line-height:1.1}
+    .stat span{font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+    .est{font-size:11.5px;color:var(--brand);font-weight:800;letter-spacing:.05em}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+    .option{display:flex;flex-direction:column;gap:10px;padding:18px;border:1px solid var(--line);border-radius:18px;background:rgba(0,0,0,.18)}
+    .option p{margin:0;font-size:14px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:14px;text-decoration:none;font-weight:800;border:1px solid var(--line);color:var(--text);background:rgba(255,255,255,.06)}
+    .btn.primary{background:linear-gradient(90deg,rgba(214,168,102,.32),rgba(214,168,102,.2));border-color:rgba(214,168,102,.45)}
+    ul.rules{margin:10px 0 0;padding-left:20px;line-height:1.9;color:var(--muted)}
+    .notice{margin-top:16px;padding:16px;border-radius:18px;background:rgba(143,214,160,.08);border:1px solid rgba(143,214,160,.34);font-size:14.5px}
+    table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+    th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+    th{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+    .tblWrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;margin-top:12px}
+    .fine{font-size:12.5px;color:var(--muted);margin-top:16px}
+    .hidden{display:none}
+    @media (max-width:760px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div class="navInner">
+      <a class="navBrand" href="/">WinLEW</a>
+      <div class="navLinks" id="siteNavLinks"></div>
+      <div class="navRight">
+        <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+        <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+        <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet">Connect wallet</button>
+        <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="card">
+      <div class="eyebrow">HODL Rewards</div>
+      <h1>Hold, take part, get rewarded.</h1>
+      <p>
+        The faucet rewards showing up. The quiz rewards knowing things. Games reward playing.
+        HODL Rewards recognise <strong>staying</strong>, and staying involved.
+      </p>
+      <p>
+        While an epoch is running, distributions are scheduled for each Tuesday. Each verified holder's
+        reward is a small percentage of their balance: <strong>0.10%</strong> as a base, rising to
+        <strong>0.15%</strong> for taking part on all seven days of the week before. Larger balances earn
+        more, up to clear caps, and every payment comes from a fixed weekly community allocation.
+      </p>
+      <div class="tuesday">🗓️ Scheduled every Tuesday</div>
+
+      <!-- Disambiguation, added 2026-08-20. Two different things now share the
+           word HODL: this weekly programme, and the time-limited HODL +
+           Liquidity Campaign draw. Someone landing here from the campaign
+           announcement would otherwise reasonably assume they are the same
+           thing and wait for a Tuesday that has nothing to do with it. This is
+           a pointer, not a second copy of the rules. -->
+      <p class="muted" style="font-size:13.5px;">
+        Not to be confused with the <a href="/news/liquidity-and-hodl-campaign/">HODL + Liquidity Campaign</a> —
+        a separate, time-limited draw for 1,000,000 $WinLEW that closed on 1 October 2026.
+        HODL Rewards below are the ongoing weekly programme.
+      </p>
+
+      <!-- Said plainly and early: what the reward is, how it is calculated, and
+           what it is not. Owner decision 2026-11-13: make no claims that the
+           reward is not a return, and show no annualised figures here. -->
+      <div class="notice">
+        <strong>What this is, plainly.</strong> A weekly reward worked out as a percentage of the WinLEW you
+        hold, paid from a capped community allocation. It is <strong>not staking</strong>: you deposit nothing,
+        nothing is locked, and your tokens never leave your wallet. It is <strong>not guaranteed</strong>:
+        the rates apply only while an epoch is running, Tuesday is the scheduled day rather than a promise
+        (a distribution can be delayed, paused or skipped), a busy week can be scaled down to fit the pool,
+        and an epoch can be ended. A reward paid in WinLEW is only worth what WinLEW is worth.
+      </div>
+
+      <h2>This epoch</h2>
+      <div id="noEpoch" class="notice hidden" style="background:rgba(214,168,102,.09);border-color:rgba(214,168,102,.34)">
+        <strong>No epoch is running right now.</strong> No rewards are paid between epochs. Verify your
+        wallet now so you qualify from the first snapshot of the next one.
+      </div>
+      <div id="epochBlock" class="hidden">
+        <div class="stats">
+          <div class="stat"><b id="statPool">—</b><span>weekly pool</span></div>
+          <div class="stat"><b id="statRates">—</b><span>weekly rate</span></div>
+          <div class="stat"><b id="statParticipants">—</b><span>paid last week</span></div>
+          <div class="stat"><b id="statWeek">—</b><span>week of epoch</span></div>
+        </div>
+        <p class="fine" id="epochDates">—</p>
+      </div>
+
+      <!-- The bounds a governance vote CANNOT raise. This is the most
+           load-bearing fact about the program and the page did not show it:
+           "governance sets the pool" reads very differently once the ceiling
+           that vote is trapped under is visible. Values come from
+           /api/hodl/status, which reads LIMITS in hodlEpochs.js — never
+           hardcode them here or the page will quietly drift from the code. -->
+      <div class="card" id="limitsBlock" hidden>
+        <h2>Limits governance cannot raise</h2>
+        <p class="fine">
+          Governance chooses each epoch's parameters, but only within these. They are not
+          themselves votable, and an epoch that breaches one cannot be activated at all.
+        </p>
+        <ul class="fine" id="limitsList"></ul>
+        <p class="fine">
+          The caps exist so that the largest wallets cannot take the whole allocation: only part of a
+          large balance counts, and nobody receives more than the per-person cap in a week.
+        </p>
+      </div>
+
+      <h2>How to qualify</h2>
+      <ul class="rules">
+        <li>A <strong>verified wallet</strong>, linked to your Discord account and not expired.</li>
+        <li>Holding at least the epoch's minimum — <strong id="ruleMinHold">a small amount</strong> — when the snapshot is taken.</li>
+        <li>Not banned, and not linked to a banned wallet.</li>
+      </ul>
+      <p class="fine">
+        Qualification is per <strong>account</strong>, not per wallet. The verified wallets on one account
+        are added together and treated as one holder with one payment, so splitting tokens across wallets
+        changes nothing.
+      </p>
+
+      <h2>How your reward is worked out</h2>
+      <ol class="rules">
+        <li><strong>Your counted balance.</strong> The WinLEW in your verified wallets at the Tuesday snapshot,
+          counting at most <strong data-hodl="maxQualifyingBalance">5,000,000 WinLEW</strong>.</li>
+        <li><strong>Your active days.</strong> How many of the 7 full UTC days before the snapshot day you
+          took part on (normally Tuesday to Monday). The snapshot day itself does not count.</li>
+        <li><strong>Your rate.</strong> Counted balance × the rate for your active days (table below).</li>
+        <li><strong>The caps.</strong> No more than <strong data-hodl="maxPerParticipantWeek">2,500 WinLEW</strong> to any one person in a week.
+          If everyone's rewards together would exceed the weekly pool, every payment is reduced by the same
+          percentage so the total fits. Amounts are rounded down to whole tokens.</li>
+      </ol>
+
+      <!-- Static fallback = the approved E1 terms, clearly labelled as such.
+           When /api/hodl/status returns the running epoch's balanceRates, the
+           script replaces the rows and the label says the figures are live. -->
+      <p class="fine" id="rateSource"><strong>Example figures:</strong> a static copy of the approved E1
+        terms. Live figures from the server are not shown here, either because no epoch is running yet or
+        because they could not be loaded.</p>
+      <div class="tblWrap">
+        <table>
+          <thead><tr><th>Active days</th><th>Weekly rate</th><th>On 100,000 WinLEW</th><th>On 1,000,000 WinLEW</th></tr></thead>
+          <tbody id="rateRows">
+            <tr><td>0</td><td>0.100%</td><td>100</td><td>1,000</td></tr>
+            <tr><td>1</td><td>0.105%</td><td>105</td><td>1,050</td></tr>
+            <tr><td>2</td><td>0.110%</td><td>110</td><td>1,100</td></tr>
+            <tr><td>3</td><td>0.115%</td><td>115</td><td>1,150</td></tr>
+            <tr><td>4</td><td>0.120%</td><td>120</td><td>1,200</td></tr>
+            <tr><td>5</td><td>0.130%</td><td>130</td><td>1,300</td></tr>
+            <tr><td>6</td><td>0.140%</td><td>140</td><td>1,400</td></tr>
+            <tr><td>7</td><td>0.150%</td><td>150</td><td>1,500</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="fine">
+        Examples are before any pool scaling. At the base rate, a counted balance of
+        <span id="capBalance">2,500,000 WinLEW</span> or more already reaches the per-person cap, so extra
+        active days only raise the reward for smaller balances.
+      </p>
+
+      <h2>What counts as an active day</h2>
+      <p>Any one of these, on a UTC calendar day, from your verified account:</p>
+      <ul class="rules">
+        <li>a confirmed <a href="/faucet/">faucet</a> claim</li>
+        <li>a validated game reward claim</li>
+        <li>answering the web quiz</li>
+        <li><code>/mole checkin</code> in the WinLEW Discord</li>
+      </ul>
+      <p class="fine">
+        Several activities on the same day count as one day. Missing a day only costs that day, never the
+        days before it. Each week is counted fresh, and only from server-recorded times. Proof of Value
+        scores do not add a bonus on top of these rates.
+      </p>
+
+      <h2>Reward history</h2>
+      <div id="historyEmpty" class="fine">No distributions yet.</div>
+      <div class="tblWrap hidden" id="historyWrap">
+        <table>
+          <thead><tr><th>Week</th><th>Participants</th><th>Distributed</th><th>Status</th></tr></thead>
+          <tbody id="historyRows"></tbody>
+        </table>
+      </div>
+      <p class="fine" id="lastDist"></p>
+
+      <!-- WHO GOT PAID (2026-08-21). Receipts, not a rich list: this page
+           argues that participation matters more than wallet size, so it shows
+           payments and their transactions rather than ranking anyone by
+           balance. Hidden entirely until there is something to show. -->
+      <h2>Who got paid</h2>
+      <p class="fine">Every row is a completed payment with the transaction behind it. Names appear only where a participant chose to be shown &mdash; everyone else was paid by the same rules.</p>
+      <div id="payoutsEmpty" class="fine">No payouts recorded yet.</div>
+      <div class="tblWrap hidden" id="payoutsWrap">
+        <table>
+          <thead><tr><th>Week</th><th>Participant</th><th>Amount</th><th>Proof</th></tr></thead>
+          <tbody id="payoutRows"></tbody>
+        </table>
+      </div>
+
+      <h2>Decided every three months</h2>
+      <p>
+        Each epoch runs about three months (13 weeks), and its terms — the weekly allocation, the minimum
+        holding, the rate table — are fixed for its duration and published here. Near the end of an epoch
+        the community votes on the next one. Past epochs are never rewritten; what a week paid stays on record.
+      </p>
+      <p class="fine">
+        Governance chooses within hard limits set in code (listed above). No vote can raise the weekly
+        rate ceiling, the counted-balance cap or the per-person weekly cap.
+      </p>
+
+      <div class="grid">
+        <div class="option">
+          <strong>Not verified yet?</strong>
+          <p>One signed message. No transaction, no fees, no seed phrase. You qualify from the next snapshot.</p>
+          <a class="btn primary" href="/mole-link/">🔗 Verify your wallet</a>
+        </div>
+        <div class="option">
+          <strong>Governance</strong>
+          <p>How epoch terms are chosen, and what a vote can and cannot do.</p>
+          <a class="btn" href="/governance/">🏛️ Open Governance</a>
+        </div>
+      </div>
+
+      <p class="fine">
+        HODL Rewards are funded from a community allocation held in the WinLEW treasury wallet
+        <a href="https://solscan.io/account/FcEtZqVowuhF2hdysy7qxJYRhu1eNZ8ws2JqHUDmPPjE" target="_blank" rel="noreferrer noopener">diglew.sol</a>
+        (<code>FcEtZqVo…PPjE</code>) and are not guaranteed income or financial advice. An epoch can be paused or ended,
+        and the terms can change between epochs. See
+        <a href="/transparency/">Transparency</a> and <a href="/policies/">Policies</a>.
+      </p>
+    </section>
+  </div>
+
+  <script src="/assets/wallet-auth.js"></script>
+  <script>
+    (function () {
+      var A = window.WinLEWAuth;
+      if (A) {
+        document.getElementById('navWalletConnect')?.addEventListener('click', function (e) {
+          A.walletLogin({ triggerBtn: e.currentTarget, onSuccess: function () { window.location.reload(); } });
+        });
+        if (A.getAuth().session) A.setConnectedUi(A.getCachedWallet() || 'connected');
+        A.refreshWalletBalance();
+      }
+
+      var fmt = function (n) { return Number(n || 0).toLocaleString('en-US'); };
+      /* hodl-exact:start — same arithmetic as src/mole/hodlMath.js (tested against it).
+         A rate is read from its decimal digits into integer nano-units and every
+         product is BigInt, so 100,000 x 0.12% is 120, never 119. */
+      var hodlExact = (function () {
+        var NANO = 1000000000;
+        function rateNanos(rate) {
+          var s = String(rate);
+          /* exponent forms (rates below 0.000001) are not E1 terms: show the static table instead */
+          var m = /^(\d+)(?:\.(\d*))?$/.exec(s);
+          if (!m) return null;
+          var frac = (m[2] || '');
+          if (/[1-9]/.test(frac.slice(9))) return null;
+          return BigInt(m[1] + (frac.slice(0, 9) + '000000000').slice(0, 9));
+        }
+        return {
+          rateNanos: rateNanos,
+          /* floor(tokens x rate), whole tokens */
+          reward: function (tokens, rate) {
+            var n = rateNanos(rate); if (n === null) return null;
+            return Number(BigInt(tokens) * n / BigInt(NANO));
+          },
+          /* the rate as a percentage with 3 decimals, from its exact digits */
+          percent: function (rate) {
+            var n = rateNanos(rate); if (n === null) return null;
+            var thousandths = n / 10000n; /* 1 nano-unit = 0.0000001%; 0.001% = 10,000 nano-units */
+            var whole = thousandths / 1000n, part = String(thousandths % 1000n);
+            return String(whole) + '.' + ('000' + part).slice(-3) + '%';
+          },
+          /* smallest whole-token balance whose base-rate reward reaches the cap */
+          capBalance: function (cap, rate) {
+            var n = rateNanos(rate); if (n === null || n === 0n) return null;
+            var num = BigInt(cap) * BigInt(NANO);
+            return Number((num + n - 1n) / n);
+          }
+        };
+      })();
+      /* hodl-exact:end */
+      var base = document.documentElement.getAttribute('data-api-base') || '';
+      // Dates are shown on the SERVER's calendar (the one hodl-pay uses to decide
+      // "Tuesday"), so a viewer in another zone never sees the day shift.
+      var tz = null;
+      var dayLabel = function (iso) {
+        try { return new Date(iso).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', timeZone: tz || undefined }); }
+        catch (_) { return new Date(iso).toDateString(); }
+      };
+      var setLive = function (key, text) {
+        document.querySelectorAll('[data-hodl="' + key + '"]').forEach(function (el) { el.textContent = text; });
+      };
+
+      fetch(base + '?path=/api/hodl/status')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          if (!d || !d.ok) return;
+          tz = d.payoutTimeZone || null;
+
+          // No epoch is a real state, not a failure. Rendering zeros would make
+          // a program that has not started look like one that is broken.
+          // Limits and bonus tiers are static program facts. They render
+          // whether or not an epoch is active — someone reading the page
+          // between epochs still needs to know what the rules are.
+          if (d.limits) {
+            document.getElementById('limitsList').innerHTML =
+              '<li>Maximum <strong>' + fmt(d.limits.maxWeeklyPool) + '</strong> WinLEW per week</li>' +
+              '<li>Maximum <strong>' + fmt(d.limits.maxPerParticipantWeek) + '</strong> to any one person in a week</li>' +
+              (d.limits.maxRatePerWeek != null ? '<li>Maximum <strong>' + (d.limits.maxRatePerWeek * 100).toFixed(2) + '%</strong> of counted balance per week</li>' : '') +
+              (d.limits.maxQualifyingBalance != null ? '<li>At most <strong>' + fmt(d.limits.maxQualifyingBalance) + '</strong> WinLEW of any balance counts</li>' : '') +
+              '<li>Epochs between <strong>' + d.limits.minEpochWeeks + '</strong> and <strong>' + d.limits.maxEpochWeeks + '</strong> weeks</li>';
+            document.getElementById('limitsBlock').hidden = false;
+            // The rule text quotes these caps; replace the static copies with the server's.
+            if (d.limits.maxPerParticipantWeek != null) setLive('maxPerParticipantWeek', fmt(d.limits.maxPerParticipantWeek) + ' WinLEW');
+            if (d.limits.maxQualifyingBalance != null) setLive('maxQualifyingBalance', fmt(d.limits.maxQualifyingBalance) + ' WinLEW');
+          }
+          // Proof of Value tiers are not rendered: balance-rate epochs never apply them.
+
+          if (!d.active || !d.epoch) {
+            document.getElementById('noEpoch').classList.remove('hidden');
+            return;
+          }
+          var e = d.epoch;
+          document.getElementById('epochBlock').classList.remove('hidden');
+          document.getElementById('statPool').textContent = fmt(e.weeklyPool);
+          document.getElementById('statWeek').textContent = (e.currentWeek || '—') + ' / ' + (e.totalWeeks || '—');
+          document.getElementById('ruleMinHold').textContent = fmt(e.minHold) + ' WinLEW';
+          var dates = document.getElementById('epochDates');
+          dates.textContent = 'Epoch ' + e.id + ' · ' + dayLabel(e.startAt) + ' → ' + dayLabel(e.endAt);
+
+          // The next SCHEDULED distribution, computed by the server with the same
+          // rule the payout script enforces. A schedule, not a promise.
+          if (e.payoutDayName) {
+            dates.textContent += ' · scheduled on ' + e.payoutDayName + 's';
+            if (e.nextPayoutAt) dates.textContent += ' · next scheduled ' + dayLabel(e.nextPayoutAt);
+            if (tz) dates.textContent += ' (' + tz.replace(/_/g, ' ') + ' calendar)';
+          }
+
+          // Only real, completed distributions count here; test records never
+          // reach this page (the API filters them out before it answers).
+          var weeks = d.weeks || [];
+          var last = d.lastDistribution;
+          document.getElementById('statParticipants').textContent = last ? fmt(last.participants) : '—';
+
+          var r = e.balanceRates;
+          var exactOk = r && r.length === 8 && r.every(function (v) { return hodlExact.rateNanos(v) !== null; });
+          if (e.mode === 'balance-rate' && r && r.length === 8 && exactOk) {
+            document.getElementById('statRates').textContent = (r[0] * 100).toFixed(2) + '–' + (r[7] * 100).toFixed(2) + '%';
+            document.getElementById('rateRows').innerHTML = r.map(function (v, i) {
+              return '<tr><td>' + i + '</td><td>' + hodlExact.percent(v) + '</td><td>' +
+                     fmt(hodlExact.reward(100000, v)) + '</td><td>' + fmt(hodlExact.reward(1000000, v)) + '</td></tr>';
+            }).join('');
+            document.getElementById('rateSource').innerHTML =
+              '<strong>Live figures:</strong> epoch ' + e.id + ' rates, as stored on the server.';
+            if (d.limits && d.limits.maxPerParticipantWeek && r[0] > 0) {
+              document.getElementById('capBalance').textContent = fmt(hodlExact.capBalance(d.limits.maxPerParticipantWeek, r[0])) + ' WinLEW';
+            }
+          }
+
+          if (weeks.length) {
+            document.getElementById('historyEmpty').classList.add('hidden');
+            document.getElementById('historyWrap').classList.remove('hidden');
+            document.getElementById('historyRows').innerHTML = weeks.map(function (w) {
+              return '<tr><td>' + w.weekIndex + '</td><td>' + fmt(w.participants) +
+                     '</td><td>' + fmt(w.total) + ' LEW</td><td>' + w.status + '</td></tr>';
+            }).join('');
+          }
+
+          if (last) {
+            document.getElementById('lastDist').textContent =
+              'Last distribution: week ' + last.weekIndex + ' — ' + fmt(last.total) +
+              ' WinLEW to ' + fmt(last.participants) + ' participants.';
+          }
+        })
+        .catch(function () { /* the page is readable without live figures */ });
+
+      // ── Who got paid ─────────────────────────────────────────────────────
+      // A second, independent fetch on purpose: if payouts fail to load, the
+      // rest of the page is unaffected, and vice versa. Escaped on the way in
+      // because display names are user-supplied text.
+      function esc(v) {
+        return String(v == null ? '' : v)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      // Same `base + '?path='` shape the status fetch above uses — on
+      // winlew.co only /verify/api-proxy.php reaches the backend, so a bare
+      // /api/... would 404 in production.
+      fetch(base + '?path=/api/hodl/payouts&limit=25')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          if (!d || !d.ok || !d.payouts || !d.payouts.length) return;
+          document.getElementById('payoutsEmpty').classList.add('hidden');
+          document.getElementById('payoutsWrap').classList.remove('hidden');
+          document.getElementById('payoutRows').innerHTML = d.payouts.map(function (p) {
+            // A name links to its profile only when the server offered one —
+            // the client never decides who is visible.
+            var who = p.profileUrl && !p.masked
+              ? '<a href="' + esc(p.profileUrl) + '">' + esc(p.name) + '</a>'
+              : esc(p.name);
+            var links = (p.identities || []).map(function (i) {
+              return i.url
+                ? ' <a href="' + esc(i.url) + '" target="_blank" rel="noreferrer noopener">@' + esc(i.handle) + '</a>'
+                : ' <span class="fine">@' + esc(i.handle) + '</span>';
+            }).join('');
+            var proof = (p.signatures || []).length
+              ? '<a href="https://solscan.io/tx/' + esc(p.signatures[0]) + '" target="_blank" rel="noreferrer noopener">Solscan &#8599;</a>'
+              : '<span class="fine">&mdash;</span>';
+            return '<tr><td>' + esc(p.weekIndex) + '</td><td>' + who + links +
+                   ' <span class="fine">' + esc(p.walletShort) + '</span></td><td>' +
+                   fmt(p.amount) + ' LEW</td><td>' + proof + '</td></tr>';
+          }).join('');
+        })
+        .catch(function () { /* payouts are additive; the page stands without them */ });
+    })();
+  </script>
+  <script defer src="/assets/nav.js"></script>
+</body>
+</html>

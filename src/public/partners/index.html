@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <title>WinLEW Sponsors & Partners</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="WinLEW's verified sponsors, community partners, and ecosystem-support history — evidence-based, not a promotional logo wall." />
+  <link rel="canonical" href="https://winlew.co/partners/" />
+  <meta property="og:title" content="WinLEW Sponsors & Partners" />
+  <meta property="og:description" content="Verified relationships and ecosystem support, honestly labeled." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/partners/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    .hidden { display: none !important; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      padding: 0;
+      margin: 0;
+      line-height: 1.7;
+    }
+    /* overflow-x:hidden lives on html only, not body — body also has its
+       own max-width+margin:auto (a narrower, centered box), and body-level
+       overflow-x:hidden clips ANY child to body's own box, silently
+       defeating .nav's intentional full-bleed edge-to-edge extension past
+       that box (see assets/nav.css / docs/site-navigation.md). html's own
+       overflow-x:hidden already fully covers the "no page-level horizontal
+       scroll" job (it's the true root scroller/clipper), so body doesn't
+       need a second, narrower copy — found 2026-07-18 when the nav's
+       account area grew wide enough to actually need that bled space and
+       the clip became visibly wrong instead of an invisible no-op. */
+    html { overflow-x: hidden; }
+    .wlPageShell { max-width: 1000px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin-bottom: 8px; }
+    h1 { font-size: clamp(30px, 5vw, 44px); margin-top: 0; }
+    h2 { font-size: clamp(18px, 2.6vw, 22px); margin-top: 0; }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header.wlHero { text-align: left; margin-bottom: 8px; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624; border-radius: 20px; padding: 26px; margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: 0.85; }
+    code { background: #2e1f16; padding: 2px 6px; border-radius: 6px; font-size: 0.9em; word-break: break-all; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid #4e3624; font-weight: 850; font-size: 13px; text-decoration: none; cursor: pointer; color: inherit; font-family: inherit; }
+    .btn.primary { background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22)); }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .status-note { border-left: 3px solid #d6a866; padding: 10px 14px; background: rgba(214,168,102,.08); border-radius: 0 10px 10px 0; margin-top: 14px; font-size: 14px; }
+
+    .partnerGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-top: 8px; align-items: start; }
+    .partnerMonogram {
+      width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 15px; color: #1b120e;
+      background: linear-gradient(135deg, #d6a866, #7d5837);
+    }
+    .partnerHead .partnerTitle { display: flex; align-items: center; gap: 10px; }
+    .partnerCard {
+      background: linear-gradient(180deg, rgba(27,18,14,.92), rgba(19,12,9,.96));
+      border: 1px solid #4e3624; border-radius: 18px; padding: 20px;
+      box-shadow: 0 12px 32px rgba(0,0,0,.24);
+      display: flex; flex-direction: column;
+      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+    .partnerCard:hover { transform: translateY(-3px); border-color: rgba(214,168,102,.34); box-shadow: 0 18px 44px rgba(0,0,0,.3); }
+    .partnerHead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
+    .partnerCard h3 { margin: 0; font-size: 17px; }
+    .partnerMeta { font-size: 12px; opacity: 0.75; margin-top: 4px; }
+    .partnerSummary { margin: 12px 0; }
+    .partnerLinks { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .disclaimer { margin: 10px 0; font-size: 13px; }
+
+    .statusPill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; border: 1px solid #4e3624; white-space: nowrap; }
+    .statusPill.active { background: rgba(85,240,165,.12); color: #55f0a5; border-color: rgba(85,240,165,.3); }
+    .statusPill.historical, .statusPill.completed { background: rgba(255,255,255,.06); color: #f6efe8; }
+    .statusPill.unconfirmed { background: rgba(255,179,71,.12); color: #ffb347; border-color: rgba(255,179,71,.3); }
+
+    .tableWrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 12px; }
+    .tableWrap table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 0; }
+    .tableWrap th, .tableWrap td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #4e3624; vertical-align: top; }
+    .tableWrap th { color: #e7c18f; font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; }
+
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+<header class="wlHero" id="about">
+  <div class="wlHeroBanner"><img src="/images/page-headers/partners.png" alt="Sponsors &amp; Partners — meet the partners building with us" loading="lazy" /></div>
+  <div class="wlHeroMain">
+    <span class="wlKicker">🤝 Ecosystem relationships · Evidence-based</span>
+    <h1 class="wlHeroTitle">Sponsors &amp; Partners<br><span class="wlHeroTitleAccent">Relationships, not a logo wall.</span></h1>
+    <p class="wlHeroSub">A historical, evidence-based record of WinLEW's community collaborations and ecosystem support — not a promotional logo wall or a paid-placement directory.</p>
+    <div class="wlChipRow">
+      <span class="wlChip">🤝 Evidence-based</span>
+      <span class="wlChip">🚫 No paid placement</span>
+      <span class="wlChip">📋 Historical record</span>
+    </div>
+    <div class="ctaRow" style="justify-content:flex-start;margin-top:16px;">
+      <a class="btn primary" href="#partnerGrid">View Partners ↓</a>
+      <a class="btn" href="/governance/">Governance →</a>
+    </div>
+  </div>
+  <div class="wlHeroSide">
+    <div class="wlEyebrow">Directory</div>
+    <div class="wlHeroStatGrid">
+      <div class="wlStat"><div class="n" id="heroPartnerCount">—</div><div class="l">Partner records</div></div>
+      <div class="wlStat"><div class="n" id="heroActivePartnerCount">—</div><div class="l">Currently active</div></div>
+      <div class="wlStat"><div class="n" id="heroHistoricalPartnerCount">—</div><div class="l">Historical</div></div>
+      <div class="wlStat"><div class="n" id="heroEcosystemSupportCount">—</div><div class="l">Ecosystem milestones</div></div>
+    </div>
+    <div class="wlHeroNote">Listing here never implies financial endorsement or investment — each record links to its own public evidence.</div>
+  </div>
+</header>
+
+<div class="box wlIn">
+  <p class="disclaimer muted">Listing here does not imply financial endorsement, investment, or an ongoing active relationship unless explicitly stated with current evidence. No token prices or market data are shown on this page, and partners are not ranked. Each record links to its own public evidence.</p>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Relationships</div>
+  <h2>Community &amp; ecosystem partners</h2>
+  <div id="partnerGrid" class="partnerGrid">
+    <div class="muted">Loading…</div>
+  </div>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Ledger</div>
+  <h2>Project Milestones and Ecosystem Support</h2>
+  <p class="muted">Verified purchases, registrations, and programs the project itself ran or paid for — kept separate from the partnerships above. Paid listing/infrastructure services are not sponsorships.</p>
+  <div class="tableWrap">
+    <table>
+      <thead>
+        <tr><th>Item</th><th>Category</th><th>Summary</th><th>Verification</th><th>Evidence</th></tr>
+      </thead>
+      <tbody id="ecosystemBody">
+        <tr><td colspan="5" class="muted">Loading…</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="status-note" id="ecosystemNotice"></div>
+</div>
+
+<footer>
+  <a href="/">← Back to WinLEW</a> · <a href="/transparency/">Transparency Center</a> · <a href="/burn/">Burn Center</a> · <a href="/whitepaper/">Whitepaper</a>
+</footer>
+</div>
+
+<script src="/assets/wallet-auth.js"></script>
+<script src="./js/app.js"></script>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

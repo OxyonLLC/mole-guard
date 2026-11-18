@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <title>WinLEW Modules & Roadmap Status</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="What WinLEW has actually built: every live module, ongoing program, and deferred roadmap item — one canonical, validated status center." />
+  <link rel="canonical" href="https://winlew.co/modules/" />
+  <meta property="og:title" content="WinLEW Modules & Roadmap Status" />
+  <meta property="og:description" content="What WinLEW has actually built: every live module, ongoing program, and deferred roadmap item — one canonical, validated status center." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/modules/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    .hidden { display: none !important; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      padding: 0;
+      margin: 0;
+      line-height: 1.7;
+    }
+    /* overflow-x:hidden lives on html only, not body — body also has its
+       own max-width+margin:auto (a narrower, centered box), and body-level
+       overflow-x:hidden clips ANY child to body's own box, silently
+       defeating .nav's intentional full-bleed edge-to-edge extension past
+       that box (see assets/nav.css / docs/site-navigation.md). html's own
+       overflow-x:hidden already fully covers the "no page-level horizontal
+       scroll" job (it's the true root scroller/clipper), so body doesn't
+       need a second, narrower copy — found 2026-07-18 when the nav's
+       account area grew wide enough to actually need that bled space and
+       the clip became visibly wrong instead of an invisible no-op. */
+    html { overflow-x: hidden; }
+    .wlPageShell { max-width: 1160px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin-bottom: 8px; }
+    h1 { font-size: clamp(30px, 5vw, 44px); margin-top: 0; }
+    h2 { font-size: clamp(18px, 2.6vw, 22px); margin-top: 0; }
+    .wlHeroTitle { font-size: clamp(38px, 6vw, 68px); line-height: .96; letter-spacing: -1.6px; }
+    .wlHeroTitle .glow { color: #fff7e8; text-shadow: 0 0 28px rgba(214,168,102,.28); }
+    .wlHeroTitleAccent { font-size: clamp(24px, 3.6vw, 38px); letter-spacing: -.8px; color: #f6efe8; opacity: .92; }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid #4e3624; font-weight: 850; font-size: 13px; text-decoration: none; cursor: pointer; color: inherit; font-family: inherit; }
+    .btn.primary { background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22)); }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .ctaRow { display: flex; gap: 10px; flex-wrap: wrap; }
+    header.wlHero { text-align: left; margin-bottom: 8px; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624; border-radius: 20px; padding: 26px; margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+      position: relative; overflow: hidden;
+    }
+    .box::before{
+      content:"";position:absolute;inset:-2px;pointer-events:none;opacity:.7;z-index:0;
+      background:radial-gradient(560px 180px at 18% 0%, rgba(214,168,102,.12), transparent 55%);
+      filter:blur(16px);
+    }
+    .box>*{position:relative;z-index:1}
+    .muted { opacity: 0.85; }
+
+    .phaseRail { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+    .railDot { flex: 1; height: 8px; border-radius: 99px; background: rgba(255,255,255,.10); }
+    .railDot.complete { background: linear-gradient(90deg, #ffd46a, #d99a2b); }
+    .railDot.ongoing { background: linear-gradient(90deg, #ffd46a, #7b4c22); }
+    .wlHeroStatGrid .wlStat { padding: 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.10); background: rgba(0,0,0,.22); }
+    .wlHeroStatGrid .n { font-size: 22px; }
+    .roadmapProgress { margin-top: 16px; }
+    .roadmapProgressTrack { height: 8px; border-radius: 999px; background: rgba(255,255,255,.06); overflow: hidden; display: flex; gap: 2px; }
+    .roadmapProgressSeg { flex: 1; background: rgba(255,255,255,.05); border-radius: 999px; transition: background .2s ease; }
+    .roadmapProgressSeg.complete { background: linear-gradient(90deg, #d6a866, #7d5837); }
+    .roadmapProgressSeg.ongoing { background: linear-gradient(90deg, rgba(85,150,240,.65), rgba(85,150,240,.35)); }
+    .roadmapProgressLabel { font-size: 11.5px; opacity: .75; margin-top: 8px; }
+    .phaseGrid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 14px; }
+    @media (max-width: 900px) { .phaseGrid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .phaseGrid { grid-template-columns: 1fr; } }
+    .phaseBox {
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid #4e3624; border-radius: 16px; padding: 16px;
+      transition: transform .16s ease, border-color .16s ease;
+    }
+    .phaseBox:hover { transform: translateY(-2px); border-color: rgba(214,168,102,.32); }
+    .phaseBox .num { font-size: 11px; color: #e7c18f; text-transform: uppercase; letter-spacing: .4px; }
+    .phaseBox .title { font-weight: 800; margin-top: 4px; font-size: 14px; }
+    .phaseState { display: inline-flex; margin-top: 8px; padding: 4px 9px; border-radius: 999px; font-size: 11px; font-weight: 800; border: 1px solid var(--line); }
+    .phaseState.complete { background: rgba(85,240,165,.14); color: #55f0a5; border-color: rgba(85,240,165,.3); }
+    .phaseState.ongoing { background: rgba(85,150,240,.14); color: #86b8ff; border-color: rgba(85,150,240,.3); }
+    .phaseItems { margin-top: 10px; display: grid; gap: 4px; }
+    .phaseItem { font-size: 12px; display: flex; justify-content: space-between; gap: 6px; }
+    .phaseItemState { font-size: 10.5px; font-weight: 800; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--line); white-space: nowrap; }
+    .phaseItemState.complete, .phaseItemState.live { color: #55f0a5; border-color: rgba(85,240,165,.3); }
+    .phaseItemState.ongoing { color: #86b8ff; border-color: rgba(85,150,240,.3); }
+    .phaseItemState.deferred { color: #ffc466; border-color: rgba(255,196,102,.3); }
+    .phaseItemState.not-started { color: rgba(246,239,232,.85); }
+    .phaseItemState.removed-from-scope { color: #ff8fa3; border-color: rgba(255,107,138,.3); }
+
+    .ongoingStrip { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .ongoingChip { padding: 8px 12px; border-radius: 999px; background: rgba(85,150,240,.10); border: 1px solid rgba(85,150,240,.28); font-size: 13px; }
+
+    .filterRow { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+    .filterGroup { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+    .filterGroup label { font-size: 11px; text-transform: uppercase; letter-spacing: .4px; color: #e7c18f; margin-right: 4px; }
+    .filterChip { cursor: pointer; padding: 6px 11px; border-radius: 999px; background: rgba(255,255,255,.04); border: 1px solid #4e3624; font-size: 12.5px; color: #f6efe8; }
+    .filterChip.active { background: linear-gradient(90deg, rgba(214,168,102,.22), rgba(125,88,55,.20)); border-color: rgba(214,168,102,.34); }
+    .filterChip:focus-visible { outline: 2px solid #d6a866; outline-offset: 2px; }
+
+    .sectionBlock { margin-top: 26px; }
+    .sectionBlock h2 { display: flex; align-items: center; gap: 8px; }
+    .moduleGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 12px; }
+    @media (max-width: 980px) { .moduleGrid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 620px) { .moduleGrid { grid-template-columns: 1fr; } }
+    .moduleCard {
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)), linear-gradient(180deg, rgba(27,18,14,.92), rgba(19,12,9,.96));
+      border: 1px solid #4e3624; border-radius: 20px; padding: 18px 20px;
+      display: flex; flex-direction: column; gap: 8px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.28);
+      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease, background .16s ease;
+    }
+    .moduleCard:hover { transform: translateY(-3px); border-color: rgba(214,168,102,.42); box-shadow: 0 18px 44px rgba(0,0,0,.32); }
+    .moduleTop { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .modIcon {
+      width: 44px; height: 44px; border-radius: 14px; font-size: 22px;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(180deg, rgba(214,168,102,.28), rgba(125,88,55,.38));
+      border: 1px solid rgba(214,168,102,.28);
+    }
+    .modNum { color: #e7c18f; font-size: 11px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+    .mHead h3 { margin: 4px 0 0; font-size: 16.5px; color: #f6efe8; letter-spacing: -.2px; }
+    .statusPill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 800; border: 1px solid #4e3624; white-space: nowrap; }
+    .statusPill .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+    .statusPill.live { background: rgba(85,240,165,.14); color: #55f0a5; border-color: rgba(85,240,165,.3); }
+    .statusPill.beta { background: rgba(85,150,240,.14); color: #86b8ff; border-color: rgba(85,150,240,.3); }
+    .statusPill.partial { background: rgba(255,196,102,.14); color: #ffc466; border-color: rgba(255,196,102,.3); }
+    .statusPill.ongoing { background: rgba(85,150,240,.14); color: #86b8ff; border-color: rgba(85,150,240,.3); }
+    .statusPill.planned, .statusPill.deferred, .statusPill.blocked { background: rgba(255,255,255,.06); color: #f6efe8; }
+    .statusPill.retired, .statusPill.historical { background: rgba(255,255,255,.04); color: rgba(246,239,232,.85); }
+    .mDesc { font-size: 13.5px; color: rgba(246,239,232,.85); flex: 1; }
+    .mMeta { font-size: 11.5px; opacity: .7; display: flex; flex-wrap: wrap; gap: 8px; }
+    .mProgress { height: 6px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; margin-top: 2px; }
+    .mProgressFill { height: 100%; background: linear-gradient(90deg, #d6a866, #7d5837); }
+    .mProgressLabel { font-size: 11px; opacity: .7; }
+    .mLinks { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+    .mLinks a { font-size: 12.5px; padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,.05); border: 1px solid #4e3624; }
+    .mLinks a:hover { background: rgba(255,255,255,.09); text-decoration: none; }
+    .ongoingBadge { font-size: 10.5px; font-weight: 800; color: #86b8ff; }
+
+    .twoCol { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
+    @media (max-width: 640px) { .twoCol { grid-template-columns: 1fr; } }
+    .detailItem { padding: 16px; border-radius: 16px; background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.10); }
+    .detailItem strong { display: block; margin-bottom: 6px; color: #f6efe8; }
+    .detailItem p { margin: 0; font-size: 13.5px; }
+
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+<header class="wlHero" id="about">
+  <div class="wlHeroBanner"><img src="/images/page-headers/modules.png" alt="Modules &amp; Roadmap — explore features and our path forward" loading="lazy" /></div>
+  <div class="wlHeroMain">
+    <span class="wlKicker">🧩 WinLEW ecosystem hub · Canonical registry</span>
+    <h1 class="wlHeroTitle"><span class="glow">Modules</span><br><span class="wlHeroTitleAccent">The living blueprint of the WinLEW ecosystem.</span></h1>
+    <p class="wlHeroSub">What WinLEW has actually built, honestly labeled — driven by one validated registry, not scattered status text. Last verified dates are shown per module.</p>
+    <div class="wlChipRow">
+      <span class="wlChip">🔓 No fake progress</span>
+      <span class="wlChip">📅 Per-module verified dates</span>
+      <span class="wlChip">🧾 Single canonical registry</span>
+    </div>
+    <div class="ctaRow" style="justify-content:flex-start;margin-top:16px;">
+      <a class="btn primary" href="#sections">Browse Modules ↓</a>
+      <!-- Pointed at github.com/LewSales/mole-gaurd, which is PRIVATE — verified
+           404 for any logged-out visitor, so "Read the Docs" was a dead end for
+           everyone who wasn't the owner. Same fix the owner chose for the
+           governance docs: serve it on-site at /modules/system/. -->
+      <a class="btn" href="/modules/system/">Read the Docs →</a>
+    </div>
+  </div>
+  <div class="wlHeroSide">
+    <div class="wlEyebrow">System snapshot</div>
+    <div class="wlHeroStatGrid">
+      <div class="wlStat"><div class="n" id="heroModuleCount">—</div><div class="l">Modules tracked</div></div>
+      <div class="wlStat"><div class="n" id="heroLiveCount">—</div><div class="l">Live today</div></div>
+      <div class="wlStat"><div class="n" id="heroPhaseCount">—</div><div class="l">Roadmap phases</div></div>
+      <div class="wlStat"><div class="n" id="heroPhaseComplete">—</div><div class="l">Phases complete</div></div>
+    </div>
+    <div class="phaseRail" id="heroPhaseRail" title="Roadmap phase progression"></div>
+    <div class="wlHeroProgressLabel" id="heroPhaseProgressLabel">Loading phase completion…</div>
+    <div class="wlHeroNote">Every fact on this page comes from one validated registry (<code>src/mole/modulesData.js</code>), not scattered page copy.</div>
+  </div>
+</header>
+
+<div class="box wlGlow wlIn" id="roadmap">
+  <div class="wlEyebrow">Roadmap visualization</div>
+  <h2>Original roadmap, phase by phase</h2>
+  <p class="muted" id="roadmapSummary">Loading…</p>
+  <div class="roadmapProgress" id="roadmapProgress"></div>
+  <div class="phaseGrid" id="phaseGrid"><div class="muted">Loading…</div></div>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Live activity</div>
+  <h2>Ongoing programs</h2>
+  <p class="muted">Platform availability and ongoing activity are different things — these systems are fully shipped; the activity itself never has a "100%" because it recurs.</p>
+  <div class="ongoingStrip" id="ongoingStrip"></div>
+</div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Directory</div>
+  <h2>Filter modules</h2>
+  <div class="filterRow">
+    <div class="filterGroup" id="categoryFilters" role="group" aria-label="Filter by category">
+      <label id="categoryFilterLabel">Category</label>
+    </div>
+  </div>
+  <div class="filterRow">
+    <div class="filterGroup" id="statusFilters" role="group" aria-label="Filter by status">
+      <label id="statusFilterLabel">Status</label>
+    </div>
+  </div>
+</div>
+
+<div id="sections"><div class="box muted">Loading modules…</div></div>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Orientation</div>
+  <h2>How to use this page</h2>
+  <div class="twoCol">
+    <div class="detailItem"><strong>For newcomers</strong><p class="muted">Start here to understand what WinLEW has actually built, in order, without digging through Discord history or scattered announcements.</p></div>
+    <div class="detailItem"><strong>For the community</strong><p class="muted">Use this page as the canonical, shareable reference when explaining the roadmap and what's live, ongoing, or still ahead.</p></div>
+  </div>
+</div>
+
+<footer>
+  <a href="/">← Back to WinLEW</a> · <a href="/governance/">Governance</a> · <a href="/burn/">Burn Center</a> · <a href="/transparency/">Transparency Center</a>
+  <!-- Second dead private-repo link, same as the CTA above. Also dropped the
+       bare "src/mole/modulesData.js" path: naming a file a visitor cannot open
+       reads as evidence while proving nothing — the published page explains the
+       same guarantees in terms anyone can check. -->
+  <div style="margin-top:8px;"><a href="/modules/system/">How module status works — the rules behind these labels →</a></div>
+</footer>
+</div>
+
+<script src="/assets/wallet-auth.js"></script>
+<script src="./js/app.js"></script>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

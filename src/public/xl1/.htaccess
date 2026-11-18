@@ -1,0 +1,47 @@
+# winlew.co/xl1/ — served from this host, no redirect.
+#
+# This file used to send everything under /xl1/ to a Netlify copy, because the
+# node data changed every five minutes and an uploaded copy could never keep up.
+#
+# It does not need to any more. The producer data now lives in a small public
+# repository the nodes write directly:
+#
+#   https://github.com/LewSales/xl1-status-data
+#
+# and the pages fetch it cross-origin from raw.githubusercontent, which sends
+# access-control-allow-origin: *. So the only thing that has to be uploaded here
+# is the pages themselves, and those change rarely.
+#
+# That is strictly better than the redirect was: the address bar stays on
+# winlew.co instead of bouncing to a netlify.app domain, and there is no build
+# step between a node publishing and a visitor seeing it.
+#
+# Why the redirect went away rather than being tidied: routing every data update
+# through a site deploy cost about 550 deploys a day, exhausted the host's
+# monthly build allowance in three days, and froze the pages on an hour-old
+# snapshot while both producers were healthy. Publishing a JSON file should not
+# rebuild a website.
+
+# Never allow Apache to turn a missing index into a public file inventory.
+# Individual, explicitly named data files remain directly fetchable.
+Options -Indexes
+
+# The pages are small and change rarely, but when one does change a visitor
+# holding a cached copy would keep polling with the old data URL. Revalidate.
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# The shared/*.test.js files are Node tests kept beside the code they test.
+# They are not part of any page, so do not serve them.
+<FilesMatch "\.test\.js$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleDisplayName</key>
+        <string>WinLEW</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<!-- Deep-link return path, e.g. co.winlew.app://auth-callback?session=...
+	     The matching Android registration is the VIEW/BROWSABLE intent-filter
+	     in mobile/android/app/src/main/AndroidManifest.xml; both are needed for
+	     the appUrlOpen listener in src/public/assets/nav.js to ever fire.
+	     AppDelegate already forwards application(_:open:options:) to
+	     ApplicationDelegateProxy, so no Swift change is required.
+
+	     Same caveat as Android: this is an entry point any other app can
+	     invoke, and it is safe today only because the listener parses and
+	     logs. Treat anything arriving here as untrusted. -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>co.winlew.app</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>co.winlew.app</string>
+			</array>
+		</dict>
+	</array>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<!-- Capacitor generates "armv7" here, which is a 32-bit capability no
+	     device running this app can have: IPHONEOS_DEPLOYMENT_TARGET is 13.0
+	     and iOS dropped 32-bit hardware at 11. arm64 is what the binary
+	     actually requires. -->
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>arm64</string>
+	</array>
+	<!-- The wrapper ships no cryptography of its own — it loads winlew.co over
+	     the system's own HTTPS/TLS, which is exempt. Declaring it here is what
+	     stops every TestFlight upload parking in "Missing Compliance" until
+	     someone answers the same question by hand in App Store Connect.
+	     Re-check this if the app ever gains native crypto beyond HTTPS. -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<!-- Applies during launch, before any view controller exists: without it
+	     the splash screen (dark) gets the default dark status-bar text and the
+	     clock is unreadable for that moment. Once the bridge is up,
+	     UIViewControllerBasedStatusBarAppearance hands control to
+	     CAPBridgeViewController and nav.js's StatusBar.setStyle({style:'DARK'})
+	     — Capacitor's "DARK" means light text for a dark background — keeps it
+	     the same. -->
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
+</dict>
+</plist>

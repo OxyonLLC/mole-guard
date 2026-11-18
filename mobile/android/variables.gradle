@@ -1,0 +1,32 @@
+// These values are read by :app AND by every Capacitor plugin module under
+// mobile/node_modules/@capacitor/*/android — each one falls back to its own
+// Capacitor-6 default (compile/target 34) only when rootProject.ext is unset,
+// so bumping here bumps the whole build in one place.
+ext {
+    minSdkVersion = 22
+    // 35 = Android 15. Google Play requires new uploads to target 35, and
+    // targeting it also opts the app into forced edge-to-edge — the system no
+    // longer insets the window for the status/navigation bars, and
+    // android:statusBarColor / navigationBarColor become no-ops. MainActivity
+    // applies those insets itself; see the comment there before changing this.
+    // Requires Android Gradle plugin >= 8.6 (root build.gradle) and platform
+    // android-35 + build-tools 35.0.0 in the SDK.
+    // 36 = Android 16 (2026-10-18): Play requires new apps and updates to target
+    // 36 from 2026-08-31. Edge-to-edge can no longer be opted out of there, which
+    // changes nothing here (MainActivity already applies the insets), and
+    // predictive back is on by default, which the App plugin's
+    // OnBackPressedCallback (androidx.activity) already handles.
+    compileSdkVersion = 36
+    targetSdkVersion = 36
+    androidxActivityVersion = '1.8.0'
+    androidxAppCompatVersion = '1.6.1'
+    androidxCoordinatorLayoutVersion = '1.2.0'
+    androidxCoreVersion = '1.13.1'
+    androidxFragmentVersion = '1.6.2'
+    coreSplashScreenVersion = '1.0.1'
+    androidxWebkitVersion = '1.9.0'
+    junitVersion = '4.13.2'
+    androidxJunitVersion = '1.1.5'
+    androidxEspressoCoreVersion = '3.5.1'
+    cordovaAndroidVersion = '10.1.1'
+}

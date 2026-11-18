@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <title>Who We Are — WinLEW</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="Who runs WinLEW, how to verify it's real, and everything a wallet, exchange, or new holder needs to confirm the project's identity on-chain." />
+  <link rel="canonical" href="https://winlew.co/who-we-are/" />
+  <meta property="og:title" content="Who We Are — WinLEW" />
+  <meta property="og:description" content="A real, publicly-run Solana project — the people, the official channels, and the on-chain proof." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/who-we-are/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    html { overflow-x: hidden; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      line-height: 1.7;
+    }
+    .wlPageShell { max-width: 1120px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin: 0 0 10px; }
+    h1 { font-size: clamp(32px, 4.8vw, 50px); }
+    h2 { font-size: clamp(20px, 2.8vw, 28px); }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624;
+      border-radius: 20px;
+      padding: 26px;
+      margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: 0.85; }
+    .linkGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .linkCard {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      text-decoration: none;
+      color: inherit;
+    }
+    .linkCard:hover { text-decoration: none; border-color: rgba(214,168,102,.34); background: rgba(255,255,255,.07); }
+    .linkCard strong { color: #f6efe8; }
+    .linkCard span { color: rgba(246,239,232,.74); font-size: 14px; }
+    .ctaRow { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid #4e3624;
+      font-weight: 850;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    .btn.primary { background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22)); }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .personCard {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(214,168,102,.22);
+      background: linear-gradient(180deg, rgba(214,168,102,.07), rgba(255,255,255,.03));
+    }
+    .personAvatar {
+      width: 56px; height: 56px; border-radius: 16px; flex-shrink: 0;
+      display: grid; place-items: center; font-size: 26px;
+      background: radial-gradient(circle at 35% 30%, rgba(214,168,102,.55), rgba(125,88,55,.85));
+      border: 1px solid rgba(214,168,102,.34);
+    }
+    .personCard .role { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: rgba(246,239,232,.85); }
+    .personCard .name { font-weight: 900; font-size: 17px; color: #f6efe8; }
+    .addressRow {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      padding: 12px 16px; border-radius: 14px;
+      background: rgba(0,0,0,.28); border: 1px solid rgba(255,255,255,.08);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px; word-break: break-all;
+    }
+    .checklist { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+    .checklist li { display: flex; gap: 10px; align-items: flex-start; color: rgba(246,239,232,.86); }
+    .checklist li::before { content: "✅"; flex-shrink: 0; }
+    .factStrip { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; margin-top: 16px; }
+    .factStrip .n { font-size: 22px; font-weight: 950; color: #f6efe8; line-height: 1.1; }
+    .factStrip .l { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: rgba(246,239,232,.85); margin-top: 4px; }
+    .addrLabel { font-size: 12px; font-weight: 800; color: rgba(246,239,232,.85); margin: 18px 0 6px; }
+    .addrLabel:first-of-type { margin-top: 10px; }
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+    @media (max-width: 900px) {
+      .linkGrid, .factStrip { grid-template-columns: 1fr 1fr; }
+      .wlPageShell { padding: 22px 16px 32px; }
+    }
+    @media (max-width: 560px) {
+      .factStrip { grid-template-columns: 1fr; }
+      .personCard { flex-direction: column; align-items: flex-start; text-align: left; }
+    }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+  <header class="wlHero" id="who-overview">
+    <div class="wlHeroMain">
+      <span class="wlKicker">WINLEW • WHO WE ARE</span>
+      <h1 class="wlHeroTitle">A real project, run<br><span class="wlHeroTitleAccent">in the open.</span></h1>
+      <p class="wlHeroSub">If your wallet warned you that winlew.co is "new" or unverified, this page is for you: who's actually behind WinLEW, how long it's been operating, and how to independently check every claim yourself — no trust required, just the chain.</p>
+      <div class="wlChipRow">
+        <span class="wlChip">Token live on Solana since Dec 2024</span>
+        <span class="wlChip">Public, on-chain burns since Feb 2025</span>
+        <span class="wlChip">Every reserve wallet independently verifiable</span>
+      </div>
+      <div class="ctaRow">
+        <a class="btn primary" href="/community/">💬 Talk to us on Discord ↗</a>
+        <a class="btn" href="/transparency/">Open Transparency Center</a>
+        <a class="btn" href="/whitepaper/">Read the Whitepaper</a>
+        <a class="btn" href="/about/">See the full platform →</a>
+      </div>
+    </div>
+    <div class="wlHeroSide">
+      <div class="wlEyebrow">At a glance</div>
+      <div class="factStrip">
+        <div><div class="n">Dec 2024</div><div class="l">Token created on-chain</div></div>
+        <div><div class="n">Feb 2025</div><div class="l">First verified burn</div></div>
+        <div><div class="n">10</div><div class="l">Public reserve &amp; lock addresses</div></div>
+        <div><div class="n">0</div><div class="l">Times we've asked for a seed phrase</div></div>
+      </div>
+      <div class="wlHeroNote">Every figure above links to a real transaction or address further down this page.</div>
+    </div>
+  </header>
+
+  <div class="box wlGlow wlIn">
+    <div class="wlEyebrow">The team</div>
+    <h2>Who actually runs this</h2>
+    <p class="muted">WinLEW is not an anonymous drop. The founder and developer has been publicly named on this site's own Transparency Center since it launched — the same identity that has signed every dev-reserve transaction visible on-chain. The same team builds <a href="https://oxyon.io/" target="_blank" rel="noreferrer noopener">Oxyon ↗</a>, the technology behind Oxyon Wallet (formerly GeoWallet) and the tools WinLEW runs on (<a href="/news/winlew-isnt-going-away/">why</a>).</p>
+    <div class="personCard">
+      <div class="personAvatar">🛠️</div>
+      <div>
+        <div class="role">Founder &amp; Developer</div>
+        <div class="name">@LewSales</div>
+        <div class="muted" style="font-size:14px;margin-top:4px;">Publicly linked to the Developer Reserve wallet (<code>dev.winlew.sol</code>) on <a href="/transparency/">/transparency/</a> — <a href="https://x.com/LewSales" target="_blank" rel="noreferrer noopener">𝕏 @LewSales ↗</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box wlIn">
+    <div class="wlEyebrow">Official channels</div>
+    <h2>Where to actually find us</h2>
+    <p class="muted">These are the only accounts and links WinLEW uses. We will never DM you first, ask you to move to a different site to "verify," or request your seed phrase in any channel below.</p>
+    <div class="linkGrid">
+      <a class="linkCard" href="/community/">
+        <strong>💬 Discord</strong>
+        <span>The main community — team, bots, support, and every announcement.</span>
+      </a>
+      <!-- These two were swapped, and contradicted this page's own line further
+           down ("X (Twitter) Faucet Reserve — winlew.sol — held by
+           @WinLewToken"). Settled 2026-08-04 by the owner's DNS:
+           faucet.winlew.xyz -> x.com/winlewtoken, burn.winlew.xyz ->
+           x.com/leteveryonewin. Same correction applied to /links/. -->
+      <a class="linkCard" href="https://x.com/WinLewToken" target="_blank" rel="noreferrer noopener">
+        <strong>𝕏 @WinLewToken</strong>
+        <span>Runs the X/Twitter faucet and giveaway program (winlew.sol reserve).</span>
+      </a>
+      <a class="linkCard" href="https://x.com/LetEveryOneWin" target="_blank" rel="noreferrer noopener">
+        <strong>𝕏 @LetEveryOneWin</strong>
+        <span>The official project account — announcements and the burn program.</span>
+      </a>
+      <a class="linkCard" href="https://x.com/LewSales" target="_blank" rel="noreferrer noopener">
+        <strong>𝕏 @LewSales</strong>
+        <span>Founder &amp; developer's personal account.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="box wlIn">
+    <div class="wlEyebrow">On-chain proof</div>
+    <h2>Every wallet &amp; contract, in one place</h2>
+    <p class="muted">Don't take our word for it — every address below is real, on-chain, and independently checkable. We're putting them here so nobody has to go dig for them.</p>
+
+    <div class="addrLabel">Token mint (contract address)</div>
+    <div class="addressRow">
+      <span>DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump</span>
+      <button class="btn" type="button" data-copy="DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump">📋 Copy</button>
+      <a class="btn" href="https://solscan.io/token/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+    </div>
+
+    <div class="addrLabel">Developer Reserve — dev.winlew.sol / lewsales.sol — held by @LewSales</div>
+    <div class="addressRow">
+      <span>D6d5byBxBcddovgQ2UPUMpPDpJukjyC7C4Hcg3v4FRkZ</span>
+      <button class="btn" type="button" data-copy="D6d5byBxBcddovgQ2UPUMpPDpJukjyC7C4Hcg3v4FRkZ">📋 Copy</button>
+      <a class="btn" href="https://solscan.io/account/D6d5byBxBcddovgQ2UPUMpPDpJukjyC7C4Hcg3v4FRkZ" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+    </div>
+
+    <div class="addrLabel">Discord &amp; Web Faucet Reserve — diglew.sol</div>
+    <div class="addressRow">
+      <span>FcEtZqVowuhF2hdysy7qxJYRhu1eNZ8ws2JqHUDmPPjE</span>
+      <button class="btn" type="button" data-copy="FcEtZqVowuhF2hdysy7qxJYRhu1eNZ8ws2JqHUDmPPjE">📋 Copy</button>
+      <a class="btn" href="https://solscan.io/account/FcEtZqVowuhF2hdysy7qxJYRhu1eNZ8ws2JqHUDmPPjE" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+    </div>
+
+    <div class="addrLabel">Burn Wallet — burn.winlew.sol</div>
+    <div class="addressRow">
+      <span>EX5nxVKgRKaJVZLfDUinXie6HQ5GPhKwkZ419pRGaZ74</span>
+      <button class="btn" type="button" data-copy="EX5nxVKgRKaJVZLfDUinXie6HQ5GPhKwkZ419pRGaZ74">📋 Copy</button>
+      <a class="btn" href="https://solscan.io/account/EX5nxVKgRKaJVZLfDUinXie6HQ5GPhKwkZ419pRGaZ74" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+    </div>
+
+    <div class="addrLabel">X (Twitter) Faucet Reserve — winlew.sol — held by @WinLewToken</div>
+    <div class="addressRow">
+      <span>GFxz42bib3o6kxmPgK95fMtBxRk16yaTvt5UBwC7EhAp</span>
+      <button class="btn" type="button" data-copy="GFxz42bib3o6kxmPgK95fMtBxRk16yaTvt5UBwC7EhAp">📋 Copy</button>
+      <a class="btn" href="https://solscan.io/account/GFxz42bib3o6kxmPgK95fMtBxRk16yaTvt5UBwC7EhAp" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+    </div>
+
+    <ul class="checklist" style="margin-top:16px;">
+      <!-- Said "34.8M+". That was the total before the 2026-08-01 burn of
+           14,878,231.210253 — 34.83M + 14.88M is exactly the 49,707,077.187484
+           that burnEvents.js, /burn/ and the whitepaper all report, so this
+           line simply never got updated after that burn. It understated the
+           project's own record by ~15M, which is the safe direction to be
+           wrong in and still wrong. Guarded now by
+           test/mole/whoWeAreBurnFigure.test.mjs so it cannot drift again. -->
+      <li>Every confirmed burn (49.7M+ WinLEW as of August 2026, toward a public 100M target) is listed with its own transaction signature on <a href="/burn/">Burn Center</a> — click "view transaction" on any entry and read it yourself.</li>
+      <li><!-- Was "(50M Jupiter Lock, 15M Team Lock, two Streamflow vesting contracts)" — it
+     omitted the 25M faucet-runway lock (created 2026-08-08) and the 19.19M
+     Developer Reserve lock (2026-08-11), understating locked supply by 44.19M.
+     Same drift the /transparency/ tokenomics guard exists to catch, on a page
+     that guard does not cover. All six verified on-chain 2026-08-11. -->
+        Team and community token locks (50M Jupiter Lock, 15M Team Lock, 25M Faucet Lock, 19.19M Developer Lock, two 20M Burn Locks added Aug 16 2026, and two Streamflow vesting contracts &mdash; 178.28M in total) are on-chain, program-owned escrow accounts, each with its own address — full detail on <a href="/transparency/">Transparency Center</a>.</li>
+      <li>Mint authority is renounced — supply can only ever go down (via a real burn instruction), never be inflated.</li>
+    </ul>
+  </div>
+
+  <div class="box wlIn">
+    <div class="wlEyebrow">Verify $WinLEW anywhere</div>
+    <h2>Not just our word — check it on every major tracker</h2>
+    <div class="linkGrid">
+      <a class="linkCard" href="https://dex.coinmarketcap.com/token/solana/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump/" target="_blank" rel="noreferrer noopener">
+        <strong>📈 CoinMarketCap</strong>
+        <span>Dexscan listing, live price and volume.</span>
+      </a>
+      <!-- Raydium pool, and the caption says so. DexScreener hides a pair with
+           no volume, so the primary PumpSwap page renders "no pair found"
+           (verified 2026-08-12); the GeckoTerminal card below is the one that
+           shows the primary market. Do not "correct" this back to Hmif58 — the
+           old caption claiming this link was the PumpSwap market was the bug. -->
+      <a class="linkCard" href="https://dexscreener.com/solana/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer noopener">
+        <strong>📊 DexScreener</strong>
+        <span>The established Raydium market — renders even at zero volume.</span>
+      </a>
+      <a class="linkCard" href="https://www.geckoterminal.com/solana/pools/Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL" target="_blank" rel="noreferrer noopener">
+        <strong>🦎 GeckoTerminal</strong>
+        <span>Independent chart and pool data.</span>
+      </a>
+      <a class="linkCard" href="https://rugcheck.xyz/tokens/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">
+        <strong>🔒 RugCheck</strong>
+        <span>Automated contract &amp; holder-risk scan.</span>
+      </a>
+      <a class="linkCard" href="https://solscan.io/token/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">
+        <strong>🔗 Solscan</strong>
+        <span>Full mint history, holders, and every transaction.</span>
+      </a>
+      <a class="linkCard" href="https://gmgn.ai/sol/token/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">
+        <strong>🐊 GMGN.AI</strong>
+        <span>Trading terminal view — security scan, holder breakdown.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="box wlGlow wlIn">
+    <div class="wlEyebrow">For wallet providers &amp; security reviewers</div>
+    <h2>If your wallet flagged this site</h2>
+    <p class="muted">Wallet security scanners (Phantom's, and others) sometimes flag newer domains as "unverified" by default — that's a domain-age heuristic, not a finding of anything malicious. A few things worth checking directly:</p>
+    <ul class="checklist">
+      <li>The <strong>token</strong> itself has been live on Solana mainnet since <strong>December 2024</strong> — independently checkable via the mint's own on-chain creation history, not just this website's age.</li>
+      <li>Every transaction this site ever asks a wallet to sign is a single, minimal SPL token transfer — the fee payer is always the user's own wallet, and the site never constructs an instruction that creates a token account for a different address (the exact instruction shape used by drainer kits).</li>
+      <li>Every destination address a user can send to from this site is published, address-by-address, at <a href="/transparency/">/transparency/</a> and <a href="/burn/">/burn/</a> — reviewable before approving anything.</li>
+      <li>This site never requests a seed phrase, private key, or an off-platform payment, in any flow, anywhere.</li>
+      <li>The original bot source is public: <a href="https://github.com/LewSales/Discord-Bot" target="_blank" rel="noreferrer noopener">github.com/LewSales/Discord-Bot ↗</a> — the faucet/price/community bot's real code, readable line by line.</li>
+    </ul>
+    <p class="muted" style="margin-top:14px;">If you're reviewing this domain for a wallet's allow-list or safety database, we're reachable at any time via the Discord above to answer questions directly.</p>
+  </div>
+
+  <footer>
+    <a href="/">← Back to WinLEW</a> · <a href="/about/">About the platform</a> · <a href="/transparency/">Transparency</a> · <a href="/burn/">Burn Center</a> · <a href="/whitepaper/">Whitepaper</a> · <a href="/policies/">Policies</a>
+  </footer>
+</div>
+
+<script src="/assets/wallet-auth.js"></script>
+<script defer src="/assets/nav.js"></script>
+<script>
+  document.querySelectorAll('button[data-copy]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy);
+        const original = btn.textContent;
+        btn.textContent = '✅ Copied';
+        setTimeout(() => { btn.textContent = original; }, 1500);
+      } catch (e) {
+        console.warn('[who-we-are] copy failed:', e);
+      }
+    });
+  });
+</script>
+</body>
+</html>

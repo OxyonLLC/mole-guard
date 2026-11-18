@@ -1,0 +1,20 @@
+{
+  "architecture": "apache-php-plus-existing-node",
+  "siteOrigin": "https://winlew.co",
+  "moleUpstream": "https://REPLACE.invalid",
+  "geoHackersUpstream": "https://REPLACE.invalid",
+  "geoAgoraUpstream": "https://REPLACE.invalid/geoagora-api",
+  "nodeMajor": 22,
+  "testIsolationFlagPresent": false,
+  "activatePayoutWorkers": false,
+  "gates": {
+    "apachePhpCurl": false, "pathInfo": false, "httpsCertificate": false,
+    "outboundUpstreams": false, "cacheAndDenyRules": false,
+    "existingRuntimeBaseline": false, "retainedAuxiliaryServices": false,
+    "persistentPathsPreserved": false, "consistentBackup": false,
+    "rollbackRehearsed": false, "privateEnvironmentInstalled": false,
+    "proxySecretsMatch": false, "singleWriterTopology": false,
+    "providerAcceptance": false, "androidDeviceAcceptance": false,
+    "manualAccessibility": false
+  }
+}

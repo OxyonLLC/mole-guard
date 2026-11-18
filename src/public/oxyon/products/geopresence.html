@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GeoPresence — Verify location · Oxyon</title>
+  <meta name="description" content="GeoPresence turns being somewhere into verifiable proof: signed check-ins with freshness, accuracy, and privacy built in — raw location stays private, proofs go public." />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon-16.png" />
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+  <meta name="theme-color" content="#0a0a0c" />
+</head>
+<body>
+
+  <header class="nav">
+    <a class="brand" href="../index.html">
+      <img class="brand-mark" src="../assets/logo-mark.png" srcset="../assets/logo-mark.png 1x, ../assets/logo-mark@2x.png 2x" alt="" aria-hidden="true" width="28" height="28" />
+      OXYON
+    </a>
+    <nav>
+      <a href="../index.html#platform">Platform</a>
+      <a href="../index.html#principles">Principles</a>
+      <a href="../index.html#vision">Vision</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="product-hero">
+      <p class="crumb"><a href="../index.html#platform">Platform</a> &nbsp;/&nbsp; Module 03</p>
+      <h1>GeoPresence</h1>
+      <p class="role">Verify location.</p>
+      <p class="status">In development · Working check-in layer, v1.1.x</p>
+      <p class="lede">
+        GeoPresence turns “I was there” into evidence. A check-in layer that
+        binds an identity, a place, and a moment into a proof — with the
+        anti-spoofing and privacy work done before anything is published.
+      </p>
+    </section>
+
+    <section class="section">
+      <p class="eyebrow">How a check-in becomes proof</p>
+      <h2>Challenge, capture, seal.</h2>
+      <ol class="pipeline" role="list">
+        <li><b>Challenge</b><span>The identity signs a one-use challenge — fresh, expiring, and never replayable.</span></li>
+        <li><b>Capture</b><span>Location is captured with its accuracy measured, not assumed.</span></li>
+        <li><b>Validate</b><span>Freshness, accuracy bounds, and cooldowns are enforced before acceptance.</span></li>
+        <li><b>Split</b><span>Raw coordinates stay private; the public proof carries only a location hash.</span></li>
+        <li><b>Publish</b><span>The sealed proof joins the participant’s verifiable history.</span></li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <p class="eyebrow">Capabilities</p>
+      <h2>What’s built.</h2>
+      <ul class="domains" role="list">
+        <li><b>Signed challenges</b><span>Wallet-based identity across ecosystems, proven by signature — one use, then gone.</span></li>
+        <li><b>Accuracy validation</b><span>A reading that can’t meet the accuracy bar doesn’t become a proof.</span></li>
+        <li><b>Replay resistance</b><span>Freshness windows and per-identity cooldowns close the obvious cheats.</span></li>
+        <li><b>Privacy split</b><span>Private raw storage, public hash-only proofs. Presence without surveillance.</span></li>
+        <li><b>Participation history</b><span>Streaks, awards, and leaderboard-ready stats derived from verified check-ins.</span></li>
+        <li><b>Durable storage</b><span>Database-backed with graceful fallback — a check-in is never silently lost.</span></li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <p class="eyebrow">Status</p>
+      <h2>What exists today.</h2>
+      <p class="lede">
+        A working starter with the complete check-in flow: challenge issuance and
+        validation, browser location capture, the privacy split, and participation
+        stats. Reward adapters are stubbed and honest about it. Proof formats
+        align with the GeoProof presence schema; anchoring rides the same path as
+        the rest of the platform.
+      </p>
+      <p class="backlink"><a class="btn ghost" href="../index.html#platform">← Back to the platform</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="plate">
+      <p class="plate-name">OXYON</p>
+      <p class="plate-role">MODULE 03 · GEOPRESENCE · VERIFY LOCATION</p>
+      <hr />
+      <p class="plate-pillars">OBSERVE&nbsp;&nbsp;•&nbsp;&nbsp;LOCATE&nbsp;&nbsp;•&nbsp;&nbsp;VERIFY&nbsp;&nbsp;•&nbsp;&nbsp;CONNECT</p>
+      <p class="plate-copy">© <span id="year"></span> Oxyon</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

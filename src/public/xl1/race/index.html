@@ -1,0 +1,410 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XL1 Race Board</title>
+<!--
+  Race telemetry for XL1 sequence: which producer's candidate the finalizer picks, and why.
+  Reads race.json (built off-box by a read-only observer on the public candidate pool, joined
+  with the finalized chain). It prefers the copy in the public xl1-status-data repository, so
+  new race data never needs a site upload, and falls back to ./race.json beside this page.
+  No producer is contacted by this page.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<script>document.documentElement.classList.add('xl1-js')</script>
+<link rel="stylesheet" href="/xl1/shared/atmosphere.css?v=cc0927"><link rel="stylesheet" href="/xl1/shared/shell.css?v=cc0927">
+<style>
+  .race-page {
+    --surface: var(--panel, #0b171c); --ink-2: var(--muted, #91aaa9); --ink-3: var(--dim, #5e7778);
+    --rule: var(--line, rgba(111,224,205,.16)); --grid: rgba(111,224,205,.07); --focus: var(--teal, #42dfc4);
+    --s-pi: #3987e5; --s-jim: #d95926; --s-win: #199e70; --s-cm4: #c98500; --s-fca: #9085e9; --s-other: #6f7a86;
+    --good: #0ca30c; --bg: #050a0d;
+    --rb-display: "Barlow Semi Condensed", Inter, system-ui, sans-serif;
+    --rb-body: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --rb-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  }
+  .race-page .rb { display: grid; gap: 20px; padding-bottom: 40px; }
+  .race-page .panel { background: color-mix(in srgb, var(--surface) 88%, transparent); }
+  .race-page .loading { color: var(--ink-2); font-size: 14px; }
+  .race-page .hero .chips { margin-top: 14px; }
+  .race-page * { box-sizing: border-box; }
+  .race-page .rb h2, .race-page .rb h3 { font-family: var(--rb-display); text-wrap: balance; margin: 0; }
+  .race-page h2 { font-size: 21px; font-weight: 600; }
+  .race-page .eyebrow { font: 600 11px/1 var(--rb-body); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+  .race-page .muted { color: var(--ink-2); }
+  .race-page .small { font-size: 13px; }
+  .race-page .num { font-family: var(--rb-mono); font-variant-numeric: tabular-nums; }
+  .race-page header.top { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; }
+  .race-page header.top p { margin: 4px 0 0; max-width: 64ch; }
+  .race-page .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .race-page .chip { font: 600 12px/1 var(--rb-body); padding: 6px 10px; border-radius: 999px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink-2); white-space: nowrap; }
+  .race-page .panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 18px 18px 16px; display: grid; gap: 12px; min-width: 0; }
+  .race-page .panel > header { display: grid; gap: 4px; }
+  .race-page .panel > header p { margin: 0; max-width: 72ch; }
+  .race-page .grid-2 { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); }
+  .race-page .finding { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); align-items: center; }
+  .race-page .headline { font: 700 44px/1.05 var(--rb-display); }
+  .race-page .headline small { display: block; font: 400 16px/1.4 var(--rb-body); color: var(--ink-2); margin-top: 8px; }
+  .race-page .tiles { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .race-page .tile { border: 1px solid var(--rule); border-radius: 8px; padding: 12px; display: grid; gap: 4px; }
+  .race-page .tile .v { font: 600 26px/1.1 var(--rb-mono); font-variant-numeric: tabular-nums; }
+  .race-page .tile .l { font-size: 13px; color: var(--ink-2); }
+  .race-page .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--ink-2); }
+  .race-page .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .race-page .sw { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+  .race-page .scroll { overflow-x: auto; }
+  .race-page table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  .race-page th, .race-page td { padding: 7px 8px; text-align: right; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  .race-page th:first-child, .race-page td:first-child { text-align: left; }
+  .race-page th { font: 600 11px/1.2 var(--rb-body); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+  .race-page td.num, .race-page th.num { font-family: var(--rb-mono); font-variant-numeric: tabular-nums; }
+  .race-page tr.ours td:first-child { font-weight: 600; }
+  .race-page .who { display: inline-flex; align-items: center; gap: 8px; }
+  .race-page .barcell { position: relative; min-width: 120px; }
+  .race-page .barcell i { position: absolute; left: 10px; top: 50%; height: 8px; transform: translateY(-50%); border-radius: 0 4px 4px 0; opacity: .85; }
+  .race-page .barcell b { position: relative; font-weight: 400; }
+  .race-page .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .race-page button, .race-page select { font: 600 13px var(--rb-body); color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 6px 10px; cursor: pointer; }
+  .race-page button:hover, .race-page select:hover { border-color: var(--ink-3); }
+  .race-page button:focus-visible, .race-page select:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .race-page .pill { font: 600 11px/1 var(--rb-body); padding: 4px 7px; border-radius: 999px; border: 1px solid var(--rule); color: var(--ink-2); }
+  .race-page .pill.won { border-color: transparent; background: var(--good); color: #fff; }
+  .race-page svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .race-page .legend svg { display: inline-block; width: auto; height: auto; flex: none; }
+  .race-page svg text { fill: var(--ink-2); font: 12px var(--rb-body); }
+  .race-page svg .axis text { fill: var(--ink-3); font: 11px var(--rb-mono); }
+  .race-page svg .gridline { stroke: var(--grid); stroke-width: 1; }
+  .race-page svg .zero { stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 3 3; }
+  .race-page .tip { position: fixed; pointer-events: none; z-index: 10; background: var(--ink); color: var(--bg); font: 12px/1.45 var(--rb-body); padding: 8px 10px; border-radius: 6px; max-width: 280px; opacity: 0; transition: opacity .08s; }
+  .race-page .tip b { font-weight: 600; }
+  .race-page .note { font-size: 13px; color: var(--ink-2); margin: 0; max-width: 80ch; }
+  .race-page details summary { cursor: pointer; font-weight: 600; }
+  @media (prefers-reduced-motion: reduce) { .tip { transition: none; } }
+
+  .race-page .panel, .race-page .panel > * { min-width: 0; }
+  .race-page select { max-width: 100%; min-width: 0; text-overflow: ellipsis; }
+</style>
+<body class="xl1-shell">
+<a class="skip" href="#main">Skip to content</a><header class="site"><div class="wrap"><a class="brand" href="/xl1/"><span class="mark">◆</span> XL1 <small>by WinLEW</small></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="xl1-nav">Menu</button><nav class="site" id="xl1-nav" aria-label="XL1"><a href="/xl1/">Overview</a><a href="/xl1/#producers" aria-current="page">Producers</a><a href="/xl1/#projects">Projects</a><a href="/xl1/#proofs">Proofs</a><a href="/xl1/#learn">Learn</a></nav></div></header>
+<main class="wrap race-page" id="main"><div class="breadcrumbs"><a href="/">WinLEW</a><span>/</span><a href="/xl1/">XL1</a><span>/</span>Race board</div><section class="hero"><div class="hero-kicker">Race telemetry</div><h1>Race board.</h1><p>Every block on XL1 sequence is a race between producers. This page shows how each producer's candidates reach the pool and which one the finalizer picks, measured from the public candidate pool and the finalized chain.</p><div class="chips" id="chips"></div><p class="small muted" id="rb-source"></p></section>
+<p class="loading" id="rb-loading">Loading race data…</p>
+<div class="rb" id="rb">
+  
+  <section class="panel" aria-labelledby="h-find">
+    <header>
+      <div class="eyebrow">The rule that decides most blocks</div>
+      <h2 id="h-find">The newest valid candidate wins, not the fastest</h2>
+      <p class="muted small">The mempool lists pending blocks newest first and the finalizer keeps that order when scores tie. In practice it decides right after the second valid candidate arrives.</p>
+    </header>
+    <div class="finding">
+      <div class="headline" id="headline"></div>
+      <div id="rankChart"></div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-board">
+    <header>
+      <div class="eyebrow">Challenge window</div>
+      <h2 id="h-board">Leaderboard</h2>
+      <p class="muted small" id="boardNote"></p>
+    </header>
+    <div class="tiles" id="tiles"></div>
+    <div class="scroll"><table id="board"></table></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-fall">
+    <header>
+      <div class="eyebrow">One block at a time</div>
+      <h2 id="h-fall">Race waterfall</h2>
+      <p class="muted small">Time runs from the moment the opportunity opened: a heartbeat falling due, or the transaction appearing in the mempool. The hollow dot is when a producer started building (its signed timestamp). The solid dot is when its candidate reached the pool.</p>
+    </header>
+    <div class="controls">
+      <button id="prev" type="button" aria-label="Previous block">‹ Prev</button>
+      <select id="pick" aria-label="Block height"></select>
+      <button id="next" type="button" aria-label="Next block">Next ›</button>
+      <span class="small muted" id="fallMeta"></span>
+    </div>
+    <div class="scroll"><div id="fall" style="min-width:560px"></div></div>
+    <div class="legend" id="fallLegend"></div>
+  </section>
+
+  <div class="grid-2">
+    <section class="panel" aria-labelledby="h-slot">
+      <header>
+        <div class="eyebrow">Where candidates land</div>
+        <h2 id="h-slot">Arrival slot and conversion</h2>
+        <p class="muted small">Share of valid candidates arriving 1st, 2nd, 3rd or later, and how often each slot turned into a win.</p>
+      </header>
+      <div class="scroll"><table id="slots"></table></div>
+    </section>
+    <section class="panel" aria-labelledby="h-ours">
+      <header>
+        <div class="eyebrow">Our two nodes</div>
+        <h2 id="h-ours">Where our time goes</h2>
+        <p class="muted small">Median time from starting a candidate to it appearing in the pool, split using each node's own build log. Other producers are shown as totals.</p>
+      </header>
+      <div id="ours"></div>
+    </section>
+  </div>
+
+  <section class="panel" aria-labelledby="h-speed">
+    <header>
+      <div class="eyebrow">Per producer</div>
+      <h2 id="h-speed">Reaction and submit speed</h2>
+      <p class="muted small">Bars span the 10th to 90th percentile, the dot is the median. Lower is faster. Signed timestamps come from each producer's own clock, so small offsets are clock skew.</p>
+    </header>
+    <div class="grid-2" id="speed"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-trend">
+    <header>
+      <div class="eyebrow">Last 24 hours</div>
+      <h2 id="h-trend">Hourly win share</h2>
+      <p class="muted small">Share of each hour's blocks won. An even split across 8 producers is 12.5%. Single hours swing widely by chance.</p>
+    </header>
+    <div id="trend"></div>
+    <div class="legend" id="trendLegend"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="h-method">
+    <header><h2 id="h-method">Method</h2></header>
+    <p class="note" id="method"></p>
+  </section>
+</div>
+<div class="tip" id="tip" role="tooltip"></div>
+
+</main>
+<script>
+
+function renderRace(D) {
+  const COLOR = { 'LewSales-pi3': 'var(--s-pi)', 'Jim-pi4': 'var(--s-jim)', 'LewSales-2': 'var(--s-win)', 'Jim-pi4-2': 'var(--s-cm4)', FreeCryptoA: 'var(--s-fca)' }
+  const col = n => COLOR[n] || 'var(--s-other)'
+  const OURS = new Set(['LewSales-pi3', 'LewSales-2'])
+  const SETUP = { 'LewSales-pi3': 'xl1-pi · Raspberry Pi 3', 'LewSales-2': 'xl1-windows-lewsales · Windows (test build)', 'FreeCryptoA': 'xl1-windows · Windows',
+    'Jim-pi4': 'private repo · Pi 4', 'Jim-pi4-2': 'private repo · CM4', 'System owned 8a49': 'XYO unreleased build', 'System owned 7ac8': 'XYO unreleased build', 'System owned 81b8': 'XYO unreleased build' }
+  const OPERATORS = { LewSales: ['LewSales-pi3', 'LewSales-2'], Jim: ['Jim-pi4', 'Jim-pi4-2'], FreeCryptoA: ['FreeCryptoA'] }
+  const opTotal = (o, op) => OPERATORS[op].reduce((a, n) => a + (o[n] || 0), 0)
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]))
+  const fmtT = t => new Date(t).toISOString().slice(11, 16) + ' UTC'
+  const fmtD = t => new Date(t).toISOString().slice(0, 10)
+  const pct = (a, b) => b ? (100 * a / b).toFixed(1) + '%' : '–'
+  const tip = document.getElementById('tip')
+  const showTip = (e, html) => { tip.innerHTML = html; tip.style.opacity = 1; const x = Math.min(e.clientX + 14, innerWidth - tip.offsetWidth - 8), y = Math.min(e.clientY + 14, innerHeight - tip.offsetHeight - 8); tip.style.left = x + 'px'; tip.style.top = y + 'px' }
+  const hideTip = () => { tip.style.opacity = 0 }
+  const bindTips = root => root.querySelectorAll('[data-tip]').forEach(el => { el.addEventListener('pointermove', e => showTip(e, el.dataset.tip)); el.addEventListener('pointerleave', hideTip) })
+  const who = n => `<span class="who"><span class="sw" style="background:${col(n)}"></span>${esc(n)}</span>`
+
+  // ---- header chips ----
+  document.getElementById('chips').innerHTML = [
+    `Observer ${fmtD(D.window.from)} ${fmtT(D.window.from)}–${fmtT(D.window.to)}`,
+    `${D.heightsAnalysed} blocks raced`,
+    `Chain tip ${D.board.tip}`,
+  ].map(t => `<span class="chip">${esc(t)}</span>`).join('')
+
+  // ---- finding ----
+  const rd = D.rankDist, rn = Object.values(rd).reduce((a, b) => a + b, 0)
+  document.getElementById('headline').innerHTML = `${pct(rd[2], rn)} <small>of blocks went to the 2nd valid candidate to reach the pool. The 1st won ${pct(rd[1], rn)}. The rule "newest candidate when the 2nd arrives" matches ${pct(D.rule.newestAt2nd, rn)} of winners.</small>`
+  ;(() => {
+    const W = 420, H = 190, L = 40, B = 30, T = 18, max = Math.max(...Object.values(rd)), bw = 58
+    const labels = { 1: '1st', 2: '2nd', 3: '3rd', 4: '4th+' }
+    const y = v => T + (H - T - B) * (1 - v / max)
+    let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Winner arrival position: ${Object.entries(rd).map(([k, v]) => labels[k] + ' ' + pct(v, rn)).join(', ')}">`
+    for (const g of [0, .5, 1]) { const v = Math.round(max * g); s += `<line class="gridline" x1="${L}" x2="${W - 4}" y1="${y(v)}" y2="${y(v)}"/><g class="axis"><text x="${L - 6}" y="${y(v) + 4}" text-anchor="end">${v}</text></g>` }
+    Object.entries(rd).forEach(([k, v], i) => {
+      const x = L + 20 + i * (bw + 34), top = y(v), h = (H - B) - top
+      const fill = k === '2' ? 'var(--s-pi)' : 'var(--s-other)'
+      s += `<path d="M${x},${H - B} v${-(h - 4)} q0,-4 4,-4 h${bw - 8} q4,0 4,4 v${h - 4} z" fill="${fill}" data-tip="<b>${labels[k]} to arrive</b><br>${v} of ${rn} winners (${pct(v, rn)})"/>`
+      s += `<text x="${x + bw / 2}" y="${top - 6}" text-anchor="middle" style="font:600 12px var(--mono);fill:var(--ink)">${pct(v, rn)}</text>`
+      s += `<text x="${x + bw / 2}" y="${H - 10}" text-anchor="middle">${labels[k]}</text>`
+    })
+    s += `</svg><div class="small muted">Winner's position in the arrival order (valid candidates only)</div>`
+    const el = document.getElementById('rankChart'); el.innerHTML = s; bindTips(el)
+  })()
+
+  // ---- leaderboard ----
+  ;(() => {
+    const b = D.board, names = Object.keys(b.last1000).sort((x, y) => b.last1000[y] - b.last1000[x])
+    const sum = o => Object.values(o).reduce((a, c) => a + c, 0)
+    const n1 = sum(b.last1000), n2 = sum(b.last2000)
+    const ours = o => (o['LewSales-pi3'] || 0) + (o['LewSales-2'] || 0), jims = o => (o['Jim-pi4'] || 0) + (o['Jim-pi4-2'] || 0)
+    document.getElementById('boardNote').textContent = `Last 1,000 blocks up to block ${b.tip} (${fmtD(b.tipTime)} ${fmtT(b.tipTime)}). Rankings over a single day move by about ±16 blocks from chance alone.`
+    const rankOf = n => names.indexOf(n) + 1
+    document.getElementById('tiles').innerHTML = [
+      [`#${rankOf('LewSales-2')} · #${rankOf('LewSales-pi3')}`, 'LewSales-2 · LewSales-pi3 place'],
+      [`${pct(opTotal(b.last1000, 'LewSales'), n1)} · ${pct(opTotal(b.last1000, 'Jim'), n1)} · ${pct(opTotal(b.last1000, 'FreeCryptoA'), n1)}`, 'Operator share: LewSales · Jim · FreeCryptoA'],
+      [`#${rankOf('FreeCryptoA')} · #${rankOf('Jim-pi4')}`, 'FreeCryptoA · Jim-pi4 place'],
+      [`${pct(opTotal(b.last3h, 'LewSales'), b.n3h)} · ${pct(opTotal(b.last3h, 'Jim'), b.n3h)} · ${pct(opTotal(b.last3h, 'FreeCryptoA'), b.n3h)}`, 'Operator share, last 3 h'],
+    ].map(([v, l]) => `<div class="tile"><span class="v">${esc(v)}</span><span class="l">${esc(l)}</span></div>`).join('')
+    const max = Math.max(...names.map(n => b.last1000[n]))
+    let h = `<caption class="sr-only" style="position:absolute;left:-9999px">Blocks won per producer</caption><thead><tr><th>#</th><th style="text-align:left">Producer</th><th style="text-align:left">Setup</th><th>Last 1,000</th><th class="num">Share</th><th class="num">Last 2,000</th><th class="num">Last 3 h</th></tr></thead><tbody>`
+    names.forEach((n, i) => {
+      const v = b.last1000[n]
+      h += `<tr class="${OURS.has(n) ? 'ours' : ''}"><td class="num">${i + 1}</td><td style="text-align:left">${who(n)}</td><td style="text-align:left" class="small muted">${esc(SETUP[n] || '')}</td><td class="barcell"><i style="width:${(100 * v / max * 0.7).toFixed(1)}%;background:${col(n)}"></i><b class="num">&nbsp;</b></td><td class="num">${v} · ${pct(v, n1)}</td><td class="num">${b.last2000[n] || 0}</td><td class="num">${pct(b.last3h[n] || 0, b.n3h)}</td></tr>`
+    })
+    document.getElementById('board').innerHTML = h + '</tbody>'
+  })()
+
+  // ---- waterfall ----
+  const H = D.heights, pick = document.getElementById('pick')
+  H.forEach((h, i) => { const o = document.createElement('option'); o.value = i; o.textContent = `Block ${h.n} · ${h.heartbeat ? 'heartbeat' : 'transaction'} · won by ${h.winner}`; pick.appendChild(o) })
+  function drawFall(i) {
+    const h = H[i]; pick.value = i
+    const rows = [...h.rows].sort((a, b) => a.seen - b.seen)
+    const t0 = h.opens, xs = rows.flatMap(r => [r.epoch - t0, r.seen - t0]).concat([0, h.headSeen - t0])
+    const lo = Math.min(-500, ...xs), hi = Math.max(...xs) + 300
+    const W = 900, L = 140, R = 20, rowH = 30, T = 26, Hh = T + rows.length * rowH + 30
+    const x = v => L + (W - L - R) * (v - lo) / (hi - lo)
+    const step = (hi - lo) > 8000 ? 2000 : (hi - lo) > 4000 ? 1000 : 500
+    let s = `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Race for block ${h.n}, won by ${esc(h.winner)}">`
+    for (let v = Math.ceil(lo / step) * step; v <= hi; v += step) s += `<line class="gridline" x1="${x(v)}" x2="${x(v)}" y1="${T - 6}" y2="${Hh - 26}"/><g class="axis"><text x="${x(v)}" y="${Hh - 10}" text-anchor="middle">${(v / 1000).toFixed(v % 1000 ? 1 : 0)}s</text></g>`
+    s += `<line class="zero" x1="${x(0)}" x2="${x(0)}" y1="${T - 12}" y2="${Hh - 26}"/><text x="${x(0) + 4}" y="${T - 14}" style="font-size:11px">${h.heartbeat ? 'heartbeat due' : 'tx visible'}</text>`
+    if (h.headSeen - t0 <= hi) s += `<line class="zero" x1="${x(h.headSeen - t0)}" x2="${x(h.headSeen - t0)}" y1="${T - 12}" y2="${Hh - 26}" style="stroke:var(--good)"/><text x="${x(h.headSeen - t0) - 4}" y="${T - 14}" text-anchor="end" style="font-size:11px">winner published</text>`
+    rows.forEach((r, j) => {
+      const y = T + j * rowH + rowH / 2, c = col(r.p)
+      const status = r.won ? 'won' : r.early ? 'built before the heartbeat was due' : r.parentProducer ? 'made the previous block' : r.rank ? `arrived ${r.rank}${['st', 'nd', 'rd'][r.rank - 1] || 'th'}` : ''
+      const tipTxt = `<b>${esc(r.p)}</b> · ${status}<br>started building ${((r.epoch - t0) / 1000).toFixed(2)} s<br>reached pool ${((r.seen - t0) / 1000).toFixed(2)} s (${r.seen - r.epoch} ms later)${r.timePayloadMs != null ? `<br>time payload ${r.timePayloadMs} ms` : ''}`
+      s += `<text x="${L - 10}" y="${y + 4}" text-anchor="end" style="${r.won ? 'font-weight:600;fill:var(--ink)' : ''}">${esc(r.p)}</text>`
+      s += `<line x1="${x(r.epoch - t0)}" x2="${x(r.seen - t0)}" y1="${y}" y2="${y}" stroke="${c}" stroke-width="2" stroke-linecap="round" opacity="${r.early || r.parentProducer ? .4 : 1}"/>`
+      s += `<circle cx="${x(r.epoch - t0)}" cy="${y}" r="5" fill="var(--surface)" stroke="${c}" stroke-width="2"/>`
+      s += `<circle cx="${x(r.seen - t0)}" cy="${y}" r="${r.won ? 7 : 5}" fill="${c}" stroke="var(--surface)" stroke-width="2"/>`
+      if (r.won) s += `<circle cx="${x(r.seen - t0)}" cy="${y}" r="11" fill="none" stroke="var(--good)" stroke-width="2"/>`
+      if (r.early || r.parentProducer) s += `<text x="${x(r.seen - t0) + 10}" y="${y + 4}" style="font-size:11px;fill:var(--ink-3)">${r.early ? 'too early' : 'made previous block'}</text>`
+      s += `<rect x="${L}" y="${y - rowH / 2}" width="${W - L - R}" height="${rowH}" fill="transparent" data-tip="${esc(tipTxt)}"/>`
+    })
+    s += '</svg>'
+    const el = document.getElementById('fall'); el.innerHTML = s; bindTips(el)
+    document.getElementById('fallMeta').innerHTML = `${h.heartbeat ? 'Heartbeat' : 'Transaction'} block · winner <b>${esc(h.winner)}</b>, ${h.winnerRank ? `arrived ${h.winnerRank}${['st', 'nd', 'rd'][h.winnerRank - 1] || 'th'}` : 'not seen'}`
+  }
+  document.getElementById('fallLegend').innerHTML = `<span><svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="4.5" fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2"/></svg>started building</span><span><svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5" fill="var(--ink-2)"/></svg>reached the pool</span><span><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="7" fill="none" stroke="var(--good)" stroke-width="2"/></svg>won</span>`
+  let cur = H.length - 1
+  pick.addEventListener('change', () => { cur = +pick.value; drawFall(cur) })
+  document.getElementById('prev').addEventListener('click', () => { cur = Math.max(0, cur - 1); drawFall(cur) })
+  document.getElementById('next').addEventListener('click', () => { cur = Math.min(H.length - 1, cur + 1); drawFall(cur) })
+  drawFall(cur)
+
+  // ---- slots ----
+  ;(() => {
+    const P = D.producers
+    let h = `<thead><tr><th style="text-align:left">Producer</th><th class="num">Wins</th><th class="num">1st</th><th class="num">2nd</th><th class="num">3rd</th><th class="num">4th+</th><th class="num">Won from 2nd</th><th class="num">Won from 1st</th><th class="num">Too early</th></tr></thead><tbody>`
+    for (const p of P) {
+      const tot = Object.values(p.slot).reduce((a, b) => a + b, 0) || 1
+      const cell = k => `<td class="num">${(100 * p.slot[k] / tot).toFixed(0)}%</td>`
+      const conv = k => p.slot[k] ? `${(100 * p.winAt[k] / p.slot[k]).toFixed(0)}%` : '–'
+      h += `<tr class="${OURS.has(p.name) ? 'ours' : ''}"><td style="text-align:left">${who(p.name)}</td><td class="num">${p.wins}</td>${cell(1)}${cell(2)}${cell(3)}${cell(4)}<td class="num"><b>${conv(2)}</b></td><td class="num">${conv(1)}</td><td class="num">${p.early}</td></tr>`
+    }
+    document.getElementById('slots').innerHTML = h + '</tbody>'
+  })()
+
+  // ---- where our time goes ----
+  ;(() => {
+    const P = Object.fromEntries(D.producers.map(p => [p.name, p]))
+    const segs = n => { const p = P[n]; const tp = p.timePayload.p50, after = p.afterBuild.p50, total = p.pool.p50; return { tp, other: Math.max(0, total - tp - after), after, total } }
+    const ours = ['LewSales-pi3', 'LewSales-2'].map(n => ({ n, ...segs(n) }))
+    const others = D.producers.filter(p => !OURS.has(p.name)).map(p => ({ n: p.name, total: p.pool.p50 }))
+    const max = Math.max(...ours.map(o => o.total), ...others.map(o => o.total)) * 1.08
+    const W = 540, L = 132, R = 16, rowH = 26
+    const rows = ours.length + others.length, Hh = 20 + rows * rowH + 34
+    const x = v => L + (W - L - R) * v / max
+    let s = `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Median time from starting a candidate to reaching the pool, per producer">`
+    for (let v = 0; v <= max; v += 200) s += `<line class="gridline" x1="${x(v)}" x2="${x(v)}" y1="10" y2="${Hh - 28}"/><g class="axis"><text x="${x(v)}" y="${Hh - 12}" text-anchor="middle">${v}</text></g>`
+    s += `<g class="axis"><text x="${W - R}" y="${Hh - 0}" text-anchor="end">ms</text></g>`
+    let y = 20
+    for (const o of ours) {
+      const parts = [['time payload (Ethereum anchor)', o.tp, 1], ['balances and checks', o.other, .55], ['build, sign, submit, pool', o.after, .3]]
+      let acc = 0
+      parts.forEach(([label, v, op], k) => {
+        const w = Math.max(0, x(acc + v) - x(acc) - (k < parts.length - 1 ? 2 : 0))
+        s += `<rect x="${x(acc)}" y="${y + 4}" width="${w}" height="${rowH - 10}" rx="${k === parts.length - 1 ? 3 : 0}" fill="${col(o.n)}" fill-opacity="${op}" data-tip="<b>${o.n}</b><br>${label}: ${v} ms"/>`
+        acc += v
+      })
+      s += `<text x="${L - 8}" y="${y + rowH / 2 + 3}" text-anchor="end" style="font-weight:600;fill:var(--ink)">${o.n}</text><text x="${x(o.total) + 6}" y="${y + rowH / 2 + 3}" class="num" style="font:11px var(--mono)">${o.total}</text>`
+      y += rowH
+    }
+    for (const o of others) {
+      s += `<line x1="${x(0)}" x2="${x(o.total)}" y1="${y + rowH / 2}" y2="${y + rowH / 2}" stroke="${col(o.n)}" stroke-width="2"/><circle cx="${x(o.total)}" cy="${y + rowH / 2}" r="4.5" fill="${col(o.n)}" data-tip="<b>${o.n}</b><br>median start-to-pool ${o.total} ms"/>`
+      s += `<text x="${L - 8}" y="${y + rowH / 2 + 3}" text-anchor="end">${o.n}</text><text x="${x(o.total) + 8}" y="${y + rowH / 2 + 3}" style="font:11px var(--mono)">${o.total}</text>`
+      y += rowH
+    }
+    s += '</svg>'
+    const el = document.getElementById('ours')
+    el.innerHTML = s + `<div class="legend"><span><span class="sw" style="background:var(--ink-2)"></span>time payload (Ethereum anchor)</span><span><span class="sw" style="background:var(--ink-2);opacity:.55"></span>balances and checks</span><span><span class="sw" style="background:var(--ink-2);opacity:.3"></span>build, sign, submit, pool (includes ~150 ms sampling)</span></div>`
+    bindTips(el)
+  })()
+
+  // ---- speed range charts ----
+  ;(() => {
+    const charts = [['pool', 'Start to pool (submit speed)'], ['hbReact', 'Heartbeat due to pool'], ['txReact', 'Transaction visible to pool']]
+    const box = document.getElementById('speed')
+    for (const [key, title] of charts) {
+      const P = [...D.producers].filter(p => p[key].p50 != null).sort((a, b) => a[key].p50 - b[key].p50)
+      const max = Math.max(...P.map(p => p[key].p90)) * 1.05
+      const W = 540, L = 132, R = 40, rowH = 24, Hh = 16 + P.length * rowH + 32
+      const x = v => L + (W - L - R) * Math.max(0, v) / max
+      const step = max > 4000 ? 1000 : max > 1600 ? 500 : 200
+      let s = `<div><h3 style="font-size:16px;margin-bottom:6px">${title}</h3><svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="${title}, median and spread per producer">`
+      for (let v = 0; v <= max; v += step) s += `<line class="gridline" x1="${x(v)}" x2="${x(v)}" y1="8" y2="${Hh - 26}"/><g class="axis"><text x="${x(v)}" y="${Hh - 10}" text-anchor="middle">${v >= 1000 ? (v / 1000).toFixed(v % 1000 ? 1 : 0) + 's' : v}</text></g>`
+      P.forEach((p, j) => {
+        const y = 16 + j * rowH + rowH / 2, c = col(p.name), r = p[key]
+        s += `<text x="${L - 8}" y="${y + 4}" text-anchor="end" style="${OURS.has(p.name) ? 'font-weight:600;fill:var(--ink)' : ''}">${p.name}</text>`
+        s += `<line x1="${x(r.p10)}" x2="${x(r.p90)}" y1="${y}" y2="${y}" stroke="${c}" stroke-width="6" stroke-linecap="round" opacity=".35"/>`
+        s += `<circle cx="${x(r.p50)}" cy="${y}" r="5" fill="${c}" stroke="var(--surface)" stroke-width="2"/>`
+        s += `<text x="${x(r.p90) + 8}" y="${y + 4}" style="font:11px var(--mono)">${r.p50}</text>`
+        s += `<rect x="${L}" y="${y - rowH / 2}" width="${W - L - R}" height="${rowH}" fill="transparent" data-tip="<b>${p.name}</b><br>median ${r.p50} ms<br>10th–90th percentile ${r.p10}–${r.p90} ms${r.n ? `<br>${r.n} candidates` : ''}"/>`
+      })
+      s += '</svg></div>'
+      box.insertAdjacentHTML('beforeend', s)
+    }
+    bindTips(box)
+  })()
+
+  // ---- hourly trend ----
+  ;(() => {
+    const hrs = D.board.hourly.filter(h => h.total >= 30)
+    const series = ['LewSales-pi3', 'Jim-pi4', 'LewSales-2', 'Jim-pi4-2', 'FreeCryptoA']
+    const W = 900, L = 42, R = 96, T = 14, B = 30, Hh = 260
+    const maxV = Math.max(25, ...hrs.flatMap(h => series.map(s => 100 * (h.counts[s] || 0) / h.total)))
+    const x = i => L + (W - L - R) * i / Math.max(1, hrs.length - 1)
+    const y = v => T + (Hh - T - B) * (1 - v / maxV)
+    let s = `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Hourly win share for LewSales, Jim and FreeCryptoA producers over the last day">`
+    for (let v = 0; v <= maxV; v += 5) s += `<line class="gridline" x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/><g class="axis"><text x="${L - 6}" y="${y(v) + 4}" text-anchor="end">${v}%</text></g>`
+    s += `<line class="zero" x1="${L}" x2="${W - R}" y1="${y(12.5)}" y2="${y(12.5)}"/><text x="${W - R + 4}" y="${y(12.5) + 4}" style="font-size:11px;fill:var(--ink-3)">even 12.5%</text>`
+    hrs.forEach((h, i) => { if (i % 3 === 0) s += `<g class="axis"><text x="${x(i)}" y="${Hh - 10}" text-anchor="middle">${new Date(h.hour).toISOString().slice(11, 13)}h</text></g>` })
+    for (const name of series) {
+      const pts = hrs.map((h, i) => [x(i), y(100 * (h.counts[name] || 0) / h.total)])
+      s += `<polyline points="${pts.map(p => p.join(',')).join(' ')}" fill="none" stroke="${col(name)}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`
+      const [lx, ly] = pts.at(-1); s += `<circle cx="${lx}" cy="${ly}" r="4" fill="${col(name)}" stroke="var(--surface)" stroke-width="2"/>`
+    }
+    // direct labels at the right edge, nudged apart
+    const ends = series.map(n => ({ n, v: y(100 * (hrs.at(-1).counts[n] || 0) / hrs.at(-1).total) })).sort((a, b) => a.v - b.v)
+    for (let i = 1; i < ends.length; i++) if (ends[i].v - ends[i - 1].v < 14) ends[i].v = ends[i - 1].v + 14
+    ends.forEach(e => { s += `<text x="${W - R + 10}" y="${e.v + 4}" style="font-size:11px;fill:var(--ink)">${e.n}</text>` })
+    // hover columns
+    hrs.forEach((h, i) => { const w = (W - L - R) / Math.max(1, hrs.length - 1); s += `<rect x="${x(i) - w / 2}" y="${T}" width="${w}" height="${Hh - T - B}" fill="transparent" data-tip="<b>${new Date(h.hour).toISOString().slice(0, 13).replace('T', ' ')}:00 UTC</b> · ${h.total} blocks<br>${series.map(n => `${n}: ${pct(h.counts[n] || 0, h.total)}`).join('<br>')}"/>` })
+    s += '</svg>'
+    const el = document.getElementById('trend'); el.innerHTML = s; bindTips(el)
+    document.getElementById('trendLegend').innerHTML = series.map(n => `<span><span class="sw" style="background:${col(n)}"></span>${n}</span>`).join('') + '<span><span class="sw" style="background:var(--s-other)"></span>other producers (not drawn)</span>'
+  })()
+
+  document.getElementById('method').textContent = `Observer: every 300 ms it reads the public candidate pool (mempoolViewer_pendingBlocks, the list the finalizer reads) and XYO's pending transactions, and every 250 ms the published head. Each candidate's signed timestamp marks when its producer started building; the first poll that shows it marks its arrival. Valid candidates exclude heartbeats built before they were due and the previous block's own producer, which cannot win. Our node breakdown joins each candidate with that node's build log (time payload duration and the "Building block" line). Arrival times carry up to 300 ms of sampling error, and producer timestamps carry each producer's clock offset. Leaderboard and hourly figures come from the finalized chain. Nothing here touches a producer.`
+}
+
+// Data: the public status repo first (updates without a site upload), then the copy beside this page.
+const RACE_URLS = ['https://raw.githubusercontent.com/LewSales/xl1-status-data/main/race.json', './race.json']
+;(async () => {
+  for (const url of RACE_URLS) {
+    try {
+      const r = await fetch(url, { cache: 'no-cache' })
+      if (!r.ok) continue
+      const d = await r.json()
+      if (!d || !Array.isArray(d.heights)) continue
+      document.getElementById('rb-loading')?.remove()
+      renderRace(d)
+      document.getElementById('rb-source').textContent = url.startsWith('http') ? 'Data from the public xl1-status-data repository.' : 'Data from the snapshot published with this page.'
+      return
+    } catch (e) { /* try the next source */ }
+  }
+  const el = document.getElementById('rb-loading')
+  if (el) el.textContent = 'Race data could not be loaded right now. Try again in a minute.'
+})()
+</script>
+<script src="/xl1/shared/shell.js?v=cc0927" defer></script><script src="/xl1/shared/navigation.js?v=cc0927" defer></script>

@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XL1 Arcade · WinLEW</title>
+<meta name="description" content="Play WinLEW's browser games and earn real XL1 for every minute of a finished round, the same in every game. Verified wallet, public reward ledger.">
+<link rel="canonical" href="https://winlew.co/xl1/arcade/">
+<meta name="theme-color" content="#0c0907">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="WinLEW">
+<meta property="og:title" content="XL1 Arcade · WinLEW">
+<meta property="og:description" content="Play WinLEW's browser games and earn real XL1 for every minute you play. Verified wallet, public reward ledger.">
+<meta property="og:url" content="https://winlew.co/xl1/arcade/">
+<meta property="og:image" content="https://winlew.co/mole-hub/assets/diglew-card-600.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="/images/avatars/mole-guard-128.png">
+<link rel="stylesheet" href="/xl1/shared/oxyon.css?v=ox1004b">
+<link rel="stylesheet" href="/xl1/shared/xl1.css?v=ox1004b">
+<link rel="stylesheet" href="/xl1/shared/winlew-theme.css?v=wl1024-layout">
+</head>
+<body class="xl1-shell">
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+<a class="brand" href="/" aria-label="WinLEW home">
+      <img class="brand-mark" src="/images/avatars/mole-guard-128.png" alt="" aria-hidden="true" width="28" height="28">
+      <span class="brand-word">WinLEW</span><span class="brand-sub">XL1</span>
+    </a>
+    <nav aria-label="XL1"><a href="/xl1/">XL1 hub</a><a href="/xl1/arcade/" aria-current="page">Arcade</a><a href="/xl1/arcade/play/?game=molespades">Mole Spades</a><a href="/xl1/geohackers/">GeoHackers</a><a href="/xl1/verify/">Verify</a><a href="https://oxyon.io/xl1/" rel="noopener">Network<span class="ext" aria-hidden="true">↗</span></a></nav>
+</header>
+
+<main id="main">
+    <section class="product-hero">
+      <p class="crumb"><a href="/xl1/">XL1</a> · Arcade</p>
+      <h1>Play games. Earn real XL1.</h1>
+      <p class="role">Eight WinLEW browser games; seven pay XL1 for every minute of a finished round, the same in each, so play what you enjoy.</p>
+      <div class="hero-status"><span class="chip chip-in" id="mode-chip">Checking…</span><span class="card-kind" id="mode-tag">reward status</span></div>
+      <div class="figures" role="group" aria-labelledby="reward-heading">
+        <div><span class="k" id="reward-heading">XL1 per minute played</span><span class="v" id="rate">—</span><p>Up to <span id="round-cap" class="round-cap-minutes">—</span> minutes count per round.</p></div>
+        <div><span class="k">Most per round</span><span class="v"><span id="round-max">—</span> XL1</span><p>A full-length round.</p></div>
+        <div><span class="k">Daily maximum, all games</span><span class="v"><span id="cap">—</span> XL1</span><p>Resets at 00:00 UTC.</p></div>
+      </div>
+      <p class="doc-note" id="mode-callout" role="status" aria-live="polite">Reading the reward status…</p>
+      <div class="account-strip" id="wallet" aria-label="Your account">
+        <p class="doc-note" id="wallet-status" role="status" aria-live="polite">Checking your account…</p>
+        <div class="cta-row">
+          <button type="button" class="btn primary" id="verify-wallet" hidden style="display:none">Verify XL1 wallet</button>
+          <a class="btn primary" id="wallet-signin" href="/" hidden style="display:none">Sign in with Discord</a>
+          <a class="btn ghost" href="#games">Choose a game</a>
+        </div>
+      </div>
+      <section id="held" class="my-rewards" aria-labelledby="a-held" data-account="unknown">
+        <div class="my-rewards-head"><h2 id="a-held">Your rewards</h2><span class="muted">Hold longer, cash out more.</span></div>
+        <div class="figures" id="held-stats">
+          <div><strong>—</strong><span>Held</span></div>
+          <div><strong>—</strong><span>Cash out now</span></div>
+          <div><strong>—</strong><span>Not yet cashable</span></div>
+        </div>
+        <div class="cta-row"><button type="button" class="btn" id="cashout" disabled>Cash out</button></div>
+        <p class="doc-note" id="held-status" role="status" aria-live="polite">Sign in and verify an XL1 wallet, and your held rewards and cash-out appear here.</p>
+        <details class="more" id="held-more"><summary>Each reward, and when it multiplies</summary><div class="more-body"><div class="proof-list" id="held-rewards"></div></div></details>
+      </section>
+      <details class="start-guide" id="start">
+        <summary><span class="start-title">🎮 New to XL1? Start here.</span><span class="start-sub">Get a wallet, verify it, play. Three steps, no fees.</span></summary>
+        <p class="start-swipe" aria-hidden="true">Swipe for the next step →</p>
+        <ol class="start-steps">
+          <li data-step="1">
+            <h3><span class="start-n">1</span>Get an XL1 wallet</h3>
+            <div class="platform-tabs" role="tablist" aria-label="Your device">
+              <button type="button" role="tab" id="tab-android" aria-controls="panel-android" data-platform-tab="android" aria-selected="true">Android</button>
+              <button type="button" role="tab" id="tab-desktop" aria-controls="panel-desktop" data-platform-tab="desktop" aria-selected="false" tabindex="-1">Computer</button>
+              <button type="button" role="tab" id="tab-iphone" aria-controls="panel-iphone" data-platform-tab="iphone" aria-selected="false" tabindex="-1">iPhone</button>
+            </div>
+            <div class="platform-panel" id="panel-android" aria-labelledby="tab-android" data-platform-panel="android" role="tabpanel">
+              <p><strong>Oxyon Wallet for Android</strong> has its own browser, so you can verify and play right inside it. It's a direct download from oxyon.io while its Google Play listing is on the way.</p>
+              <p class="cta-row"><a class="btn primary" href="https://oxyon.io/wallet/android/" rel="noopener">Get Oxyon Wallet ↗</a></p>
+              <p class="start-fine">By Oxyon, not XYO Network. Opened this from Discord or X? Their built-in browsers can't reach a wallet: open winlew.co in Oxyon Wallet's browser to verify.</p>
+            </div>
+            <div class="platform-panel" id="panel-desktop" aria-labelledby="tab-desktop" data-platform-panel="desktop" role="tabpanel" hidden>
+              <p>Use Chrome (or another Chromium browser such as Edge or Brave) and add <strong>one</strong> wallet extension:</p>
+              <ul class="wallet-list">
+                <li><a href="https://chromewebstore.google.com/detail/xl1-wallet/fblbagcjeigmhakkfgjpdlcapcgmcfbm" rel="noopener"><strong>XL1 Wallet</strong> ↗</a><span>By XYO Network: the official XL1 wallet. Not sure? Pick this one.</span></li>
+                <li><a href="https://chromewebstore.google.com/detail/dmppahjigfpdddppjhnekgealjbkbljn" rel="noopener"><strong>Oxyon Wallet</strong> ↗</a><span>By Oxyon. It has a <a href="https://chromewebstore.google.com/detail/lbkakkiebconkjonncikmaaefldkaggh" rel="noopener">second Chrome Web Store listing</a> for the same wallet: install one, not both.</span></li>
+              </ul>
+              <p class="start-fine">The <a href="https://wallet.oxyon.io/" rel="noopener">Oxyon Web Wallet</a> works in any browser for holding XL1, but it can't sign on this site: to verify for the arcade, use an extension or the Android app.</p>
+            </div>
+            <div class="platform-panel" id="panel-iphone" aria-labelledby="tab-iphone" data-platform-panel="iphone" role="tabpanel" hidden>
+              <p>We haven't tested an XL1 wallet on iPhone yet. You can play right now, just for fun, and verify a wallet later from a computer with Chrome or an Android phone. Rounds earn from then on.</p>
+              <p class="start-fine">The <a href="https://wallet.oxyon.io/" rel="noopener">Oxyon Web Wallet</a> opens on iPhone for holding XL1, but it can't sign on this site.</p>
+            </div>
+          </li>
+          <li data-step="2">
+            <h3><span class="start-n">2</span>Sign in and verify</h3>
+            <p><strong>Sign in with Discord</strong><span class="age-rule"> (accounts at least <span class="age-copy">30</span> days old earn)</span>, then <strong>prove the wallet is yours</strong>: tap <em>Verify XL1 wallet</em> above, or run <code>/verify</code> with the GeoHackers bot in our Discord. You sign a one-time message that costs and sends nothing.</p>
+            <p>A connected wallet isn't verified yet: you're set when the box above says <em>Ready to earn</em>.</p>
+            <p class="start-fine">On Android, if Discord opens the verify link in its own browser, tap <em>Open in Oxyon Wallet</em> there. We will never ask for your recovery phrase or private key.</p>
+          </li>
+          <li data-step="3">
+            <h3><span class="start-n">3</span>Play and earn</h3>
+            <p>Once verified, each minute of a finished round earns <span class="rate-copy">0.24</span> XL1, as far as your score backs it (up to <span class="round-cap-minutes">5</span> minutes a round, <span class="cap-copy">20</span> XL1 a day).</p>
+            <p><strong>Hold to multiply:</strong> cash out any reward after 24 h, or wait and it's multiplied when you cash out: <span class="hold-tiers-copy">24 h ×1 · 72 h ×2 · 7 days ×5 · 30 days ×7</span>.</p>
+            <p class="start-fine">Under consideration, not available today: a higher top tier (up to ×10). <a href="#rewards">All the rules</a></p>
+            <p class="cta-row"><a class="btn primary" href="#games">Choose a game</a></p>
+          </li>
+        </ol>
+        <p class="start-help">💙 Stuck on a step? <a href="https://discord.gg/PSCrBzqdbE" rel="noopener">Ask in the WinLEW Discord</a>: real people, happy to help.</p>
+      </details>
+    </section>
+
+    <section id="games" class="section reveal" aria-labelledby="a-games">
+      <p class="eyebrow">The arcade</p>
+      <h2 id="a-games">Choose a game.</h2>
+      <p class="lede">Every game pays the same for the same time played. Scores only have to be real: each game has its own server-side timing and score checks.</p>
+      <div class="game-cards">
+        <a class="card game-card" href="/xl1/arcade/play/?game=diglew"><img src="/mole-hub/assets/diglew-card-600.webp" alt="" width="600" height="338" loading="lazy"><div class="in-card"><header><span class="card-kind">Tunnel runner</span><span class="chip chip-earn">Earns XL1</span></header><h3>DigLEW</h3><p>An endless tunnel runner.</p><span class="card-action">Play →</span></div></a>
+        <a class="card game-card" href="/xl1/arcade/play/?game=pacmole"><img src="/mole-hub/assets/pacmole-card-600.webp" alt="" width="600" height="338" loading="lazy"><div class="in-card"><header><span class="card-kind">Maze</span><span class="chip chip-earn">Earns XL1</span></header><h3>Pac-Mole</h3><p>An arcade maze, mole-style.</p><span class="card-action">Play →</span></div></a>
+        <a class="card game-card" href="/xl1/arcade/play/?game=rootglide"><img src="/mole-hub/assets/rootglide-card-600.webp" alt="" width="600" height="338" loading="lazy"><div class="in-card"><header><span class="card-kind">Touch runner</span><span class="chip chip-earn">Earns XL1</span></header><h3>Root Glide</h3><p>A tunnel runner built for touch.</p><span class="card-action">Play →</span></div></a>
+        <a class="card game-card" href="/xl1/arcade/play/?game=burrowblaster"><img src="/mole-hub/assets/burrowblaster-card-600.webp" alt="" width="600" height="338" loading="lazy"><div class="in-card"><header><span class="card-kind">Shooter</span><span class="chip chip-earn">Earns XL1</span></header><h3>Burrow Blaster</h3><p>An arcade shooter.</p><span class="card-action">Play →</span></div></a>
+        <a class="card game-card" href="/xl1/arcade/play/?game=tunneltap"><img src="/mole-hub/assets/tunneltap-card-600.webp" alt="" width="600" height="338" loading="lazy"><div class="in-card"><header><span class="card-kind">Dodger</span><span class="chip chip-earn">Earns XL1</span></header><h3>Tunnel Tap</h3><p>Tap through the tunnel, dodge the falls.</p><span class="card-action">Play →</span></div></a>
+        <a class="card game-card" href="/xl1/arcade/play/?game=moleice"><img src="/mole-hub/assets/moleice-card-600.webp" alt="" width="600" height="338" loading="lazy"><div class="in-card"><header><span class="card-kind">Puzzle</span><span class="chip chip-earn">Earns XL1</span></header><h3>Mole Ice</h3><p>Push ice blocks, crush the Glitch Bugs.</p><span class="card-action">Play →</span></div></a>
+        <a class="card game-card" href="/xl1/arcade/play/?game=molespades"><img src="/mole-hub/assets/molespades-card-600.webp" alt="" width="600" height="338" loading="lazy"><div class="in-card"><header><span class="card-kind">Cards</span><span class="chip chip-earn">Earns XL1</span></header><h3>Mole Spades</h3><p>Spades at the burrow table.</p><span class="card-action">Play →</span></div></a>
+        <a class="card game-card" href="/xl1/arcade/play/?game=grubdrop"><img src="/mole-hub/assets/grubdrop-card-600.webp" alt="" width="600" height="338" loading="lazy"><div class="in-card"><header><span class="card-kind">Drop</span><span class="chip chip-play">Play only</span></header><h3>Grub Drop</h3><p>Playable now. XL1 rewards are off, pending validator approval.</p><span class="card-action">Play →</span></div></a>
+      </div>
+    </section>
+
+    <section id="rewards" class="section reveal" aria-labelledby="a-rewards">
+      <p class="eyebrow">How rewards work</p>
+      <h2 id="a-rewards">The rules, in plain words.</h2>
+      <details class="section-fold" id="rules-fold">
+        <summary><span class="fold-sub">XL1 for every minute of a finished round, held 24 h, then multiplied the longer you hold.</span><span class="fold-open">Show every rule</span></summary>
+        <div class="fold-body">
+        <ol class="steps" aria-label="How it works">
+          <li><strong>Sign in and verify</strong>Sign in with Discord, then prove your XL1 wallet is yours. A signature only: nothing is sent.</li>
+          <li><strong>Play</strong>Each minute of a finished round earns XL1, up to the round and daily limits.</li>
+          <li><strong>Hold</strong>Rewards wait 24 h before you can cash out. Holding longer multiplies them.</li>
+          <li><strong>Cash out</strong>Paid on-chain from the arcade's distributor wallet. Every payment can be checked.</li>
+        </ol>
+        <ul class="rules">
+          <li><strong>Paid for time, not score.</strong> <span id="rule-rate">Each minute of a finished round earns XL1</span>, in every game except Grub Drop.</li>
+          <li><strong>Limits.</strong> At most <span class="round-cap-minutes">—</span> minutes count per round, and <span class="cap-copy">—</span> XL1 a day across all games, per account and per wallet.</li>
+          <li><strong>Real play only.</strong> Time is paid only as far as the round's score backs it (each game has its own minimum score per second), a round with no score earns nothing, and you can play one round at a time.</li>
+          <li><strong>A verified wallet.</strong> Rewards go only to an XL1 wallet you have proven is yours, linked to your Discord account<span id="rule-age">, and the Discord account must be old enough to earn</span>.</li>
+          <li><strong>Hold to multiply.</strong> Rewards can be cashed out 24 h after you earn them, multiplied by how long they were held: <span id="hold-tiers">—</span>. Each reward's multiplier is set by its age when you cash out, and the daily maximum counts the amount before the multiplier.</li>
+          <li><strong>Some cash-outs are checked.</strong> A moderator looks at unusually large or unusual cash-outs before they are paid. Everything else is paid automatically.</li>
+          <li class="no"><strong>No promised value.</strong> XL1 rewards are real tokens on the XL1 network, with no promised monetary value.</li>
+        </ul>
+        <details class="more">
+          <summary>How a round is checked</summary>
+          <div class="more-body">
+            <p>The arcade's server starts a session when a round begins and times it itself. When the round ends, the game reports its score, and the server pays for the time it measured, up to the round limit, and only as far as the score backs it up (each game has its own minimum score per second).</p>
+            <p>Rewards are written to a server-side ledger and held. When you cash out, a separate payout worker sends the payment from the distributor wallet and records its transaction.</p>
+          </div>
+        </details>
+        <details class="more">
+          <summary>Live, held and paid: what each word means</summary>
+          <div class="more-body">
+            <p><strong>Earned / held:</strong> recorded in the ledger and waiting for you to cash out. Not on-chain yet.</p>
+            <p><strong>Paid:</strong> sent on-chain from the distributor wallet, with a transaction anyone can check in the XL1 explorer.</p>
+            <p><strong>Dry run:</strong> if the status above ever says dry run, rewards are simulated and nothing is sent.</p>
+          </div>
+        </details>
+        </div>
+      </details>
+    </section>
+
+    <section id="activity" class="section reveal" aria-labelledby="a-activity">
+      <p class="eyebrow">Public ledger</p>
+      <h2 id="a-activity">Reward activity, for everyone to see.</h2>
+      <p class="lede">Totals only. No account IDs, wallets, IP addresses or session details are published.</p>
+      <div class="figures" id="public-stats">
+        <div><strong>—</strong><span>Earned today</span></div>
+        <div><strong>—</strong><span>Earned, all time</span></div>
+        <div><strong>—</strong><span>Paid on-chain, with hold bonuses</span></div>
+        <div><strong>—</strong><span>Players rewarded</span></div>
+      </div>
+      <details class="more" id="recent-more">
+        <summary>Recent rewards</summary>
+        <div class="more-body"><div class="proof-list" id="recent-rewards">
+          <div class="proof-item"><div class="body">Reading recent rewards…</div></div>
+        </div></div>
+      </details>
+      <details class="more">
+        <summary>Where the XL1 comes from</summary>
+        <div class="more-body">
+          <p>Payments come from the arcade's distributor wallet <code id="distributor">—</code>, funded by hand by the WinLEW treasury. The arcade holds no treasury key and cannot withdraw from it. <a href="https://explore.xyo.network/xl1/mainnet" id="explorer-link" rel="noopener">Open the XL1 explorer ↗</a></p>
+        </div>
+      </details>
+    </section>
+
+    <section class="section reveal" aria-labelledby="a-community">
+      <div class="community-band">
+      <div>
+        <p class="eyebrow">Community</p>
+        <h2 id="a-community">💙 Questions? You're not alone.</h2>
+        <p class="lede">New to XL1, wallets or blockchain? The WinLEW Discord is where players ask questions, share scores and get help getting started. It's also where the GeoHackers bot runs <code>/verify</code> and the daily faucet.</p>
+      </div>
+      <p class="cta-row"><a class="btn primary" href="https://discord.gg/PSCrBzqdbE" rel="noopener">Join the WinLEW Discord ↗</a></p>
+      </div>
+    </section>
+
+    <section class="section reveal" aria-labelledby="a-next">
+      <p class="eyebrow">Keep going</p>
+      <h2 id="a-next">More to do on XL1.</h2>
+      <div class="tiles">
+        <a class="tile" href="/xl1/geohackers/"><div class="tile-top"><h3>GeoHackers</h3><span class="chip chip-alpha">Alpha</span></div><p>The Discord bot behind wallet verification, the XL1 faucet and co-signed observations.</p><span class="card-action">Explore →</span></a>
+        <a class="tile" href="/xl1/verify/"><div class="tile-top"><h3>Verify a wallet</h3><span class="chip chip-live">Live</span></div><p>How wallet verification works, and why it never moves funds.</p><span class="card-action">Learn →</span></a>
+        <a class="tile" href="https://oxyon.io/xl1/" rel="noopener"><div class="tile-top"><h3>The XL1 network</h3><span class="card-kind">by Oxyon</span></div><p>Watch the chain live, and see the producers behind it, on Oxyon's Chain Viewer.</p><span class="card-action">Open ↗</span></a>
+      </div>
+    </section>
+</main>
+
+<footer>
+<div class="plate">
+      <img class="plate-mark" src="/images/avatars/mole-guard-128.png" alt="" aria-hidden="true" width="26" height="26">
+      <p class="plate-name">WinLEW</p>
+      <p class="plate-role">XL1 · ARCADE&nbsp;&nbsp;·&nbsp;&nbsp;LET'S EVERYONE WIN</p>
+      <hr>
+      <nav class="plate-groups" aria-label="All XL1 pages"><div><p class="plate-h">Play</p><a href="/xl1/arcade/" aria-current="page">Arcade</a><a href="/mole-hub/">Mole Hub</a><a href="/xl1/arcade/play/?game=molespades">Mole Spades</a></div><div><p class="plate-h">Take part</p><a href="/xl1/geohackers/">GeoHackers</a><a href="/xl1/geohackers/#faucet">XL1 faucet</a><a href="/xl1/verify/">Verify</a><a href="https://discord.gg/PSCrBzqdbE" rel="noopener">Discord<span class="ext" aria-hidden="true">↗</span></a></div><div><p class="plate-h">Check it</p><a href="/xl1/arcade/#activity">Arcade ledger</a><a href="https://explore.xyo.network/xl1/mainnet" rel="noopener">XL1 explorer<span class="ext" aria-hidden="true">↗</span></a><a href="https://oxyon.io/xl1/" rel="noopener">Network<span class="ext" aria-hidden="true">↗</span></a><a href="https://oxyon.io/status/" rel="noopener">What's live<span class="ext" aria-hidden="true">↗</span></a></div><div><p class="plate-h">WinLEW</p><a href="/">winlew.co</a><a href="/xl1/#learn">Who does what</a></div></nav>
+      <p class="plate-net" id="xl1-net" data-state="unknown" role="status" aria-live="polite"><span class="net-dot" aria-hidden="true"></span><span id="xl1-net-label">XL1 network</span></p>
+      <p class="plate-copy">WinLEW is independent community work, not affiliated with, sponsored by or endorsed by XYO Network. XL1 is XYO Network's blockchain. © <span id="year">2026</span> WinLEW</p>
+    </div>
+</footer>
+<script src="/xl1/shared/shell.js?v=wl1024-start" defer></script>
+<script src="/xl1/shared/onboarding.js?v=wl1024-start" defer></script>
+<script src="/xl1/arcade/arcade.js?v=wl1024-layout" defer></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1,viewport-fit=cover">
+<title>Oxyon Wallet — Privacy Policy</title>
+<meta name="robots" content="index,follow">
+<meta name="description" content="Oxyon Wallet (formerly GeoWallet) privacy policy for local storage, self-custody wallet data, messaging, browser permissions, and blockchain network requests.">
+<link rel="canonical" href="https://winlew.co/wallet/privacy/" />
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/oxyon-favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/oxyon-apple-touch-icon.png">
+<meta name="theme-color" content="#0a0a0c">
+<style>
+/* Oxyon identity: near-black, brushed titanium/steel neutrals, champagne-gold accent. */
+:root{color-scheme:dark;--bg:#0a0a0c;--panel:rgba(22,22,26,.78);--panel2:rgba(255,255,255,.035);--line:rgba(205,167,105,.22);--line2:rgba(255,255,255,.09);--text:#f4f4f5;--muted:#c4c4cc;--soft:#8e8e98;--gold:#dcc08a;--gold-deep:#b98f52;--ink:#0a0a0c}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 82% 6%,rgba(205,167,105,.12),transparent 36%),radial-gradient(circle at 15% 85%,rgba(160,170,190,.07),transparent 38%),linear-gradient(160deg,#08080a,#121216 50%,#08080a)}
+a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
+.nav{position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line2);background:rgba(10,10,12,.78);backdrop-filter:blur(14px)}
+.nav-inner{width:min(1180px,calc(100% - 32px));margin:auto;display:flex;align-items:center;justify-content:space-between;min-height:72px;gap:18px}
+.brand{display:flex;align-items:center;gap:12px;color:var(--text)}.brand:hover{text-decoration:none}
+.brand img{width:38px;height:38px;border-radius:10px;box-shadow:0 0 28px rgba(205,167,105,.18)}
+.wordmark{font-weight:700;letter-spacing:.28em;font-size:15px}.wordmark small{margin-left:6px;font-size:10px;font-weight:600;letter-spacing:.22em;color:var(--gold)}
+.nav-links{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:14px}.nav-links a{color:#e4e4e7;font-weight:600;font-size:14px}
+.wrap{width:min(1180px,calc(100% - 32px));margin:auto}.hero{padding:42px 0 22px}.hero-card{overflow:hidden;border:1px solid var(--line);border-radius:28px;background:var(--panel);box-shadow:0 28px 110px rgba(0,0,0,.5)}.hero-card img{display:block;width:100%;height:auto}
+.section{padding:28px 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.grid.two{grid-template-columns:1.05fr .95fr}
+.card{border:1px solid var(--line);border-radius:22px;padding:24px;background:var(--panel);box-shadow:0 18px 70px rgba(0,0,0,.25)}.card.soft{background:var(--panel2)}
+h1,h2,h3,p{margin-top:0}h1{font-size:clamp(42px,8vw,86px);line-height:.92;letter-spacing:-.05em;margin-bottom:18px}h2{font-size:clamp(28px,4vw,48px);line-height:1.02;letter-spacing:-.035em;margin-bottom:14px}h3{font-size:21px;letter-spacing:-.015em;margin-bottom:10px}
+p{color:var(--muted);line-height:1.68}.lead{font-size:clamp(18px,2.2vw,24px);line-height:1.5;max-width:860px}
+.tagline{margin:-4px 0 18px;color:var(--gold);font-size:12px;font-weight:600;letter-spacing:.28em;text-transform:uppercase}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0 0}.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:9px 14px;color:var(--text);background:rgba(255,255,255,.04);font-weight:700;font-size:14px}
+.badge.gold{border-color:rgba(205,167,105,.5);color:var(--gold)}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}.btn{min-height:48px;display:inline-flex;align-items:center;justify-content:center;padding:0 22px;border-radius:999px;font-weight:800;color:var(--ink);background:linear-gradient(135deg,#ead9b4,#cda769 55%,#b98f52);box-shadow:0 14px 34px rgba(205,167,105,.2)}.btn.secondary{color:var(--text);background:rgba(255,255,255,.05);border:1px solid var(--line);box-shadow:none}.btn:hover{text-decoration:none;filter:brightness(1.06)}
+.note{border-left:3px solid var(--gold);border-radius:16px;background:rgba(255,255,255,.045);padding:18px 20px;color:var(--muted);line-height:1.65}.list{margin:0;padding-left:20px;color:var(--muted);line-height:1.75}
+.lifecycle{margin-top:16px;color:var(--soft);font-size:12px;font-weight:600;letter-spacing:.26em;text-transform:uppercase}
+footer{margin-top:34px;padding:34px 0 46px;border-top:1px solid var(--line2);color:rgba(244,244,245,.6)}.footer-inner{width:min(1180px,calc(100% - 32px));margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.announcement{border-bottom:1px solid var(--line2);background:rgba(205,167,105,.06)}
+.announcement-inner{width:min(1180px,calc(100% - 32px));margin:auto;min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--muted);font-weight:600}
+.announcement strong{color:var(--text)}.announcement-actions{display:flex;gap:10px;flex-wrap:wrap}.mini-btn{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 14px;border-radius:999px;color:var(--ink);background:linear-gradient(135deg,#ead9b4,#cda769 55%,#b98f52);font-weight:800;font-size:13px}.mini-btn:hover{text-decoration:none}.mini-btn.secondary{color:var(--text);background:rgba(255,255,255,.06);border:1px solid var(--line)}
+.wallet-warning{margin-top:22px;color:var(--soft);font-size:14px;line-height:1.6}
+.link-list{display:grid;gap:10px;margin-top:12px}.link-row{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:14px;padding:13px 15px;background:rgba(255,255,255,.035);color:var(--text);font-weight:700}.link-row:hover{text-decoration:none;border-color:rgba(205,167,105,.45)}.link-row span{color:var(--soft);font-weight:600;font-size:14px}
+.policy main{max-width:860px}.policy h1{font-size:42px;letter-spacing:-.035em}.policy h2{font-size:24px;margin-top:32px;color:var(--gold)}.policy code{background:rgba(255,255,255,.07);padding:2px 6px;border-radius:6px;color:var(--text)}.meta{color:var(--soft);font-size:14px;margin-bottom:16px}
+@media(max-width:850px){.nav-inner{align-items:flex-start;flex-direction:column;padding:15px 0}.nav-links{justify-content:flex-start}.grid,.grid.two{grid-template-columns:1fr}.hero{padding-top:24px}}
+</style>
+</head>
+<body class="policy">
+<header class="nav"><div class="nav-inner"><a class="brand" href="https://wallet.oxyon.io/" aria-label="Oxyon Wallet"><img src="../assets/oxyon-icon-128.png" alt=""><span class="wordmark">OXYON<small>WALLET</small></span></a><nav class="nav-links"><a href="../">Wallet Home</a><a href="../support/">Support</a><a href="https://x.com/GeoWallet" rel="noopener">Updates</a><a href="https://x.com/LewSales" rel="noopener">Developer</a></nav></div></header>
+<div class="announcement"><div class="announcement-inner"><span><strong>Privacy first:</strong> Oxyon Wallet is self-custody. Keys and recovery phrases stay on your device.</span><div class="announcement-actions"><a class="mini-btn secondary" href="../support/">Support</a><a class="mini-btn" href="https://wallet.oxyon.io/">Launch Wallet</a></div></div></div>
+
+<main class="wrap section"><div class="card">
+<h1>Oxyon Wallet Privacy Policy</h1><p class="meta">Last updated: 2 October 2026 · Oxyon Wallet was formerly GeoWallet</p>
+<div class="note">Oxyon Wallet is a <strong>self-custodial</strong> wallet (browser extension and web app). It does not have user accounts, does not run analytics, and does not collect, sell, or share personal information. Your keys and recovery phrase are generated and stored <strong>only on your own device</strong>.</div>
+<h2>What we store, and where</h2><ul class="list"><li><strong>Your recovery phrase and private keys</strong> are encrypted with your password and stored locally in your browser. They are <strong>never</strong> transmitted to us or anyone else. We cannot see, recover, or reset them.</li><li><strong>Local preferences</strong> such as selected networks, custom RPC URLs, address book labels, and optional API keys are stored locally in your browser only.</li><li><strong>Messaging data</strong> — your message inbox, the senders you have accepted or blocked, and how far the wallet has scanned — is stored locally in your browser only. Private messages are kept in their encrypted form and decrypted in memory only while the wallet is unlocked.</li><li>Optional <strong>fingerprint unlock</strong> uses your device's WebAuthn authenticator to wrap your password locally; no biometric data leaves your device.</li></ul>
+<h2>Network requests</h2><p>Like any wallet, Oxyon Wallet must talk to public infrastructure to function. These requests may expose your public wallet address and IP address to the endpoint you are contacting.</p><ul class="list"><li><strong>Blockchain RPC endpoints</strong> — to read balances and broadcast transactions that you approve.</li><li><strong>XL1 RPC and the XL1 data lake</strong> — to send messages and to find messages sent to your address. The browser extension checks for new messages in the background every few minutes, using only your public XL1 address.</li><li><strong>CoinGecko</strong> — to display token prices in USD.</li><li><strong>Alchemy / Etherscan</strong> — only if enabled or configured, to show NFTs and transaction history.</li><li><strong>WalletConnect / Reown relay</strong> — only if enabled, to connect to mobile dApps.</li></ul><p>We do not add tracking parameters, identifiers, or analytics to these requests.</p>
+<h2>Messages you send</h2><ul class="list"><li><strong>Public messages</strong> are written to the XL1 public blockchain and its data lake. They are <strong>permanent and readable by anyone</strong>, and cannot be edited or deleted — by you or by us.</li><li><strong>Private messages</strong> are end-to-end encrypted on your device so only the recipient's wallet can read them. Like every blockchain transaction, the sender and recipient addresses, the time, the size, and any XL1 attached remain publicly visible.</li><li><strong>Enabling private messages</strong> publishes your wallet's messaging public key on XL1 so others can encrypt to you. It never publishes your recovery phrase, private keys, or signing key.</li><li>Never send secrets, passwords, or recovery phrases in a message.</li></ul>
+<h2>Permissions</h2><ul class="list"><li><code>storage</code> — to keep your encrypted vault, inbox, and local settings on your device.</li><li><code>tabs</code> — to identify which site is making a connection or signing request so approvals and responses go to the correct page.</li><li><code>alarms</code> — to check for new messages every few minutes.</li><li><code>notifications</code> — to tell you when a message arrives from someone you know. Notifications never include the message text, and first-time senders never trigger one.</li><li>Host permissions / content scripts — to inject the wallet provider so decentralized apps can request a connection. You approve every connection and signature.</li></ul>
+<h2>What we never do</h2><ul class="list"><li>We never collect or transmit your recovery phrase, private keys, or password.</li><li>We never run third-party analytics, advertising, or trackers.</li><li>We never sell or share your data.</li></ul>
+<h2>Data deletion</h2><p>Using <strong>Reset</strong> in the wallet, removing the extension, or clearing browser data permanently deletes locally stored Oxyon Wallet data from your device. Because nothing is stored on our servers, there is nothing for us to delete on your behalf. Messages and transactions already written to a public blockchain cannot be deleted by anyone.</p>
+<h2>Children</h2><p>Oxyon Wallet is not directed to children under 16.</p>
+<h2>Changes</h2><p>We may update this policy; material changes will be reflected by the “Last updated” date above.</p>
+<h2>Contact</h2><p>Questions or requests: <!-- Was https://github.com/LewSales/GeoWallet/issues, which returns 404 (re-checked 2026-10-02):
+     that repo is private/nonexistent to the public. This is a PRIVACY POLICY contact point, so a
+     dead link here is worse than an ordinary broken link. Repointed at the community Discord
+     (verified 200). If a dedicated Oxyon Wallet channel or inbox exists, swap it in here. -->
+<a href="https://discord.gg/PSCrBzqdbE" rel="noopener noreferrer" target="_blank">the WinLEW community Discord</a></p>
+</div></main>
+<footer><div class="footer-inner"><span>Oxyon Wallet Privacy Policy</span><span><a href="../">Wallet Home</a> · <a href="../support/">Support</a> · <a href="https://x.com/GeoWallet" rel="noopener">Updates</a> · <a href="https://x.com/LewSales" rel="noopener">Developer</a></span></div></footer>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "appId": "co.winlew.app",
+  "appName": "WinLEW",
+  "webDir": "www",
+  "server": {
+    "url": "https://winlew.co/app/",
+    "cleartext": false,
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": false
+  },
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#130b08"
+  }
+}

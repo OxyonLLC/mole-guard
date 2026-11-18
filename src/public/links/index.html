@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Links — WinLEW</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="Every official $WinLEW link in one place: buy, chart, verify, socials, and every winlew.co page." />
+  <link rel="canonical" href="https://winlew.co/links/" />
+  <meta property="og:title" content="Links — WinLEW" />
+  <meta property="og:description" content="Every official $WinLEW link in one place: buy, chart, verify, socials, and every winlew.co page." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/links/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    html { overflow-x: hidden; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      line-height: 1.7;
+    }
+    .wlPageShell { max-width: 1120px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin: 0 0 10px; }
+    h2 { font-size: clamp(20px, 2.8vw, 26px); }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624;
+      border-radius: 20px;
+      padding: 26px;
+      margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: 0.85; }
+    .sectionTag { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: rgba(246,239,232,.7); margin-bottom: 4px; }
+    .linkGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .linkGrid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .linkCard {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      text-decoration: none;
+      color: inherit;
+    }
+    .linkCard:hover { text-decoration: none; border-color: rgba(214,168,102,.34); background: rgba(255,255,255,.07); }
+    .linkCard strong { color: #f6efe8; font-size: 15px; }
+    .linkCard span { color: rgba(246,239,232,.74); font-size: 13px; }
+    .linkCard.featured { border-color: rgba(214,168,102,.5); background: linear-gradient(180deg, rgba(214,168,102,.10), rgba(214,168,102,.03)); }
+    .linkCard.missing { opacity: .55; border-style: dashed; cursor: default; }
+    .tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 800; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.05); align-self: flex-start; }
+    .tag.new { border-color: rgba(214,168,102,.5); color: #f0c989; }
+    .tag.pending { border-color: rgba(255,179,71,.4); color: #ffb347; }
+    .ctaRow { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid #4e3624;
+      font-weight: 850;
+      font-size: 13px;
+      text-decoration: none;
+      cursor: pointer;
+      color: inherit;
+      font-family: inherit;
+    }
+    .btn.primary { background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22)); }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .caRow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+    .caCode { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; padding: 8px 12px; border-radius: 10px; background: rgba(255,255,255,.05); border: 1px solid #4e3624; word-break: break-all; }
+    .exploreGrid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
+    .exploreCol h3 { font-size: 13px; color: #f0c989; margin: 0 0 8px; text-transform: uppercase; letter-spacing: .04em; }
+    .exploreCol ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+    .exploreCol li a { font-size: 13.5px; color: rgba(246,239,232,.88); }
+    .exploreCol li a:hover { color: #d6a866; }
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+    @media (max-width: 900px) {
+      .linkGrid { grid-template-columns: 1fr 1fr; }
+      .exploreGrid { grid-template-columns: 1fr 1fr; }
+      .wlPageShell { padding: 22px 16px 32px; }
+    }
+    @media (max-width: 560px) {
+      .linkGrid, .exploreGrid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+  <header class="wlHero" id="links-overview">
+    <div class="wlHeroMain">
+      <span class="wlKicker">WINLEW • LINKS</span>
+      <h1 class="wlHeroTitle">Everywhere to find,<br><span class="wlHeroTitleAccent">verify, and buy $WinLEW.</span></h1>
+      <p class="wlHeroSub">One page, every real link — socials, where to buy, every chart/market tracker we're on, and every winlew.co page. If a platform below is marked "not yet listed," that's honest: we're not on it yet.</p>
+      <div class="caRow">
+        <span class="caCode" id="caCode">DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump</span>
+        <button class="btn" type="button" data-copy="DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump">📋 Copy CA</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="box">
+    <div class="sectionTag">🏛️ Listed On</div>
+    <div class="linkGrid two">
+      <a class="linkCard featured" href="https://www.coinbase.com/price/lets-everyone-win-solana-dnrcdqvh7fdbmm4eyd7ljt9mnnozf5huwmekcpvjpump-token" target="_blank" rel="noreferrer noopener">
+        <span class="tag new">Since ~May 29, 2026</span>
+        <strong>🔵 Coinbase</strong>
+        <span>Trackable and tradeable via Coinbase's onchain DEX view — not a formal exchange listing, but real and live.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="sectionTag">💬 Community</div>
+    <div class="linkGrid">
+      <a class="linkCard" href="/community/"><strong>💬 Discord</strong><span>The official WinLEW server</span></a>
+      <!-- These two descriptions were swapped. Settled 2026-08-04 by the
+           owner's own DNS, which is the least ambiguous evidence available:
+             faucet.winlew.xyz -> x.com/winlewtoken
+             burn.winlew.xyz   -> x.com/leteveryonewin
+           That agrees with /home/, /whitepaper/, /contribute/ and the
+           xFaucetReserve component in web.js (winlew.sol / GFxz42…EhAp is
+           "held by @WinLewToken, the X giveaway host account"), and with
+           bot.js's !xwallet reply. /who-we-are/ had the same swap and is
+           corrected in the same pass. -->
+      <a class="linkCard" href="https://x.com/WinLewToken" target="_blank" rel="noreferrer noopener"><strong>𝕏 @WinLewToken</strong><span>Runs the X/Twitter faucet &amp; giveaway program</span></a>
+      <a class="linkCard" href="https://x.com/LetEveryOneWin" target="_blank" rel="noreferrer noopener"><strong>𝕏 @LetEveryOneWin</strong><span>Official project account — announcements &amp; the burn program</span></a>
+      <a class="linkCard" href="https://x.com/LewSales" target="_blank" rel="noreferrer noopener"><strong>𝕏 @LewSales</strong><span>Founder</span></a>
+      <a class="linkCard" href="https://x.com/i/communities/1890899109684683068" target="_blank" rel="noreferrer noopener"><strong>𝕏 Community</strong><span>WinLEW's X Community</span></a>
+      <a class="linkCard" href="https://t.me/LetsEveryOneWin" target="_blank" rel="noreferrer noopener"><strong>✈️ Telegram</strong><span>Chat &amp; announcements</span></a>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="sectionTag">🛒 Buy</div>
+    <div class="linkGrid">
+      <a class="linkCard" href="https://pump.fun/coin/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener"><strong>🚀 pump.fun</strong><span>Coin page</span></a>
+      <a class="linkCard" href="https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&amp;output=DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener"><strong>🚀 pump.fun Swap</strong><span>Direct SOL swap</span></a>
+      <!-- Was "Post-graduation swap", which names the wrong market. The
+           post-graduation market is the PumpSwap pool Hmif58… (created
+           2026-07-22); Raydium's 5nTz… pool was created 2025-02-10 and is the
+           established secondary route, which is how /home/ and /transparency/
+           both describe it. -->
+      <a class="linkCard" href="https://raydium.io/swap/?inputMint=sol&amp;outputMint=DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener"><strong>🌊 Raydium Swap</strong><span>Established secondary market</span></a>
+      <a class="linkCard" href="https://raydium.io/liquidity/increase/?mode=add&amp;pool_id=5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer noopener"><strong>🌊 Raydium Liquidity</strong><span>Add liquidity</span></a>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="sectionTag">📊 Charts &amp; Market Data</div>
+    <div class="linkGrid">
+      <!-- Raydium pool on purpose: DexScreener drops a pair once its volume
+           hits zero, so the primary PumpSwap page currently renders "no pair
+           found" (verified 2026-08-12). GeckoTerminal below covers the primary
+           pool, so between the two cards a visitor always reaches a chart. -->
+      <a class="linkCard" href="https://dexscreener.com/solana/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer noopener"><strong>📊 DexScreener</strong><span>Raydium pool — always renders</span></a>
+      <a class="linkCard" href="https://www.geckoterminal.com/solana/pools/Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL" target="_blank" rel="noreferrer noopener"><strong>🦎 GeckoTerminal</strong><span>Primary pool</span></a>
+      <a class="linkCard" href="https://dex.coinmarketcap.com/token/solana/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump/" target="_blank" rel="noreferrer noopener"><strong>📈 CoinMarketCap</strong><span>DexScan</span></a>
+      <a class="linkCard" href="https://rugcheck.xyz/tokens/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener"><strong>🛡️ RugCheck</strong><span>Safety report</span></a>
+      <a class="linkCard" href="https://www.mexc.com/dex/onchain/sol/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener"><strong>🏦 MEXC</strong><span>DEX onchain view</span></a>
+      <!-- Dropped the /en locale segment: DexTools 301s it away, so the old
+           URL cost every visitor a redirect. Verified 200 at this address. -->
+      <a class="linkCard" href="https://www.dextools.io/app/solana/pair-explorer/Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL" target="_blank" rel="noreferrer noopener"><strong>🛠️ DexTools</strong><span class="tag new" style="margin-top:2px;">New</span></a>
+      <span class="linkCard missing"><strong>🦎 CoinGecko</strong><span class="tag pending" style="margin-top:2px;">Not yet listed</span></span>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="sectionTag">🔗 Verify On-Chain</div>
+    <div class="linkGrid two">
+      <a class="linkCard" href="https://solscan.io/token/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener"><strong>🔗 Solscan</strong><span>Token page</span></a>
+      <a class="linkCard" href="/transparency/"><strong>🔍 Transparency Center</strong><span>Every published wallet &amp; reserve</span></a>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="sectionTag">🌐 Explore winlew.co</div>
+    <div class="exploreGrid">
+      <div class="exploreCol">
+        <h3>Start Here</h3>
+        <ul>
+          <li><a href="/home/">Ecosystem Hub</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/who-we-are/">Who We Are</a></li>
+          <li><a href="/discord-bots/">Discord Bots</a></li>
+          <li><a href="/policies/">Policies</a></li>
+        </ul>
+      </div>
+      <div class="exploreCol">
+        <h3>Trust &amp; Transparency</h3>
+        <ul>
+          <li><a href="/transparency/">Transparency Center</a></li>
+          <li><a href="/burn/">Burn Center</a></li>
+          <li><a href="/contribute/">Contribute</a></li>
+          <li><a href="/health/">Health / Status</a></li>
+          <li><a href="/whitepaper/">Whitepaper</a></li>
+        </ul>
+      </div>
+      <div class="exploreCol">
+        <h3>Build &amp; Explore</h3>
+        <ul>
+          <li><a href="/roadmap/">Roadmap</a></li>
+          <li><a href="/modules/">Modules</a></li>
+          <li><a href="/winlew-forge/">WinLEW Forge</a></li>
+          <!-- /merch/ was deliberately out of nav while private, then a public
+               "coming soon" teaser from 2026-07-31. On 2026-08-30 the shop
+               itself moved onto /merch/ and opened, so the "(Soon)" came off
+               here at the same time as nav.js's own 'Soon' tag. -->
+          <li><a href="/merch/">Merch</a></li>
+        </ul>
+      </div>
+      <div class="exploreCol">
+        <h3>Play &amp; Participate</h3>
+        <ul>
+          <li><a href="/verify/profile.html">Dashboard</a></li>
+          <li><a href="/mole-hub/">The Mole Hub</a></li>
+          <li><a href="/xl1/arcade/">XL1 Arcade</a></li>
+          <li><a href="/verify/">Verify Wallet</a></li>
+          <li><a href="/quiz/">Quiz</a></li>
+          <li><a href="/faucet/">Faucet</a></li>
+          <li><a href="/bounties/">Bounties</a></li>
+          <li><a href="/leaderboards/">Leaderboards</a></li>
+          <li><a href="/events/">Community Events</a></li>
+        </ul>
+      </div>
+      <div class="exploreCol">
+        <h3>Governance</h3>
+        <ul>
+          <li><a href="/governance/">Governance</a></li>
+          <li><a href="/governance/submit/">Submit a Proposal</a></li>
+          <li><a href="/partners/">Sponsors &amp; Partners</a></li>
+          <li><a href="/xyo/">XYO Ecosystem</a></li>
+        </ul>
+      </div>
+      <!-- Listed 3 of the 7 /ecosystem/ pages. All seven are live, carry no
+           noindex and are in nav.js's own menu, so on a page that promises
+           "every winlew.co page" the other four were simply missing. Added,
+           with the "Coming Soon" status each page's own <title> declares. -->
+      <div class="exploreCol">
+        <h3>Oxyon</h3>
+        <ul>
+          <li><a href="https://oxyon.io/" target="_blank" rel="noreferrer noopener">Oxyon ↗</a></li>
+          <li><a href="/ecosystem/geowallet/">Oxyon Wallet (Beta)</a></li>
+          <li><a href="/ecosystem/geoagora/">GeoAgora (Soon)</a></li>
+          <li><a href="/ecosystem/geohackers/">GeoHackers (Soon)</a></li>
+          <li><a href="/ecosystem/geojustice/">GeoJustice (Soon)</a></li>
+          <li><a href="/ecosystem/geopresence/">GeoPresence (Soon)</a></li>
+          <li><a href="/ecosystem/geoproof/">GeoProof (Soon)</a></li>
+          <li><a href="/ecosystem/ublock/">uBlock (Soon)</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <a href="/">← Back to WinLEW</a> · <a href="/who-we-are/">Who We Are</a> · <a href="/proof-of-value/">Proof of Value</a> · <a href="/whitepaper/">Whitepaper</a> · <a href="/policies/">Policies</a>
+  </footer>
+</div>
+
+<script src="/assets/wallet-auth.js"></script>
+<script defer src="/assets/nav.js"></script>
+<script>
+  document.querySelectorAll('button[data-copy]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy);
+        const original = btn.textContent;
+        btn.textContent = '✅ Copied';
+        setTimeout(() => { btn.textContent = original; }, 1500);
+      } catch (e) {
+        console.warn('[links] copy failed:', e);
+      }
+    });
+  });
+</script>
+</body>
+</html>

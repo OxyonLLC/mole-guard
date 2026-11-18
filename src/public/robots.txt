@@ -1,0 +1,27 @@
+# winlew.co
+#
+# There are deliberately NO Disallow lines here, and adding one is almost
+# always a mistake on this site. Two reasons:
+#
+#   1. robots.txt is world-readable. A "Disallow: /some/private/path" publishes
+#      the exact path to anyone who reads this file — it advertises what it
+#      means to hide. A test in test/nav/ enforces this for the paths where it
+#      would matter most, and it is strict about it: naming one of those paths
+#      even inside a comment on this line would fail the build.
+#
+#   2. A disallowed page cannot be crawled, so the crawler never reads the
+#      <meta name="robots" content="noindex"> it would otherwise obey. Blocking
+#      a page here is how a page stays *indexed* with no description.
+#
+# noindex is the mechanism on this site. Around 50 pages carry it — redirect
+# stubs and pre-launch lockdown pages. That is what
+# keeps them out of search results, and it is enforced by
+# test/nav/redirectStubHygiene.test.mjs and test/nav/indexingHygiene.test.mjs.
+#
+# The server-side protections that actually matter (the /log/ block) live in
+# .htaccess, where they are enforced rather than requested.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://winlew.co/sitemap.xml

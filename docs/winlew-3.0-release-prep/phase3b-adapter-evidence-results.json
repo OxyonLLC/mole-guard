@@ -1,0 +1,9 @@
+{
+  "generatedAt": "2026-10-09T14:51:16.391Z",
+  "methodology": "Local VM execution of the packaged browser adapter with a mocked same-origin fetch; not a browser-engine result.",
+  "logicalReads": 9,
+  "fetchCount": 1,
+  "requestedUrl": "http://preview.local/api/homepage/summary",
+  "directLegacySourceRequests": 0,
+  "allItemsResolved": true
+}

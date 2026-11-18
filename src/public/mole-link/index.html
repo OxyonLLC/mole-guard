@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>WinLEW — Verify Your Wallet, Unlock Your Roles</title>
+  <meta name="description" content="Verify your Solana wallet to unlock WinLEW Discord roles, governance voting and holder recognition. No private key, no seed phrase, no transaction, no fees — just a one-time signed message." />
+  <link rel="canonical" href="https://winlew.co/mole-link/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <style>
+    :root{--bg:#140d09;--panel:rgba(255,255,255,.06);--line:rgba(255,255,255,.12);--text:#f7efe6;--muted:rgba(247,239,230,.82);--brand:#d6a866}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);background:radial-gradient(1100px 680px at 10% 0%, rgba(214,168,102,.12), transparent 55%),linear-gradient(180deg,#110906 0%,#1e120b 100%)}
+    a{color:#f0c989;text-decoration-color:rgba(240,201,137,.45)}
+    a:hover{color:#ffe0ad}
+    .wrap{max-width:960px;margin:0 auto;padding:24px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:0 28px 80px rgba(0,0,0,.38)}
+    h1{margin:0 0 10px;font-size:clamp(34px,4vw,54px);line-height:1.02}
+    p{color:var(--muted);line-height:1.7}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+    .option{display:flex;flex-direction:column;gap:10px;padding:18px;border:1px solid var(--line);border-radius:18px;background:rgba(0,0,0,.18)}
+    .option p{margin:0;font-size:14px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:14px;text-decoration:none;font-weight:800;border:1px solid var(--line);color:var(--text);background:rgba(255,255,255,.06)}
+    .btn.primary{background:linear-gradient(90deg,rgba(214,168,102,.32),rgba(214,168,102,.2));border-color:rgba(214,168,102,.45)}
+    .eyebrow{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#f0c989}
+    .steps{margin:14px 0 0;padding-left:20px;color:var(--muted);line-height:1.8;font-size:14px}
+    .fine{font-size:12.5px;color:var(--muted);margin-top:16px}
+    .lede{font-size:17px;line-height:1.75}
+    .safety{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0 4px;
+      padding:16px;border-radius:18px;background:rgba(143,214,160,.09);border:1px solid rgba(143,214,160,.34)}
+    .safety div{font-size:14.5px;font-weight:700;line-height:1.5}
+    h2{margin:34px 0 6px;font-size:clamp(22px,2.6vw,30px);line-height:1.15}
+    h3{margin:0;font-size:17px}
+    .role{display:flex;flex-direction:column;gap:8px;padding:18px;border-radius:18px;
+      border:1px solid var(--line);background:rgba(0,0,0,.18)}
+    .role p{margin:0;font-size:14px}
+    .role .tag{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+    .role.hold{border-color:rgba(214,168,102,.4)}
+    .role.crew{border-color:rgba(240,201,137,.34)}
+    .role.club{border-color:rgba(143,214,160,.34)}
+    .proof{margin:10px 0 0;padding:12px 14px;border-radius:12px;background:rgba(0,0,0,.28);
+      border:1px solid var(--line);font-size:13px;color:var(--muted)}
+    .proof code{color:#f0c989}
+    ol.linked{margin:12px 0 0;padding-left:20px;color:var(--muted);line-height:1.85;font-size:14.5px}
+    .never{margin-top:8px;padding:16px;border-radius:18px;background:rgba(240,169,169,.08);
+      border:1px solid rgba(240,169,169,.34)}
+    .never ul{margin:8px 0 0;padding-left:20px;line-height:1.8;font-size:14.5px}
+    .infographic{margin:16px 0 0;padding:0;overflow-x:auto;border-radius:18px;border:1px solid var(--line);background:rgba(0,0,0,.24)}
+    .infographic img{display:block;width:100%;min-width:680px;height:auto}
+    .infographic figcaption{padding:10px 14px;font-size:13px;color:var(--muted);border-top:1px solid var(--line)}
+    .closing{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);font-size:15px}
+    @media (max-width:760px){.grid{grid-template-columns:1fr}.safety{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <!-- This page loaded nav.css and nav.js but carried no .nav markup at all, so
+       buildTwoLevelNav() returned early on its `if (!navInner || !links)` guard
+       and the page rendered with ZERO site navigation. It is reachable from the
+       shared menu ("Link Wallet + Roles"), so anyone arriving here had no way
+       onward except the browser back button. Same defect /community/ had.
+       Adding the standard shell; nav.js fills in the primary row, the grouped
+       Menu and the account controls, and /mole-link/ now shares /verify/'s
+       identity in PAGE_CONFIGS so it inherits the right icon and accent. -->
+  <div class="nav">
+    <div class="navInner">
+      <a class="navBrand" href="/">WinLEW</a>
+      <div class="navLinks" id="siteNavLinks"></div>
+      <div class="navRight">
+        <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+        <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+        <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+        <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="card">
+      <div class="eyebrow">Wallet Verification</div>
+      <h1>Verify your wallet.<br>Unlock what you&rsquo;ve earned.</h1>
+      <p class="lede">
+        WinLEW doesn&rsquo;t think recognition should come from saying what you own or what you&rsquo;ve done.
+        We verify it. Linking your wallet lets WinLEW recognise your holdings, participation and eligibility
+        across Discord and the rest of the ecosystem &mdash; so the evidence speaks instead of you having to.
+      </p>
+
+      <!-- The guarantees go above everything else because they are the reason
+           people hesitate, not a disclaimer to bury at the bottom. Someone who
+           has been drained by a fake "verification" once reads this page looking
+           for exactly these four lines. -->
+      <div class="safety">
+        <div>🔐 We never need your private key</div>
+        <div>🌱 We never need your seed phrase</div>
+        <div>💸 Verification sends no transaction</div>
+        <div>💰 There are no verification fees</div>
+      </div>
+      <p>You prove ownership by signing a one-time message with your wallet. A signature is not a transaction &mdash; it moves nothing and approves no spending.</p>
+
+      <h2>How to verify</h2>
+      <ol class="steps">
+        <li>Log in with Discord (official discord.com OAuth &mdash; we never see your password).</li>
+        <li>Connect your wallet and sign the one-time verification message.</li>
+        <li>Your roles sync in the WinLEW Discord, and your dashboard unlocks.</li>
+      </ol>
+      <p class="fine" style="margin-top:10px">Prefer to start in Discord? Run <code>/mole link</code> in the server &mdash; it begins this exact same flow.</p>
+      <div class="grid">
+        <div class="option">
+          <strong>Start verification</strong>
+          <p>Begin with Discord login, then link your wallet. Takes about a minute.</p>
+          <a class="btn primary" href="/verify/api-proxy.php/linked-role/mole">🔗 Start verification</a>
+        </div>
+        <div class="option">
+          <strong>Already verified?</strong>
+          <p>Open your dashboard, or the verify page directly if you already have a session link.</p>
+          <a class="btn" href="/verify/profile.html">📊 Open Dashboard</a>
+          <a class="btn" href="/verify/">Open Verify page</a>
+        </div>
+      </div>
+
+      <h2>What verification unlocks</h2>
+      <p>
+        Verification publishes five values about your wallet to Discord, and nothing beyond them: that it is
+        verified, whether it holds any WinLEW, whether it crosses the 1M and 10M marks, and your whole-number
+        WinLEW balance (which is what lets Discord build threshold roles). Discord decides which roles those
+        values qualify you for &mdash; WinLEW never sees or stores your Discord password. Your balance is public
+        on the blockchain either way; this simply connects it to your account so a role can be issued from it.
+      </p>
+      <div class="grid">
+        <div class="role hold">
+          <span class="tag" style="color:#f0c989">🟠 Foundation</span>
+          <h3>Verified WinLEW Holders</h3>
+          <p>Your connected wallet is checked for a $WinLEW balance. This is what turns &ldquo;trust me, I hold WinLEW&rdquo; into something the wallet itself proves.</p>
+        </div>
+        <div class="role crew">
+          <span class="tag" style="color:#f0c989">🟡 Community</span>
+          <h3>LewCREW</h3>
+          <p>More than holding a token &mdash; recognition for established members, and access to discussions not meant for the general public. Its exact criteria are set in Discord rather than by a fixed on-chain number.</p>
+        </div>
+        <div class="role club">
+          <span class="tag" style="color:#8fd6a0">🟢 Threshold</span>
+          <h3>#LewCREW 1 Million Club</h3>
+          <p>A verified wallet holding at least <strong>1,000,000 $WinLEW</strong>. No screenshots, no telling an admin, no &ldquo;trust me&rdquo; &mdash; the chain is the evidence.</p>
+        </div>
+        <div class="role club">
+          <span class="tag" style="color:#8fd6a0">🟢 Threshold</span>
+          <h3>#LewCREW 10 Million Club</h3>
+          <p>The same idea, another level: at least <strong>10,000,000 $WinLEW</strong> in your verified wallet. A role you actually earned and can prove.</p>
+        </div>
+      </div>
+      <p class="proof">
+        If your holdings change, so does your eligibility &mdash; these roles track the wallet, not a moment in time.
+        Selling down below a threshold removes the role it earned. That is the point of proving it rather than claiming it.
+      </p>
+
+      <h2>🗓️ HODL Rewards</h2>
+      <p>
+        Verifying does more than unlock a role. A verified wallet also qualifies you for
+        <strong>HODL Rewards</strong> — paid from a fixed weekly community allocation, with distributions
+        scheduled for <strong>each Tuesday</strong> while an epoch is running.
+      </p>
+      <p>
+        It is not staking: you deposit nothing, nothing is locked, and your tokens never leave your wallet.
+        Each reward is 0.10% to 0.15% of your verified balance, with the higher rates for taking part on
+        more days of the week before. Only part of a very large balance counts, each person's weekly reward
+        is capped, and a busy week is scaled down to fit the allocation. Rewards are not guaranteed.
+      </p>
+      <div class="grid">
+        <div class="option">
+          <strong>HODL Rewards</strong>
+          <p>How to qualify, the current epoch, the weekly pool, and every past distribution.</p>
+          <a class="btn" href="/hodl/">🗓️ Open HODL Rewards</a>
+        </div>
+        <div class="option">
+          <strong>The path</strong>
+          <p>Verify → link your wallet → hold → qualify → Tuesday. One verification covers all of it.</p>
+          <a class="btn" href="/verify/api-proxy.php/linked-role/mole">🔗 Start verification</a>
+        </div>
+      </div>
+
+      <h2>🏛️ Governance</h2>
+      <p>
+        The same verification decides whether you can vote. <strong>You do not need a separate governance wallet</strong>
+        &mdash; one verified wallet is one identity across the whole ecosystem.
+      </p>
+      <p>
+        A verified wallet holding WinLEW gets <strong>one free vote</strong>. Verifying is what earns your voice;
+        buying extra vote weight on top is a separate, capped thing with its own much higher bar. The exact
+        thresholds and the honest limits of what a vote can guarantee are set out on the governance page.
+      </p>
+      <div class="grid">
+        <div class="option">
+          <strong>Governance</strong>
+          <p>Proposals, voting rules, eligibility, and what the system can and cannot promise.</p>
+          <a class="btn" href="/governance/">🏛️ Open Governance</a>
+        </div>
+        <div class="option">
+          <strong>Proof of Value</strong>
+          <p>How participation is measured and recognised beyond what a balance shows.</p>
+          <a class="btn" href="/proof-of-value/">📊 Open Proof of Value</a>
+        </div>
+      </div>
+
+      <h2>Badges, access and clout</h2>
+      <p>
+        This is where verification becomes bigger than a Discord role. Verified activity gives us a foundation
+        for recognising holder status, wallet ownership, governance eligibility, private channel access,
+        achievements and badges, Proof of Value, and the standing you have actually earned &mdash; without asking
+        you to prove yourself over and over again.
+      </p>
+
+      <h2>📱 Already verified?</h2>
+      <p>Roles sync automatically, but Discord asks you to switch each one on once:</p>
+      <ol class="linked">
+        <li>In Discord, open <strong>Server Settings</strong> on the WinLEW server.</li>
+        <li>Click <strong>Linked Roles</strong>.</li>
+        <li>Enable the roles you are eligible for. Discord handles the rest.</li>
+      </ol>
+      <p class="fine">If your holdings or eligibility change later, WinLEW recognises that too &mdash; nothing to redo.</p>
+
+      <!-- The same two steps as the list above, drawn. The list stays: this is a
+           1983px-wide text-heavy image, so it is unreadable on a phone without
+           panning and invisible to a screen reader. It restates the steps, it
+           does not carry them. Lazy-loaded because it is ~1.6MB and sits well
+           below the fold. -->
+      <figure class="infographic">
+        <img src="/images/Verify+roles-x.png" loading="lazy" decoding="async" width="1983" height="793"
+             alt="Two steps: open Server Settings and click Linked Roles, then enable your eligible roles in the Linked Roles window." />
+        <figcaption>One identity. One verified connection. Multiple benefits.</figcaption>
+      </figure>
+
+      <h2>💬 Community</h2>
+      <div class="grid">
+        <div class="option">
+          <strong>Join the Discord</strong>
+          <p>Where the quiz, the faucet, governance votes and the roles above actually live.</p>
+          <a class="btn primary" href="https://discord.gg/PSCrBzqdbE" target="_blank" rel="noreferrer noopener">💬 Open Discord</a>
+        </div>
+        <div class="option">
+          <strong>Airdrop registry</strong>
+          <p>Check whether your verified wallet is on the airdrop list, and how to add it.</p>
+          <a class="btn" href="/community/">🎁 Airdrop Registry</a>
+        </div>
+        <div class="option">
+          <strong>Discord Bot Hub</strong>
+          <p>What each bot does and every command it answers, readable without joining first.</p>
+          <a class="btn" href="/discord-bots/">🤖 Open Bot Hub</a>
+        </div>
+        <div class="option">
+          <strong>Mole Hub</strong>
+          <p>Go straight to the games. A wallet-only web session works even if you skip Discord.</p>
+          <a class="btn" href="/mole-hub/">🎮 Open Mole Hub</a>
+        </div>
+      </div>
+
+      <div class="never">
+        <strong>⚠️ Remember</strong>
+        <ul>
+          <li>WinLEW will <strong>never</strong> ask you to send funds to verify.</li>
+          <li>WinLEW will <strong>never</strong> ask for your seed phrase.</li>
+          <li>WinLEW will <strong>never</strong> ask for your private key.</li>
+          <li>Only sign messages that clearly come from this flow, and never from a DM.</li>
+        </ul>
+      </div>
+      <p class="fine">
+        Signing a verification message proves you own the wallet without giving WinLEW any control over what is in it.
+        See <a href="/policies/">Policies</a> and <a href="/transparency/">Transparency</a>.
+      </p>
+
+      <p class="closing">
+        Verification isn&rsquo;t about proving wealth. It&rsquo;s about proving what is real.<br>
+        <strong>Proof of Value. Not Proof of Wealth.</strong> 🪽
+      </p>
+    </section>
+  </div>
+  <script src="/assets/wallet-auth.js"></script>
+  <script>
+    (function () {
+      var A = window.WinLEWAuth;
+      if (!A) return;
+      document.getElementById('navWalletConnect')?.addEventListener('click', function (e) {
+        A.walletLogin({ triggerBtn: e.currentTarget, onSuccess: function () { window.location.reload(); } });
+      });
+      if (A.getAuth().session) A.setConnectedUi(A.getCachedWallet() || 'connected');
+      A.refreshWalletBalance();
+    })();
+  </script>
+  <script defer src="/assets/nav.js"></script>
+</body>
+</html>

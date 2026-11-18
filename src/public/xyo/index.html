@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WinLEW × XYO — Community Ecosystem</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="WinLEW is an independent community initiative supporting the XYO ecosystem and XL1 — years of tools, education, and transparency built in good faith. Not an official partner." />
+  <link rel="canonical" href="https://winlew.co/xyo/" />
+  <meta property="og:title" content="WinLEW × XYO — Supporting the Ecosystem" />
+  <meta property="og:description" content="An independent community project built by people who believe in the long-term vision of XYO and XL1 — through consistent work and transparency, not hype." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/xyo/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    html { overflow-x: hidden; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      padding: 0; margin: 0; line-height: 1.7;
+    }
+    .wlBodyScroll { max-width: 900px; margin: 0 auto; padding: 32px; overflow-x: hidden; }
+    h1, h2, h3 { color: #e7c18f; margin-bottom: 8px; }
+    h1 { font-size: clamp(30px, 5vw, 44px); margin-top: 0; }
+    h2 { font-size: clamp(20px, 3vw, 26px); margin-top: 0; }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header.wlHero { text-align: left; margin-bottom: 8px; }
+    header.wlHero .ctaRow { justify-content: flex-start; }
+    .meta { font-size: 13px; opacity: 0.75; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624; border-radius: 20px; padding: 26px; margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: 0.85; }
+    ul, ol { margin-top: 10px; padding-left: 20px; }
+    li { margin: 5px 0; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid #4e3624; font-weight: 850; text-decoration: none; }
+    .btn.primary { background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22)); }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .ctaRow { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 18px 0 0; }
+    /* Honesty callout — the single most important element on the page. */
+    .honest {
+      border: 1px solid rgba(85,150,240,.4);
+      background: linear-gradient(180deg, rgba(85,150,240,.12), rgba(85,150,240,.04));
+      border-radius: 16px; padding: 18px 20px; margin: 18px 0;
+    }
+    .honest strong { color: #bcd8ff; }
+    .status-note { border-left: 3px solid #d6a866; padding: 10px 14px; background: rgba(214,168,102,.08); border-radius: 0 10px 10px 0; margin-top: 14px; font-size: 14px; }
+    /* Flow diagram for the XYO observations→evidence pipeline. */
+    .flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px 0 2px; }
+    .flow .node { padding: 7px 12px; border-radius: 999px; border: 1px solid #4e3624; background: #221610; font-size: 12.5px; font-weight: 800; white-space: nowrap; }
+    .flow .arr { color: #9c7b52; font-weight: 900; }
+    /* Project grid */
+    .projGrid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin-top: 14px; }
+    @media (max-width: 640px) { .projGrid { grid-template-columns: 1fr; } }
+    .projCard { border: 1px solid #4e3624; border-radius: 14px; padding: 14px 16px; background: rgba(0,0,0,.2); display: flex; flex-direction: column; gap: 4px; }
+    .projCard .pn { font-weight: 900; color: #f3d8a8; font-size: 15px; }
+    .projCard .pd { font-size: 12.5px; opacity: .85; line-height: 1.5; }
+    .projCard a.pl { font-size: 12px; font-weight: 800; margin-top: 4px; }
+    .projCard .soon { font-size: 11px; font-weight: 800; color: #9c7b52; margin-top: 4px; }
+    /* FAQ */
+    .faq { border-bottom: 1px solid rgba(255,255,255,.08); padding: 14px 0; }
+    .faq:last-child { border-bottom: none; }
+    .faq .q { font-weight: 900; color: #f3d8a8; margin: 0 0 6px; }
+    .faq .a { margin: 0; opacity: .9; }
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlBodyScroll">
+<header class="wlHero">
+  <div class="wlHeroMain">
+    <span class="wlKicker">🧭 Independent community initiative · Not an official partner</span>
+    <h1 class="wlHeroTitle">Supporting the<br><span class="wlHeroTitleAccent">XYO Ecosystem.</span></h1>
+    <p class="wlHeroSub">WinLEW is an <strong>independent community project</strong> built by people who believe in the long-term vision of XYO and XL1. For years we've built tools, education, and transparency that move <em>toward</em> the ecosystem — never competing with it.</p>
+    <div class="wlChipRow">
+      <span class="wlChip">🎓 Education-first</span>
+      <span class="wlChip">🔍 Transparency over hype</span>
+      <span class="wlChip">🔗 Building on XL1</span>
+    </div>
+    <div class="ctaRow" style="margin-top:16px;">
+      <a class="btn primary" href="/community/">💬 Join the community</a>
+      <a class="btn" href="/transparency/">🔍 Transparency Center</a>
+      <a class="btn" href="/whitepaper/">📄 Whitepaper</a>
+    </div>
+  </div>
+  <div class="wlHeroSide">
+    <div class="wlEyebrow">Years of work</div>
+    <div class="wlHeroStatGrid">
+      <div class="wlStat"><div class="n">~5 yrs</div><div class="l">Community leadership</div></div>
+      <div class="wlStat"><div class="n">~6 yrs</div><div class="l">Building toward XYO</div></div>
+      <div class="wlStat"><div class="n">10+</div><div class="l">Tools &amp; projects</div></div>
+      <div class="wlStat"><div class="n">0</div><div class="l">Hype required</div></div>
+    </div>
+    <div class="wlHeroNote">Everything here is community work offered in good faith — measured by what's shipped and verifiable, not by claims.</div>
+  </div>
+</header>
+
+<div class="honest">
+  <p style="margin:0;"><strong>Read this first.</strong> WinLEW is <strong>not officially partnered with, sponsored by, or endorsed by XYO</strong>. No official partnership has been announced, and nothing on this page should be read to imply that one exists today. WinLEW is an independent community initiative. We build because we believe in the ecosystem, and we hope our work continues to create value for both communities. If that recognition is ever earned, it will be through years of demonstrated work — not through assumptions.</p>
+</div>
+
+<div class="box">
+  <h2>Why We Build for XYO</h2>
+  <p>XYO is an incentive-driven geospatial network built on a simple, powerful idea: <strong>real-world observations can become verifiable evidence</strong>. Devices called <em>sentinels</em> make observations; two of them can co-sign a <strong>bound witness</strong> — a mutually-signed record of what was observed; those records chain together into an <strong>origin chain</strong>, a chronological history of evidence. <em>Bridges</em> relay it, <em>archivists</em> store it, and <em>diviners</em> answer questions using it.</p>
+  <p>That philosophy — <strong>observation → evidence → trust</strong>, earned rather than asserted — is the same principle WinLEW has been trying to build around for years. It's why our own work leans on transparency, on-chain verification, and records anyone can check for themselves rather than take on faith.</p>
+  <div class="flow">
+    <span class="node">Sentinel</span><span class="arr">→</span>
+    <span class="node">Bound Witness</span><span class="arr">→</span>
+    <span class="node">Bridge</span><span class="arr">→</span>
+    <span class="node">Archivist</span><span class="arr">→</span>
+    <span class="node">Diviner</span>
+  </div>
+  <p class="muted" style="font-size:13px;margin-top:6px;">The XYO evidence pipeline — observations become mutually-signed records, then a queryable history of trust.</p>
+</div>
+
+<div class="box">
+  <h2>Our Journey</h2>
+  <p>WinLEW didn't appear overnight, and it wasn't built to chase a trend. Its founder has been an active <strong>XYO community leader for roughly five years</strong>, and the WinLEW effort itself has been building toward the XYO ecosystem — and, more recently, XL1 — for about <strong>six years</strong>.</p>
+  <p>Across that time, every choice has intentionally moved <em>closer</em> to XYO rather than away from it. WinLEW was never designed to compete with the ecosystem or to distract from it. It was designed to add to it: to bring new people in, help them understand what XYO is, and give the community useful, honest tools to participate.</p>
+  <p>The long-term goal has always been straightforward:</p>
+  <ul>
+    <li><strong>Grow the ecosystem</strong> — bring new, genuine participants to XYO and XL1.</li>
+    <li><strong>Educate</strong> — help newcomers understand the technology and the philosophy behind it.</li>
+    <li><strong>Build useful tools</strong> — real, working community infrastructure, not vaporware.</li>
+    <li><strong>Earn recognition through work</strong> — and, one day, hopefully an official partnership — by demonstrating value consistently over years.</li>
+  </ul>
+  <div class="status-note">To be explicit: that partnership has <strong>not</strong> been announced and does not exist today. It's an aspiration we're working toward through contribution — nothing more, and we won't pretend otherwise.</div>
+</div>
+
+<div class="box">
+  <h2>Our Community Contributions</h2>
+  <p>WinLEW exists to help people <strong>discover and understand XYO</strong>. Everything we've built points back at learning, participation, and ecosystem growth:</p>
+  <ul>
+    <li><strong>Educational quizzes</strong> — crypto, Solana, and ecosystem trivia that rewards learning.</li>
+    <li><strong>Documentation &amp; educational content</strong> — plain-language explainers of how things actually work.</li>
+    <li><strong>Discord tools</strong> — bots and integrations that make participating easy where the community already lives.</li>
+    <li><strong>Wallet verification</strong> — a clean, no-custody way to prove ownership and unlock community roles.</li>
+    <li><strong>Transparency tools</strong> — live, on-chain visibility into balances, locks, reserves, and burns.</li>
+    <li><strong>Games that encourage participation</strong> — short, skill-based experiences that reward showing up.</li>
+    <li><strong>XL1 experimentation</strong> — hands-on building on XYO's Layer One chain.</li>
+    <li><strong>Community engagement</strong> — events, giveaways, and day-to-day support that keep people involved.</li>
+  </ul>
+</div>
+
+<div class="box">
+  <h2>Projects Supporting the Ecosystem</h2>
+  <p>These are the WinLEW community projects built in support of that mission — each one a small step toward a more useful, more transparent, more welcoming ecosystem:</p>
+  <!-- Status qualifiers added 2026-08-11 by the second audit. These two cards
+       described GeoHackers and GeoAgora in flat present tense with a definite
+       article ("The ecosystem's XL1 companion — verification, ... and XL1 asset
+       interactions"), while their own pages at /ecosystem/<slug>/ say "Coming
+       Soon · Not public yet". Neither is open to the public. The other cards in
+       this grid already hedge correctly ("being built", "an effort"), so these
+       two were the outliers, and a reader arriving here first would have been
+       told a product exists that they cannot use.
+
+       "anchoring against XL1 beta" is deliberate and verified against the
+       GeoHackers repo, whose own KNOWN_GAPS.md records co-witnessing anchoring
+       on BETA. Do not upgrade that to plain "on XL1" — that would claim mainnet.
+       Pinned by test/mole/prelaunchStatusClaims.test.mjs. -->
+  <div class="projGrid">
+    <div class="projCard"><span class="pn">WinLEW</span><span class="pd">The community token and hub that ties everything together — "Let's EveryOne Win."</span><a class="pl" href="/">winlew.co →</a></div>
+    <div class="projCard"><span class="pn">The Mole Guard</span><span class="pd">Wallet-verification bot — one-time signature, role sync, no custody.</span><a class="pl" href="/discord-bots/">Discord Bots →</a></div>
+    <div class="projCard"><span class="pn">WinLEW Utility Bot</span><span class="pd">The day-to-day companion — faucet, quizzes, announcements, community tools.</span><a class="pl" href="/discord-bots/">Discord Bots →</a></div>
+    <div class="projCard"><span class="pn">GeoHackers</span><span class="pd"><em>Not public yet.</em> The ecosystem&rsquo;s XL1 companion in development — wallet verification, on-chain game integrations and XL1 asset interactions, currently anchoring against XL1 beta.</span><a class="pl" href="/ecosystem/geohackers/">GeoHackers →</a></div>
+    <div class="projCard"><span class="pn">GeoAgora</span><span class="pd"><em>Not public yet.</em> A marketplace companion in development — browse listings, watch alerts, and check wallet/profile status.</span><a class="pl" href="/ecosystem/geoagora/">GeoAgora →</a></div>
+    <div class="projCard"><span class="pn">GeoJustice</span><span class="pd">A community-integrity effort focused on fairness and accountability across the ecosystem.</span><a class="pl" href="/ecosystem/geojustice/">GeoJustice →</a></div>
+    <div class="projCard"><span class="pn">Oxyon Wallet</span><span class="pd">A self-custody wallet for Ethereum, Solana and XL1, formerly GeoWallet. In beta.</span><a class="pl" href="/ecosystem/geowallet/">Oxyon Wallet →</a></div>
+    <div class="projCard"><span class="pn">GeoPresence</span><span class="pd">A proof-of-presence check-in layer — turning a signed wallet check-in and a location into privacy-preserving, verifiable proof.</span><a class="pl" href="/ecosystem/geopresence/">GeoPresence →</a></div>
+    <div class="projCard"><span class="pn">GeoProof</span><span class="pd">A shared proof protocol for turning an observation into evidence a stranger can verify, without trusting anyone in between.</span><a class="pl" href="/ecosystem/geoproof/">GeoProof →</a></div>
+    <div class="projCard"><span class="pn">The Mole Hub</span><span class="pd">A small catalog of skill-based browser games that reward participation.</span><a class="pl" href="/mole-hub/">Mole Hub →</a></div>
+    <div class="projCard"><span class="pn">Quiz</span><span class="pd">Learn-to-earn trivia across Discord and the web, with sponsor pools.</span><a class="pl" href="/quiz/">Quiz →</a></div>
+    <div class="projCard"><span class="pn">Faucet</span><span class="pd">A fair, cooldown-based way for holders to claim small amounts of WinLEW.</span><a class="pl" href="/faucet/">Faucet →</a></div>
+    <div class="projCard"><span class="pn">Transparency Center</span><span class="pd">Live, on-chain visibility into every liquidity, lock, and reserve component.</span><a class="pl" href="/transparency/">Transparency →</a></div>
+    <div class="projCard"><span class="pn">Burn Center</span><span class="pd">Verified, independently-confirmed token burns and progress toward the burn target.</span><a class="pl" href="/burn/">Burn Center →</a></div>
+    <div class="projCard"><span class="pn">Health Center</span><span class="pd">A live status page that actively probes first-party services and data APIs.</span><a class="pl" href="/health/">Health →</a></div>
+    <div class="projCard"><span class="pn">Dashboard</span><span class="pd">A unified home for verification, holdings, Proof of Value, rewards, and activity.</span><a class="pl" href="/verify/profile.html">Dashboard →</a></div>
+    <div class="projCard"><span class="pn">Discord integrations</span><span class="pd">The connective tissue — verification, roles, rewards, and community operations, in Discord.</span><a class="pl" href="/discord-bots/">Discord Bots →</a></div>
+  </div>
+</div>
+
+<div class="box">
+  <h2>Growing with XL1</h2>
+  <p>One of WinLEW's largest engineering goals is <strong>expanding the use of XL1</strong> — XYO's Layer One chain, the modern era of the ecosystem built around smart contracts, current SDKs, and proof infrastructure.</p>
+  <p>The long-term objective is simple to state and hard to earn: <strong>move as much meaningful WinLEW data as is practical onto XL1</strong>, so that the record of what the community actually does can live somewhere verifiable rather than somewhere private. The kinds of data we're working toward putting on-chain include:</p>
+  <ul>
+    <li><strong>Participation</strong> — the fact that someone showed up and contributed.</li>
+    <li><strong>Community activity</strong> — the real, day-to-day life of the project.</li>
+    <li><strong>Achievements</strong> — milestones earned through genuine involvement.</li>
+    <li><strong>Verification</strong> — proof that an identity and a wallet belong together.</li>
+    <li><strong>Proofs</strong> — evidence that an action or event actually happened.</li>
+    <li><strong>Historical records</strong> — a durable timeline that doesn't quietly change.</li>
+    <li><strong>Transparency</strong> — records anyone can check, not claims they have to trust.</li>
+  </ul>
+  <div class="status-note">This is the <strong>vision</strong>, described honestly. We're not going to invent technical claims about what's finished — the Whitepaper and Transparency Center reflect the current, real state, and this section reflects the direction we're building toward.</div>
+</div>
+
+<div class="box">
+  <h2>Frequently Asked Questions</h2>
+  <div class="faq">
+    <p class="q">Is WinLEW officially partnered with XYO?</p>
+    <p class="a">No. WinLEW is an independent community initiative. We are building because we believe in the ecosystem and hope our work continues to create value for both communities. No official partnership has been announced, and none should be assumed.</p>
+  </div>
+  <div class="faq">
+    <p class="q">Does XYO endorse WinLEW?</p>
+    <p class="a">No. Nothing on this site should be read as an endorsement by XYO. WinLEW is community-built and community-run, offered in good faith.</p>
+  </div>
+  <div class="faq">
+    <p class="q">Why build around XYO at all?</p>
+    <p class="a">Because the technology, the philosophy, and the direction genuinely align with what WinLEW has been trying to build for years — a community organized around verifiable evidence, real participation, and trust that's earned rather than claimed. Building near XYO isn't a marketing decision; it's the reason the project exists.</p>
+  </div>
+  <div class="faq">
+    <p class="q">Why XL1?</p>
+    <p class="a">Because verifiable records, transparency, and evidence-based systems fit naturally with the direction WinLEW is heading. If the goal is to prove what the community actually did — participation, achievements, history — then a chain built for proof infrastructure is the right foundation to grow into.</p>
+  </div>
+  <div class="faq">
+    <p class="q">Are the tools real, or is this a roadmap of promises?</p>
+    <p class="a">Real. The faucet, quiz, games, verification, transparency, burn, and health tools are live today — you can use them right now. Where something is still in development (like GeoJustice, or the Oxyon Wallet mobile app), we say so plainly rather than presenting it as finished.</p>
+  </div>
+  <div class="faq">
+    <p class="q">How can I tell what's actually true?</p>
+    <p class="a">Check it yourself. The <a href="/transparency/">Transparency Center</a> reads balances, locks, and reserves live from Solana; the <a href="/burn/">Burn Center</a> links verified burn transactions; the <a href="/whitepaper/">Whitepaper</a> documents what's finished and what isn't. We'd rather you verify than trust.</p>
+  </div>
+</div>
+
+<div class="box">
+  <h2>Long-Term Vision</h2>
+  <p>The plan from here is the same plan it's always been: keep showing up. Keep building tools, games, educational content, and infrastructure that make the ecosystem more useful and more understandable. Keep moving meaningful records onto XL1 as it becomes practical. Keep everything transparent enough that no one has to take our word for it.</p>
+  <p>We want to grow <em>alongside</em> XYO and XL1 — through consistent work, honesty, and community contribution, not through hype or assumptions. If years of that earn WinLEW a place as a recognized part of the ecosystem, wonderful. And if the value we create is simply that more people discovered, understood, and participated in XYO because of the work — that's a win too.</p>
+  <p class="muted">Let's EveryOne Win.</p>
+  <div class="ctaRow" style="margin-top:16px;">
+    <a class="btn primary" href="/community/">💬 Join the community</a>
+    <a class="btn" href="/">🏠 Explore WinLEW</a>
+  </div>
+</div>
+
+<footer>
+  <div>WinLEW is an independent community initiative supporting the XYO ecosystem. Not affiliated with, endorsed by, or an official partner of XYO.</div>
+</footer>
+</div>
+
+<script src="/assets/wallet-auth.js"></script>
+<script>
+  (function () {
+    const { getAuth, setConnectedUi, walletLogin, getCachedWallet, refreshWalletBalance } = window.WinLEWAuth;
+    document.getElementById('navWalletConnect')?.addEventListener('click', (e) => void walletLogin({ triggerBtn: e.currentTarget, onSuccess: () => window.location.reload() }));
+    if (getAuth().session) setConnectedUi(getCachedWallet() || 'connected');
+    refreshWalletBalance();
+  })();
+</script>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

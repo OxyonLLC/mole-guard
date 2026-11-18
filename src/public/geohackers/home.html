@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Unreleased/unlinked build entry: the directory index redirects
+         away, but that only stops browsing — this keeps it out of search
+         results if the URL ever leaks (shared link, referrer, scraper). -->
+    <meta name="robots" content="noindex, nofollow" />
+
+<meta charset="UTF-8" />
+<title>GeoHackers — Evidence Over Assumption</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="description" content="GeoHackers is a proof-first community platform built on XYO's XL1 protocol — real community actions become cryptographically verifiable, publicly viewable proofs. Currently in closed alpha." />
+<meta property="og:title" content="GeoHackers — Evidence Over Assumption" />
+<meta property="og:description" content="A proof-first community platform built on XYO's XL1. Closed alpha in progress." />
+<meta property="og:type" content="website" />
+<link rel="icon" type="image/x-icon" href="favicon.ico" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="manifest" href="manifest.json" />
+<style>
+  :root {
+    --bg-0: #070d11;
+    --bg-1: #0c1720;
+    --bg-2: #10202b;
+    --panel: rgba(255,255,255,.03);
+    --panel-border: rgba(45,212,191,.18);
+    --text: #e7f3f2;
+    --muted: #9fb6b8;
+    --accent: #2dd4bf;
+    --accent-soft: rgba(45,212,191,.14);
+    --amber: #f2b134;
+    --blue: #4ea8de;
+    --pink: #ec4899;
+    --orange: #f97316;
+  }
+  * { box-sizing: border-box; }
+  html { overflow-x: hidden; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: radial-gradient(circle at top, var(--bg-2), var(--bg-0) 70%);
+    color: var(--text);
+    line-height: 1.65;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .shell { max-width: 980px; margin: 0 auto; padding: 40px 24px 60px; }
+  header.hero { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+  .mascot { width: 96px; height: 96px; border-radius: 20px; object-fit: cover; border: 1px solid var(--panel-border); flex-shrink: 0; }
+  .heroText h1 { font-size: clamp(28px, 5vw, 42px); margin: 0 0 6px; letter-spacing: -0.5px; }
+  .heroText .tagline { color: var(--amber); font-weight: 700; font-size: clamp(14px, 2vw, 17px); margin-bottom: 10px; }
+  .heroLead { max-width: 640px; color: var(--muted); font-size: 15px; margin: 10px 0 0; }
+  .chipRow { display: flex; gap: 8px; flex-wrap: wrap; margin: 18px 0 6px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 700; border: 1px solid var(--panel-border); background: var(--panel); white-space: nowrap; }
+  .chip.status { background: var(--accent-soft); border-color: rgba(45,212,191,.35); color: var(--accent); }
+  section { margin-top: 40px; }
+  .eyebrow { text-transform: uppercase; letter-spacing: 1.5px; font-size: 11.5px; font-weight: 800; color: var(--accent); margin-bottom: 6px; }
+  h2 { font-size: clamp(20px, 3vw, 26px); margin: 0 0 8px; }
+  .sectionLead { color: var(--muted); font-size: 14.5px; max-width: 680px; margin: 0 0 18px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+  .card { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 16px; padding: 16px 18px; position: relative; overflow: hidden; }
+  .card .dot { position: absolute; top: 16px; right: 16px; width: 8px; height: 8px; border-radius: 50%; }
+  .card .title { font-weight: 800; margin-bottom: 6px; font-size: 14.5px; }
+  .card p { margin: 0; font-size: 13.2px; color: var(--muted); }
+  .pipeline { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; }
+  .pStep { flex: 1 1 140px; background: var(--panel); border: 1px solid var(--panel-border); border-radius: 14px; padding: 14px; font-size: 13px; }
+  .pStep .n { color: var(--accent); font-weight: 800; font-size: 11px; letter-spacing: .5px; margin-bottom: 4px; }
+  .pStep .d { color: var(--muted); font-size: 12.3px; margin-top: 4px; }
+  .pArrow { align-self: center; color: var(--muted); opacity: .6; font-size: 18px; }
+  .box { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 18px; padding: 22px 24px; }
+  .quote { border-left: 3px solid var(--accent); padding: 10px 16px; background: rgba(45,212,191,.06); border-radius: 0 10px 10px 0; font-style: italic; font-size: 14.5px; margin: 14px 0 0; }
+  .rankLadder { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; align-items: center; }
+  .rankStep { padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.05); border: 1px solid var(--panel-border); font-size: 12.5px; }
+  .rankArrow { opacity: .5; }
+  .roadList { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .roadList li { font-size: 13.5px; color: var(--muted); padding-left: 20px; position: relative; }
+  .roadList li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 800; }
+  .roadList li.next::before { content: "→"; color: var(--amber); }
+  .ctaRow { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 12px; background: rgba(255,255,255,.06); border: 1px solid var(--panel-border); font-weight: 800; font-size: 13.5px; cursor: pointer; color: var(--text); }
+  .btn.primary { background: linear-gradient(90deg, rgba(45,212,191,.22), rgba(78,168,222,.18)); border-color: rgba(45,212,191,.4); color: #d9fff9; }
+  .btn:hover { filter: brightness(1.1); text-decoration: none; }
+  .discordGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 14px; }
+  .discordCard { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 16px; padding: 16px 18px; }
+  .discordCard .title { font-weight: 800; margin-bottom: 4px; font-size: 14.5px; }
+  .discordCard p { margin: 0 0 10px; font-size: 12.8px; color: var(--muted); }
+  .easterEgg { margin-top: 14px; font-size: 13px; color: var(--muted); }
+  footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid var(--panel-border); font-size: 12px; color: var(--muted); text-align: center; }
+  footer a { color: var(--muted); }
+  footer a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <header class="hero">
+    <img class="mascot" src="geohacker-mascot.jpg" alt="GeoHackers mascot" onerror="this.style.display='none'" />
+    <div class="heroText">
+      <h1>GeoHackers</h1>
+      <div class="tagline">Evidence Over Assumption.</div>
+      <p class="heroLead">A proof-first community platform built on <a href="https://xyo.network" target="_blank" rel="noopener noreferrer">XYO's XL1</a> protocol. Real community actions — wallet verification, faucet claims, moderation calls, vouches — become cryptographically verifiable, publicly viewable on-chain proofs. Not claims. Proofs.</p>
+      <div class="chipRow">
+        <span class="chip status">🧪 v1.0.1-alpha.1 — Closed Alpha</span>
+        <span class="chip">🔒 Mainnet writes disabled</span>
+      </div>
+      <div class="ctaRow">
+        <a class="btn primary" href="#proofs">What gets proven ↓</a>
+        <a class="btn" href="#community">Join the community ↓</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="proofs">
+    <div class="eyebrow">What is it</div>
+    <h2>Reputation you can actually check, not just believe</h2>
+    <p class="sectionLead">The core idea: if something matters, it should be provable. Every action below turns into a signed, on-chain proof — a shareable link anyone can verify, no login required, without ever trusting the person who made the claim.</p>
+    <div class="grid">
+      <div class="card"><span class="dot" style="background:var(--blue)"></span><div class="title">🔐 Verification</div><p>Prove ownership of a wallet via a signed challenge. Drives role assignment.</p></div>
+      <div class="card"><span class="dot" style="background:var(--pink)"></span><div class="title">💧 Faucet</div><p>Claim a community XL1 beta drip, cooldown-protected.</p></div>
+      <div class="card"><span class="dot" style="background:var(--orange)"></span><div class="title">🛡️ Moderation</div><p>A recorded, on-chain audit-logged decision. Record-only — it never bans, kicks, mutes, or deletes.</p></div>
+      <div class="card"><span class="dot" style="background:var(--blue)"></span><div class="title">🚩 Scam Reporting</div><p>Capture a message's evidence — link, domain, message — and record it. High-risk categories require evidence.</p></div>
+      <div class="card"><span class="dot" style="background:var(--pink)"></span><div class="title">🏅 Quests</div><p>Achievements <em>derived</em> from confirmed proofs — never self-reported.</p></div>
+      <div class="card"><span class="dot" style="background:var(--orange)"></span><div class="title">🤝 Co-Witnessing</div><p>Two members co-sign one shared proof, so no one can fabricate a claim alone.</p></div>
+      <div class="card"><span class="dot" style="background:var(--blue)"></span><div class="title">⚖️ Moderation Witness</div><p>A high-impact moderation call witnessed by two moderators, with evidence.</p></div>
+      <div class="card"><span class="dot" style="background:var(--pink)"></span><div class="title">🫱 Community Vouches</div><p>A peer attestation — both parties co-sign, and it must say why. Sybil-gated.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">How it works</div>
+    <h2>Every proof follows the same path</h2>
+    <p class="sectionLead">The project calls this the "Direction Lock" — one pipeline, no shortcuts.</p>
+    <div class="pipeline">
+      <div class="pStep"><div class="n">01</div>User Action<div class="d">Something happens in the community</div></div>
+      <div class="pArrow">→</div>
+      <div class="pStep"><div class="n">02</div>Event<div class="d">Validated, queued</div></div>
+      <div class="pArrow">→</div>
+      <div class="pStep"><div class="n">03</div>Canonical Payload<div class="d">Built once, deterministic</div></div>
+      <div class="pArrow">→</div>
+      <div class="pStep"><div class="n">04</div>BoundWitness<div class="d">Authorship lives here — not in payload fields</div></div>
+      <div class="pArrow">→</div>
+      <div class="pStep"><div class="n">05</div>XL1<div class="d">Anchored on-chain</div></div>
+      <div class="pArrow">→</div>
+      <div class="pStep"><div class="n">06</div>Public Proof<div class="d">A shareable URL anyone can verify</div></div>
+    </div>
+    <div class="box" style="margin-top:18px;">
+      <div class="eyebrow">Surfaces</div>
+      <p style="margin:0 0 8px;font-size:13.5px;color:var(--muted);">Every proof gets a public, server-rendered page anyone can open and verify on XL1 — no login. Members build a proof history at a public profile, with earned badges and a rank ladder built purely from confirmed proof counts, not admin opinion.</p>
+      <div class="rankLadder">
+        <span class="rankStep">Initiate</span><span class="rankArrow">→</span>
+        <span class="rankStep">Operative</span><span class="rankArrow">→</span>
+        <span class="rankStep">Guardian</span><span class="rankArrow">→</span>
+        <span class="rankStep">Legend</span>
+      </div>
+      <p class="quote">"Trust indicators are derived from confirmed proofs. No stored scores, no admin-assigned reputation, nothing hidden."</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Games</div>
+    <h2>🎴 CryptoSpades</h2>
+    <p class="sectionLead">A Proof-of-Trick card game built for GeoHackers, part of the WinLEW ecosystem. It is designed so ranked matches deal from a server-issued seed and replay every move server-side before a score counts. It is not publicly hosted right now: its old Netlify build is retired.</p>
+    <div class="ctaRow">
+      <a class="btn primary" href="/ecosystem/geohackers/">About GeoHackers →</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Built on</div>
+    <h2>XYO's XL1 protocol</h2>
+    <p class="sectionLead">GeoHackers is an independent community project built on top of <a href="https://xyo.network" target="_blank" rel="noopener noreferrer">XYO's XL1</a> (XYO Layer One) — it is not an official XYO product. Every proof is ultimately anchored through XL1's BoundWitness protocol: two or more parties co-signing a claim so it can't be fabricated by either side alone. That's the same primitive behind everything above.</p>
+  </section>
+
+  <section>
+    <div class="eyebrow">Where things stand</div>
+    <h2>Alpha status — v1.0.1-alpha.1</h2>
+    <p class="sectionLead">Mainnet writes are disabled by default. The trust model, pipeline, observer, and proof schemas are frozen for this line — this is polish and surfacing only.</p>
+    <ul class="roadList">
+      <li>RC2 — the deployable platform: verification, faucet, moderation (+ witness), quests, co-witnessing, vouches, proof pages, public profiles, wallet co-signing foundations</li>
+      <li>Public homepage, live lifecycle dashboard, JSON stats, activity feed</li>
+      <li>Richer profiles with proof lineage / related proofs</li>
+      <li>Dashboard filters, by-kind breakdown, auto-refresh, operator health panel</li>
+      <li>Mobile polish and this web build strategy decision</li>
+      <li class="next">Next: live in-browser wallet co-signing (the one piece still experimental)</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="eyebrow">Alpha access</div>
+    <h2>Currently testing with a small group</h2>
+    <p class="sectionLead">There's no public sign-up yet. If you found this page and the bot happens to be online — you've already done the hard part. Say hello. 😉</p>
+  </section>
+
+  <section id="community">
+    <div class="eyebrow">Community</div>
+    <h2>Where this lives</h2>
+    <div class="discordGrid">
+      <div class="discordCard">
+        <div class="title">Official XYO Discord</div>
+        <p>The official home for XYO & XL1 builders and community.</p>
+        <a class="btn" href="https://discord.com/invite/officialxyo" target="_blank" rel="noopener noreferrer">Join ↗</a>
+      </div>
+      <div class="discordCard">
+        <div class="title">The Unofficial XYO Discord</div>
+        <p>An XYO-focused community built independently, ahead of the official one.</p>
+        <a class="btn" href="https://discord.gg/7BK793Nbwk" target="_blank" rel="noopener noreferrer">Join ↗</a>
+      </div>
+      <div class="discordCard">
+        <div class="title">WinLEW Discord</div>
+        <p>GeoHackers' sister project community.</p>
+        <a class="btn" href="/community/">Join ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    GeoHackers — Evidence Over Assumption. Part of the WinLEW ecosystem, built on XYO's XL1.
+  </footer>
+
+</div>
+</body>
+</html>

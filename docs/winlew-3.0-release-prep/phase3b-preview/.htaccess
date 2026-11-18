@@ -1,0 +1,11 @@
+Options -Indexes
+
+<IfModule mod_headers.c>
+  Header always set X-Robots-Tag "noindex, nofollow, noarchive"
+  Header always set Referrer-Policy "same-origin"
+  Header always set X-Content-Type-Options "nosniff"
+</IfModule>
+
+<FilesMatch "(^\.|README|UPLOAD|evidence|results|integrity)">
+  Require all denied
+</FilesMatch>

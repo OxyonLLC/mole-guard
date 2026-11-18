@@ -1,0 +1,41 @@
+# Dependencies / generated installs
+node_modules
+**/node_modules
+.pnp.*
+.yarn/install-state.gz
+
+# Git / editor noise
+.git
+.gitignore
+.vscode
+.idea
+*.log
+.DS_Store
+
+# Secrets and private runtime state. These are mounted by docker-compose instead.
+.env
+.env-*
+.env.*
+!.env.example
+!src/quiz/.env.example
+!src/faucet/.env.example
+data
+data-watchdog
+src/data
+src/quiz/data
+src/watchdog/data-watchdog
+src/faucet/bot-keypair.json
+src/faucet/airdrops.json
+src/faucet/faucet_claims.json
+src/faucet/lastTweet.json
+src/faucet/registrations.json
+src/faucet/subscriptions.json
+src/faucet/twitterUserId.json
+src/faucet/wallet_links.json
+
+# Archives / backups
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+node_modules.zip

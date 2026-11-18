@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The site's own page background, i.e. the wl-bg token in
+         src/public/assets/nav.css. Painted behind the status and navigation
+         bars by MainActivity: from targetSdk 35 the app draws edge-to-edge and
+         android:statusBarColor no longer does anything, so this is the only
+         thing keeping those strips from showing the splash drawable. Keep it
+         in step with that token. -->
+    <color name="winlewSystemBars">#130b08</color>
+</resources>

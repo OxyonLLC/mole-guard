@@ -1,0 +1,29 @@
+{
+  "name": "winlew-faucet",
+  "version": "2.0.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "dev": "node --watch bot.js",
+    "doctor": "node doctor.js",
+    "tracker": "node priceTracker.js",
+    "test": "node --test test/**/*.test.mjs",
+    "verify:imports": "node tools/verify-imports.mjs"
+  },
+  "dependencies": {
+    "@bonfida/spl-name-service": "^3.0.20",
+    "@solana/spl-token": "^0.4.13",
+    "@solana/web3.js": "^1.98.4",
+    "discord.js": "^14.25.1",
+    "dotenv": "^16.5.0",
+    "node-cron": "^4.1.0",
+    "node-fetch": "^2.7.0",
+    "twitter-api-v2": "^1.23.2"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

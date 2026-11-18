@@ -1,0 +1,35 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // 8.2.1 (Capacitor 6's generated default) only supports compileSdk up
+        // to 34 and refuses to build against 35. AGP 8.6 is the first release
+        // that accepts it; 8.10.1 is what's used here, which needs Gradle
+        // >= 8.11.1 (see gradle/wrapper/gradle-wrapper.properties) and JDK 17.
+        // The Capacitor plugin modules under node_modules pin 8.2.1 in their
+        // own buildscript blocks — that's ignored, the root classpath wins.
+        classpath 'com.android.tools.build:gradle:8.10.1'
+        classpath 'com.google.gms:google-services:4.4.0'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+apply from: "variables.gradle"
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

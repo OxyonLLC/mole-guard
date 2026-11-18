@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <title>WinLEW Governance — Proposal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="WinLEW governance proposal detail — full text, eligibility, live results, and execution status." />
+  <link rel="canonical" href="https://winlew.co/governance/proposal/" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <style>
+    .hidden { display: none !important; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      padding: 0;
+      margin: 0;
+      line-height: 1.7;
+    }
+    /* overflow-x:hidden lives on html only, not body — see the identical
+       fix + rationale in the 6 top-level pages this was found on
+       (docs/site-navigation.md's 2026-07-18 entry). */
+    html { overflow-x: hidden; }
+    .wlPageShell { max-width: 1000px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin-bottom: 8px; }
+    h1 { font-size: clamp(24px, 4.4vw, 36px); margin-top: 0; text-wrap: balance; }
+    h2 { font-size: clamp(17px, 2.4vw, 20px); margin-top: 0; }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .box { background: #1b120e; border: 1px solid #4e3624; border-radius: 16px; padding: 24px; margin: 18px 0; }
+    .muted { opacity: 0.85; }
+    code { background: #2e1f16; padding: 2px 6px; border-radius: 6px; font-size: 0.9em; word-break: break-all; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 15px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid #4e3624; font-weight: 850; font-size: 13.5px; text-decoration: none; cursor: pointer; color: inherit; font-family: inherit; }
+    .btn.primary { background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22)); }
+    .btn:disabled { opacity: .45; cursor: default; }
+    .btn:hover:not(:disabled) { text-decoration: none; filter: brightness(1.08); }
+    .status-note { border-left: 3px solid #d6a866; padding: 10px 14px; background: rgba(214,168,102,.08); border-radius: 0 10px 10px 0; margin-top: 14px; font-size: 14px; }
+
+    .pTop { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
+    .statusPill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 800; border: 1px solid #4e3624; white-space: nowrap; }
+    .statusPill.active { background: rgba(85,240,165,.14); color: #55f0a5; border-color: rgba(85,240,165,.3); }
+    .statusPill.upcoming { background: rgba(85,150,240,.14); color: #86b8ff; border-color: rgba(85,150,240,.3); }
+    .statusPill.closed { background: rgba(255,255,255,.06); color: #f6efe8; }
+    .statusPill.rejected { background: rgba(255,107,138,.12); color: #ff8fa3; border-color: rgba(255,107,138,.3); }
+    .modePill { display: inline-flex; padding: 3px 9px; border-radius: 999px; font-size: 11px; background: rgba(255,255,255,.05); border: 1px solid #4e3624; opacity: .85; }
+    .pMeta { font-size: 12.5px; opacity: .75; margin-top: 6px; }
+
+    dl.kv { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 6px 0 0; font-size: 13.5px; }
+    dl.kv dt { color: rgba(246,239,232,.85); }
+    dl.kv dd { margin: 0; }
+
+    .statGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 8px; }
+    @media (max-width: 720px) { .statGrid { grid-template-columns: repeat(2, 1fr); } }
+    .statBox { background: rgba(255,255,255,.05); border: 1px solid #4e3624; border-radius: 14px; padding: 14px; text-align: center; }
+    .statVal { font-size: clamp(18px, 2.6vw, 24px); font-weight: 900; }
+    .statLbl { font-size: 11.5px; opacity: .8; margin-top: 4px; }
+
+    .choiceBar { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+    .choiceRow { }
+    .choiceRow .cLabel { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
+    .choiceTrack { height: 10px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
+    .choiceFill { height: 100%; background: linear-gradient(90deg, #d6a866, #7d5837); }
+
+    .ballot { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+    .choiceBtn { text-align: left; padding: 12px 14px; border-radius: 12px; background: rgba(255,255,255,.05); border: 1px solid #4e3624; color: inherit; font: inherit; cursor: pointer; }
+    .choiceBtn:hover:not(:disabled) { filter: brightness(1.12); }
+    .choiceBtn.selected { border-color: #d6a866; background: rgba(214,168,102,.14); }
+    .choiceBtn:disabled { cursor: default; opacity: .6; }
+
+    .confirmBox { margin-top: 14px; padding: 14px 16px; border-radius: 14px; background: rgba(124, 92, 255, 0.12); border: 1px solid rgba(124, 92, 255, 0.35); }
+    .receiptBox { margin-top: 14px; padding: 14px 16px; border-radius: 14px; background: rgba(85,240,165,.08); border: 1px solid rgba(85,240,165,.3); }
+
+    .tableWrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 12px; }
+    .tableWrap table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 0; }
+    .tableWrap th, .tableWrap td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #4e3624; vertical-align: top; }
+    .tableWrap th { color: #e7c18f; font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; }
+
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+<p style="margin-top:24px;"><a href="/governance/">← All proposals</a></p>
+
+<div id="loading" class="box"><p class="muted">Loading proposal…</p></div>
+<div id="notFound" class="box hidden"><p class="muted">⚠️ This proposal couldn't be found. <a href="/governance/">Back to Governance →</a></p></div>
+
+<div id="content" class="hidden">
+  <div class="box">
+    <div class="pTop">
+      <h1 id="pTitle">—</h1>
+      <span class="statusPill" id="pStatusPill">—</span>
+    </div>
+    <div class="pMeta"><span id="pCategory">—</span> · <span class="modePill" id="pMode">—</span> · Author: <span id="pAuthor">—</span></div>
+    <p id="pSummary" style="margin-top:14px;"></p>
+    <div id="pFullDescription" class="muted" style="margin-top:10px;white-space:pre-line;"></div>
+  </div>
+
+  <div class="box">
+    <h2>Timeline &amp; rules</h2>
+    <dl class="kv">
+      <dt>Created</dt><dd id="rCreated">—</dd>
+      <dt>Discussion starts</dt><dd id="rDiscussion">—</dd>
+      <dt>Voting window</dt><dd id="rVotingWindow">—</dd>
+      <dt>Execution deadline</dt><dd id="rExecDeadline">—</dd>
+      <dt>Voting method</dt><dd id="rVotingMethod">—</dd>
+      <dt>Eligibility</dt><dd id="rEligibility">—</dd>
+      <dt>Quorum</dt><dd id="rQuorum">—</dd>
+      <dt>Approval threshold</dt><dd id="rThreshold">—</dd>
+      <dt>Snapshot rule</dt><dd id="rSnapshot">—</dd>
+      <dt>Discussion</dt><dd id="rDiscussionLink">—</dd>
+    </dl>
+  </div>
+
+  <div class="box" id="burnDetailsBox" style="display:none;">
+    <h2>🔥 Burn proposal details</h2>
+    <p class="muted">Reuses the canonical Burn Center totals — nothing here is a second, hardcoded figure.</p>
+    <dl class="kv" id="burnDetailsKv"></dl>
+    <p class="status-note">A passed vote does not execute a burn. See the Execution status section below and <a href="/burn/">the Burn Center</a> for verified, on-chain burn history.</p>
+  </div>
+
+  <div class="box">
+    <h2>Your status</h2>
+    <div class="statGrid">
+      <div class="statBox"><div class="statVal" id="yourEligibility">—</div><div class="statLbl">Eligibility</div></div>
+      <div class="statBox"><div class="statVal" id="yourVote">—</div><div class="statLbl">Your vote</div></div>
+    </div>
+    <p class="muted" id="eligibilitySnapshotNote" style="font-size:12.5px;margin-top:10px;"></p>
+
+    <div id="ballotWrap" class="hidden">
+      <div class="ballot" id="ballotChoices"></div>
+      <div id="voteConfirm" class="confirmBox hidden">
+        <p id="voteConfirmText"></p>
+        <p class="muted" style="font-size:13px;">Your individual choice stays private — only the aggregate result is ever shown publicly. You may change this vote again until voting closes.</p>
+        <div style="display:flex;gap:10px;margin-top:10px;">
+          <button id="voteConfirmBtn" class="btn primary" type="button">Confirm vote</button>
+          <button id="voteCancelBtn" class="btn" type="button">Cancel</button>
+        </div>
+      </div>
+      <div id="voteReceipt" class="receiptBox hidden">
+        <p id="voteReceiptText"></p>
+      </div>
+      <p id="voteError" class="muted hidden" style="color:#ff8fa3;margin-top:8px;"></p>
+    </div>
+    <p id="ballotClosedNote" class="status-note hidden"></p>
+  </div>
+
+  <div class="box">
+    <h2>Live results</h2>
+    <div class="statGrid">
+      <div class="statBox"><div class="statVal" id="resTotal">—</div><div class="statLbl">Eligible votes cast</div></div>
+      <div class="statBox"><div class="statVal" id="resQuorum">—</div><div class="statLbl">Quorum</div></div>
+      <div class="statBox"><div class="statVal" id="resThreshold">—</div><div class="statLbl">Approval threshold</div></div>
+      <div class="statBox"><div class="statVal" id="resOutcome">—</div><div class="statLbl">Outcome</div></div>
+    </div>
+    <div class="choiceBar" id="choiceBar"></div>
+    <p class="muted" id="resUpdated" style="font-size:12px;margin-top:10px;"></p>
+  </div>
+
+  <div class="box">
+    <h2>Risks, impact &amp; evidence</h2>
+    <dl class="kv">
+      <dt>Financial impact</dt><dd id="dFinancial">—</dd>
+      <dt>Token impact</dt><dd id="dToken">—</dd>
+      <dt>Security considerations</dt><dd id="dSecurity">—</dd>
+      <dt>Risks</dt><dd id="dRisks">—</dd>
+      <dt>Alternatives considered</dt><dd id="dAlternatives">—</dd>
+      <dt>Implementation plan</dt><dd id="dImplementation">—</dd>
+      <dt>Maintainer position</dt><dd id="dMaintainer">—</dd>
+    </dl>
+    <div id="evidenceLinks" style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;"></div>
+  </div>
+
+  <div class="box" id="executionBox">
+    <h2>Execution status</h2>
+    <dl class="kv">
+      <dt>Final decision</dt><dd id="eDecision">—</dd>
+      <dt>Execution status</dt><dd id="eStatus">—</dd>
+      <dt>Rejection/cancellation reason</dt><dd id="eReason">—</dd>
+    </dl>
+    <div id="executionEvidence" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;"></div>
+  </div>
+</div>
+
+<footer>
+  <a href="/governance/">← All proposals</a> · <a href="/burn/">Burn Center</a> · <a href="/transparency/">Transparency Center</a>
+</footer>
+</div>
+
+<script src="/assets/wallet-auth.js"></script>
+<script src="./js/app.js"></script>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

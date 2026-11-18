@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>WinLEW</title>
+  <meta name="description" content="The WinLEW app home — claim, quiz, play." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <style>
+    :root{--bg:#130b08;--bg2:#24150d;--line:rgba(255,255,255,.12);--text:#f6efe8;--muted:rgba(246,239,232,.8);--brand:#d6a866;--ok:#8fd6a0;--bad:#f0a9a9}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);
+      background:radial-gradient(900px 560px at 12% 0%, rgba(214,168,102,.12), transparent 60%), linear-gradient(180deg,var(--bg) 0%,var(--bg2) 55%,#130b08 100%);
+      min-height:100vh;
+      /* The native shell pads for the status bar itself; this covers a plain
+         mobile browser opening the same page. */
+      padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+    .wrap{max-width:520px;margin:0 auto;padding:22px 18px 40px}
+    .brand{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+    .brand img{width:40px;height:40px;border-radius:11px}
+    .brand b{font-size:19px;letter-spacing:.02em}
+    h1{font-size:clamp(25px,7vw,34px);margin:0 0 6px;line-height:1.12}
+    p{line-height:1.65;color:var(--muted);margin:0 0 14px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.022));border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:14px}
+    .primary{display:block;width:100%;text-align:center;padding:20px;border-radius:18px;border:0;font:inherit;
+      background:linear-gradient(180deg,#e6bb79,#c9974f);color:#1a1008;font-weight:900;font-size:19px;cursor:pointer;text-decoration:none}
+    .primary:disabled{opacity:.55;cursor:default}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+    .tile{display:flex;flex-direction:column;gap:6px;align-items:flex-start;padding:18px;border-radius:18px;
+      background:rgba(255,255,255,.05);border:1px solid var(--line);color:inherit;text-decoration:none;font-weight:800}
+    .tile .ico{font-size:26px;line-height:1}
+    .tile small{font-weight:600;color:var(--muted);font-size:12.5px;line-height:1.4}
+    .account{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding:14px 16px;border-radius:18px;
+      background:linear-gradient(180deg, rgba(214,168,102,.14), rgba(214,168,102,.05));
+      border:1px solid rgba(214,168,102,.34);color:inherit;text-decoration:none}
+    .accountDot{width:9px;height:9px;border-radius:50%;background:var(--ok);flex:none}
+    .accountMain{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+    .accountMain b{font-size:14.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .accountMain small{font-size:11.5px;color:var(--muted)}
+    .accountBal{font-weight:900;font-size:15px;white-space:nowrap;color:var(--brand)}
+    .accountBal i{font-style:normal;font-size:11px;opacity:.75}
+    .muted{color:var(--muted)} .ok{color:var(--ok)} .bad{color:var(--bad)}
+    .center{text-align:center}
+    .spinner{width:34px;height:34px;border-radius:50%;border:3px solid rgba(255,255,255,.16);border-top-color:var(--brand);margin:26px auto;animation:sp .9s linear infinite}
+    @keyframes sp{to{transform:rotate(360deg)}}
+    .hidden{display:none}
+    a.link{color:var(--brand)}
+    .tiny{font-size:12px;color:rgba(246,239,232,.55);line-height:1.6}
+    .caBlock{margin-top:22px;padding:16px;border-radius:18px;background:rgba(0,0,0,.22);border:1px solid var(--line)}
+    .caLabel{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:900;margin-bottom:8px}
+    .caBlock code{display:block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+      word-break:break-all;line-height:1.5;color:var(--text)}
+    .caRow{display:flex;gap:8px;margin-top:10px}
+    .caBtn{flex:1;text-align:center;padding:11px;border-radius:12px;border:1px solid var(--line);
+      background:rgba(255,255,255,.05);color:inherit;font:inherit;font-weight:800;font-size:13px;cursor:pointer;text-decoration:none}
+    /* Two tokens, two chains (2026-11-17): $WinLEW on Solana, $XL1 on XYO Layer One. */
+    .tag{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.02em;padding:4px 10px;border-radius:999px;margin:0 0 10px}
+    .tagSol{background:rgba(153,69,255,.16);color:#c9a6ff;border:1px solid rgba(153,69,255,.4)}
+    .tagXl1{background:rgba(0,200,170,.12);color:#7fe3cf;border:1px solid rgba(0,200,170,.35)}
+    .lead{font-size:13.5px;color:var(--muted);line-height:1.55;margin:0 0 12px}
+    .lead b{color:var(--text)}
+    .lead a,.help a,.where a{color:var(--brand)}
+    .where{display:grid;gap:10px}
+    .oneWallet{display:flex;gap:12px;align-items:center;padding:12px;margin:0 0 10px;border-radius:16px;border:1px solid rgba(214,168,102,.35);background:rgba(214,168,102,.08)}
+    .oneWallet b{display:block;font-size:14.5px;color:var(--text)}
+    .oneWallet span{display:block;font-size:12.5px;color:var(--muted);line-height:1.45}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .row2 .caBtn{text-align:center;text-decoration:none}
+    .where div{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.5}
+    .where b{color:var(--text)}
+    .help{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .help > div{border:1px solid var(--line);border-radius:16px;padding:14px}
+    .help h3{margin:0 0 4px;font-size:15px}
+    .help p{margin:0 0 8px;font-size:12px;color:rgba(246,239,232,.6);line-height:1.5}
+    .help a{display:block;font-size:13.5px;font-weight:700;margin:6px 0 0;text-decoration:none}
+    @media (max-width:420px){.help{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <img src="/images/avatars/utility-bot-128.png" alt="" />
+      <b>WinLEW</b>
+    </div>
+
+    <p class="tiny"><a class="link" href="/">WinLEW website</a> · <a class="link" href="/jdid93hf8dh/">Android beta download &amp; installation guidance</a></p>
+
+    <!-- Update prompt. Hidden unless a newer build is actually published, and
+         never blocking — the app stays usable on the old version. -->
+    <section id="updateBar" class="hidden">
+      <div class="card" style="border-color:rgba(214,168,102,.45)">
+        <b>Update available</b>
+        <p style="margin:6px 0 12px" id="updateWhat">A newer WinLEW build is ready.</p>
+        <a class="primary" id="btnUpdate" href="#">⬇ Download update</a>
+        <p class="tiny" style="margin-top:10px">Opens your browser to download. Tap the downloaded file to install over this one — your sign-in is kept.</p>
+      </div>
+    </section>
+
+    <!-- Notifications. Hidden entirely unless the native shell can actually
+         deliver one — in a browser, or in app 0.1.0 which shipped without the
+         plugin, there is nothing here to offer and a dead toggle is worse than
+         no toggle. Opt-IN: the permission prompt is fired by this button, never
+         on first paint, because a dialog thrown at someone who has just opened
+         an app is how you earn a denial, and on Android a denial is close to
+         permanent. -->
+    <section id="notifyCard" class="hidden">
+      <div class="card">
+        <b>Get told when there's something to claim</b>
+        <p style="margin:6px 0 12px" id="notifyWhat">A reminder when your faucet claim is ready and before a quiz cycle closes. Nothing else.</p>
+        <button class="primary" id="btnNotify" type="button">🔔 Turn on notifications</button>
+        <p class="tiny" style="margin-top:10px" id="notifyNote">Scheduled on your phone — nothing about you is sent anywhere for this.</p>
+      </div>
+    </section>
+
+    <!-- Boot: shown until we know which of the three states applies, so the
+         user never sees a wrong screen flash before the right one. -->
+    <section id="boot">
+      <div class="spinner"></div>
+      <p class="center muted">Checking your wallet…</p>
+    </section>
+
+    <!-- Sign-in started in the wallet and not yet completed. Without this the
+         last step is invisible: the user signs in Phantom, comes back, and the
+         app shows the Connect button again with no explanation. -->
+    <section id="finishing" class="hidden">
+      <div class="card">
+        <h1>Finishing sign-in…</h1>
+        <p id="finishNote">Waiting for your wallet. If you have already signed, this completes on its own.</p>
+        <button class="primary" id="btnFinish" type="button">Finish sign-in</button>
+        <p class="tiny" style="margin-top:14px"><a class="link" href="#" id="btnStartOver">Start over</a></p>
+      </div>
+    </section>
+
+    <!-- 1. Not signed in -->
+    <section id="needConnect" class="hidden">
+      <div class="card">
+        <h1>Connect your wallet</h1>
+        <p>One signature links this device to your WinLEW account. Nothing moves, nothing is spent, and you only do this once.</p>
+        <button class="primary" id="btnConnect" type="button">Connect wallet</button>
+        <p class="tiny" style="margin-top:14px">Opens your wallet app to sign, then brings you back here. If it doesn't return on its own, just switch back to WinLEW — it finishes by itself.</p>
+      </div>
+    </section>
+
+    <!-- 2. Signed in, but the faucet wants verification -->
+    <section id="needVerify" class="hidden">
+      <div class="card">
+        <h1>Verify to keep claiming</h1>
+        <p id="verifyWhy">After a number of claims the faucet asks you to verify your wallet once — a single signature proving it is yours.</p>
+        <a class="primary" id="btnVerify" href="/verify/">Verify now</a>
+        <p class="tiny" style="margin-top:14px">A one-time signature proving the wallet is yours. Your cooldown isn't affected.</p>
+      </div>
+    </section>
+
+    <!-- 3. Ready -->
+    <section id="ready" class="hidden">
+      <!-- The dashboard moved up here and became the thing it describes: it
+           shows who you are signed in as and what you hold, and tapping it is
+           how you reach the full dashboard. A tile labelled "Dashboard" told
+           you a page existed; this shows you the page's headline and takes you
+           there. -->
+      <a class="account" href="/verify/profile.html">
+        <span class="accountDot"></span>
+        <span class="accountMain">
+          <b id="stateText">Signed in</b>
+          <small>Tap for your dashboard</small>
+        </span>
+        <span class="accountBal"><span id="navWalletAmount">—</span> <i>LEW</i></span>
+      </a>
+
+      <div class="card">
+        <h1 style="margin-bottom:12px">What are we doing today?</h1>
+        <span class="tag tagSol">$WinLEW · on Solana</span>
+        <p class="lead"><b>$WinLEW</b> is WinLEW's token on <b>Solana</b>. To claim the drip, your Solana wallet must <b>hold at least 1,000 $WinLEW</b>. Holding also earns weekly <a href="/hodl/">HODL rewards</a>.</p>
+        <button class="primary" id="btnClaim" type="button">💧 Claim your $WinLEW drip</button>
+        <p class="center tiny" id="claimNote" style="margin:12px 0 0">Checking the faucet…</p>
+      </div>
+
+      <!-- XL1 faucet (GeoHackers): hidden unless /api/xl1-faucet/status answers, i.e. while the server has it on. -->
+      <div class="card hidden" id="xl1Faucet">
+        <span class="tag tagXl1">$XL1 · on XYO Layer One</span>
+        <h2 style="margin:0 0 6px">XL1 faucet</h2>
+        <p class="lead"><b>$XL1</b> is the coin of <b>XYO Layer One</b>, a different chain from Solana. This faucet is run by <b>Oxyon</b> through the GeoHackers bot.</p>
+        <p class="tiny" id="xl1FaucetInfo" style="margin:0 0 12px">For members who verified an XL1 wallet.</p>
+        <button class="primary" id="btnXl1Claim" type="button">💧 Claim XL1</button>
+        <p class="center tiny" id="xl1Note" role="status" aria-live="polite" style="margin:12px 0 0"></p>
+      </div>
+
+      <div class="grid">
+        <a class="tile" href="/quiz/"><span class="ico">🧠</span>Quiz<small>Answer, earn points</small></a>
+        <a class="tile" href="/mole-hub/"><span class="ico">🎮</span>Games<small>The Mole Hub arcade</small></a>
+        <a class="tile" href="/hodl/"><span class="ico">💎</span>HODL rewards<small>Hold $WinLEW, earn weekly</small></a>
+        <a class="tile" href="/xl1/arcade/"><span class="ico">🕹️</span>XL1 Arcade<small>Play, earn $XL1</small></a>
+        <a class="tile" href="/leaderboards/"><span class="ico">🏆</span>Leaderboard<small>Where you rank</small></a>
+        <a class="tile" href="/contribute/"><span class="ico">🤝</span>Contribute<small>Back the project</small></a>
+        <a class="tile" href="/about/"><span class="ico">📖</span>About<small>What WinLEW is</small></a>
+        <a class="tile" href="/"><span class="ico">🌐</span>Website<small>Everything else</small></a>
+      </div>
+    </section>
+    <!-- Two tokens, two chains, two teams (2026-11-17). Always shown, signed in or not. -->
+    <section id="tokens" aria-labelledby="tokensTitle">
+      <div class="card">
+        <h2 id="tokensTitle" style="margin:0 0 10px">Which token lives where</h2>
+        <div class="oneWallet">
+          <img src="https://oxyon.io/assets/logo-mark.png" alt="" width="40" height="39" loading="lazy">
+          <div>
+            <b>One wallet for both: Oxyon Wallet</b>
+            <span>Holds $WinLEW on Solana <i>and</i> $XL1 on XYO Layer One, with Ethereum chains too. Your keys stay on your device.</span>
+          </div>
+        </div>
+        <div class="row2" style="margin:0 0 14px">
+          <a class="caBtn" href="https://play.google.com/store/apps/details?id=io.oxyon.wallet" rel="noopener">▶ Google Play</a>
+          <a class="caBtn" href="https://wallet.oxyon.io/" rel="noopener">🌐 Web wallet</a>
+        </div>
+        <div class="where">
+          <div><span class="tag tagSol" style="margin:0;white-space:nowrap">$WinLEW</span><span>On <b>Solana</b>. Hold it in Oxyon Wallet, or any Solana wallet such as Phantom. Its contract address is below.</span></div>
+          <div><span class="tag tagXl1" style="margin:0;white-space:nowrap">$XL1</span><span>On <b>XYO Layer One</b>. Hold it in Oxyon Wallet, and verify it once to receive XL1 rewards.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="help" aria-labelledby="helpTitle">
+      <div class="card">
+        <h2 id="helpTitle" style="margin:0 0 10px">Help and support</h2>
+        <div class="help">
+          <div>
+            <h3>WinLEW</h3>
+            <p>$WinLEW, the drip, the quiz, games and HODL.</p>
+            <a href="https://discord.gg/PSCrBzqdbE" rel="noopener">💬 WinLEW Discord</a>
+            <a href="mailto:support@winlew.co">✉️ support@winlew.co</a>
+          </div>
+          <div>
+            <h3>Oxyon</h3>
+            <p>$XL1, the XL1 faucet, Oxyon Wallet and wallet verification.</p>
+            <a href="https://discord.gg/t5SZ7JDknR" rel="noopener">💬 UnOfficial XYO Discord</a>
+            <a href="mailto:support@oxyon.io">✉️ support@oxyon.io</a>
+            <a href="https://oxyon.io/docs/" rel="noopener">📖 Oxyon docs</a>
+          </div>
+        </div>
+        <p class="tiny" style="margin:12px 0 0">No one from either team will ever ask for your recovery phrase or private key.</p>
+      </div>
+    </section>
+
+    <!-- Contract address, always shown. Someone gets asked "what's the CA?"
+         in a chat and needs it in one tap, whatever screen they are on — so
+         this sits outside the state sections rather than inside `ready`.
+         Hardcoded to match src/public/index.html, which is the site's existing
+         source of truth for it. -->
+    <div class="caBlock">
+      <div class="caLabel">Contract address (CA)</div>
+      <code id="caValue">DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump</code>
+      <div class="caRow">
+        <button class="caBtn" type="button" id="btnCopyCa">📋 Copy</button>
+        <a class="caBtn" href="https://solscan.io/token/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+      </div>
+      <p class="tiny" style="margin:10px 0 0">Always check this against the address on winlew.co before swapping — never trust one sent in a DM.</p>
+    </div>
+  </div>
+
+  <script src="/assets/wallet-auth.js"></script>
+  <script defer src="/assets/nav.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    const A = window.WinLEWAuth;
+    const $ = (id) => document.getElementById(id);
+    const show = (id) => {
+      for (const s of ['boot', 'finishing', 'needConnect', 'needVerify', 'ready']) $(s).classList.toggle('hidden', s !== id);
+    };
+
+    $('btnConnect').addEventListener('click', (e) => {
+      A.walletLogin({ triggerBtn: e.currentTarget, onSuccess: () => window.location.reload() });
+    });
+
+    async function loadFaucet(session, { preserveNote = false } = {}) {
+      const btn = $('btnClaim');
+      const note = $('claimNote');
+      // preserveNote keeps a just-issued transaction link on screen while the
+      // button flips to the countdown. Without it, refreshing after a claim
+      // throws away the one thing the user might want to tap.
+      const setNote = (text) => { if (!preserveNote) note.textContent = text; };
+      try {
+        const res = await A.hubApiFetch('/api/faucet/status');
+        const data = await A.readHubApiJson(res, 'status_failed');
+        const el = (data && data.eligibility) || {};
+
+        // Mirror the server's own gate rather than re-deriving it, so the app
+        // can never offer a claim the faucet will refuse. Note the shape:
+        // nextEligibleAt is an ISO string on `eligibility`, not epoch ms on a
+        // `cooldown` object — assuming the latter silently disabled the
+        // cooldown display entirely.
+        if (el.reason === 'verification_required') {
+          // Say the real threshold rather than a hardcoded one — it is tunable
+          // server-side, so the number has to come from the server.
+          const after = data && data.faucet && data.faucet.verifyAfterClaims;
+          if (after) {
+            $('verifyWhy').textContent =
+              'After ' + after + ' claims the faucet asks you to verify your wallet once — a single signature proving it is yours.';
+          }
+          show('needVerify');
+          return;
+        }
+
+        const nextIso = el.nextEligibleAt;
+        const nextAt = nextIso ? Date.parse(nextIso) : 0;
+        if (nextAt && nextAt > Date.now()) {
+          // Hand the ABSOLUTE time to the ticker rather than writing a computed
+          // string. See startCooldownTicker() for why that distinction is the
+          // whole bug.
+          startCooldownTicker(nextAt);
+          setNote('Already claimed in this window.');
+          return { settled: true };
+        }
+        stopCooldownTicker();
+
+        if (el.eligible === false) {
+          btn.disabled = true;
+          btn.textContent = '💧 Not available';
+          setNote(el.reason ? 'Faucet says: ' + String(el.reason).replace(/_/g, ' ') : 'Not eligible right now.');
+          return;
+        }
+
+        btn.disabled = false;
+        setNote('Ready when you are.');
+      } catch (err) {
+        setNote("Couldn't reach the faucet just now.");
+      }
+    }
+
+    $('btnClaim').addEventListener('click', async () => {
+      const btn = $('btnClaim');
+      const note = $('claimNote');
+      const { session } = A.getAuth();
+      if (!session) { show('needConnect'); return; }
+      btn.disabled = true;
+      btn.textContent = 'Claiming…';
+      try {
+        const res = await A.hubApiFetch('/api/faucet/claim', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ session }),
+        });
+        const data = await A.readHubApiJson(res, 'claim_failed');
+        if (data && data.claim && data.claim.signature) {
+          btn.textContent = '✅ Sent';
+          note.innerHTML = '<a class="link" target="_blank" rel="noreferrer" href="https://solscan.io/tx/' +
+            encodeURIComponent(data.claim.signature) + '">View transaction ↗</a>';
+          // Flip the button to the real countdown, keeping the transaction
+          // link on screen. Otherwise the card reads "Sent" until the app is
+          // force-closed, and the next tap claims into a refusal.
+          pollUntilSettled();
+          return;
+        }
+        if (data && data.pending) {
+          btn.textContent = '⏳ On its way';
+          note.textContent = 'Queued — it lands shortly.';
+          pollUntilSettled();
+          return;
+        }
+        if (data && data.reason === 'verification_required') { show('needVerify'); return; }
+        btn.textContent = '💧 Claim your $WinLEW drip';
+        btn.disabled = false;
+        note.textContent = (data && (data.message || data.reason)) || 'That did not go through.';
+      } catch (err) {
+        btn.textContent = '💧 Claim your $WinLEW drip';
+        btn.disabled = false;
+        note.textContent = 'Network problem — try again in a moment.';
+      }
+    });
+
+    /**
+     * Offers a newer build when one is published.
+     *
+     * Compares the running app's versionCode (Capacitor's App.getInfo().build)
+     * against /jdid93hf8dh/latest.json, which is generated from the actual APK
+     * by `npm run mobile:publish` — so the number offered here cannot drift
+     * from the file being served.
+     *
+     * It only ever offers a DOWNLOAD. Installing silently would need the
+     * REQUEST_INSTALL_PACKAGES permission and a native installer flow, which is
+     * a meaningful change to what the app is allowed to do on someone's phone
+     * and not something a beta should take. Android handles the install, and
+     * because every build from here is signed with the same key it upgrades in
+     * place — no uninstall, nothing lost.
+     */
+    async function checkForUpdate() {
+      const App = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App;
+      if (!App || typeof App.getInfo !== 'function') return; // not the native app
+      try {
+        const [info, res] = await Promise.all([
+          App.getInfo(),
+          fetch('/jdid93hf8dh/latest.json', { cache: 'no-store' }),
+        ]);
+        if (!res.ok) return;
+        const latest = await res.json();
+        const running = Number(info && info.build);
+        if (!Number.isFinite(running) || !latest || Number(latest.build) <= running) return;
+
+        $('updateWhat').textContent =
+          'Version ' + latest.version + ' is available — you have ' + (info.version || running) + '.';
+        // The href alone does nothing inside the native shell, and this was
+        // shipped broken from 2026-08-02 until it was observed on a real device
+        // on 2026-08-17: the banner appeared correctly and tapping the button
+        // did literally nothing, with no error.
+        //
+        // The cause is that this URL is same-origin, so Capacitor's
+        // shouldOverrideUrlLoading leaves it to the WebView instead of handing
+        // it to Android — and an Android WebView silently discards a download
+        // when no DownloadListener is registered. Neither MainActivity nor
+        // Capacitor's own bridge registers one (the server sends the APK as
+        // application/vnd.android.package-archive with nosniff, so the WebView
+        // can only ever treat it as a download).
+        //
+        // A Custom Tab is Chrome, which has a download manager, so handing the
+        // URL to Browser.open() is what actually starts the download. Fixed
+        // HERE rather than natively on purpose: this page is served from
+        // winlew.co, so the fix reaches every APK already installed. A
+        // DownloadListener in MainActivity would only ever help builds made
+        // after it — and the installs that need the fix are exactly the ones
+        // that could never receive it, since the broken button is the only way
+        // the app offers an update.
+        const apkUrl = new URL(latest.url, location.origin).href;
+        $('btnUpdate').setAttribute('href', apkUrl);
+        $('btnUpdate').onclick = (e) => {
+          const Browser = window.Capacitor.Plugins && window.Capacitor.Plugins.Browser;
+          if (!Browser) return; // no plugin — leave the plain link, which works in a browser tab
+          e.preventDefault();
+          Browser.open({ url: apkUrl }).catch(() => { window.open(apkUrl, '_blank'); });
+        };
+        $('updateBar').classList.remove('hidden');
+      } catch {
+        // An update check is never worth interrupting the app for.
+      }
+    }
+
+    async function finishHandoff(manual) {
+      const note = $('finishNote');
+      const res = await A.completeNativeHandoff('');
+      if (res && res.ok) { window.location.reload(); return true; }
+      const why = res && res.reason;
+      if (why === 'pending') {
+        note.textContent = manual
+          ? "Your wallet hasn't handed the session over yet. Finish signing in the wallet app, then tap again."
+          : 'Waiting for your wallet. If you have already signed, this completes on its own.';
+      } else if (why === 'no_pending') {
+        // Expired or already used — say so instead of silently showing Connect.
+        show('needConnect');
+      } else if (manual) {
+        note.textContent = 'That did not complete. Tap "Start over" and connect again.';
+      }
+      return false;
+    }
+
+    $('btnFinish').addEventListener('click', () => finishHandoff(true));
+    $('btnStartOver').addEventListener('click', (e) => {
+      e.preventDefault();
+      try { localStorage.removeItem('winlew.native.handoff'); } catch {}
+      show('needConnect');
+    });
+
+    async function boot() {
+      const { session } = A.getAuth();
+
+      // A hand-off in flight outranks "not signed in": showing Connect here is
+      // what made a successful wallet signature look like nothing happened.
+      if (!session && typeof A.hasPendingNativeHandoff === 'function' && A.hasPendingNativeHandoff()) {
+        show('finishing');
+        if (await finishHandoff(false)) return;
+        // Keep trying briefly — the user may have arrived just ahead of the deposit.
+        let tries = 0;
+        const timer = setInterval(async () => {
+          if (++tries > 10 || !A.hasPendingNativeHandoff()) { clearInterval(timer); return; }
+          if (await finishHandoff(false)) clearInterval(timer);
+        }, 2000);
+        return;
+      }
+
+      if (!session) { show('needConnect'); return; }
+      const wallet = A.getCachedWallet();
+      $('stateText').textContent = wallet
+        ? 'Signed in · ' + wallet.slice(0, 4) + '…' + wallet.slice(-4)
+        : 'Signed in';
+      show('ready');
+      loadFaucet(session);
+      // Fills #navWalletAmount, the id refreshWalletBalance() defaults to.
+      if (typeof A.refreshWalletBalance === 'function') A.refreshWalletBalance();
+    }
+
+    /**
+     * Re-read the faucet state.
+     *
+     * THE BUG THIS FIXES: loadFaucet() was called once, from boot(), and never
+     * again. An Android WebView is not reloaded when the app is foregrounded —
+     * only a cold start reloads the page — so the claim card kept showing
+     * whatever it fetched at first launch. Reported 2026-08-15 by a user who
+     * claimed in Discord and watched the app go on saying "Ready when you are"
+     * for hours. It failed the other way too: after claiming IN the app, the
+     * card stayed on "Sent" and the next tap just failed.
+     *
+     * Throttled, because appStateChange can fire in bursts when Android
+     * shuffles activities, and this must never turn into a request storm on a
+     * phone the user is not even looking at.
+     */
+    /**
+     * Keep the cooldown label honest while the app sits in the background.
+     *
+     * THE BUG (reported 2026-08-16). The countdown used to be computed once, at
+     * fetch time, and written straight into the button's text. Nothing ever
+     * re-derived it. So the app would show "Next drip in ~2h", get backgrounded,
+     * and two hours later the LOCAL NOTIFICATION would correctly fire saying the
+     * claim was ready — while the app it opened still said ~2h with the button
+     * disabled. The notification and the screen disagreed, and the screen was
+     * wrong.
+     *
+     * There was already an appStateChange listener that refetches on resume, and
+     * it was not enough: the OEM battery management that causes this in the first
+     * place is exactly what stops that event arriving reliably. A fix that
+     * depends on the resume event is a fix that fails in the case it is for.
+     *
+     * So the label is now DERIVED from an absolute timestamp against
+     * Date.now(), on a local tick. That works with no network, no resume event
+     * and a suspended WebView, because wall-clock time keeps passing regardless.
+     * Same principle as computing reading time instead of typing it: store the
+     * source of truth, render the display from it.
+     *
+     * When the countdown reaches zero the button is NOT simply enabled — the
+     * server is asked. Local time says "the wait is over"; only the faucet can
+     * say "and you may claim".
+     */
+    let cooldownAt = 0;
+    let cooldownTimer = null;
+
+    function renderCooldown() {
+      const btn = $('btnClaim');
+      if (!btn || !cooldownAt) return;
+      const left = cooldownAt - Date.now();
+      if (left <= 0) {
+        stopCooldownTicker();
+        btn.textContent = '💧 Checking…';
+        refreshFaucet({ force: true });
+        return;
+      }
+      const mins = Math.round(left / 60000);
+      btn.disabled = true;
+      btn.textContent = mins >= 60
+        ? '💧 Next drip in ~' + Math.round(mins / 60) + 'h'
+        : '💧 Next drip in ~' + Math.max(1, mins) + 'm';
+    }
+
+    function startCooldownTicker(at) {
+      cooldownAt = Number(at) || 0;
+      renderCooldown();
+      if (cooldownTimer) return;
+      // 30s is fine: the label is in minutes and hours. A tighter tick would
+      // wake the device for nothing.
+      cooldownTimer = setInterval(renderCooldown, 30000);
+    }
+
+    function stopCooldownTicker() {
+      if (cooldownTimer) { clearInterval(cooldownTimer); cooldownTimer = null; }
+      cooldownAt = 0;
+    }
+
+    let lastFaucetLoad = 0;
+    let faucetLoading = false;
+    async function refreshFaucet({ force = false, preserveNote = false } = {}) {
+      const { session } = A.getAuth();
+      if (!session || faucetLoading) return;
+      if (!force && Date.now() - lastFaucetLoad < 5000) return;
+      faucetLoading = true;
+      lastFaucetLoad = Date.now();
+      try { return await loadFaucet(session, { preserveNote }); }
+      finally { faucetLoading = false; }
+    }
+
+    /**
+     * After a claim, watch until the card reflects it — then stop.
+     *
+     * The owner asked for a page auto-refresh after 45 seconds. This does the
+     * same job without reloading the page: a reload interrupts whatever the
+     * person is doing, re-downloads everything on mobile data, and costs a
+     * fresh set of proxy requests — and proxied requests piling up on shared
+     * hosting is what took winlew.co down on 2026-08-15. Polling one small
+     * endpoint is the cheap version of the same idea.
+     *
+     * Bounded and self-cancelling: it stops the moment the cooldown appears,
+     * and gives up after roughly 45s either way. A claim that has not
+     * registered by then is not going to be fixed by asking again — the next
+     * app resume will pick it up.
+     */
+    let polling = false;
+    async function pollUntilSettled() {
+      if (polling) return;
+      polling = true;
+      try {
+        for (const wait of [3000, 7000, 15000, 20000]) {
+          await new Promise((r) => setTimeout(r, wait));
+          const res = await refreshFaucet({ force: true, preserveNote: true });
+          if (res && res.settled) return;
+        }
+      } finally {
+        polling = false;
+      }
+    }
+
+    // Native shell: the app being brought back to the front.
+    const CapApp = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App;
+    if (CapApp && typeof CapApp.addListener === 'function') {
+      CapApp.addListener('appStateChange', (st) => {
+        // renderCooldown() first: it is synchronous and needs no network, so
+        // the label is already correct before the refetch even starts.
+        if (st && st.isActive) { renderCooldown(); refreshFaucet(); }
+      });
+    }
+    // Plain browser, and a second net for WebViews that report visibility but
+    // not app state. Both paths are throttled through the same guard, so a
+    // shell firing both does one request, not two.
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') { renderCooldown(); refreshFaucet(); }
+    });
+
+    $('btnCopyCa').addEventListener('click', async () => {
+      const btn = $('btnCopyCa');
+      const ca = $('caValue').textContent.trim();
+      try {
+        // The wallet-browser and older WebView cases don't all have the async
+        // clipboard API, and a copy button that silently fails is worse than
+        // none — fall back to the legacy path before giving up.
+        if (navigator.clipboard && navigator.clipboard.writeText) await navigator.clipboard.writeText(ca);
+        else {
+          const ta = document.createElement('textarea');
+          ta.value = ca; ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed'; ta.style.opacity = '0';
+          document.body.appendChild(ta); ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        }
+        btn.textContent = '✅ Copied';
+      } catch {
+        btn.textContent = '⚠️ Copy failed — long-press the address';
+      }
+      setTimeout(() => { btn.textContent = '📋 Copy'; }, 2200);
+    });
+
+    boot();
+    checkForUpdate();
+  })();
+  </script>
+
+  <script type="module">
+  /**
+   * Notification wiring. Kept apart from the main script because notify.js is
+   * an ES module, and deliberately AFTER boot() — nothing here may delay the
+   * app rendering. Everything in this block is best-effort.
+   */
+  import {
+    getPlugin, applySchedule, disableNotifications, hasOptedOut, setOptedOut,
+  } from './notify.js';
+
+  (async () => {
+    // Declared here on purpose: the `A` in the main script lives inside its own
+    // IIFE and is NOT in scope in a module block. Referencing it across the two
+    // would throw a ReferenceError on every app open and schedule nothing at
+    // all — worse than the bug this fetch change is fixing.
+    const A = window.WinLEWAuth;
+    const card = document.getElementById('notifyCard');
+    const btn = document.getElementById('btnNotify');
+    const note = document.getElementById('notifyNote');
+    if (!card || !btn) return;
+
+    // No plugin means a browser or app 0.1.0. Offering a switch that cannot do
+    // anything is worse than offering nothing, so the card stays hidden.
+    if (!getPlugin()) return;
+    card.classList.remove('hidden');
+
+    /** Current facts, best-effort. A failed fetch just means less is scheduled;
+     *  it must never stop the reminders that need no server at all.
+     *
+     *  MUST go through hubApiFetch. The session travels in the
+     *  `x-winlew-session` HEADER, not a cookie — so a raw fetch with
+     *  `credentials: 'include'` sends nothing, /api/profile/me answers 401, and
+     *  `signedIn` stays false forever. computeSchedule() then skips the faucet
+     *  reminder, which is the one people actually want.
+     *
+     *  That is exactly what happened: Jim reported his 24h drip notification
+     *  never fired, and it could not have fired for anybody. hubApiFetch also
+     *  handles the 401-retry-with-query fallback for WebViews that drop custom
+     *  headers, which a raw fetch does not. */
+    async function readState() {
+      const state = { now: Date.now(), signedIn: false, faucet: null, quiz: null };
+      const base = document.documentElement.getAttribute('data-api-base') || '';
+      const api = (path) => (A && typeof A.hubApiFetch === 'function')
+        ? A.hubApiFetch(path)
+        : fetch(base + '?path=' + encodeURIComponent(path));
+
+      await Promise.all([
+        api('/api/profile/me')
+          .then((r) => (r.ok ? r.json() : null))
+          .then((d) => {
+            if (!d || d.error) return;
+            state.signedIn = true;
+            state.faucet = d.faucet || null;
+          })
+          .catch(() => {}),
+        api('/api/quiz/cycle')
+          .then((r) => (r.ok ? r.json() : null))
+          .then((d) => { if (d && d.cycle) state.quiz = { endMs: Number(d.cycle.endMs) || 0 }; })
+          .catch(() => {}),
+      ]);
+      return state;
+    }
+
+    function paintOn(count) {
+      btn.textContent = '🔕 Turn off notifications';
+      note.textContent = count
+        ? count + ' reminders set on this phone. Nothing about you was sent anywhere.'
+        : 'On. Reminders are set on this phone.';
+    }
+    function paintOff(why) {
+      btn.textContent = '🔔 Turn on notifications';
+      note.textContent = why === 'no_permission'
+        ? 'Android is blocking notifications for WinLEW. Turn them on in Settings → Apps → WinLEW → Notifications.'
+        : 'Scheduled on your phone — nothing about you is sent anywhere for this.';
+    }
+
+    let on = !hasOptedOut();
+
+    // Re-arm on every open. This is the only chance to correct anything: once
+    // the app closes, a scheduled notification cannot be changed or cancelled.
+    //
+    // THROTTLED, and it was not at first. readState() costs TWO API calls, both
+    // of which cross the PHP proxy on shared hosting, and appStateChange fires
+    // in bursts when Android shuffles activities — the same hazard the claim
+    // refresh in this file already guards against, missed here. On a host where
+    // each proxied call can occupy a worker, unthrottled bursts are a way to
+    // flood your own site.
+    let lastRearm = 0;
+    let rearming = false;
+    async function rearm({ force = false } = {}) {
+      if (rearming) return { scheduled: 0, reason: 'in_flight' };
+      if (!force && Date.now() - lastRearm < 30000) return { scheduled: 0, reason: 'throttled' };
+      rearming = true;
+      lastRearm = Date.now();
+      try {
+        return await rearmNow();
+      } finally {
+        rearming = false;
+      }
+    }
+
+    async function rearmNow() {
+      const res = await applySchedule(await readState());
+      if (res.scheduled) paintOn(res.scheduled);
+      else if (res.reason === 'opted_out') paintOff();
+      else paintOff(res.reason);
+      return res;
+    }
+
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      try {
+        if (on) {
+          await disableNotifications();
+          on = false;
+          paintOff();
+        } else {
+          setOptedOut(false);
+          on = true;
+          const res = await rearm({ force: true });
+          // A denial is not a state to leave the switch claiming "on" in.
+          if (res.reason === 'no_permission') on = false;
+        }
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    if (on) await rearm({ force: true });
+    else paintOff();
+
+    // Coming back from the background is an "open" too, and it is the common
+    // case on mobile — without this, someone who never fully quits the app
+    // would drift and start getting their own idle reminders.
+    const App = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.App;
+    if (App && typeof App.addListener === 'function') {
+      App.addListener('appStateChange', (s) => { if (s && s.isActive && on) rearm(); });
+    }
+  })();
+  </script>
+<script>
+// XL1 faucet card. The session goes only in the x-winlew-session header (these routes refuse it in a URL),
+// so this calls fetch directly rather than hubApiFetch, whose 401 retry would put it in the query string.
+(function () {
+  'use strict';
+  var A = window.WinLEWAuth; if (!A) return;
+  var card = document.getElementById('xl1Faucet'), btn = document.getElementById('btnXl1Claim');
+  var note = document.getElementById('xl1Note'), info = document.getElementById('xl1FaucetInfo');
+  function call(method, path) {
+    var s = ''; try { s = A.getAuth().session || ''; } catch (e) {}
+    if (!s) return Promise.resolve(null);
+    return fetch(A.hubApiUrl(path), { method: method, headers: { 'x-winlew-session': s, accept: 'application/json' }, cache: 'no-store' })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (b) { return { status: r.status, body: b }; }); })
+      .catch(function () { return null; });
+  }
+  function load() {
+    call('GET', '/api/xl1-faucet/status').then(function (r) {
+      if (!r || r.status !== 200) { card.classList.add('hidden'); return; }
+      var b = r.body || {}, f = b.faucet || {};
+      card.classList.remove('hidden');
+      if (!b.verified) {
+        info.innerHTML = 'Verify an XL1 wallet first: <a href="/xl1/verify/">verify on winlew.co</a>, or run /verify in Discord.';
+        btn.disabled = true; return;
+      }
+      btn.disabled = false;
+      var every = f.cooldownHours ? (' Once every ' + f.cooldownHours + ' h,') : '';
+      info.textContent = 'Pays your verified wallet ' + b.wallet + '.' + every + ' the same limit as the Discord /faucet.';
+    });
+  }
+  btn.addEventListener('click', function () {
+    btn.disabled = true; note.textContent = 'Sending…';
+    call('POST', '/api/xl1-faucet/claim').then(function (r) {
+      if (r && r.status === 201 && r.body && r.body.ok) {
+        note.textContent = '✅ ' + (r.body.amount ? r.body.amount + ' XL1 sent' : 'Sent') + ' to ' + r.body.wallet + '. ';
+        var link = r.body.explorer;
+        if (link && /^https:\/\//.test(link)) { var a = document.createElement('a'); a.href = link; a.rel = 'noopener'; a.textContent = 'See the transaction'; note.appendChild(a); }
+        return;
+      }
+      btn.disabled = false;
+      note.textContent = (r && r.body && r.body.message) || 'The faucet could not take this claim right now.';
+    });
+  });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load); else load();
+})();
+</script>
+</body>
+</html>

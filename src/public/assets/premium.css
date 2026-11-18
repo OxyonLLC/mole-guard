@@ -1,0 +1,155 @@
+/* WinLEW premium presentation layer — additive component classes used by
+   the transparency/governance/documentation family of pages (Burn,
+   Transparency, Governance, Modules, Partners, Events, Discord Bots,
+   Health, Whitepaper) to reach the same visual quality as the Mole Hub /
+   Quiz / Faucet reference pages, without adopting their arcade identity.
+   Loads after nav.css and before each page's own <style> block, which
+   still wins on any class both define — this file only introduces NEW
+   class names, it never redefines a page's existing .box/.card/.statBox/
+   etc. rules (those are upgraded per-page instead, since a page's own
+   later <style> block always wins the cascade over an earlier <link>).
+   Uses only the --wl-* tokens already established in nav.css — no new
+   theme, no new token namespace. See docs/site-design-system.md. */
+
+.wlHero{
+  display:grid;grid-template-columns:1.15fr .85fr;gap:20px;
+  align-items:stretch;margin:4px 0 22px;
+}
+/* Full-width illustrated banner, spanning both .wlHero columns — a sibling
+   of .wlHeroMain/.wlHeroSide, not a replacement. .wlHeroSide already holds
+   each page's own live stats (e.g. Burn's "Verified progress" grid), so the
+   banner gets its own row above rather than displacing that. Optional: a
+   page only gets one when it has a real image to show — omitting this
+   element leaves .wlHero exactly as it was before. */
+.wlHeroBanner{
+  grid-column:1 / -1;
+  border-radius:var(--wl-radius-lg);
+  overflow:hidden;
+  border:1px solid var(--wl-border-accent);
+}
+.wlHeroBanner img{
+  display:block;width:100%;height:auto;
+}
+.wlHeroMain{padding:6px 4px}
+.wlKicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--wl-gold);border:1px solid var(--wl-border-accent);
+  background:rgba(214,168,102,.09);padding:8px 14px;border-radius:999px;
+  margin-bottom:16px;
+}
+.wlHeroTitle{
+  margin:0 0 12px;font-size:clamp(30px,4.4vw,50px);line-height:1.04;
+  letter-spacing:-.02em;color:var(--wl-text);
+}
+.wlHeroSub{margin:0;max-width:60ch;color:var(--wl-text-muted);font-size:15.5px;line-height:1.7}
+.wlHeroCta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+
+/* Short factual highlight chips under the hero copy — real, already-known
+   facts about the page (a count, a policy, a guarantee), never invented
+   metrics. Distinct from .wlStat (a live number) and .wlQuickNavCard (a
+   jump link) — these never link anywhere, purely descriptive. */
+.wlChipRow{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.wlChip{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:700;padding:7px 13px;border-radius:999px;
+  background:rgba(255,255,255,.05);border:1px solid var(--wl-border);
+  color:var(--wl-text-muted);
+}
+
+/* Second line of a two-line hero headline (e.g. "Modules" / "The build map
+   behind WinLEW.") — same weight/size as the page-name line by default so
+   the whole thing reads as one statement, not a title+subtitle. */
+.wlHeroTitleAccent{display:block}
+
+.wlHeroSide{
+  border-radius:var(--wl-radius-lg);
+  background:linear-gradient(180deg, rgba(214,168,102,.08), rgba(125,88,55,.08));
+  border:1px solid var(--wl-border-accent);
+  padding:20px;display:flex;flex-direction:column;justify-content:center;gap:10px;
+  position:relative;overflow:hidden;
+}
+.wlHeroSide::before{
+  content:"";position:absolute;top:-30%;right:-15%;width:220px;height:220px;
+  background:radial-gradient(circle, rgba(214,168,102,.16), transparent 70%);
+  pointer-events:none;
+}
+.wlHeroSide>*{position:relative}
+@media (max-width:900px){
+  .wlHero{grid-template-columns:1fr}
+}
+
+/* Compact real-data stat strip — for numbers already computed/fetched by
+   the page's own app.js, never invented here. */
+.wlStatStrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px}
+.wlStat{padding:2px 0}
+.wlStat .n{font-size:24px;font-weight:950;color:var(--wl-text);line-height:1.08}
+.wlStat .l{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--wl-text-muted);margin-top:4px}
+
+/* Explicit 2x2 variant of .wlStatStrip for the hero side panel (System
+   Snapshot-style) — same .wlStat markup, just a fixed two-column grid
+   instead of auto-fit, so 4 stats read as a deliberate 2x2 block. */
+.wlHeroStatGrid{display:grid;grid-template-columns:1fr 1fr;gap:16px 14px}
+
+/* Compact note box for the hero side panel — a short clarifying blurb
+   below the stats (and optional progress bar), reusing the same visual
+   language as each page's own .status-note but scaled for the narrower
+   side-panel column. */
+.wlHeroNote{
+  margin-top:6px;padding:10px 12px;border-radius:var(--wl-radius-sm);
+  background:rgba(255,255,255,.04);border:1px solid var(--wl-border);
+  font-size:12px;line-height:1.55;color:var(--wl-text-muted);
+}
+
+/* Optional progress bar for hero side panels with a natural completion
+   percentage (e.g. roadmap phases complete, burn progress toward target).
+   Not every page has one — omit rather than force a fake percentage. */
+.wlHeroProgressTrack{height:8px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:4px}
+.wlHeroProgressFill{height:100%;background:linear-gradient(90deg, var(--wl-gold), #7d5837)}
+.wlHeroProgressLabel{font-size:11px;color:var(--wl-text-muted);margin-top:6px}
+
+.wlSectionHead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:2px}
+.wlEyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--wl-gold);font-weight:800}
+
+/* Card-depth glow, opt-in via class so pages choose which containers get
+   it rather than every .box picking it up automatically. Mirrors the
+   Mole Hub / Verify .card::before treatment. */
+.wlGlow{position:relative;overflow:hidden}
+.wlGlow::before{
+  content:"";position:absolute;inset:-2px;pointer-events:none;opacity:.85;z-index:0;
+  background:
+    radial-gradient(640px 200px at 22% 0%, rgba(214,168,102,.15), transparent 55%),
+    radial-gradient(600px 220px at 82% 0%, rgba(125,88,55,.13), transparent 55%);
+  filter:blur(18px);
+}
+.wlGlow>*{position:relative;z-index:1}
+
+.wlLift{transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease}
+.wlLift:hover{transform:translateY(-3px)}
+
+/* Subtle entrance motion — opt-in via .wlIn on a container; disabled
+   entirely under reduced-motion. Never applied to elements JS repaints
+   on every poll (stat values), only to static section/card containers. */
+@media (prefers-reduced-motion: no-preference){
+  .wlIn{animation:wlFadeUp .5s ease both}
+}
+@keyframes wlFadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* Quick-nav pill row (Whitepaper-style section jump list, reusable) */
+.wlQuickNav{display:flex;flex-wrap:wrap;gap:8px}
+.wlQuickNavCard{
+  display:flex;flex-direction:column;gap:4px;
+  padding:14px 16px;border-radius:var(--wl-radius-md);
+  background:var(--wl-panel);border:1px solid var(--wl-border);
+  text-decoration:none;color:var(--wl-text);
+}
+.wlQuickNavCard:hover{background:rgba(255,255,255,.08);text-decoration:none;border-color:var(--wl-border-accent)}
+.wlQuickNavCard .num{font-size:11px;color:var(--wl-gold);font-weight:800;letter-spacing:.04em}
+.wlQuickNavCard .label{font-size:13.5px;font-weight:750}
+
+/* Native <select> popup lists render on the OS's own (often white) surface,
+   so the page's light text becomes white-on-white in the open dropdown.
+   color-scheme:dark asks the browser for its dark control surface; the
+   option rule is the fallback for browsers that only honor explicit colors. */
+select{color-scheme:dark}
+select option{background-color:#24150d;color:#f6efe8}

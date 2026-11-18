@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <link rel="canonical" href="https://winlew.co/community/" />
+  <title>WinLEW Airdrop Registry</title>
+  <meta name="description" content="Check whether your verified WinLEW wallet is on the airdrop registry, and how to add it. Registration records a standing intent — it is not a promise of an airdrop." />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <style>
+    :root{--bg:#140d09;--panel:rgba(255,255,255,.06);--line:rgba(255,255,255,.12);--text:#f7efe6;--muted:rgba(247,239,230,.82);--brand:#d6a866;--ok:#8fd6a0;--bad:#f0a9a9}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);background:radial-gradient(1100px 680px at 10% 0%, rgba(214,168,102,.12), transparent 55%),linear-gradient(180deg,#110906 0%,#1e120b 100%)}
+    a{color:#f0c989;text-decoration-color:rgba(240,201,137,.45)}
+    a:hover{color:#ffe0ad}
+    .wrap{max-width:960px;margin:0 auto;padding:24px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:0 28px 80px rgba(0,0,0,.38)}
+    h1{margin:0 0 10px;font-size:clamp(34px,4vw,54px);line-height:1.02}
+    h2{margin:30px 0 6px;font-size:clamp(21px,2.4vw,28px)}
+    p{color:var(--muted);line-height:1.7}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+    .option{display:flex;flex-direction:column;gap:10px;padding:18px;border:1px solid var(--line);border-radius:18px;background:rgba(0,0,0,.18)}
+    .option p{margin:0;font-size:14px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:14px;text-decoration:none;font-weight:800;border:1px solid var(--line);color:var(--text);background:rgba(255,255,255,.06);cursor:pointer;font:inherit;font-weight:800}
+    .btn.primary{background:linear-gradient(90deg,rgba(214,168,102,.32),rgba(214,168,102,.2));border-color:rgba(214,168,102,.45)}
+    .eyebrow{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#f0c989}
+    .status{margin-top:18px;padding:20px;border-radius:20px;border:1px solid var(--line);background:rgba(0,0,0,.24)}
+    .statusRow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .statusBadge{font-size:26px;line-height:1}
+    .statusMain b{font-size:18px}
+    .statusMain div{font-size:14px;color:var(--muted);margin-top:2px}
+    .wallet{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;word-break:break-all;color:var(--muted)}
+    .yes{border-color:rgba(143,214,160,.4);background:rgba(143,214,160,.08)}
+    .no{border-color:rgba(214,168,102,.4);background:rgba(214,168,102,.08)}
+    .how{margin-top:14px;padding:14px 16px;border-radius:14px;background:rgba(0,0,0,.3);border:1px solid var(--line)}
+    .how code{color:#f0c989;font-size:14px}
+    .caveat{margin-top:18px;padding:16px;border-radius:18px;background:rgba(240,169,169,.08);border:1px solid rgba(240,169,169,.34)}
+    .caveat p{margin:6px 0 0;font-size:14.5px}
+    .fine{font-size:12.5px;color:var(--muted);margin-top:16px}
+    .hidden{display:none}
+    @media (max-width:760px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <!-- This page had NO .nav markup at all — it loaded nav.js, which tolerates
+       that by adding only the footer, so the page rendered with no site header.
+       That was survivable while it was unlisted; now that it is in NAV_GROUPS,
+       a page reachable from the menu that has no menu of its own is a dead end.
+       Same shell as /mole-link/. -->
+  <div class="nav">
+    <div class="navInner">
+      <a class="navBrand" href="/">WinLEW</a>
+      <div class="navLinks" id="siteNavLinks"></div>
+      <div class="navRight">
+        <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+        <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+        <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+        <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="card">
+      <div class="eyebrow">Airdrop Registry</div>
+      <h1>Is your wallet on the list?</h1>
+      <p>
+        The airdrop registry is the record of which verified wallets have asked to be included if WinLEW runs
+        a distribution. It is read from your verified wallet &mdash; there is nothing to fill in here.
+      </p>
+
+      <!-- Three states, and the page starts in none of them: showing "not
+           registered" while we are still asking would tell a registered user
+           they are not, which is the one wrong answer that matters. -->
+      <div id="statusLoading" class="status">
+        <div class="statusRow">
+          <span class="statusBadge">⏳</span>
+          <div class="statusMain"><b>Checking&hellip;</b><div>Reading your verified wallet.</div></div>
+        </div>
+      </div>
+
+      <div id="statusSignedOut" class="status hidden">
+        <div class="statusRow">
+          <span class="statusBadge">🔗</span>
+          <div class="statusMain">
+            <b>Verify a wallet to check</b>
+            <div>The registry is keyed to a verified wallet, so there is nothing to look up until you have one.</div>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="option">
+            <strong>Verify your wallet</strong>
+            <p>One signed message. No transaction, no fees, no seed phrase.</p>
+            <a class="btn primary" href="/mole-link/">🔗 Verify &amp; unlock roles</a>
+          </div>
+          <div class="option">
+            <strong>Already verified?</strong>
+            <p>Open your dashboard and this page will recognise you.</p>
+            <a class="btn" href="/verify/profile.html">📊 Open Dashboard</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="statusYes" class="status yes hidden">
+        <div class="statusRow">
+          <span class="statusBadge">✅</span>
+          <div class="statusMain">
+            <b>Registered</b>
+            <div>Your verified wallet is on the airdrop registry.</div>
+          </div>
+        </div>
+        <p class="wallet" id="walletYes"></p>
+      </div>
+
+      <div id="statusNo" class="status no hidden">
+        <div class="statusRow">
+          <span class="statusBadge">➖</span>
+          <div class="statusMain">
+            <b>Not registered yet</b>
+            <div>Your wallet is verified, but it has not been added to the registry.</div>
+          </div>
+        </div>
+        <p class="wallet" id="walletNo"></p>
+        <div class="how">
+          Add it from Discord with <code>!register &lt;your-wallet&gt;</code> &mdash; the same command that saves a
+          wallet for faucet fallback. Registering from the website is not available yet.
+        </div>
+      </div>
+
+      <!-- Stated plainly and not buried. A registry page that reads as a
+           guarantee of free tokens sets an expectation nobody has agreed to
+           meet, and this project's whole posture is not claiming more than the
+           code does. -->
+      <div class="caveat">
+        <strong>What registering does and does not mean</strong>
+        <p>
+          Registering records a <strong>standing intent</strong> to be included. It is not a promise of an airdrop,
+          an amount, or a date, and no airdrop is scheduled by being on this list. If one happens, this is the
+          record it would be drawn from.
+        </p>
+      </div>
+
+      <h2>While you are here</h2>
+      <div class="grid">
+        <div class="option">
+          <strong>Verify &amp; unlock roles</strong>
+          <p>What verification unlocks: holder roles, the LewCREW clubs, and a governance vote.</p>
+          <a class="btn" href="/mole-link/">🔗 Verify your wallet</a>
+        </div>
+        <div class="option">
+          <strong>Join the Discord</strong>
+          <p>Where the quiz, faucet, governance and <code>!register</code> actually live.</p>
+          <a class="btn" href="https://discord.gg/PSCrBzqdbE" target="_blank" rel="noreferrer noopener">💬 Open Discord</a>
+        </div>
+      </div>
+      <p class="fine">
+        WinLEW will never ask you to send funds, share a seed phrase, or hand over a private key &mdash; for an
+        airdrop or for anything else. See <a href="/policies/">Policies</a>.
+      </p>
+    </section>
+  </div>
+
+  <script src="/assets/wallet-auth.js"></script>
+  <script>
+    (function () {
+      var A = window.WinLEWAuth;
+      if (!A) return;
+      document.getElementById('navWalletConnect')?.addEventListener('click', function (e) {
+        A.walletLogin({ triggerBtn: e.currentTarget, onSuccess: function () { window.location.reload(); } });
+      });
+      if (A.getAuth().session) A.setConnectedUi(A.getCachedWallet() || 'connected');
+      A.refreshWalletBalance();
+
+      function show(id) {
+        ['statusLoading', 'statusSignedOut', 'statusYes', 'statusNo'].forEach(function (k) {
+          document.getElementById(k).classList.toggle('hidden', k !== id);
+        });
+      }
+
+      /**
+       * Read-only. faucet.registeredForAirdrops already ships in both branches
+       * of /api/profile/me — buildPublicProfilePayload() keeps that flag while
+       * stripping the cooldown timing beside it, because an intent flag is not
+       * activity detail. So this needs no new endpoint.
+       *
+       * A failed request falls back to the signed-out state, never to "not
+       * registered": telling a registered user they are not on the list is the
+       * one wrong answer that would actually cost them something.
+       */
+      var base = document.documentElement.getAttribute('data-api-base') || '';
+      fetch(base + '?path=/api/profile/me', { credentials: 'include' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          if (!d || d.ok === false) return show('statusSignedOut');
+          // Field names taken from buildPublicProfilePayload() in src/mole/web.js,
+          // not guessed. verifiedWallet is the one this registry is keyed to;
+          // primaryWallet and profile.wallet are the same value in the common
+          // case and cover the owner payload's shape too.
+          var w = d.wallets || {};
+          var wallet = w.verifiedWallet || w.primaryWallet || (d.profile && d.profile.wallet) || '';
+          if (!wallet) return show('statusSignedOut');
+          var registered = !!(d.faucet && d.faucet.registeredForAirdrops);
+          document.getElementById(registered ? 'walletYes' : 'walletNo').textContent = wallet;
+          show(registered ? 'statusYes' : 'statusNo');
+        })
+        .catch(function () { show('statusSignedOut'); });
+    })();
+  </script>
+  <script defer src="/assets/nav.js"></script>
+</body>
+</html>

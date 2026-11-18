@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Oxyon Wallet — Self-Custody Wallet for Ethereum, Solana &amp; XL1</title>
+<meta name="description" content="Oxyon Wallet (formerly GeoWallet) is a self-custody multi-chain wallet for Ethereum, Solana, XL1, NFTs, and dApps — with on-chain wallet-to-wallet messaging.">
+<link rel="canonical" href="https://winlew.co/wallet/" />
+<meta name="robots" content="index,follow">
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/oxyon-favicon-32.png">
+<link rel="apple-touch-icon" href="./assets/oxyon-apple-touch-icon.png">
+<meta name="theme-color" content="#0a0a0c">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Oxyon Wallet">
+<meta property="og:title" content="Oxyon Wallet — Your wallet address is your inbox">
+<meta property="og:description" content="Self-custody wallet for Ethereum, Solana, XL1, NFTs, and dApps. Send a message and XL1 together in one on-chain transaction.">
+<meta property="og:url" content="https://winlew.co/wallet/">
+<meta property="og:image" content="https://winlew.co/wallet/assets/oxyon-og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://winlew.co/wallet/assets/oxyon-og.png">
+<style>
+/* Oxyon identity: near-black, brushed titanium/steel neutrals, champagne-gold accent. */
+:root{color-scheme:dark;--bg:#0a0a0c;--panel:rgba(22,22,26,.78);--panel2:rgba(255,255,255,.035);--line:rgba(205,167,105,.22);--line2:rgba(255,255,255,.09);--text:#f4f4f5;--muted:#c4c4cc;--soft:#8e8e98;--gold:#dcc08a;--gold-deep:#b98f52;--ink:#0a0a0c}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 82% 6%,rgba(205,167,105,.12),transparent 36%),radial-gradient(circle at 15% 85%,rgba(160,170,190,.07),transparent 38%),linear-gradient(160deg,#08080a,#121216 50%,#08080a)}
+a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
+.nav{position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line2);background:rgba(10,10,12,.78);backdrop-filter:blur(14px)}
+.nav-inner{width:min(1180px,calc(100% - 32px));margin:auto;display:flex;align-items:center;justify-content:space-between;min-height:72px;gap:18px}
+.brand{display:flex;align-items:center;gap:12px;color:var(--text)}.brand:hover{text-decoration:none}
+.brand img{width:38px;height:38px;border-radius:10px;box-shadow:0 0 28px rgba(205,167,105,.18)}
+.wordmark{font-weight:700;letter-spacing:.28em;font-size:15px}.wordmark small{margin-left:6px;font-size:10px;font-weight:600;letter-spacing:.22em;color:var(--gold)}
+.nav-links{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:14px}.nav-links a{color:#e4e4e7;font-weight:600;font-size:14px}
+.wrap{width:min(1180px,calc(100% - 32px));margin:auto}.hero{padding:42px 0 22px}.hero-card{overflow:hidden;border:1px solid var(--line);border-radius:28px;background:var(--panel);box-shadow:0 28px 110px rgba(0,0,0,.5)}.hero-card img{display:block;width:100%;height:auto}
+.section{padding:28px 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.grid.two{grid-template-columns:1.05fr .95fr}
+.card{border:1px solid var(--line);border-radius:22px;padding:24px;background:var(--panel);box-shadow:0 18px 70px rgba(0,0,0,.25)}.card.soft{background:var(--panel2)}
+h1,h2,h3,p{margin-top:0}h1{font-size:clamp(42px,8vw,86px);line-height:.92;letter-spacing:-.05em;margin-bottom:18px}h2{font-size:clamp(28px,4vw,48px);line-height:1.02;letter-spacing:-.035em;margin-bottom:14px}h3{font-size:21px;letter-spacing:-.015em;margin-bottom:10px}
+p{color:var(--muted);line-height:1.68}.lead{font-size:clamp(18px,2.2vw,24px);line-height:1.5;max-width:860px}
+.tagline{margin:-4px 0 18px;color:var(--gold);font-size:12px;font-weight:600;letter-spacing:.28em;text-transform:uppercase}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0 0}.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:9px 14px;color:var(--text);background:rgba(255,255,255,.04);font-weight:700;font-size:14px}
+.badge.gold{border-color:rgba(205,167,105,.5);color:var(--gold)}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}.btn{min-height:48px;display:inline-flex;align-items:center;justify-content:center;padding:0 22px;border-radius:999px;font-weight:800;color:var(--ink);background:linear-gradient(135deg,#ead9b4,#cda769 55%,#b98f52);box-shadow:0 14px 34px rgba(205,167,105,.2)}.btn.secondary{color:var(--text);background:rgba(255,255,255,.05);border:1px solid var(--line);box-shadow:none}.btn:hover{text-decoration:none;filter:brightness(1.06)}
+.note{border-left:3px solid var(--gold);border-radius:16px;background:rgba(255,255,255,.045);padding:18px 20px;color:var(--muted);line-height:1.65}.list{margin:0;padding-left:20px;color:var(--muted);line-height:1.75}
+.lifecycle{margin-top:16px;color:var(--soft);font-size:12px;font-weight:600;letter-spacing:.26em;text-transform:uppercase}
+footer{margin-top:34px;padding:34px 0 46px;border-top:1px solid var(--line2);color:rgba(244,244,245,.6)}.footer-inner{width:min(1180px,calc(100% - 32px));margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.announcement{border-bottom:1px solid var(--line2);background:rgba(205,167,105,.06)}
+.announcement-inner{width:min(1180px,calc(100% - 32px));margin:auto;min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--muted);font-weight:600}
+.announcement strong{color:var(--text)}.announcement-actions{display:flex;gap:10px;flex-wrap:wrap}.mini-btn{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 14px;border-radius:999px;color:var(--ink);background:linear-gradient(135deg,#ead9b4,#cda769 55%,#b98f52);font-weight:800;font-size:13px}.mini-btn:hover{text-decoration:none}.mini-btn.secondary{color:var(--text);background:rgba(255,255,255,.06);border:1px solid var(--line)}
+.wallet-warning{margin-top:22px;color:var(--soft);font-size:14px;line-height:1.6}
+@media(max-width:850px){.nav-inner{align-items:flex-start;flex-direction:column;padding:15px 0}.nav-links{justify-content:flex-start}.grid,.grid.two{grid-template-columns:1fr}.hero{padding-top:24px}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="nav-inner"><a class="brand" href="https://wallet.oxyon.io/" aria-label="Oxyon Wallet"><img src="./assets/oxyon-icon-128.png" alt=""><span class="wordmark">OXYON<small>WALLET</small></span></a><nav class="nav-links"><a href="#messaging">Messaging</a><a href="#features">Features</a><a href="#ecosystem">Ecosystem</a><a href="./support/">Support</a><a href="./privacy/">Privacy</a><a href="https://x.com/GeoWallet" rel="noopener">Updates</a><a href="https://x.com/LewSales" rel="noopener">Developer</a></nav></div></header>
+<div class="announcement"><div class="announcement-inner"><span><strong>Oxyon Wallet Beta</strong> — formerly GeoWallet. Ethereum, Solana, XL1, NFTs, dApps, and on-chain messaging.</span><div class="announcement-actions"><a class="mini-btn" href="https://wallet.oxyon.io/">Launch Web Wallet</a><a class="mini-btn secondary" href="./support/">Support</a><a class="mini-btn secondary" href="./privacy/">Privacy</a></div></div></div>
+
+<main>
+<section class="hero wrap"><div class="hero-card"><img src="./assets/oxyon-banner.webp" alt="Oxyon — Every decision deserves evidence. Observe, Locate, Verify, Connect."></div></section>
+
+<section class="section wrap"><div class="grid two"><div class="card"><h1>The Oxyon Wallet.</h1><p class="tagline">Every decision deserves evidence.</p><p class="lead">A self-custody wallet for Ethereum, Solana, XL1, NFTs, and dApps — now with wallet-to-wallet messaging on XL1. Formerly GeoWallet.</p><div class="badges"><span class="badge">Self-custody</span><span class="badge">Ethereum</span><span class="badge">Solana</span><span class="badge">XL1</span><span class="badge">NFTs</span><span class="badge">dApp ready</span><span class="badge gold">On-chain messaging</span></div><div class="btns"><a class="btn" href="https://wallet.oxyon.io/">Launch Web Wallet</a><a class="btn secondary" href="./support/#extension">Install Extension</a></div><p class="wallet-warning">Self-custody reminder: you are responsible for securing your recovery phrase. Oxyon Wallet support will never ask for it.</p></div><div class="card soft"><h2>Built for more than balances.</h2><p>Oxyon Wallet is the home layer for XYO-native activity: assets, verifiable messages, proof tools, reputation, and safer signing.</p><ul class="list"><li>Store, send, and receive supported assets.</li><li>Send messages — and XL1 with them — wallet to wallet.</li><li>Connect to dApps with clear approval prompts.</li><li>Support GeoAgora, GeoJustice, and GeoProof flows.</li></ul></div></div></section>
+
+<section id="messaging" class="section wrap"><h2>Your wallet address is your inbox.</h2><p class="lead">No phone number. No email address. Messages travel on XL1 as part of a signed transaction you can verify on the explorer.</p><div class="grid"><article class="card"><h3>Message + value, one transaction</h3><p>Send a message to any XL1 address and optionally attach XL1 to it. The transfer and the message are signed together in a single transaction.</p></article><article class="card"><h3>Private messages</h3><p>End-to-end encrypted: only the recipient's wallet can read them. As with any transaction, who sent it, to whom, when, and any XL1 attached stay visible on-chain.</p></article><article class="card"><h3>Spam protection</h3><p>Messages from first-time senders wait quietly under Requests — no badge, no notification — until you accept them. Block anyone, anytime.</p></article></div><div class="note" style="margin-top:18px">Messaging is in beta. Public messages are permanent and readable by anyone on XL1 — never send secrets or recovery phrases.</div></section>
+
+<section id="features" class="section wrap"><h2>What Oxyon Wallet does</h2><div class="grid"><article class="card"><h3>Multi-chain asset management</h3><p>Manage Ethereum, Solana, XL1, and XYO-related assets from a single wallet experience.</p></article><article class="card"><h3>Tokens &amp; NFTs</h3><p>View supported coins, tokens, NFT collections, metadata, and ownership status as the wallet expands.</p></article><article class="card"><h3>dApp connections</h3><p>Connect to supported decentralized applications and review every request before approving it.</p></article><article class="card"><h3>Local-first privacy</h3><p>Your recovery phrase and private keys are encrypted locally. Oxyon Wallet does not run user accounts or analytics.</p></article><article class="card"><h3>Safer signing</h3><p>Transactions are decoded and risk-checked before you sign, with clear warnings when something can't be verified.</p></article><article class="card"><h3>Quantum-ready identity</h3><p>A post-quantum (ML-DSA-65) identity derived from your seed, with a signed attestation binding it to your XL1 address.</p></article></div></section>
+
+<section id="ecosystem" class="section wrap"><div class="grid two"><div class="card"><h2>Part of Oxyon.</h2><p>Oxyon builds decision infrastructure — turning observations into evidence anyone can verify. Oxyon Wallet is where you hold assets, sign, and send verifiable messages, and the access point for GeoAgora, GeoJustice, and GeoProof.</p><p class="lifecycle">Observe · Locate · Verify · Connect</p></div><div class="card soft"><h2>Formerly GeoWallet.</h2><p>Same wallet, new name. Your recovery phrase, keys, and addresses are unchanged — Oxyon Wallet is the next chapter of GeoWallet.</p><div class="note">Oxyon Wallet is in active development. Some features may be current, upcoming, or release-stage dependent.</div></div></div></section>
+</main>
+<footer><div class="footer-inner"><span>Oxyon Wallet • Ethereum • Solana • XL1 • by Oxyon<br>Self-custody wallet. You are responsible for securing your recovery phrase.</span><span><a href="./support/">Support</a> · <a href="./privacy/">Privacy</a> · <a href="https://x.com/GeoWallet" rel="noopener">Updates</a> · <a href="https://x.com/LewSales" rel="noopener">Developer</a></span></div></footer>
+</body>
+</html>

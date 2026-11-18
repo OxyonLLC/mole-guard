@@ -1,0 +1,12 @@
+{
+  "version": "1.0.5",
+  "build": 105,
+  "tag": "v1.0.5",
+  "cli": "5.5.0",
+  "sdk": "5.5.4",
+  "released": "2026-09-25T03:38:41Z",
+  "notes": "xl1-cli 5.5.0",
+  "pi": "LewSales/xl1-block-producer-pi",
+  "windows": "LewSales/xl1-block-producer-windows",
+  "minCliToSkip": null
+}

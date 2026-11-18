@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Merch — WinLEW</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="$WinLEW drops sold by WinLEW (PayPal or crypto) plus official XYO gear fulfilled by the official XYO store. Holders get up to 15% off WinLEW drops." />
+  <link rel="canonical" href="https://winlew.co/merch/" />
+  <!-- Was noindex,nofollow,noarchive while this page was the staged shop
+       parked at /merch/shop.html behind a public "coming soon" teaser.
+       2026-08-30: stock is in hand, the shop moved to /merch/ and opened
+       for browsing, so it is a real indexable page now. -->
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Merch — WinLEW" />
+  <meta property="og:description" content="Official $WinLEW drops + official XYO gear, one page. Holders get up to 15% off WinLEW drops." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/merch/" />
+  <!-- Absolute URL to the 269 KB 1200px JPEG, not the 3.9 MB source PNG:
+       most scrapers drop a relative og:image entirely, and a 3.9 MB unfurl
+       is slow enough that some of them time out. -->
+  <meta property="og:image" content="https://winlew.co/merch/img/winlew-first-tee-shirt-og.jpg" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    html { overflow-x: hidden; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      line-height: 1.7;
+    }
+    .wlPageShell { max-width: 1120px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin: 0 0 10px; }
+    h2 { font-size: clamp(20px, 2.8vw, 26px); }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624;
+      border-radius: 20px;
+      padding: 26px;
+      margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: 0.85; }
+    .sectionTag { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: rgba(246,239,232,.7); margin-bottom: 4px; }
+    .sectionSub { margin: 0 0 16px; color: rgba(246,239,232,.78); font-size: 14px; }
+
+    /* Section accent split: gold = WinLEW's own drops only; XYO section runs
+       cool blue so the two fulfillment models read differently at a glance. */
+    .box.xyoSection { border-color: rgba(45,156,219,.35); }
+    .box.xyoSection .sectionTag { color: rgba(133,194,235,.9); }
+    .box.xyoSection h2 { color: #85c2eb; }
+
+    .heroAnchors { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    .heroAnchors .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 16px; border-radius: 999px; font-weight: 800; font-size: 14px;
+      border: 1px solid rgba(214,168,102,.45); background: rgba(214,168,102,.10); color: #f0c989;
+      cursor: pointer;
+    }
+    .heroAnchors .btn.xyo { border-color: rgba(45,156,219,.45); background: rgba(45,156,219,.10); color: #85c2eb; }
+    .heroAnchors .btn:hover { text-decoration: none; filter: brightness(1.15); }
+
+    /* Pre-checkout notice. The shop opened for browsing on 2026-08-30 with
+       stock in hand, but the serving machine has no PAYPAL_CLIENT_SECRET, so
+       /api/merch/config reports checkoutReady:false and every WinLEW card
+       renders its "checkout coming online" state. Saying that once, at the
+       top, beats making a visitor discover it card by card. Amber, not gold —
+       it is a pending state, and it matches .tag.pending. DELETE THIS BLOCK
+       and its markup when checkout goes live. */
+    .openNotice {
+      border: 1px solid rgba(255,179,71,.42);
+      background: linear-gradient(180deg, rgba(255,179,71,.10), rgba(255,179,71,.03));
+      border-radius: 16px; padding: 14px 18px; margin: 18px 0 0;
+      font-size: 14px; line-height: 1.6;
+    }
+    .openNotice strong { color: #ffb347; }
+    .openNotice p { margin: 0 0 6px; }
+    .openNotice p:last-child { margin-bottom: 0; }
+    .openNotice a { font-weight: 800; }
+
+    /* Discount banner */
+    .discountBar {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      border: 1px solid rgba(214,168,102,.4);
+      background: linear-gradient(180deg, rgba(214,168,102,.12), rgba(214,168,102,.04));
+      border-radius: 14px; padding: 12px 16px; margin: 0 0 18px;
+      font-size: 14px;
+    }
+    .discountBar strong { color: #f0c989; }
+    .discountBar .pctBadge {
+      font-size: 18px; font-weight: 900; color: #130b08;
+      background: linear-gradient(180deg, #f0c989, #d6a866);
+      border-radius: 10px; padding: 4px 10px;
+    }
+    .discountBar a.verifyCta { font-weight: 800; }
+
+    /* Product grid + cards */
+    .productGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .productCard {
+      display: flex; flex-direction: column;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      overflow: hidden;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .productCard:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,.4); }
+    .xyoSection .productCard:hover { border-color: rgba(45,156,219,.4); }
+    #winlew-drops .productCard:hover { border-color: rgba(214,168,102,.4); }
+    .productImgWrap {
+      aspect-ratio: 4 / 3; background: rgba(255,255,255,.03);
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .productImgWrap img { width: 100%; height: 100%; object-fit: cover; max-width: 100%; }
+    .productImgWrap .imgPlaceholder { font-size: 44px; opacity: .5; }
+    .productBody { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px 12px; flex: 1; }
+    .productBody strong { color: #f6efe8; font-size: 15px; line-height: 1.35; }
+    .productBody .desc { color: rgba(246,239,232,.72); font-size: 13px; line-height: 1.5; }
+    .priceRow { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+    .price { font-size: 17px; font-weight: 900; color: #f0c989; }
+    .xyoSection .price { color: #85c2eb; }
+    .priceWas { font-size: 13px; text-decoration: line-through; opacity: .55; }
+    .discountTag {
+      font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 999px;
+      border: 1px solid rgba(214,168,102,.5); color: #f0c989; background: rgba(214,168,102,.08);
+    }
+    .buyRow { display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-top: 8px; }
+    .optRow { display: flex; gap: 8px; align-items: center; }
+    .optRow label { font-size: 12px; color: rgba(246,239,232,.7); }
+    .optRow select, .optRow input[type="number"] {
+      background: rgba(255,255,255,.06); color: #f6efe8;
+      border: 1px solid rgba(255,255,255,.18); border-radius: 8px; padding: 5px 8px; font-size: 13px;
+    }
+    .optRow input[type="number"] { width: 62px; }
+    .buyBtn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 10px 14px; border-radius: 10px; font-weight: 800; font-size: 14px;
+      border: 1px solid rgba(45,156,219,.5); background: rgba(45,156,219,.14); color: #85c2eb;
+      cursor: pointer; text-align: center;
+    }
+    .buyBtn:hover { text-decoration: none; filter: brightness(1.15); }
+    .buyBtn:focus-visible, .heroAnchors .btn:focus-visible, .cryptoBtn:focus-visible {
+      outline: 2px solid #f0c989; outline-offset: 2px;
+    }
+    .cryptoBtn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 9px 14px; border-radius: 10px; font-weight: 800; font-size: 13px;
+      border: 1px solid rgba(214,168,102,.45); background: rgba(214,168,102,.08); color: #f0c989;
+      cursor: pointer;
+    }
+    .cryptoBtn[disabled] { opacity: .45; cursor: not-allowed; border-style: dashed; }
+    .paypalSlot { min-height: 0; }
+    .paypalNote { font-size: 12px; color: rgba(246,239,232,.6); }
+    .orderConfirm {
+      border: 1px solid rgba(133,235,164,.45); background: rgba(133,235,164,.08);
+      border-radius: 10px; padding: 10px 12px; font-size: 13px; color: #b9f0c9;
+      word-break: break-all;
+    }
+
+    /* Signature element: mono ledger stamp in every card footer */
+    .ledgerStamp {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase;
+      color: rgba(246,239,232,.55);
+      border-top: 1px dashed rgba(255,255,255,.12);
+      padding: 8px 16px 10px; margin-top: 2px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .xyoSection .ledgerStamp { color: rgba(133,194,235,.6); }
+
+    /* Placeholder "first drop loading" cards */
+    .productCard.comingSoon { border-style: dashed; opacity: .78; }
+    .productCard.comingSoon:hover { transform: none; box-shadow: none; }
+    .tag {
+      display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px;
+      font-size: 11px; font-weight: 800; border: 1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.05); align-self: flex-start;
+    }
+    .tag.pending { border-color: rgba(255,179,71,.4); color: #ffb347; }
+
+    .linkoutRow { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .microcopy { font-size: 12px; color: rgba(246,239,232,.55); margin-top: 14px; }
+    .disclosure {
+      text-align: center; font-size: 13px; color: rgba(246,239,232,.6);
+      margin: 26px 0 8px; padding: 0 12px;
+    }
+
+    /* Scroll-in reveal — one per section, motion-safe */
+    @media (prefers-reduced-motion: no-preference) {
+      .revealOnScroll { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
+      .revealOnScroll.revealed { opacity: 1; transform: none; }
+    }
+
+    @media (max-width: 880px) { .productGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 560px) {
+      .wlPageShell { padding: 22px 16px 32px; }
+      .productGrid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+  <header class="wlHero" id="merch-overview">
+    <div class="wlHeroMain">
+      <span class="wlKicker">WINLEW • MERCH</span>
+      <h1 class="wlHeroTitle">$WinLEW + <span class="wlHeroTitleAccent">XYO Merch.</span></h1>
+      <p class="wlHeroSub">Official $WinLEW drops + official XYO gear, one page.</p>
+      <div class="heroAnchors">
+        <a class="btn" href="#winlew-drops">🪙 $WinLEW Drops</a>
+        <a class="btn xyo" href="#xyo-gear">📡 Official XYO Gear</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="openNotice" role="status">
+    <p><strong>Browsing is open — buying isn't, quite yet.</strong> Every $WinLEW drop below is
+      final on artwork, sizes and price. Card and crypto checkout is still being switched on, so
+      the buy buttons stay dark until it is.</p>
+    <p><strong>Official XYO gear is live right now</strong> — those items check out on the
+      official XYO store, not here.</p>
+    <p>Two things worth doing while you wait:
+      <a href="/verify/">verify your wallet</a> so your holder discount is already applied the
+      moment checkout opens, and be in the
+      <a href="/community/">community</a> — drops get announced there first.</p>
+  </div>
+
+  <div class="box revealOnScroll" id="winlew-drops">
+    <div class="sectionTag">🪙 $WinLEW Drops</div>
+    <h2 id="winlewSectionTitle">$WinLEW Drops</h2>
+    <p class="sectionSub" id="winlewSectionSub">Sold and shipped by WinLEW. Checkout opens shortly.</p>
+    <div class="discountBar" id="discountBar">
+      <span>Loading holder discount…</span>
+    </div>
+    <div class="productGrid" id="winlewGrid" aria-live="polite"></div>
+    <p class="microcopy">Holder discount applies to $WinLEW drops only — XYO gear prices are set by the official XYO store.</p>
+  </div>
+
+  <div class="box xyoSection revealOnScroll" id="xyo-gear">
+    <div class="sectionTag">📡 Official XYO Gear</div>
+    <h2 id="xyoSectionTitle">Official XYO Gear</h2>
+    <p class="sectionSub" id="xyoSectionSub">Fulfilled by the official XYO store — checkout completes on shop.xyo.network.</p>
+    <div class="productGrid" id="xyoGrid"></div>
+    <div class="linkoutRow" id="linkoutRow"></div>
+    <p class="microcopy">Prices shown at time of listing — final price is set by the XYO store.</p>
+  </div>
+
+  <p class="disclosure">WinLEW is an independent project. XYO gear is sold and fulfilled by the official XYO store.</p>
+</div>
+
+<script src="/assets/wallet-auth.js"></script>
+<script defer src="/assets/nav.js"></script>
+<script src="/merch/merch.js"></script>
+</body>
+</html>

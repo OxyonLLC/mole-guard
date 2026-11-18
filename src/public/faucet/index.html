@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+  <title>WinLEW Faucet</title>
+  <meta name="description" content="Claim $WinLEW from the faucet. Shares one cooldown with Discord's !drip command — claim from whichever is easiest." />
+  <link rel="canonical" href="https://winlew.co/faucet/" />
+  <meta property="og:title" content="WinLEW Faucet" />
+  <meta property="og:description" content="Claim $WinLEW — the same faucet as Discord's !drip, now on the website." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/faucet/" />
+  <meta property="og:image" content="https://winlew.co/faucet/assets/WinLew-Faucet-banner.png" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <!-- Shared Mole Hub theme so /faucet/ is visually consistent with /quiz/ and /mole-hub/ -->
+  <link rel="stylesheet" href="/mole-hub/css/styles.css" />
+  <link rel="stylesheet" href="./css/faucet.css" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+</head>
+<body>
+  <div class="nav">
+    <div class="navInner navArcade">
+      <a class="brandMark arcadeBrand" href="/">
+        <img class="brandAvatar" src="/images/avatars/arcade-128.png" alt="WinLEW Arcade" />
+        <span class="brandCopy">
+          <span class="brandTitle">WinLEW</span>
+          <span class="brandSub">FAUCET • CLAIM • WIN</span>
+        </span>
+      </a>
+      <div class="navLinks arcadeLinks" id="siteNavLinks">
+        <a class="pill" href="/home/">🏠 Hub</a>
+        <a class="pill active" href="/faucet/">Faucet</a>
+        <a class="pill" href="/mole-hub/">Games</a>
+        <a class="pill" href="/quiz/">Quiz</a>
+        <a class="pill" href="/verify/">Verify</a>
+        <a class="pill" href="/about/">About</a>
+      </div>
+      <div class="navRight">
+        <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+        <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+        <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="app" class="wrap">
+    <main>
+      <section class="catalog-shell">
+        <div class="hub-banner"><img src="/images/page-headers/faucet.png" alt="Faucet — claim your $WinLEW from the website or Discord" loading="lazy" /></div>
+        <div class="catalog-top">
+          <div class="catalog-copy">
+            <div class="catalog-kicker">$WinLEW Faucet • one shared cooldown, two ways to claim</div>
+            <h1 class="catalog-title">Claim your $WinLEW.</h1>
+            <p class="catalog-sub">
+              Every eligible holder can claim <strong id="heroAmount">—</strong> $WinLEW every
+              <strong id="heroCooldown">—</strong> — from Discord or right here.
+            </p>
+          </div>
+          <div class="catalog-utility card">
+            <img class="faucetHero" src="./assets/WinLew-Faucet-banner.png" alt="WinLEW Faucet — claim your $WinLEW on a fixed cooldown, from the website or Discord" />
+          </div>
+        </div>
+      </section>
+
+      <section class="card noticeCard">
+        <p>💧 <strong>The Discord faucet and website faucet share one cooldown.</strong> Claiming from either location uses your faucet claim for the full cooldown period.</p>
+        <!-- Filled from /api/faucet/status (faucet.verifyAfterClaims) and left
+             hidden if the gate is off, so the page states the rule the server
+             is actually running rather than a number copied into the markup.
+             Previously this requirement appeared only after it had already
+             blocked someone. -->
+        <p id="verifyGateNotice" class="fine muted hidden"></p>
+      </section>
+
+      <section id="distributionCard" class="card">
+        <div class="cardHead"><h2>Total given away</h2></div>
+
+        <!-- The blockchain total leads, because it is the complete one. The
+             platform's own claim counter sits underneath as a subset. Showing
+             the smaller number first read as "we've given away 63,000" when
+             the real figure is over a million. -->
+        <div id="distOnChainWrap" class="hidden">
+          <p class="muted">Read straight from the blockchain — every payout the faucet reserve wallet has ever sent, since its very first one.</p>
+          <div class="statGrid">
+            <div class="statBox"><div class="statVal" id="distChainAmount">—</div><div class="statLbl">$WinLEW sent, all time</div></div>
+            <div class="statBox"><div class="statVal" id="distChainCount">—</div><div class="statLbl">Payout transactions</div></div>
+            <div class="statBox"><div class="statVal" id="distChainRecipients">—</div><div class="statLbl">Distinct wallets paid</div></div>
+            <div class="statBox"><div class="statVal" id="distChainSince">—</div><div class="statLbl">First payout</div></div>
+          </div>
+          <p class="muted fine" id="distChainNote"></p>
+        </div>
+
+        <h3 style="margin:22px 0 6px;">Of that, tracked by this platform</h3>
+        <p class="muted">A <em>subset</em> of the total above: claims processed and confirmed by this website and bot. Confirmed claims only — never a projection, never a claim that failed before tokens were sent. It is smaller than the on-chain total because not every payout the wallet has made has a matching claim record here.</p>
+        <div class="statGrid">
+          <div class="statBox"><div class="statVal" id="distTotalAmount">—</div><div class="statLbl">$WinLEW distributed</div></div>
+          <div class="statBox"><div class="statVal" id="distTotalCount">—</div><div class="statLbl">Confirmed claims</div></div>
+          <div class="statBox"><div class="statVal" id="distWebAmount">—</div><div class="statLbl">Via website</div></div>
+          <div class="statBox"><div class="statVal" id="distDiscordAmount">—</div><div class="statLbl">Via Discord</div></div>
+        </div>
+        <p class="muted fine" id="distSince"></p>
+      </section>
+
+      <section id="loadingCard" class="card">
+        <p class="muted">Loading your faucet status…</p>
+      </section>
+
+      <section id="signedOutCard" class="card hidden">
+        <div class="cardHead"><h2>Connect your wallet</h2></div>
+        <p class="muted">Connect the Solana wallet you verified on Discord to see your faucet status and claim.</p>
+        <div class="actions"><button id="signedOutConnectBtn" class="btn primary" type="button">Connect wallet</button></div>
+      </section>
+
+      <section id="identityCard" class="card hidden">
+        <div class="cardHead"><h2>Your identity</h2></div>
+        <div class="statGrid">
+          <div class="statBox"><div class="statVal" id="idDiscordName">—</div><div class="statLbl">Discord</div></div>
+          <div class="statBox"><div class="statVal" id="idWallet">—</div><div class="statLbl">Faucet wallet</div></div>
+          <div class="statBox"><div class="statVal" id="idSource">—</div><div class="statLbl">Wallet source</div></div>
+          <div class="statBox"><div class="statVal" id="idBalance">—</div><div class="statLbl">Holder balance</div></div>
+        </div>
+      </section>
+
+      <section id="claimCard" class="card hidden">
+        <div class="cardHead">
+          <h2>Claim</h2>
+          <span id="claimAmountChip" class="pill">—</span>
+        </div>
+        <div id="claimStateArea" class="claimStateArea">
+          <p class="muted">Checking eligibility…</p>
+        </div>
+        <div class="actions">
+          <button id="claimBtn" class="btn primary" type="button" disabled>💧 Claim $WinLEW</button>
+        </div>
+        <p id="claimFinePrint" class="muted fine"></p>
+      </section>
+
+      <section id="historyCard" class="card hidden">
+        <div class="cardHead">
+          <h2>Your claim history</h2>
+          <span id="historySummaryChip" class="pill">—</span>
+        </div>
+        <p class="muted fine">Web and Discord claims together — they've always shared one cooldown, so your history does too.</p>
+        <div class="lbWrap">
+          <table class="lbTable">
+            <thead>
+              <tr><th>Date</th><th>Source</th><th class="num">Amount</th><th>Status</th></tr>
+            </thead>
+            <tbody id="historyBody"><tr><td colspan="4" class="muted">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="cardHead"><h2>Prefer Discord?</h2></div>
+        <p class="muted">
+          You can also claim with <code>!drip</code> or <code>!faucet</code> in Discord, and check your status with
+          <code>!faucetstatus</code>. Every one of these shares the exact same cooldown as this page — claiming here
+          counts there, and vice versa.
+        </p>
+        <!-- Superseded 2026-08-02 (src/faucet/service.js): a claim can no longer
+             be aimed at an arbitrary address. This block used to advertise that
+             as a feature, so it now states the rule that actually applies. -->
+        <p class="muted fine">
+          💡 Wherever you claim from, the faucet pays the wallet registered to your account — and only that
+          wallet. To change it, register the new one first with <code>!register &lt;wallet-or-domain&gt;</code>.
+        </p>
+        <div class="actions">
+          <a class="pill" href="/community/">Open Discord ↗</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/assets/wallet-auth.js"></script>
+  <script src="./js/app.js?v=v3-claim-retry-recovery"></script>
+  <script defer src="/assets/nav.js"></script>
+</body>
+</html>

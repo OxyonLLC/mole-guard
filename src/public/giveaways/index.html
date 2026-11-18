@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <title>WinLEW Giveaway Records — Promised, Paid, Proven</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="Every WinLEW giveaway: what was promised, what was actually paid, and the transaction for each. Reconstructed from the chain, including the ones that never triggered." />
+  <link rel="canonical" href="https://winlew.co/giveaways/" />
+  <meta property="og:title" content="WinLEW Giveaway Records — Promised, Paid, Proven" />
+  <meta property="og:description" content="8,725,000 WinLEW given away across 26 transfers to 17 wallets — every one with a transaction you can check." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/giveaways/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    html { overflow-x: hidden; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%); color:#f6efe8; line-height:1.7; }
+    .wlPageShell { max-width:1120px; margin:0 auto; padding:32px; }
+    h1,h2,h3 { color:#e7c18f; margin:0 0 10px; }
+    h1 { font-size: clamp(32px,4.8vw,50px); }
+    h2 { font-size: clamp(20px,2.8vw,28px); margin-top:38px; }
+    h3 { font-size: clamp(17px,2.2vw,21px); }
+    a { color:#8fd6a0; text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    p { margin:0 0 12px; }
+    code { background:rgba(0,0,0,.34); padding:2px 6px; border-radius:6px; font-size:.9em; }
+    .lede { color:rgba(246,239,232,.86); max-width:74ch; }
+    .statRow { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:14px; margin:26px 0 8px; }
+    .stat { background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.12); border-radius:16px; padding:16px 18px; }
+    .stat b { display:block; font-size:clamp(21px,3vw,29px); color:#8fd6a0; line-height:1.2; }
+    .stat span { font-size:13px; color:rgba(246,239,232,.72); }
+    .card { background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.12); border-radius:18px; padding:20px; margin:16px 0; }
+    .cardTop { display:flex; gap:12px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; }
+    .meta,.cond,.note { font-size:14.5px; color:rgba(246,239,232,.8); }
+    .note { border-left:3px solid rgba(143,214,160,.5); padding-left:12px; margin-top:14px; color:rgba(246,239,232,.72); }
+    .status { font-size:12px; font-weight:900; letter-spacing:.08em; text-transform:uppercase;
+      padding:6px 12px; border-radius:999px; white-space:nowrap; border:1px solid; }
+    .s-paid { color:#8fd6a0; border-color:rgba(143,214,160,.5); background:rgba(143,214,160,.1); }
+    .s-partially-paid { color:#e0c66a; border-color:rgba(224,198,106,.5); background:rgba(224,198,106,.1); }
+    .s-never-triggered { color:rgba(246,239,232,.66); border-color:rgba(255,255,255,.2); background:rgba(255,255,255,.05); }
+    .s-open { color:#7fb2d9; border-color:rgba(127,178,217,.5); background:rgba(127,178,217,.1); }
+    .basis { font-size:11.5px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+      padding:3px 9px; border-radius:999px; border:1px solid; white-space:nowrap; }
+    .b-verified { color:#8fd6a0; border-color:rgba(143,214,160,.45); }
+    .b-inferred-timing { color:#e0c66a; border-color:rgba(224,198,106,.45); }
+    .b-none { color:rgba(246,239,232,.6); border-color:rgba(255,255,255,.18); }
+    /* What became of a payout, attached under its own row. Green because a
+       destroyed token is a fact in the reader's favour, and indented so it
+       reads as a footnote to the row above rather than another payout. */
+    .fateRow td { font-size:13px; color:rgba(246,239,232,.82); padding-left:22px;
+      border-left:3px solid rgba(61,220,132,.45); background:rgba(61,220,132,.05); }
+    .fateRow em { color:rgba(246,239,232,.62); }
+    .fateTag { display:inline-block; margin-right:8px; font-size:11px; font-weight:800;
+      letter-spacing:.06em; text-transform:uppercase; color:#8fe3b0;
+      background:rgba(61,220,132,.10); border:1px solid rgba(61,220,132,.28);
+      padding:3px 8px; border-radius:999px; }
+    .why { font-size:13px; color:rgba(246,239,232,.62); font-weight:400; text-transform:none; letter-spacing:0; }
+    .tableWrap { overflow-x:auto; margin-top:14px; }
+    table { border-collapse:collapse; width:100%; min-width:640px; font-size:14px; }
+    th,td { text-align:left; padding:9px 12px; border-bottom:1px solid rgba(255,255,255,.09); }
+    th { color:#e7c18f; font-size:12px; letter-spacing:.06em; text-transform:uppercase; }
+    td.a, th.a { text-align:right; font-variant-numeric:tabular-nums; }
+    td.d { white-space:nowrap; color:rgba(246,239,232,.75); }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Rebuilt by nav.js from NAV_GROUPS. The element must stay; nav.js
+             bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+  <header class="wlHero">
+    <div class="wlHeroMain">
+      <span class="wlKicker">PROMISED • PAID • PROVEN</span>
+      <h1 class="wlHeroTitle">Giveaway<br><span class="wlHeroTitleAccent">Records</span></h1>
+      <p class="lede">Every giveaway this project has run — what was promised, what was actually paid, and the transaction for each one. Including the ones that were never paid, and why.</p>
+      <p class="lede">These records were <strong>not kept at the time</strong>. They were reconstructed in August 2026 by walking the paying wallet's complete history on Solana — all 82 transactions of it, back to two days after launch. The chain kept what we didn't.</p>
+    </div>
+  </header>
+
+  <div class="statRow">
+    <div class="stat"><b>8,725,000</b><span>WinLEW given to people</span></div>
+    <div class="stat"><b>26</b><span>payouts, to 17 distinct wallets</span></div>
+    <div class="stat"><b>8</b><span>tied to an announcement, verified</span></div>
+    <div class="stat"><b>11</b><span>real transfers we cannot explain</span></div>
+  </div>
+
+  <h2>Evidence over assumptions</h2>
+  <p class="lede">A payout is a fact — it has a signature. Its <em>association</em> with an announcement usually is not: for most of these, the only thing tying a transfer to a promise is that they happened near each other. Rather than quietly merge the two, every payout says which it is.</p>
+  <p class="lede"><span class="basis b-verified">Verified</span> the amount, the timing and a named winner all agree, or the recipient published the address themselves. <span class="basis b-inferred-timing">Inferred</span> it lands in a cluster right after a deadline and the amount matches the prize — probably right, not proven. <span class="basis b-none">Unmatched</span> a real transfer with no announcement to attach it to.</p>
+  <p class="lede" style="border-left:3px solid rgba(214,168,102,.5);padding-left:14px;"><strong>3,500 WinLEW is also not counted above</strong> — 3 faucet claims the owner paid by hand from winlew.sol on days the faucet's own wallet had run dry. Somebody had already earned those by claiming; counting them here would pad this ledger with rewards that are tracked and paid somewhere else.</p>
+  <p class="lede" style="border-left:3px solid rgba(214,168,102,.5);padding-left:14px;"><strong>3,500,000 WinLEW is deliberately NOT counted above.</strong> It was an <strong>exchange, not a gift</strong> — the project received 1,000,000 2BRZ for it 55 minutes earlier, in a token swap with a partner project. Counting what you were paid for as generosity is the one failure mode a giveaway ledger must not have, so it is listed separately and still shown.</p>
+  <p class="lede"><strong>11 of 30 payouts are unmatched.</strong> That is not a hole in the record — it <em>is</em> the record. Tokens were given away for two years without notes. The chain preserved the transfers; it does not store reasons.</p>
+  <p class="lede">Wallets are shown because they are public on-chain regardless. Winners are named only where they published the link between themselves and their wallet — nothing here identifies anyone who didn't.</p>
+
+  <h2>Nothing is owed</h2>
+  <p class="lede">Some giveaways below never triggered, because they were tied to a milestone — a follower count, a holder count — that was never reached. They are listed anyway, with their conditions intact, because deleting a promise that went unmet is worse than leaving it standing.</p>
+  <p class="lede">To be plain: <strong>a giveaway conditioned on a milestone that did not happen is not a debt.</strong> Nothing is owed to anyone from these records. They are published so the history is complete, not because there is a bill outstanding.</p>
+
+  <h2>Every announcement</h2>
+  <article class="card">
+      <div class="cardTop">
+        <h3>Holder milestone giveaways — at 100 holders, then 500</h3>
+        <span class="status s-never-triggered">Never triggered</span>
+      </div>
+      <p class="meta">Announced 2025-05-03 · <a href="https://x.com/WinLewToken/status/1918847633944158308" rel="noopener noreferrer" target="_blank">the post</a></p>
+      <p class="cond"><strong>Condition:</strong> Triggers when the token reaches 100 holders, and again at 500.</p>
+      <p class="cond"><strong>Promised:</strong> Unspecified — no amount was ever named</p>
+      
+      <p class="note">Never triggered. Counted on-chain on 2026-08-18 the token had 79 holders, of which 60 are people rather than pools, locks or reserves. Neither milestone has been reached.</p>
+      
+    </article>
+<article class="card">
+      <div class="cardTop">
+        <h3>2BRZ partnership giveaway — 500,000 WinLEW</h3>
+        <span class="status s-paid">Paid</span>
+      </div>
+      <p class="meta">Announced 2025-04-01 · <a href="https://x.com/WinLewToken/status/1907256355477500314" rel="noopener noreferrer" target="_blank">the post</a></p>
+      <p class="cond"><strong>Condition:</strong> Show support for both the WinLEW and 2BRZ communities. Winner picked April 10, 2025.</p>
+      <p class="cond"><strong>Promised:</strong> 500,000 WinLEW to one winner</p>
+      <p class="cond"><strong>Actually paid:</strong> 500,000 WinLEW across 1 transfer · <span class="basis b-verified">Verified</span> <span class="why">Amount, timing and a named winner agree — or the recipient published the address themselves.</span></p>
+      <p class="note">Paid in full. The winner published their own wallet address when entering, which is the only reason it can be named.</p>
+      <div class="tableWrap"><table><thead><tr><th>Date</th><th class="a">WinLEW</th><th>To</th><th>Link basis</th><th>Transaction</th></tr></thead><tbody><tr>
+      <td class="d">2025-04-11</td>
+      <td class="a">500,000</td>
+      <td><code>5gKXS4…Q2dg</code></td>
+      <td><span class="basis b-verified">Verified</span></td>
+      <td><a href="https://solscan.io/tx/57yz552QCvVDNqfg5d5YXqgeqMF8TCLEb39toEmgRN7SDYHUM3PLXPLCT9A4tQzxezSjzAkc5je88oQ2CYFDjr4Y" rel="noopener noreferrer" target="_blank"><code>57yz552Q…FDjr4Y</code></a></td>
+    </tr></tbody></table></div>
+    </article>
+<article class="card">
+      <div class="cardTop">
+        <h3>Meme contest — 500,000 each to the best three</h3>
+        <span class="status s-partially-paid">Partly paid</span>
+      </div>
+      <p class="meta">Announced 2025-03-29 · <a href="https://x.com/WinLewToken/status/1906130750077813211" rel="noopener noreferrer" target="_blank">the post</a></p>
+      <p class="cond"><strong>Condition:</strong> Post a WinLEW meme. Three winners picked on April 1, 2025.</p>
+      <p class="cond"><strong>Promised:</strong> 500,000 WinLEW to each of three winners</p>
+      <p class="cond"><strong>Actually paid:</strong> 1,000,000 WinLEW across 2 transfers · <span class="basis b-inferred-timing">Inferred</span> <span class="why">Lands in a cluster right after the deadline and the amount matches the prize. Probably right. Not proven.</span></p>
+      <p class="note">Two 500,000 transfers left the reserve within nine minutes of each other just after the April 1 deadline. Four participants publicly confirmed receiving a prize in the same thread, so at least two were paid from a wallet this ledger does not cover.</p>
+      <div class="tableWrap"><table><thead><tr><th>Date</th><th class="a">WinLEW</th><th>To</th><th>Link basis</th><th>Transaction</th></tr></thead><tbody><tr>
+      <td class="d">2025-04-02</td>
+      <td class="a">500,000</td>
+      <td><code>FDhcxn…eo5j</code></td>
+      <td><span class="basis b-inferred-timing">Inferred</span></td>
+      <td><a href="https://solscan.io/tx/3rUS65vJnzyi9wJKLGrKy2bbA1MqQG5Py9ZAuqxvFwQ5GzdHYAeu7YetGDZ1gr7BT67J3qkuYXZupRbYL56cvUAW" rel="noopener noreferrer" target="_blank"><code>3rUS65vJ…6cvUAW</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2025-04-02</td>
+      <td class="a">500,000</td>
+      <td><code>9JGvjo…B39k</code></td>
+      <td><span class="basis b-inferred-timing">Inferred</span></td>
+      <td><a href="https://solscan.io/tx/8XRB4P3ZJxTeNkRVF4T9V6wzcbSZwVAmaAgxnk8w3pfh2cU1yPsMwJTd91XcU5itKGS9FpT1b6UbZPkAmRhvV4h" rel="noopener noreferrer" target="_blank"><code>8XRB4P3Z…RhvV4h</code></a></td>
+    </tr></tbody></table></div>
+    </article>
+<article class="card">
+      <div class="cardTop">
+        <h3>500-follower giveaway — 1,000,000 WinLEW</h3>
+        <span class="status s-never-triggered">Never triggered</span>
+      </div>
+      <p class="meta">Announced 2025-03-29 · <a href="https://x.com/LetEveryOneWin/status/1906124922298196250" rel="noopener noreferrer" target="_blank">the post</a></p>
+      <p class="cond"><strong>Condition:</strong> Triggers when @LetEveryOneWin reaches 500 followers. One follower receives 1,000,000 WinLEW.</p>
+      <p class="cond"><strong>Promised:</strong> 1,000,000 WinLEW to one follower</p>
+      
+      <p class="note">Never triggered. The account stood at 66 followers when last counted on 2026-07-17. Nothing is owed: a giveaway conditioned on a milestone that was not reached is not a debt.</p>
+      
+    </article>
+<article class="card">
+      <div class="cardTop">
+        <h3>100 followers reached — thank-you payouts</h3>
+        <span class="status s-paid">Paid</span>
+      </div>
+      <p class="meta">Announced 2025-03-17 · <a href="https://x.com/WinLewToken/status/1901442960061034861" rel="noopener noreferrer" target="_blank">the post</a></p>
+      <p class="cond"><strong>Condition:</strong> Participation in the follower push; no draw mechanics were published.</p>
+      <p class="cond"><strong>Promised:</strong> No fixed amount was stated in the announcement.</p>
+      <p class="cond"><strong>Actually paid:</strong> 1,000,000 WinLEW across 2 transfers · <span class="basis b-inferred-timing">Inferred</span> <span class="why">Lands in a cluster right after the deadline and the amount matches the prize. Probably right. Not proven.</span></p>
+      <p class="note">Announced on reaching 100 followers. A recipient confirmed receipt publicly in the replies the same night, which is what ties the transfers to it.</p>
+      <div class="tableWrap"><table><thead><tr><th>Date</th><th class="a">WinLEW</th><th>To</th><th>Link basis</th><th>Transaction</th></tr></thead><tbody><tr>
+      <td class="d">2025-03-17</td>
+      <td class="a">200,000</td>
+      <td><code>9JGvjo…B39k</code></td>
+      <td><span class="basis b-inferred-timing">Inferred</span></td>
+      <td><a href="https://solscan.io/tx/nYed7gCAr7taz1sEM1H8YeCR8zQRDb8iBW8LuCcD8W2eWFzVGoKfQ7mV1bunHYDugd4xTxueCzV2uPJe3grPT7W" rel="noopener noreferrer" target="_blank"><code>nYed7gCA…grPT7W</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2025-03-17</td>
+      <td class="a">800,000</td>
+      <td><code>2qo1zL…NU9a</code></td>
+      <td><span class="basis b-inferred-timing">Inferred</span></td>
+      <td><a href="https://solscan.io/tx/28aSvdz7MgP4gARziVhPjZ947SWe6J4dX35SQmm8mS9fmpCVf8JYYN4XM5q9Tdg78t1A8p2nDPMC3Fb9G4vQm8VA" rel="noopener noreferrer" target="_blank"><code>28aSvdz7…vQm8VA</code></a></td>
+    </tr></tbody></table></div>
+    </article>
+<article class="card">
+      <div class="cardTop">
+        <h3>Add-liquidity snapshot airdrop</h3>
+        <span class="status s-paid">Paid</span>
+      </div>
+      <p class="meta">Announced 2025-03-13 · <a href="https://x.com/WinLewToken/status/1900378128234799501" rel="noopener noreferrer" target="_blank">the post</a></p>
+      <p class="cond"><strong>Condition:</strong> Add liquidity to the WinLEW/SOL pool or farm before April 1, 2025. A snapshot would decide the airdrop.</p>
+      <p class="cond"><strong>Promised:</strong> Unspecified WinLEW airdrop to qualifying liquidity providers</p>
+      <p class="cond"><strong>Actually paid:</strong> 1,200,000 WinLEW across 6 transfers · <span class="basis b-inferred-timing">Inferred</span> <span class="why">Lands in a cluster right after the deadline and the amount matches the prize. Probably right. Not proven.</span></p>
+      <p class="note">Six equal 200,000 transfers within six minutes on 2025-04-02, right after the deadline. The project announced SEVEN participants paid at 200,000 each (1.4M); only six left the X Faucet Reserve. The seventh is unaccounted for in this ledger.</p>
+      <div class="tableWrap"><table><thead><tr><th>Date</th><th class="a">WinLEW</th><th>To</th><th>Link basis</th><th>Transaction</th></tr></thead><tbody><tr>
+      <td class="d">2025-04-02</td>
+      <td class="a">200,000</td>
+      <td><code>5gKXS4…Q2dg</code></td>
+      <td><span class="basis b-inferred-timing">Inferred</span></td>
+      <td><a href="https://solscan.io/tx/4TfWkPuvi9UNFmrQFQyCS9vCP4c9Ein6FWYNbkksTuVdUafmJG2sH96fXb6nM7q4xoAjXazJBpizV1VFj5z3BALn" rel="noopener noreferrer" target="_blank"><code>4TfWkPuv…z3BALn</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2025-04-02</td>
+      <td class="a">200,000</td>
+      <td><code>D8oJSd…5ZEz</code></td>
+      <td><span class="basis b-inferred-timing">Inferred</span></td>
+      <td><a href="https://solscan.io/tx/2AnDNGNeAvwNr89vqQ2gASDAVN68VJMkR2U8q9SwXqAmfDRMHvopf2U5M9nzxRz82BXT1vyQAeNsP5Rw2yFn4RPh" rel="noopener noreferrer" target="_blank"><code>2AnDNGNe…Fn4RPh</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2025-04-02</td>
+      <td class="a">200,000</td>
+      <td><code>64SpqF…3kTp</code></td>
+      <td><span class="basis b-inferred-timing">Inferred</span></td>
+      <td><a href="https://solscan.io/tx/VWeD3z9k8NfFqPmHNdfeJNkDswTmaEYXZ2rgscbf6UVLJ4Ccbn1wgRaFJrB6g94YYJwnbZ22KBfD51XUkoMPvgA" rel="noopener noreferrer" target="_blank"><code>VWeD3z9k…oMPvgA</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2025-04-02</td>
+      <td class="a">200,000</td>
+      <td><code>9JGvjo…B39k</code></td>
+      <td><span class="basis b-inferred-timing">Inferred</span></td>
+      <td><a href="https://solscan.io/tx/4wRyRUWCo1cSTEZ6pwpTDsE64WqPrUQrqBTgRYaLjNB7X5rwnkpNaYo3abw2q9URCZFoEQyWy96SCsBQgChmPjp5" rel="noopener noreferrer" target="_blank"><code>4wRyRUWC…hmPjp5</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2025-04-02</td>
+      <td class="a">200,000</td>
+      <td><code>FDhcxn…eo5j</code></td>
+      <td><span class="basis b-inferred-timing">Inferred</span></td>
+      <td><a href="https://solscan.io/tx/3vWshwKBbWAFf5uS3kFRSUSuj5SqfyNPEb5Lsu4zy7sNPPuDmUgUpJqEsDQvkMA1NoQyHUw1aLF6MM5mQoZ4TJdv" rel="noopener noreferrer" target="_blank"><code>3vWshwKB…Z4TJdv</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2025-04-02</td>
+      <td class="a">200,000</td>
+      <td><code>DEFFtT…VNFJ</code></td>
+      <td><span class="basis b-inferred-timing">Inferred</span></td>
+      <td><a href="https://solscan.io/tx/3W6CiomruH9c3KjZec57Q9fNtxcEYHaA7VnG3ntLdgK8ghLqNABtYoFPrDBSxfJuNdi7cnXXGNmrNg6o8mbfQVBP" rel="noopener noreferrer" target="_blank"><code>3W6Ciomr…bfQVBP</code></a></td>
+    </tr></tbody></table></div>
+    </article>
+<article class="card">
+      <div class="cardTop">
+        <h3>5 SOL milestone giveaway — 1,000,000 + two 500,000</h3>
+        <span class="status s-partially-paid">Partly paid</span>
+      </div>
+      <p class="meta">Announced 2025-02-09 · <a href="https://x.com/WinLewToken/status/1888484957871280310" rel="noopener noreferrer" target="_blank">the post</a></p>
+      <p class="cond"><strong>Condition:</strong> Triggered when the WinLEW contract reached 5 SOL. Follow @LetEveryOneWin, like and repost.</p>
+      <p class="cond"><strong>Promised:</strong> 1,000,000 to one winner; 500,000 to each of two runners-up</p>
+      <p class="cond"><strong>Actually paid:</strong> 1,500,000 WinLEW across 2 transfers · <span class="basis b-verified">Verified</span> <span class="why">Amount, timing and a named winner agree — or the recipient published the address themselves.</span></p>
+      <p class="note">Two of three prizes paid. The third was drawn in the owner's own name and deliberately not paid.</p>
+      <div class="tableWrap"><table><thead><tr><th>Date</th><th class="a">WinLEW</th><th>To</th><th>Link basis</th><th>Transaction</th></tr></thead><tbody><tr>
+      <td class="d">2025-02-21</td>
+      <td class="a">1,000,000</td>
+      <td><code>9JGvjo…B39k</code></td>
+      <td><span class="basis b-verified">Verified</span></td>
+      <td><a href="https://solscan.io/tx/4usGn3oJTsjhT2pBwWiPyNUUveSkFqZja1ALQ24R5piEmLiaTs1NZfh2NpLLBJUkFqDbQwFFDCSkFycaUfQoHHmB" rel="noopener noreferrer" target="_blank"><code>4usGn3oJ…QoHHmB</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2025-02-21</td>
+      <td class="a">500,000</td>
+      <td><code>FDhcxn…eo5j</code></td>
+      <td><span class="basis b-verified">Verified</span></td>
+      <td><a href="https://solscan.io/tx/58KzNkNDqirFHuGZFbAhdcf5RRTs1xXUghAQkG7MRYgXY7MdZqAEqYDtnstnRgJjfBwXrtR1NGofmv6ch9m5tXmd" rel="noopener noreferrer" target="_blank"><code>58KzNkND…m5tXmd</code></a></td>
+    </tr></tbody></table></div>
+    </article>
+<article class="card">
+      <div class="cardTop">
+        <h3>Engagement giveaway — 100,000 WinLEW</h3>
+        <span class="status s-paid">Paid</span>
+      </div>
+      <p class="meta">Announced 2025-02-08 · <a href="https://x.com/WinLewToken/status/1888184799118696941" rel="noopener noreferrer" target="_blank">the post</a></p>
+      <p class="cond"><strong>Condition:</strong> Engage with the post.</p>
+      <p class="cond"><strong>Promised:</strong> 100,000 WinLEW to one winner</p>
+      <p class="cond"><strong>Actually paid:</strong> 100,000 WinLEW across 1 transfer · <span class="basis b-verified">Verified</span> <span class="why">Amount, timing and a named winner agree — or the recipient published the address themselves.</span></p>
+      <p class="note">Winner named publicly as @DWirsing on the day the payout left the reserve.</p>
+      <div class="tableWrap"><table><thead><tr><th>Date</th><th class="a">WinLEW</th><th>To</th><th>Link basis</th><th>Transaction</th></tr></thead><tbody><tr>
+      <td class="d">2025-02-08</td>
+      <td class="a">100,000</td>
+      <td><code>89B84M…9aFD</code></td>
+      <td><span class="basis b-verified">Verified</span></td>
+      <td><a href="https://solscan.io/tx/3KFsbLMb4Fa1UmucZrohfsEDwT8cbH5ChRnpLMikPb48mRtqWnanHBTXJN99qc2QYMWyPaLhGb8WbRexqDbwtM3s" rel="noopener noreferrer" target="_blank"><code>3KFsbLMb…bwtM3s</code></a></td>
+    </tr></tbody></table></div>
+    </article>
+<article class="card">
+      <div class="cardTop">
+        <h3>Team HODL or Team Faucet — 100,000 WinLEW</h3>
+        <span class="status s-paid">Paid</span>
+      </div>
+      <p class="meta">Announced 2024-12-25 · <a href="https://x.com/WinLewToken/status/1871934579019616730" rel="noopener noreferrer" target="_blank">the post</a></p>
+      <p class="cond"><strong>Condition:</strong> Repost and comment which team you are on. Winner picked on New Year's Day.</p>
+      <p class="cond"><strong>Promised:</strong> 100,000 WinLEW to one winner</p>
+      <p class="cond"><strong>Actually paid:</strong> 200,000 WinLEW across 2 transfers · <span class="basis b-verified">Verified</span> <span class="why">Amount, timing and a named winner agree — or the recipient published the address themselves.</span></p>
+      <p class="note">Paid twice. The first 100,000 went to an impersonator of the winner, who then burned it; the real winner was paid three days later.</p>
+      <div class="tableWrap"><table><thead><tr><th>Date</th><th class="a">WinLEW</th><th>To</th><th>Link basis</th><th>Transaction</th></tr></thead><tbody><tr>
+      <td class="d">2025-01-04</td>
+      <td class="a">100,000</td>
+      <td><code>HJRHtd…AhcH</code></td>
+      <td><span class="basis b-verified">Verified</span></td>
+      <td><a href="https://solscan.io/tx/4yQKf5PdRcevGhjwb4ShPxtBxdYWAuyg4bQx1sto9KYWdYnktbG7jxdJRyGGPgjkaQkaagWjESUhZJW3XjszaVf6" rel="noopener noreferrer" target="_blank"><code>4yQKf5Pd…szaVf6</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2025-01-01</td>
+      <td class="a">100,000</td>
+      <td><code>6Y4MJP…QB5v</code></td>
+      <td><span class="basis b-verified">Verified</span></td>
+      <td><a href="https://solscan.io/tx/3SngeUokCTScz5ewXJb7RVnhFvSiDHXD5awM2JPpNKgtZG8p8Jnjh69DidSZUeKVgwT6rtE2AHmGUwpHVsUm6FPk" rel="noopener noreferrer" target="_blank"><code>3SngeUok…Um6FPk</code></a></td>
+    </tr><tr class="fateRow"><td colspan="5">
+        <span class="fateTag">Burned by recipient</span>
+        100,000 destroyed on 2025-01-03 —
+        <a href="https://solscan.io/tx/TVegUSjUPK7tkNu9gLCQANpeEWyTwacgDuaWXiJt4Zm6vCzYhVRB7SUqKR1fTit4DZ2GQiuQeEd9bV7Nu4PYGKy" rel="noopener noreferrer" target="_blank"><code>TVegUSjU…4PYGKy</code></a>.
+        Burned two days after receipt, for the exact amount, in a sweep that also destroyed two unrelated tokens.
+        <em>The burn is proven; that it was these tokens is inferred from the amount and the timing.</em>
+      </td></tr></tbody></table></div>
+    </article>
+<article class="card">
+      <div class="cardTop">
+        <h3>Friday the 13th — 50,000 WinLEW each to two users</h3>
+        <span class="status s-paid">Paid</span>
+      </div>
+      <p class="meta">Announced 2024-12-13 · <a href="https://x.com/WinLewToken/status/1867497621374738438" rel="noopener noreferrer" target="_blank">the post</a></p>
+      <p class="cond"><strong>Condition:</strong> Named directly in the post — not a draw.</p>
+      <p class="cond"><strong>Promised:</strong> 50,000 WinLEW to each of two named users</p>
+      <p class="cond"><strong>Actually paid:</strong> 100,000 WinLEW across 2 transfers · <span class="basis b-inferred-timing">Inferred</span> <span class="why">Lands in a cluster right after the deadline and the amount matches the prize. Probably right. Not proven.</span></p>
+      <p class="note">Announced and paid to two named users, 50,000 each. The second payment landed six days after the first.</p>
+      <div class="tableWrap"><table><thead><tr><th>Date</th><th class="a">WinLEW</th><th>To</th><th>Link basis</th><th>Transaction</th></tr></thead><tbody><tr>
+      <td class="d">2024-12-19</td>
+      <td class="a">50,000</td>
+      <td><code>D8oJSd…5ZEz</code></td>
+      <td><span class="basis b-verified">Verified</span></td>
+      <td><a href="https://solscan.io/tx/4CrJN2qDd7w3c1PkHcVaN2bmpqJmhy9qZTSMANb2V3RRsxTAd6Q1j7b7SvTb1gBRBdpDi48RZLD8ZXLUpa8k1E75" rel="noopener noreferrer" target="_blank"><code>4CrJN2qD…8k1E75</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2024-12-13</td>
+      <td class="a">50,000</td>
+      <td><code>Gg9Cng…FBc7</code></td>
+      <td><span class="basis b-inferred-timing">Inferred</span></td>
+      <td><a href="https://solscan.io/tx/5RaM9g82dBSziMcb4SzpqntAZjd4YJzUoa7NJmis3QeL4RZGo7HGhgumTmFeQCFXmocv61yqBhDuUs3VwFmep1Ba" rel="noopener noreferrer" target="_blank"><code>5RaM9g82…mep1Ba</code></a></td>
+    </tr></tbody></table></div>
+    </article>
+<article class="card">
+      <div class="cardTop">
+        <h3>Launch-day giveaway — 100,000 WinLEW</h3>
+        <span class="status s-paid">Paid</span>
+      </div>
+      <p class="meta">Announced 2024-12-07 · no post URL kept</p>
+      <p class="cond"><strong>Condition:</strong> Follow and repost. Winner to be selected December 25, 2024.</p>
+      <p class="cond"><strong>Promised:</strong> 100,000 WinLEW to one winner</p>
+      <p class="cond"><strong>Actually paid:</strong> 100,000 WinLEW across 1 transfer · <span class="basis b-verified">Verified</span> <span class="why">Amount, timing and a named winner agree — or the recipient published the address themselves.</span></p>
+      <p class="note">Announced the day the token went live. Paid 2024-12-26, one day after the stated draw date, for exactly the announced amount.</p>
+      <div class="tableWrap"><table><thead><tr><th>Date</th><th class="a">WinLEW</th><th>To</th><th>Link basis</th><th>Transaction</th></tr></thead><tbody><tr>
+      <td class="d">2024-12-26</td>
+      <td class="a">100,000</td>
+      <td><code>AX7cMx…NVhk</code></td>
+      <td><span class="basis b-verified">Verified</span></td>
+      <td><a href="https://solscan.io/tx/35qzm3NBjGQDUa731PS9dY7hnHwgpE9et21qeTMLzUMk1nSazTYWwofduiytnvsUwoTUgxjNzuFRkcbz2kzDoi7R" rel="noopener noreferrer" target="_blank"><code>35qzm3NB…zDoi7R</code></a></td>
+    </tr></tbody></table></div>
+    </article>
+
+  <h2>Unmatched payouts</h2>
+  <p class="lede">Real transfers from the same wallet, to real people, that no surviving announcement explains. Listed rather than dropped — an unexplained payment is still a payment, and hiding it would make the total a lie.</p>
+  <p class="lede">The largest of them, <strong>3,500,000 on 2025-04-01</strong>, was investigated rather than left as a question mark. It was a gift and not a sale: the reserve itself signed the transfer and the only SOL that moved was the reserve <em>paying</em> to create the recipient's token account — nothing came back. The recipient then bought roughly <strong>5.7 million more WinLEW on the open market with their own money</strong>, held for nine months, moved exactly 12,000,000 out in January 2026 and closed the account. What the chain cannot settle is <em>why</em> it was sent, and no announcement from that date accounts for the amount. So it stays unmatched.</p>
+  <p class="lede">That is the honest shape of this section: we can usually prove what a transfer <em>was</em>, and often not what it was <em>for</em>.</p>
+  <div class="tableWrap"><table><thead><tr><th>Date</th><th class="a">WinLEW</th><th>To</th><th>Link basis</th><th>Transaction</th></tr></thead><tbody>
+<tr>
+      <td class="d">2026-07-27</td>
+      <td class="a">1,000,000</td>
+      <td><code>9JGvjo…B39k</code></td>
+      <td><span class="basis b-none">Unmatched</span></td>
+      <td><a href="https://solscan.io/tx/3mzWVKa2zNSgBsN97kjXkS3yim3VXAzh4Pz2ognNJQdAWCEcf4L2MpdoCTUBawizrtKPrc79GZuq1iwFxCpZ57Dr" rel="noopener noreferrer" target="_blank"><code>3mzWVKa2…pZ57Dr</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2026-07-27</td>
+      <td class="a">1,000,000</td>
+      <td><code>D8oJSd…5ZEz</code></td>
+      <td><span class="basis b-none">Unmatched</span></td>
+      <td><a href="https://solscan.io/tx/38qD36DKR13ReqQcwh51crhC1z3eBcwSNap7pFK3NbxMA9YxDM7QrTmwKajucd2H223Wp8Sh7n8tMe1iLDdp8bvq" rel="noopener noreferrer" target="_blank"><code>38qD36DK…dp8bvq</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2026-06-14</td>
+      <td class="a">1,000</td>
+      <td><code>9Wgko8…9i8W</code></td>
+      <td><span class="basis b-none">Unmatched</span></td>
+      <td><a href="https://solscan.io/tx/3vmVEm74py6Cs5YTEQ22eftDiX57cQThDTQ1BmcmbGRYcBmGsGXEG6b6VP1prpGuxREx4YoBxzKiHxuB56xzKves" rel="noopener noreferrer" target="_blank"><code>3vmVEm74…xzKves</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2025-08-15</td>
+      <td class="a">1,500</td>
+      <td><code>2yupCJ…JqSA</code></td>
+      <td><span class="basis b-none">Unmatched</span></td>
+      <td><a href="https://solscan.io/tx/PHGSJLQfoHo865yehnWTUtUkrESEVuc8HeYuLXqNmHVRKNMcNvrXsHo5JkoSgR7Si28zrhKme7kmXWUm8kcCSc8" rel="noopener noreferrer" target="_blank"><code>PHGSJLQf…kcCSc8</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2025-05-22</td>
+      <td class="a">1,000</td>
+      <td><code>9crcXy…48AA</code></td>
+      <td><span class="basis b-none">Unmatched</span></td>
+      <td><a href="https://solscan.io/tx/5AGcHHppo5gUwQAqe4L5QPumytpaPnw2Lq2q9VQHC9MH1o6Mt1pwFobqxRFUyXbKXGzzc4PUuf2MpryCbAMP6yAv" rel="noopener noreferrer" target="_blank"><code>5AGcHHpp…MP6yAv</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2025-05-03</td>
+      <td class="a">200,000</td>
+      <td><code>FhFBZ6…AQvJ</code></td>
+      <td><span class="basis b-none">Unmatched</span></td>
+      <td><a href="https://solscan.io/tx/4N7NkxVMBUb8U7Wb44nWxktgMAHLt5CeqXXuY6hFiQ9PSo2zgYjQwzJmyv5kRtvBjMGX2qGW7ZG1Ui4kzDmgFr7h" rel="noopener noreferrer" target="_blank"><code>4N7NkxVM…mgFr7h</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2025-05-02</td>
+      <td class="a">125,000</td>
+      <td><code>FokLS7…Wett</code></td>
+      <td><span class="basis b-none">Unmatched</span></td>
+      <td><a href="https://solscan.io/tx/5E89WWmwhnzjqWLLxrFnEQTxLGANGJux7QGikdWqKfG5nNCnvH6vs8XzTCtM4evXBxzJ2KTz2EWJeY9k58y2id4M" rel="noopener noreferrer" target="_blank"><code>5E89WWmw…y2id4M</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2025-04-14</td>
+      <td class="a">400,000</td>
+      <td><code>FmwUvf…d9K3</code></td>
+      <td><span class="basis b-none">Unmatched</span></td>
+      <td><a href="https://solscan.io/tx/3hZWmWWMZei3FcSdepN8TjQweqJfJ1dVXw6FwyXzifXcdkvMgqi3eMmYTyXBzM8RcE4BxD4er6PuaiEKaqBUdbf" rel="noopener noreferrer" target="_blank"><code>3hZWmWWM…qBUdbf</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2025-04-01</td>
+      <td class="a">3,500,000</td>
+      <td><code>AqwHde…QemX</code></td>
+      <td><span class="basis b-none">Unmatched</span></td>
+      <td><a href="https://solscan.io/tx/TKV4u15m8GLiBhybayBjNP9MYWaiVExShMqzKfcjGNKuUE225udnUs8cjNjEkhL2ZWq1QKvxkF3kdx465tgZr6x" rel="noopener noreferrer" target="_blank"><code>TKV4u15m…tgZr6x</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2025-02-21</td>
+      <td class="a">100,000</td>
+      <td><code>23nSNT…haig</code></td>
+      <td><span class="basis b-none">Unmatched</span></td>
+      <td><a href="https://solscan.io/tx/4PhRZ3uUpzs4e1wiv76pof1fAjbwLKpzqJtSNXhL4aTdVh6hDkPHhtgZj4GohdCowVMwXwRVX2QQSXhDfz8ztxU2" rel="noopener noreferrer" target="_blank"><code>4PhRZ3uU…8ztxU2</code></a></td>
+    </tr>
+<tr>
+      <td class="d">2025-02-01</td>
+      <td class="a">200,000</td>
+      <td><code>4u12XC…icx3</code></td>
+      <td><span class="basis b-none">Unmatched</span></td>
+      <td><a href="https://solscan.io/tx/63ZwSSKKhiRbpvDFL91gpzu1b3R4YqXi3VNcSUoY3UsnUKgpRGaMWyxT6mduWxUTqWbGCPFhnz91uQfYdozCERkD" rel="noopener noreferrer" target="_blank"><code>63ZwSSKK…zCERkD</code></a></td>
+    </tr>
+  </tbody></table></div>
+
+  <h2>How to check this yourself</h2>
+  <p class="lede">Every payout came from <code>GFxz42bib3o6kxmPgK95fMtBxRk16yaTvt5UBwC7EhAp</code>. Open it in any explorer, walk its token transfers, and compare. The complete walk this page is built from is committed in the project repository alongside the code that produced it.</p>
+  <p class="lede">Related: <a href="/transparency/">Transparency Center</a> · <a href="/burn/">Burn Center</a> · <a href="/events/">Community Events</a> · <a href="/news/">News</a></p>
+</div>
+
+<script src="/assets/wallet-auth.js"></script>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

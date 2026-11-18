@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WinLEW • GeoHackers • Terms of Service</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="Terms of Service for GeoHackers — the WinLEW ecosystem's XL1 companion bot for wallet verification and on-chain game integrations." />
+  <link rel="canonical" href="https://winlew.co/discord-bots/terms-geohackers.html" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    html { overflow-x: hidden; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; color: var(--wl-text); background: radial-gradient(1000px 620px at 10% 0%, rgba(214,168,102,.10), transparent 60%), linear-gradient(180deg, #130b08 0%, #24150d 52%, #130b08 100%); line-height: 1.6; }
+    .nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px); background: linear-gradient(180deg, rgba(19,11,8,.88), rgba(19,11,8,.58)); border-bottom: 1px solid rgba(255,255,255,.08); }
+    .navInner { max-width: 2000px; margin: 0 auto; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .navBrand { text-decoration: none; color: var(--wl-text); font-weight: 950; }
+    .navLinks { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 10px 13px; border-radius: 999px; text-decoration: none; font-weight: 850; background: rgba(255,255,255,.06); border: 1px solid var(--wl-border); color: inherit; }
+    .pill:hover { background: rgba(255,255,255,.10); }
+    .pill.active { background: linear-gradient(180deg, rgba(214,168,102,.30), rgba(214,168,102,.14)); border-color: rgba(214,168,102,.5); color: #ffe6b0; }
+
+    .policyShell { max-width: 900px; margin: 0 auto; padding: 22px; }
+    .policyHero { background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.02)); border: 1px solid var(--wl-border); border-radius: var(--wl-radius-lg); box-shadow: 0 28px 80px rgba(0,0,0,.42); padding: 24px; margin-bottom: 16px; }
+    .policyHeroTop { display: flex; align-items: center; gap: 14px; }
+    .policyHeroIcon { width: 52px; height: 52px; min-width: 52px; border-radius: 15px; object-fit: cover; border: 1px solid var(--wl-border-accent); flex-shrink: 0; background: var(--wl-bg); }
+    .policyHeroIcon.emoji { display: inline-flex; align-items: center; justify-content: center; font-size: 28px; background: linear-gradient(180deg, rgba(214,168,102,.22), rgba(214,168,102,.08)); }
+    .policyKind { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--wl-gold); font-weight: 800; }
+    .policyHero h1 { font-size: clamp(24px, 3.4vw, 34px); margin: 2px 0 0; line-height: 1.08; color: var(--wl-text); }
+    .policyLede { color: var(--wl-text-muted); line-height: 1.7; margin: 14px 0 0; max-width: 66ch; }
+    .docToggle { display: inline-flex; gap: 4px; margin-top: 18px; padding: 4px; border: 1px solid var(--wl-border); border-radius: 999px; background: rgba(0,0,0,.2); }
+    .docToggle a { padding: 7px 16px; border-radius: 999px; text-decoration: none; font-weight: 800; font-size: 13px; color: var(--wl-text-muted); }
+    .docToggle a.active { background: linear-gradient(180deg, rgba(214,168,102,.30), rgba(214,168,102,.14)); border: 1px solid rgba(214,168,102,.5); color: #ffe6b0; }
+    .docToggle a:not(.active):hover { color: var(--wl-text); }
+    .policyMetaRow { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; align-items: center; }
+    .policyMetaRow a { font-weight: 700; font-size: 13px; color: var(--wl-gold); text-decoration: none; }
+    .policyMetaRow a:hover { text-decoration: underline; }
+    .policyBadge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 800; white-space: nowrap; border: 1px solid var(--wl-border); background: rgba(255,255,255,.05); color: var(--wl-text-muted); }
+    .policyBadge.good { border-color: rgba(85,240,165,.3); background: rgba(85,240,165,.12); color: #55f0a5; }
+    .capCard { border: 1px solid var(--wl-border-accent); border-radius: 18px; background: linear-gradient(180deg, rgba(214,168,102,.08), rgba(255,255,255,.02)); padding: 18px 22px; margin: 14px 0; }
+    .capCard h2 { font-size: 13px; margin: 0 0 12px; color: var(--wl-gold); text-transform: uppercase; letter-spacing: .05em; }
+    .capList { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+    .capList li { position: relative; padding-left: 26px; color: var(--wl-text); line-height: 1.5; font-size: 14px; }
+    .capList li::before { content: "✓"; position: absolute; left: 0; top: 0; color: #55f0a5; font-weight: 900; }
+    .policySection { border: 1px solid var(--wl-border); border-radius: 18px; background: rgba(0,0,0,.18); padding: 20px 22px; margin: 14px 0; }
+    .policySection h2 { font-size: 17px; margin: 0 0 8px; color: var(--wl-gold); display: flex; align-items: baseline; gap: 8px; }
+    .policySection h2 .n { font-size: 12px; color: var(--wl-text-muted); font-weight: 800; }
+    .policySection p { margin: 0 0 10px; color: var(--wl-text-muted); line-height: 1.7; }
+    .policySection p:last-child, .policySection ul:last-child { margin-bottom: 0; }
+    .policySection ul { margin: 8px 0; padding-left: 20px; color: var(--wl-text-muted); line-height: 1.7; }
+    .policySection li { margin: 4px 0; }
+    .policySection strong { color: var(--wl-text); }
+    .policySection a { color: var(--wl-gold); }
+    .dataGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+    @media (max-width: 620px) { .dataGrid { grid-template-columns: 1fr; } }
+    .dataCell { border: 1px solid var(--wl-border); border-radius: 12px; padding: 12px 14px; background: rgba(255,255,255,.03); }
+    .dataCell .k { font-size: 12px; font-weight: 800; color: var(--wl-text); }
+    .dataCell .v { font-size: 12.5px; color: var(--wl-text-muted); line-height: 1.55; margin-top: 4px; }
+    .policyFooter { margin: 26px 0 10px; font-size: 12px; color: var(--wl-text-muted); text-align: center; line-height: 1.7; }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div class="navInner">
+      <a class="navBrand" href="/">WinLEW</a>
+      <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+      <div class="navRight">
+        <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+        <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+        <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+        <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="policyShell">
+    <div class="policyHero">
+      <div class="policyHeroTop">
+        <img class="policyHeroIcon" src="/images/avatars/geohacker-128.png" alt="GeoHackers" width="52" height="52" />
+        <div>
+          <div class="policyKind">GeoHackers · Terms of Service</div>
+          <h1>GeoHackers</h1>
+        </div>
+      </div>
+      <p class="policyLede">GeoHackers is the WinLEW ecosystem's XL1 companion bot — wallet verification, on-chain game integrations, and XL1 asset interactions from Discord. It's a distinct product within the ecosystem; these terms cover its use.</p>
+      <div class="docToggle">
+        <a href="terms-geohackers.html" class="active">📜 Terms</a>
+        <a href="privacy-geohackers.html">🔒 Privacy</a>
+      </div>
+      <div class="policyMetaRow">
+        <span class="policyBadge good">🔒 No custody</span>
+        <span class="policyBadge">🧩 XL1 companion</span>
+        <a href="/policies/">← All policies</a>
+      </div>
+    </div>
+
+    <div class="capCard">
+      <h2>What GeoHackers does</h2>
+      <ul class="capList"><li>Verifies wallet ownership on XL1 from Discord</li><li>Integrates on-chain games</li><li>Enables XL1 asset interactions you initiate</li><li>You keep custody of your keys</li></ul>
+      <div class="policyMetaRow" style="margin-top:14px;">
+        <span class="policyBadge good">✅ Official Discord bot</span>
+        <span class="policyBadge">ID 1413739021829410850</span>
+        <a href="https://discord.com/users/1413739021829410850" target="_blank" rel="noreferrer">Open bot profile ↗</a>
+      </div>
+    </div>
+
+    <div class="policySection">
+      <h2><span class="n">1</span> What the service does</h2>
+      <p>GeoHackers connects Discord to XL1 (the XYO Layer One chain): verifying wallet ownership, integrating on-chain games, and enabling XL1 asset interactions. It's a separate product operating within the wider WinLEW ecosystem.</p>
+    </div>
+
+    <div class="policySection">
+      <h2><span class="n">2</span> You control your wallet</h2>
+      <p>Any wallet or asset action happens with keys <strong>you</strong> control. GeoHackers never takes custody of your wallet or private keys. As with all WinLEW verification, a wallet-ownership signature proves control and is not a fund-moving transaction — only ever sign requests you understand, on official surfaces.</p>
+    </div>
+
+    <div class="policySection">
+      <h2><span class="n">3</span> Your responsibilities</h2>
+      <ul><li>Only connect wallets and assets you control.</li><li>Don't exploit game integrations, spoof ownership, or automate abusive requests.</li><li>Keep your Discord account and wallet secure.</li></ul>
+    </div>
+
+    <div class="policySection">
+      <h2><span class="n">4</span> On-chain actions are permanent</h2>
+      <p>Interactions that touch XL1 are recorded on-chain and are public and irreversible by nature. Review anything you confirm; neither GeoHackers nor WinLEW can reverse a settled on-chain action.</p>
+    </div>
+
+    <div class="policySection">
+      <h2><span class="n">5</span> Availability &amp; limitations</h2>
+      <p>Provided "as-is" and dependent on Discord, XL1 infrastructure, and network conditions, any of which can rate-limit or go offline. Features may change as the product develops.</p>
+    </div>
+
+    <div class="policySection">
+      <h2><span class="n">6</span> Changes to this policy</h2>
+      <p>We may update this policy as the service evolves. Material changes are reflected here with a new "last updated" date. Continued use after an update means you accept the revised policy.</p>
+    </div>
+
+    <div class="policySection">
+      <h2><span class="n">7</span> Contact</h2>
+      <p>Questions? Ask in the <a href="/community/">WinLEW Discord</a>, or see the <a href="/policies/">Policies hub</a> for every WinLEW bot's terms and privacy documents.</p>
+    </div>
+
+    <div class="policyFooter">
+      <div>Last updated: July 19, 2026</div>
+      <div>Provided for transparency and Discord-application compliance. This is a plain-language summary, not legal advice.</div>
+    </div>
+  </div>
+
+  <script src="/assets/wallet-auth.js"></script>
+  <script>
+    (function () {
+      const { getAuth, setConnectedUi, walletLogin, getCachedWallet, refreshWalletBalance } = window.WinLEWAuth;
+      document.getElementById('navWalletConnect')?.addEventListener('click', (e) => void walletLogin({ triggerBtn: e.currentTarget, onSuccess: () => window.location.reload() }));
+      if (getAuth().session) setConnectedUi(getCachedWallet() || 'connected');
+      refreshWalletBalance();
+    })();
+  </script>
+  <script defer src="/assets/nav.js"></script>
+</body>
+</html>

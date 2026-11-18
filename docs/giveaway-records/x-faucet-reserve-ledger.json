@@ -1,0 +1,970 @@
+[
+  {
+    "time": "2024-12-09T03:11:02.000Z",
+    "slot": 306310154,
+    "sig": "4PxhFZcQBBFBsLdLgkHoW7ZmT9J1i3y239nCVPHNthSPLUaqKNTHA8NYmQkP12upDa6B1dNVCTwbwdKgSJKvRTFh",
+    "reserveDelta": "1060252327186",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-1060252327186"
+      }
+    ]
+  },
+  {
+    "time": "2024-12-12T02:41:16.000Z",
+    "slot": 306925875,
+    "sig": "46TxKkcnnq5BXQ3rFAYymCyupH74HuijKq5Y4xMzivXS79JthHTxJEWSBWZjNSvn7cka9ydAVXfaBXqgmeD1VdkM",
+    "reserveDelta": "2077196831197",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-2077196831197"
+      }
+    ]
+  },
+  {
+    "time": "2024-12-12T02:52:55.000Z",
+    "slot": 306927594,
+    "sig": "44w39bR1kE9HikqBsHTXC3FVGqaT8CTFKzhFfuwGSQLvbxGqgBNCNse8agKeUB2FFPCeMa2RUtxhDrMt28XbX6eb",
+    "reserveDelta": "33229947560",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-33229947560"
+      }
+    ]
+  },
+  {
+    "time": "2024-12-12T02:55:44.000Z",
+    "slot": 306928008,
+    "sig": "2YWo9VSLouAFSNGFZv7v6Dj1JTzpnJ3do42ygVB7zVAtnNTSVats7NV97WAMpBh7EVzJjn1vyz5Su6TuYPTcgTyc",
+    "reserveDelta": "331968755780",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-331968755780"
+      }
+    ]
+  },
+  {
+    "time": "2024-12-12T17:12:42.000Z",
+    "slot": 307052297,
+    "sig": "41GYt4FHrP2SWhd7eLg2NRHvtqF2eZYgpEV6PtpcGWQwQNWqApAQ6VoQ44AjAUaQkY6KJhaAKWzxmh1sbSsnU1GZ",
+    "reserveDelta": "344732090347",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-344732090347"
+      }
+    ]
+  },
+  {
+    "time": "2024-12-13T16:35:47.000Z",
+    "slot": 307252532,
+    "sig": "5RaM9g82dBSziMcb4SzpqntAZjd4YJzUoa7NJmis3QeL4RZGo7HGhgumTmFeQCFXmocv61yqBhDuUs3VwFmep1Ba",
+    "reserveDelta": "-50000000000",
+    "counterparties": [
+      {
+        "owner": "Gg9Cng6EF9aU3X798mUHRW9kGLG61Qx2uEvf9oMFFBc7",
+        "delta": "50000000000"
+      }
+    ]
+  },
+  {
+    "time": "2024-12-19T01:06:04.000Z",
+    "slot": 308364848,
+    "sig": "4CrJN2qDd7w3c1PkHcVaN2bmpqJmhy9qZTSMANb2V3RRsxTAd6Q1j7b7SvTb1gBRBdpDi48RZLD8ZXLUpa8k1E75",
+    "reserveDelta": "-50000000000",
+    "counterparties": [
+      {
+        "owner": "D8oJSdqoYk6heQsf36217mDm3Yf95umjnXaJiLYA5ZEz",
+        "delta": "50000000000"
+      }
+    ]
+  },
+  {
+    "time": "2024-12-26T02:14:43.000Z",
+    "slot": 309835728,
+    "sig": "35qzm3NBjGQDUa731PS9dY7hnHwgpE9et21qeTMLzUMk1nSazTYWwofduiytnvsUwoTUgxjNzuFRkcbz2kzDoi7R",
+    "reserveDelta": "-100000000000",
+    "counterparties": [
+      {
+        "owner": "AX7cMx4GMxwNt72ZqztYh9zqkZspvdxgVAmTBYcHNVhk",
+        "delta": "100000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-01-01T19:47:27.000Z",
+    "slot": 311255571,
+    "sig": "3SngeUokCTScz5ewXJb7RVnhFvSiDHXD5awM2JPpNKgtZG8p8Jnjh69DidSZUeKVgwT6rtE2AHmGUwpHVsUm6FPk",
+    "reserveDelta": "-100000000000",
+    "counterparties": [
+      {
+        "owner": "6Y4MJPHpG66bRizdy99mEZnaaiwvEx9Q1aD6wh8PQB5v",
+        "delta": "100000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-01-01T21:33:19.000Z",
+    "slot": 311271118,
+    "sig": "5VzDgbHXk55CXaSeXtXurLWMgTvxfdpmpNMiPQ9QrmwAmg62XDJU6qTwZLyAyFx3XDSySXDwFSWJ1sZokxLmdxHs",
+    "reserveDelta": "407563461873",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-407563461873"
+      }
+    ]
+  },
+  {
+    "time": "2025-01-02T23:21:00.000Z",
+    "slot": 311497420,
+    "sig": "5ckkrNKdBYmzzMXmCUrWjNr3CMGCPgVcsScqroJAYmqhPboEDRePNLczFpgGsLNHUEjD8zBKNpCpugn69cUpL9LS",
+    "reserveDelta": "336132434590",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-336132434590"
+      }
+    ]
+  },
+  {
+    "time": "2025-01-04T03:59:22.000Z",
+    "slot": 311747340,
+    "sig": "4yQKf5PdRcevGhjwb4ShPxtBxdYWAuyg4bQx1sto9KYWdYnktbG7jxdJRyGGPgjkaQkaagWjESUhZJW3XjszaVf6",
+    "reserveDelta": "-100000000000",
+    "counterparties": [
+      {
+        "owner": "HJRHtdz94LcjoPpVgsrX257t9ku9ZjnLVB4f2gLuAhcH",
+        "delta": "100000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-01-05T17:55:38.000Z",
+    "slot": 312078968,
+    "sig": "2MzkrGbJc2mHPexdM2A951CBSZ4bMGvok7dczt8H4oMcNyNZgdrXjeqbxFqaWg7UjWNj3s5RPCKCN5ZkT62SfWRj",
+    "reserveDelta": "1533596239343",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-1533596239343"
+      }
+    ]
+  },
+  {
+    "time": "2025-01-06T02:27:44.000Z",
+    "slot": 312153868,
+    "sig": "3U1J6dD9gEAimN4e14JxmBiRrAqybFeyi31vV3PF3gVVwq1FtPYyjCZqM9sZ2LkBtKprc1etwkbgFzBXv5gEjeW6",
+    "reserveDelta": "306151790516",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-306151790516"
+      }
+    ]
+  },
+  {
+    "time": "2025-01-08T19:22:01.000Z",
+    "slot": 312725504,
+    "sig": "E5heTHenCdyQQJ6YUqX9sP6Jqii94p9LLGGHV9jek11oywWrJvZzTNwo84UhzVw6Ha2ZPgFwSE3Hmc5y3TMM7Y5",
+    "reserveDelta": "327129916801",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-327129916801"
+      }
+    ]
+  },
+  {
+    "time": "2025-01-11T06:01:57.000Z",
+    "slot": 313243360,
+    "sig": "2XJRmRQVw5VTqxADmdsWsCzVmTBSycqPkDY58hTJntGsGmMJsQWijrJzbGGgB5AvvCg6VGeUEHUdKm7mpVSyXX7Y",
+    "reserveDelta": "1756186494535",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-1756186494535"
+      }
+    ]
+  },
+  {
+    "time": "2025-01-11T06:03:06.000Z",
+    "slot": 313243528,
+    "sig": "2SSsL3xsJNhjyw7xpVkKQMo5qmH9y4tzwDyRqqmZNDXoWMEFZuh8qavneXszXPZ6GJwvbfbSZh2WUagru9mtFmcA",
+    "reserveDelta": "1620736364444",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-1620736364444"
+      }
+    ]
+  },
+  {
+    "time": "2025-01-11T06:04:21.000Z",
+    "slot": 313243714,
+    "sig": "ALNoh1odHPqCXnEJPBf3VT8gZjeAwFc4fKcJEjKAtzRgieBzNXDhG8L9SYCzMiSKtZeiDTxCPJ7tb6PpoQ9t6sZ",
+    "reserveDelta": "3226104461127",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-3226104461127"
+      }
+    ]
+  },
+  {
+    "time": "2025-01-11T06:30:21.000Z",
+    "slot": 313247576,
+    "sig": "4qVfzCxSqSHEamMkgvuN1BCZrxmsAL84huuWeiKGxznbbPFEg8mQPnGdSH44D8bCdvm4AaLTGtHPhXDtevSQxkGp",
+    "reserveDelta": "1925892147043",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-1925892147043"
+      }
+    ]
+  },
+  {
+    "time": "2025-01-26T06:43:17.000Z",
+    "slot": 316436674,
+    "sig": "4emJQHApqRdxtudSrgC1VgJam1pC8uyoR8anJGFfLCb2ExDn12Q42wAbLWbT6MoQ9AVasp9JR8XPEb9t4dRBh1xt",
+    "reserveDelta": "468044513502",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-468044513502"
+      }
+    ]
+  },
+  {
+    "time": "2025-02-01T01:56:15.000Z",
+    "slot": 317678911,
+    "sig": "4qs4pT59BLmWMe3tYDJ5acx6gHXVaprJR6ATzc65VPEDjsMkE7kq15PN54Sq9ScSsc2vD7WgnV6idUcyWjfc4Upi",
+    "reserveDelta": "9730127494564",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-9730127494564"
+      }
+    ]
+  },
+  {
+    "time": "2025-02-01T02:08:15.000Z",
+    "slot": 317680706,
+    "sig": "3tpAyQWVxK6UgCdk8j4TLCqqDpKunVuzyxqpLbNva6DzG1TxNjaMcssJ39Ebt9cGQ9wNq2h3Ka9NfoeWigvJYBLJ",
+    "reserveDelta": "1797595023441",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-1797595023441"
+      }
+    ]
+  },
+  {
+    "time": "2025-02-01T20:28:23.000Z",
+    "slot": 317844980,
+    "sig": "63ZwSSKKhiRbpvDFL91gpzu1b3R4YqXi3VNcSUoY3UsnUKgpRGaMWyxT6mduWxUTqWbGCPFhnz91uQfYdozCERkD",
+    "reserveDelta": "-200000000000",
+    "counterparties": [
+      {
+        "owner": "4u12XCpdz43i8sm4yxFWaLFk8reXqFxRFTdozoYqicx3",
+        "delta": "200000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-02-08T00:41:43.000Z",
+    "slot": 319183036,
+    "sig": "3KFsbLMb4Fa1UmucZrohfsEDwT8cbH5ChRnpLMikPb48mRtqWnanHBTXJN99qc2QYMWyPaLhGb8WbRexqDbwtM3s",
+    "reserveDelta": "-100000000000",
+    "counterparties": [
+      {
+        "owner": "89B84My2MA3Srr2LxbhQGhEHqoBGAuT22yFxtN9d9aFD",
+        "delta": "100000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-02-08T06:41:30.000Z",
+    "slot": 319237428,
+    "sig": "Yxhz9gFqfBoDXofFDW6E4TTGeoju9PvxCukQ1Y3oS2g8uGMHRuHAnoMJZLUraAHDYg7cANXq77JXRCmcTRSzu2D",
+    "reserveDelta": "581204959346",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-581204959346"
+      }
+    ]
+  },
+  {
+    "time": "2025-02-10T04:35:30.000Z",
+    "slot": 319653923,
+    "sig": "JxDYzZwx2bHbWSzD3Y2c4aFFjcpPr6yT5W4EmT1C9LKgfp65bd5A8WXExscf1JA5ps1f1nrdb9TUmWeB1UBznwA",
+    "reserveDelta": "361196832595",
+    "counterparties": [
+      {
+        "owner": "GpMZbSM2GgvTKHJirzeGfMFoaZ8UR2X7F4v8vHTvxFbL",
+        "delta": "-361196832595"
+      }
+    ]
+  },
+  {
+    "time": "2025-02-21T02:46:51.000Z",
+    "slot": 322035603,
+    "sig": "58KzNkNDqirFHuGZFbAhdcf5RRTs1xXUghAQkG7MRYgXY7MdZqAEqYDtnstnRgJjfBwXrtR1NGofmv6ch9m5tXmd",
+    "reserveDelta": "-500000000000",
+    "counterparties": [
+      {
+        "owner": "FDhcxnSo1wB2X7iYjQaFaFHD3Nc5TWsASFwfhFCbeo5j",
+        "delta": "500000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-02-21T03:01:00.000Z",
+    "slot": 322037755,
+    "sig": "4usGn3oJTsjhT2pBwWiPyNUUveSkFqZja1ALQ24R5piEmLiaTs1NZfh2NpLLBJUkFqDbQwFFDCSkFycaUfQoHHmB",
+    "reserveDelta": "-1000000000000",
+    "counterparties": [
+      {
+        "owner": "9JGvjo1bu4WAiuSCB2neW6aKniqFECGuJ3DLvSawB39k",
+        "delta": "1000000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-02-21T03:37:27.000Z",
+    "slot": 322043300,
+    "sig": "4ypeUZ93hHMpTJgdKi4f8hXwVb2KRcAZedQ7hvYEoiNYG6WY9fbyNNMymAbQJTe2mhpuWQrrwiws9mq9cJXeLWhU",
+    "reserveDelta": "2620383526825",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-2620383526825"
+      }
+    ]
+  },
+  {
+    "time": "2025-02-21T05:26:08.000Z",
+    "slot": 322059789,
+    "sig": "4PhRZ3uUpzs4e1wiv76pof1fAjbwLKpzqJtSNXhL4aTdVh6hDkPHhtgZj4GohdCowVMwXwRVX2QQSXhDfz8ztxU2",
+    "reserveDelta": "-100000000000",
+    "counterparties": [
+      {
+        "owner": "23nSNTRJJMqEm8X2MYpnxG4iRtkgPW4yFkwauSsLhaig",
+        "delta": "100000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-02-22T03:54:45.000Z",
+    "slot": 322264313,
+    "sig": "2FDR7x8PZaZ4wTwJnSUFPBRmsxjKy1xjNGAqoDe6ohcPLhEr4kEZYEBCUnN46H9vVBVBf7B5vqtuzcRXJoXYLgT6",
+    "reserveDelta": "-1529373210000",
+    "counterparties": [
+      {
+        "owner": "EX5nxVKgRKaJVZLfDUinXie6HQ5GPhKwkZ419pRGaZ74",
+        "delta": "1529373210000"
+      }
+    ]
+  },
+  {
+    "time": "2025-03-03T07:06:39.000Z",
+    "slot": 324257960,
+    "sig": "5vx6EEXEHac3oedHLtzZHPzpZeAxNWjXRKZR7GWEN6HhGRbj7Z2kma4qZLMqRMErzZ2JZGcVUfys3UBUMuDgJAEs",
+    "reserveDelta": "786946114398",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-786946114398"
+      }
+    ]
+  },
+  {
+    "time": "2025-03-05T04:38:53.000Z",
+    "slot": 324671424,
+    "sig": "4ENGCm18GVXj32oievW4fNRRd7dJkR3dGyKDhXUyrvspUv3DNHB2sMMtKPTozL1HDTeQjE5CTySveAhzcNcpomPU",
+    "reserveDelta": "1500000000000",
+    "counterparties": [
+      {
+        "owner": "5V2WR1VGjbu3zbpcTkSvkmxZ8gdhrHGWxFSizKV7v3AJ",
+        "delta": "-1500000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-03-17T01:11:21.000Z",
+    "slot": 327250378,
+    "sig": "nYed7gCAr7taz1sEM1H8YeCR8zQRDb8iBW8LuCcD8W2eWFzVGoKfQ7mV1bunHYDugd4xTxueCzV2uPJe3grPT7W",
+    "reserveDelta": "-200000000000",
+    "counterparties": [
+      {
+        "owner": "9JGvjo1bu4WAiuSCB2neW6aKniqFECGuJ3DLvSawB39k",
+        "delta": "100000000000"
+      },
+      {
+        "owner": "FDhcxnSo1wB2X7iYjQaFaFHD3Nc5TWsASFwfhFCbeo5j",
+        "delta": "100000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-03-17T01:11:21.000Z",
+    "slot": 327250379,
+    "sig": "28aSvdz7MgP4gARziVhPjZ947SWe6J4dX35SQmm8mS9fmpCVf8JYYN4XM5q9Tdg78t1A8p2nDPMC3Fb9G4vQm8VA",
+    "reserveDelta": "-800000000000",
+    "counterparties": [
+      {
+        "owner": "2qo1zLvwbMEoCGg7KxtVCY1iMHobUf7s6jPtFHddNU9a",
+        "delta": "100000000000"
+      },
+      {
+        "owner": "7oMN6sms88zD1W918aPvrqNFEkzb9QkxHXSGeHPGBMFW",
+        "delta": "100000000000"
+      },
+      {
+        "owner": "3R2u9cbZMmqZGFj1ENQ4DrZPDsbkxrAX27uvZVfi5yJ8",
+        "delta": "100000000000"
+      },
+      {
+        "owner": "8rBBnxCx4vyRkrnHHFJ7xJ3rS6eUFo6CKapWgWMMB1Zz",
+        "delta": "100000000000"
+      },
+      {
+        "owner": "4XDk6ZYLm7QvPPnDbxgUFE2S1jzDpR49E1GG1wyPFen8",
+        "delta": "100000000000"
+      },
+      {
+        "owner": "DRTZ1mvzcwKgrzZ7VYhxyxaYLELXcsxjL96mHKdtep34",
+        "delta": "100000000000"
+      },
+      {
+        "owner": "9yEB7jVb39t9ouTbVE3J8Eu5nBsfEnTo8GFgX6hTiDB5",
+        "delta": "100000000000"
+      },
+      {
+        "owner": "AJ4bedJCRLSJqh3vkE5VLFmvjzb6EHqJpNqzcrXPqHf8",
+        "delta": "100000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-03-18T03:31:06.000Z",
+    "slot": 327487809,
+    "sig": "3hifHod1QWaE5Hn5jCALwNKpiUN5HoAgEuUxa6NPmvbhQ5eWSPKUy7LxDcBGvaoSg7FPuHJHAEgAjWGfJ3AUq2zb",
+    "reserveDelta": "1149329782133",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-1149329782133"
+      }
+    ]
+  },
+  {
+    "time": "2025-03-29T10:28:19.000Z",
+    "slot": 329930043,
+    "sig": "2SVUptxvDEZ94BRyDcjz7JPAB6ovJtUPYSWzh4iprFG11cjhFyXNTiLb88UpHjW7MrUozxsfQ76EC9GDY8QCsKnf",
+    "reserveDelta": "2000000000000",
+    "counterparties": [
+      {
+        "owner": "EwCKdYsHm92fHNhG5RLqoSrngTRFX45TwjQfaCX22BPi",
+        "delta": "-2000000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-01T20:15:30.000Z",
+    "slot": 330661896,
+    "sig": "TKV4u15m8GLiBhybayBjNP9MYWaiVExShMqzKfcjGNKuUE225udnUs8cjNjEkhL2ZWq1QKvxkF3kdx465tgZr6x",
+    "reserveDelta": "-3500000000000",
+    "counterparties": [
+      {
+        "owner": "AqwHdem1xsrLQ6vHvaz6VHvucakDVQw9sHZprPPZQemX",
+        "delta": "3500000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-02T00:27:51.000Z",
+    "slot": 330699695,
+    "sig": "8XRB4P3ZJxTeNkRVF4T9V6wzcbSZwVAmaAgxnk8w3pfh2cU1yPsMwJTd91XcU5itKGS9FpT1b6UbZPkAmRhvV4h",
+    "reserveDelta": "-500000000000",
+    "counterparties": [
+      {
+        "owner": "9JGvjo1bu4WAiuSCB2neW6aKniqFECGuJ3DLvSawB39k",
+        "delta": "500000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-02T00:36:16.000Z",
+    "slot": 330700950,
+    "sig": "3rUS65vJnzyi9wJKLGrKy2bbA1MqQG5Py9ZAuqxvFwQ5GzdHYAeu7YetGDZ1gr7BT67J3qkuYXZupRbYL56cvUAW",
+    "reserveDelta": "-500000000000",
+    "counterparties": [
+      {
+        "owner": "FDhcxnSo1wB2X7iYjQaFaFHD3Nc5TWsASFwfhFCbeo5j",
+        "delta": "500000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-02T01:44:57.000Z",
+    "slot": 330711249,
+    "sig": "3W6CiomruH9c3KjZec57Q9fNtxcEYHaA7VnG3ntLdgK8ghLqNABtYoFPrDBSxfJuNdi7cnXXGNmrNg6o8mbfQVBP",
+    "reserveDelta": "-200000000000",
+    "counterparties": [
+      {
+        "owner": "DEFFtTTL7rLmZLh8dnj46So9yrwkvMd8WSboTD2VVNFJ",
+        "delta": "200000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-02T01:45:45.000Z",
+    "slot": 330711370,
+    "sig": "3vWshwKBbWAFf5uS3kFRSUSuj5SqfyNPEb5Lsu4zy7sNPPuDmUgUpJqEsDQvkMA1NoQyHUw1aLF6MM5mQoZ4TJdv",
+    "reserveDelta": "-200000000000",
+    "counterparties": [
+      {
+        "owner": "FDhcxnSo1wB2X7iYjQaFaFHD3Nc5TWsASFwfhFCbeo5j",
+        "delta": "200000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-02T01:46:32.000Z",
+    "slot": 330711488,
+    "sig": "4wRyRUWCo1cSTEZ6pwpTDsE64WqPrUQrqBTgRYaLjNB7X5rwnkpNaYo3abw2q9URCZFoEQyWy96SCsBQgChmPjp5",
+    "reserveDelta": "-200000000000",
+    "counterparties": [
+      {
+        "owner": "9JGvjo1bu4WAiuSCB2neW6aKniqFECGuJ3DLvSawB39k",
+        "delta": "200000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-02T01:47:36.000Z",
+    "slot": 330711649,
+    "sig": "VWeD3z9k8NfFqPmHNdfeJNkDswTmaEYXZ2rgscbf6UVLJ4Ccbn1wgRaFJrB6g94YYJwnbZ22KBfD51XUkoMPvgA",
+    "reserveDelta": "-200000000000",
+    "counterparties": [
+      {
+        "owner": "64SpqFh68V3Yn5qa43Hfc8esnQhj3LHi2kJs7umR3kTp",
+        "delta": "200000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-02T01:48:27.000Z",
+    "slot": 330711778,
+    "sig": "2AnDNGNeAvwNr89vqQ2gASDAVN68VJMkR2U8q9SwXqAmfDRMHvopf2U5M9nzxRz82BXT1vyQAeNsP5Rw2yFn4RPh",
+    "reserveDelta": "-200000000000",
+    "counterparties": [
+      {
+        "owner": "D8oJSdqoYk6heQsf36217mDm3Yf95umjnXaJiLYA5ZEz",
+        "delta": "200000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-02T01:49:06.000Z",
+    "slot": 330711877,
+    "sig": "4TfWkPuvi9UNFmrQFQyCS9vCP4c9Ein6FWYNbkksTuVdUafmJG2sH96fXb6nM7q4xoAjXazJBpizV1VFj5z3BALn",
+    "reserveDelta": "-200000000000",
+    "counterparties": [
+      {
+        "owner": "5gKXS4bT1mdWxgx192ieTsw951yJ4VikyyrKL45hQ2dg",
+        "delta": "200000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-02T01:49:45.000Z",
+    "slot": 330711970,
+    "sig": "2U4auuK2RcuXv6uBXao1zhGPPNngibfBtwQny5Ge4pAdM22UyB4V515WCq46scumGW8UfrwmZ31KDzozA4CqHd72",
+    "reserveDelta": "-200000000000",
+    "counterparties": [
+      {
+        "owner": "D6d5byBxBcddovgQ2UPUMpPDpJukjyC7C4Hcg3v4FRkZ",
+        "delta": "200000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-02T15:58:40.000Z",
+    "slot": 330839139,
+    "sig": "2dwHrp4KvcqHQvcRY9fe29v8fmoJhD9qe4xD21pWeSKVgt4tA8wCebWGTgK6CJhSszCwgZphmGizcf5G2GDMxPFh",
+    "reserveDelta": "223412644001",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-223412644001"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-11T02:38:33.000Z",
+    "slot": 332668688,
+    "sig": "57yz552QCvVDNqfg5d5YXqgeqMF8TCLEb39toEmgRN7SDYHUM3PLXPLCT9A4tQzxezSjzAkc5je88oQ2CYFDjr4Y",
+    "reserveDelta": "-500000000000",
+    "counterparties": [
+      {
+        "owner": "5gKXS4bT1mdWxgx192ieTsw951yJ4VikyyrKL45hQ2dg",
+        "delta": "500000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-14T12:45:21.000Z",
+    "slot": 333411313,
+    "sig": "3hZWmWWMZei3FcSdepN8TjQweqJfJ1dVXw6FwyXzifXcdkvMgqi3eMmYTyXBzM8RcE4BxD4er6PuaiEKaqBUdbf",
+    "reserveDelta": "-400000000000",
+    "counterparties": [
+      {
+        "owner": "FmwUvfBHmv1MacUfvP3P61fbKxDgJWtC8BHeP1x4d9K3",
+        "delta": "400000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-20T07:48:20.000Z",
+    "slot": 334672064,
+    "sig": "3iN7DWPXJHUx4axur57GAqV98fskg7fvzzB631YzDJtVFNdD3NHBojJwCBYqSt6FZbgTuLRzXN1jox2PBEk2bQnY",
+    "reserveDelta": "2412925386467",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-2412925386467"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-20T07:50:16.000Z",
+    "slot": 334672360,
+    "sig": "5qHBRhRxPKtfnnR9owft2fQNxfCEbEX7yPG2DckQvrSmETQkapGDhh2vGgu17k4w3pkCkp92dcDyq8KgGTMpcEdZ",
+    "reserveDelta": "1066074295985",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-1066074295985"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-22T05:38:08.000Z",
+    "slot": 335089912,
+    "sig": "5NhGcrBURbgu8UPUTyM5dhgDzgsK3Qc7KYC2RQu4qWZZr7yScDJgmFsRM6po27mbe5nZUfFAuhCHDpDkAgjGpwMY",
+    "reserveDelta": "317707833070",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-317707833070"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-23T03:30:38.000Z",
+    "slot": 335288556,
+    "sig": "2YGFe9CRuJMKAoV681MVmjr1txU3fzh5Ufri1mktuKTX2ueJRMT3VhCs4hEkHmheHN562DPW9yoYqyPwLCpXuExc",
+    "reserveDelta": "20000000000000",
+    "counterparties": [
+      {
+        "owner": "D6d5byBxBcddovgQ2UPUMpPDpJukjyC7C4Hcg3v4FRkZ",
+        "delta": "-20000000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-30T01:15:57.000Z",
+    "slot": 336794787,
+    "sig": "qL7HeDrmpaqceYtHDArCYrterwEGU6uL4Jz1TvLXHf15SiKyorAZWJvpYXgAqF6Q7wcU65QSz9eiDzeKjBCQ3pM",
+    "reserveDelta": "-40000000000",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "40000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-04-30T01:17:59.000Z",
+    "slot": 336795090,
+    "sig": "21ubTNbqHDWFQY1fi6uoC156ccsDrXExu1Qz7RsZReySrcyT1hd8mz5hVSMK8bvRjGLuapRzTJAx5h21kHVDhpVQ",
+    "reserveDelta": "81430790830",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-81430790830"
+      }
+    ]
+  },
+  {
+    "time": "2025-05-02T23:43:20.000Z",
+    "slot": 337436805,
+    "sig": "5E89WWmwhnzjqWLLxrFnEQTxLGANGJux7QGikdWqKfG5nNCnvH6vs8XzTCtM4evXBxzJ2KTz2EWJeY9k58y2id4M",
+    "reserveDelta": "-125000000000",
+    "counterparties": [
+      {
+        "owner": "FokLS7aBXkRn7vQ5ttouVMzUZ8sL6shR54PwmGm5Wett",
+        "delta": "125000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-05-03T02:03:11.000Z",
+    "slot": 337458098,
+    "sig": "4N7NkxVMBUb8U7Wb44nWxktgMAHLt5CeqXXuY6hFiQ9PSo2zgYjQwzJmyv5kRtvBjMGX2qGW7ZG1Ui4kzDmgFr7h",
+    "reserveDelta": "-200000000000",
+    "counterparties": [
+      {
+        "owner": "FhFBZ6DbbJ8EzNhezDoBKv7YBU5cnevqypJ7njdvAQvJ",
+        "delta": "200000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-05-14T02:09:28.000Z",
+    "slot": 339866470,
+    "sig": "2pjo21iyyLK6iUocEQbMEeiVrmjiSb9rcafpnNPqqyf2Ty4SSgpS4ZbTT2osgiXi6jdWVrfCpwJyVbmohwNNihzd",
+    "reserveDelta": "48929772835",
+    "counterparties": [
+      {
+        "owner": "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+        "delta": "-48929772835"
+      }
+    ]
+  },
+  {
+    "time": "2025-05-19T05:38:32.000Z",
+    "slot": 340989745,
+    "sig": "kxh9Z6ZorwmuSG5MHZyFUqCtKN36WtaSYqv6uKqyCyu98c1jo8Yzz2JBJHKz8oiDH7RacZCJUybgsqKgdmNxjdB",
+    "reserveDelta": "1000000000",
+    "counterparties": [
+      {
+        "owner": "FcEtZqVowuhF2hdysy7qxJYRhu1eNZ8ws2JqHUDmPPjE",
+        "delta": "-1000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-05-22T04:31:53.000Z",
+    "slot": 341635655,
+    "sig": "5AGcHHppo5gUwQAqe4L5QPumytpaPnw2Lq2q9VQHC9MH1o6Mt1pwFobqxRFUyXbKXGzzc4PUuf2MpryCbAMP6yAv",
+    "reserveDelta": "-1000000000",
+    "counterparties": [
+      {
+        "owner": "9crcXyZaJG5rDVz7qainb4gXQp1Ntnm1CqSMAA1348AA",
+        "delta": "1000000000"
+      }
+    ]
+  },
+  {
+    "time": "2025-08-15T15:25:20.000Z",
+    "slot": 360245051,
+    "sig": "PHGSJLQfoHo865yehnWTUtUkrESEVuc8HeYuLXqNmHVRKNMcNvrXsHo5JkoSgR7Si28zrhKme7kmXWUm8kcCSc8",
+    "reserveDelta": "-1500000000",
+    "counterparties": [
+      {
+        "owner": "2yupCJfQKvDzUKoD2nXC5nYGGWG8aibjL5jpQZteJqSA",
+        "delta": "1500000000"
+      }
+    ]
+  },
+  {
+    "time": "2026-01-30T16:58:24.000Z",
+    "slot": 396953187,
+    "sig": "3CTeaihq5UJbNxsmYHkoSSdKBdfVLyxqkWPLtzjqoeE56jiB27Dp5eFFx6FeLDv79Znq963UogvNSFqoKyBneWva",
+    "reserveDelta": "-450000000000",
+    "counterparties": [
+      {
+        "owner": "FcEtZqVowuhF2hdysy7qxJYRhu1eNZ8ws2JqHUDmPPjE",
+        "delta": "450000000000"
+      }
+    ]
+  },
+  {
+    "time": "2026-06-14T04:03:49.000Z",
+    "slot": 426340228,
+    "sig": "3vmVEm74py6Cs5YTEQ22eftDiX57cQThDTQ1BmcmbGRYcBmGsGXEG6b6VP1prpGuxREx4YoBxzKiHxuB56xzKves",
+    "reserveDelta": "-1000000000",
+    "counterparties": [
+      {
+        "owner": "9Wgko8Nr58B6LVrbqFGo5CHP6XeqL5mgPTovghJQ9i8W",
+        "delta": "1000000000"
+      }
+    ]
+  },
+  {
+    "time": "2026-07-25T05:50:56.000Z",
+    "slot": 435070004,
+    "sig": "5pqvuyfshha5w7pxvj58X35hGnqTkXTgZacqgFcp54kiHww5KnAiL6QFZ4w4iv7RKjnVhth8oH3wLyTcDkXbwDZ8",
+    "reserveDelta": "-2000000000000",
+    "counterparties": [
+      {
+        "owner": "FcEtZqVowuhF2hdysy7qxJYRhu1eNZ8ws2JqHUDmPPjE",
+        "delta": "2000000000000"
+      }
+    ]
+  },
+  {
+    "time": "2026-07-25T05:57:00.000Z",
+    "slot": 435070877,
+    "sig": "3ywjK4V8Mv6rtDE59rNseUFZ7JHb5LUvwzRrVeKFhGXCsnCp1hdhLbdii3FtnArPFRMa1JJExMepKUr3mQGC2zA9",
+    "reserveDelta": "-100000000000",
+    "counterparties": [
+      {
+        "owner": "FcEtZqVowuhF2hdysy7qxJYRhu1eNZ8ws2JqHUDmPPjE",
+        "delta": "100000000000"
+      }
+    ]
+  },
+  {
+    "time": "2026-07-25T05:57:28.000Z",
+    "slot": 435070942,
+    "sig": "KSuN7BPB5iarpH3yDPjRn4HD2UrfYFdVv1amDqVATT1tzJVf1HB3HCWw2VjTcTGx98e9FsGUF4Fr1fU7K3kShJt",
+    "reserveDelta": "-800000000000",
+    "counterparties": [
+      {
+        "owner": "EX5nxVKgRKaJVZLfDUinXie6HQ5GPhKwkZ419pRGaZ74",
+        "delta": "800000000000"
+      }
+    ]
+  },
+  {
+    "time": "2026-07-26T16:51:09.000Z",
+    "slot": 435370170,
+    "sig": "6MkKUPHc2QHn8YRwMZw2Dbn6kuMYRLYfsey1STt5sCF58VebESi7Rzp1M5Vj2LqoNSgqvew94NmddFdMHFu1cEi",
+    "reserveDelta": "1500000000",
+    "counterparties": [
+      {
+        "owner": "FcEtZqVowuhF2hdysy7qxJYRhu1eNZ8ws2JqHUDmPPjE",
+        "delta": "-1500000000"
+      }
+    ]
+  },
+  {
+    "time": "2026-07-27T00:19:58.000Z",
+    "slot": 435434158,
+    "sig": "38qD36DKR13ReqQcwh51crhC1z3eBcwSNap7pFK3NbxMA9YxDM7QrTmwKajucd2H223Wp8Sh7n8tMe1iLDdp8bvq",
+    "reserveDelta": "-1000000000000",
+    "counterparties": [
+      {
+        "owner": "D8oJSdqoYk6heQsf36217mDm3Yf95umjnXaJiLYA5ZEz",
+        "delta": "1000000000000"
+      }
+    ]
+  },
+  {
+    "time": "2026-07-27T00:20:42.000Z",
+    "slot": 435434263,
+    "sig": "3mzWVKa2zNSgBsN97kjXkS3yim3VXAzh4Pz2ognNJQdAWCEcf4L2MpdoCTUBawizrtKPrc79GZuq1iwFxCpZ57Dr",
+    "reserveDelta": "-1000000000000",
+    "counterparties": [
+      {
+        "owner": "9JGvjo1bu4WAiuSCB2neW6aKniqFECGuJ3DLvSawB39k",
+        "delta": "1000000000000"
+      }
+    ]
+  },
+  {
+    "time": "2026-07-27T19:50:33.000Z",
+    "slot": 435600996,
+    "sig": "4TS2veYcji5vwFKVMTm5jMxsABx4WawuqUe8pnBwYKn9ckcsMS7vgxANSfF7snxCapBBneAgM9LgSSxAu4A6DAd7",
+    "reserveDelta": "1500000000",
+    "counterparties": [
+      {
+        "owner": "FcEtZqVowuhF2hdysy7qxJYRhu1eNZ8ws2JqHUDmPPjE",
+        "delta": "-1500000000"
+      }
+    ]
+  },
+  {
+    "time": "2026-07-31T04:00:50.000Z",
+    "slot": 436284439,
+    "sig": "3i1wWAh4sCrnJVPdpsRBmZGmyzNpVVDCEGRzdP8FQdDkpTU6DLTjXothg9naFnFfDjkdPzj2DttWXNxiRZ3SUgLp",
+    "reserveDelta": "500000000000",
+    "counterparties": [
+      {
+        "owner": "D6d5byBxBcddovgQ2UPUMpPDpJukjyC7C4Hcg3v4FRkZ",
+        "delta": "-500000000000"
+      }
+    ]
+  },
+  {
+    "time": "2026-08-01T06:45:39.000Z",
+    "slot": 436512640,
+    "sig": "UCDei91uEH3naKR9vDHVVCpcjVXyXSamgCx26oQzAsxF2iJm4UXEGToeeqcetU2JnhaBU5L7vmQxRGx6cz3bnFz",
+    "reserveDelta": "42546279124698",
+    "counterparties": [
+      {
+        "owner": "EX5nxVKgRKaJVZLfDUinXie6HQ5GPhKwkZ419pRGaZ74",
+        "delta": "-42546279124698"
+      }
+    ]
+  },
+  {
+    "time": "2026-08-01T07:00:17.000Z",
+    "slot": 436514721,
+    "sig": "RumMGACZzogcAsMhP4qwHzocC4qj6Puf2mmMP7zXNhiW2cnCsiR7XfdwNwf9Ce3ZUNQq2SXDnmpaNyAFZzK1G1o",
+    "reserveDelta": "-50000000000000",
+    "counterparties": [
+      {
+        "owner": "EX5nxVKgRKaJVZLfDUinXie6HQ5GPhKwkZ419pRGaZ74",
+        "delta": "50000000000000"
+      }
+    ]
+  },
+  {
+    "time": "2026-08-01T16:08:48.000Z",
+    "slot": 436592608,
+    "sig": "4s2r5xLFewSkcLMa6jmNuTzXuYvAJhhhBdnxnwuUHwdtBQFenYqihzfuvmtphbdvx665VVmAni9NoovEaA8RBDKF",
+    "reserveDelta": "1500000000",
+    "counterparties": [
+      {
+        "owner": "FcEtZqVowuhF2hdysy7qxJYRhu1eNZ8ws2JqHUDmPPjE",
+        "delta": "-1500000000"
+      }
+    ]
+  },
+  {
+    "time": "2026-08-07T19:15:16.000Z",
+    "slot": 437845932,
+    "sig": "2RerMbrg97bQj4VSLvzmYQ269Hax8gCynLKrPdEzxfQz8cRhrBQmYwnZuFu18Lqw96kGm6GDRFyjjygbuCgouXtY",
+    "reserveDelta": "-5000000000000",
+    "counterparties": [
+      {
+        "owner": "FcEtZqVowuhF2hdysy7qxJYRhu1eNZ8ws2JqHUDmPPjE",
+        "delta": "5000000000000"
+      }
+    ]
+  },
+  {
+    "time": "2026-08-08T04:57:42.000Z",
+    "slot": 437928703,
+    "sig": "5Q2dFg4Ct9Cs8XrxLGKUpWF1FXkKpMAppBvWKJcHqpr58fbnHoyWPAfrf1m3dC3mx5oFFhWrLv3k5hWeHgn1E7ZC",
+    "reserveDelta": "-25000000000000",
+    "counterparties": [
+      {
+        "owner": "8jr1Zov74VbbDyvuW55Hei2LgMuki9N5W2hUVnB2f986",
+        "delta": "25000000000000"
+      }
+    ]
+  },
+  {
+    "time": "2026-08-10T06:02:22.000Z",
+    "slot": 438346741,
+    "sig": "4AykT6vdMUUmrq8XXkKeKZLjLbMemjHy15ogK3YG9KNHGaKEjG6xJubxcKZU1NZYKzXiL1n3weSwty7zsFqP8Au3",
+    "reserveDelta": "709106545301",
+    "counterparties": [
+      {
+        "owner": "GpMZbSM2GgvTKHJirzeGfMFoaZ8UR2X7F4v8vHTvxFbL",
+        "delta": "-709106545301"
+      }
+    ]
+  }
+]

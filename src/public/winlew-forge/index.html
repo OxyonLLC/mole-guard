@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+  <title>$WinLEW Forge</title>
+  <meta name="description" content="$WinLEW Forge — a Multi-AI dashboard for building WinLEW games, assets, and reward systems." />
+  <link rel="canonical" href="https://winlew.co/winlew-forge/" />
+  <meta property="og:title" content="$WinLEW Forge" />
+  <meta property="og:description" content="A Multi-AI creation hub for WinLEW games, assets, and Web3 reward logic." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/winlew-forge/" />
+  <meta property="og:image" content="https://winlew.co/images/mole-dirt-hero.png" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <style>
+    :root{
+      --bg:#130b08;
+      --bg2:#24150d;
+      --panel:rgba(255,255,255,.05);
+      --line:rgba(255,255,255,.12);
+      --text:#f6efe8;
+      --muted:rgba(246,239,232,.85);
+      --brand:#d6a866;
+      --brand2:#7d5837;
+      --shadow:0 28px 80px rgba(0,0,0,.42);
+      --radius:24px;
+      --ring:0 0 0 3px rgba(214,168,102,.18);
+      --good:#d8c392;
+      --warn:#f1c27d;
+      --bad:#ff9b7a;
+      --max:1240px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1000px 620px at 10% 0%, rgba(214,168,102,.10), transparent 60%),
+        radial-gradient(900px 640px at 100% 8%, rgba(125,88,55,.18), transparent 55%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 52%, #130b08 100%);
+    }
+    a{color:inherit}
+    code, textarea, input, select{font:inherit}
+    .wrap{max-width:var(--max);margin:0 auto;padding:22px}
+    .nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:linear-gradient(180deg, rgba(19,11,8,.88), rgba(19,11,8,.58));border-bottom:1px solid rgba(255,255,255,.08)}
+    .navInner{max-width:2000px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .navBrand{text-decoration:none;color:var(--text);font-weight:950}
+    .glow{text-shadow:0 0 18px rgba(214,168,102,.18)}
+    .navLinks{display:flex;gap:10px;flex-wrap:wrap}
+    .pill,.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 13px;border-radius:999px;text-decoration:none;font-weight:850;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--text);transition:transform .12s ease,background .12s ease,border-color .12s ease;cursor:pointer}
+    .btn{border-radius:14px}
+    .pill:hover,.btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.20)}
+    .pill:focus,.btn:focus,button:focus,input:focus,select:focus,textarea:focus{outline:none;box-shadow:var(--ring)}
+    .btn.primary{background:linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22));border-color:rgba(255,255,255,.18)}
+    .btn.ghost{background:rgba(0,0,0,.18)}
+    .hero{display:grid;grid-template-columns:1.06fr .94fr;gap:16px;padding-top:18px}
+    @media (max-width: 980px){.hero{grid-template-columns:1fr}}
+    .pageBanner{grid-column:1 / -1;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.12)}
+    .pageBanner img{display:block;width:100%;height:auto}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;position:relative}
+    .card::before{content:"";position:absolute;inset:-2px;pointer-events:none;opacity:.8;background:radial-gradient(740px 230px at 20% 0%, rgba(214,168,102,.18), transparent 55%),radial-gradient(700px 230px at 82% 0%, rgba(125,88,55,.18), transparent 55%);filter:blur(18px)}
+    .card > *{position:relative}
+    .heroLeft,.heroRight,.panel{padding:24px}
+    .kicker{display:inline-flex;gap:10px;align-items:center;font-size:13px;color:var(--muted);border:1px solid var(--line);background:rgba(0,0,0,.22);padding:8px 12px;border-radius:999px;margin-bottom:14px}
+    h1{margin:0 0 10px;font-size:clamp(34px,4.2vw,56px);line-height:1.02;letter-spacing:-.8px}
+    h2,h3,h4{margin:0}
+    .sub{color:var(--muted);font-size:16px;line-height:1.7;max-width:58ch}
+    .miniRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .miniRow span{padding:8px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(0,0,0,.18);color:var(--muted);font-size:13px}
+    .stack{display:flex;flex-direction:column;gap:12px}
+    .sectionTitle{font-weight:950;letter-spacing:.2px;font-size:16px;margin:18px 0 10px}
+    .grid2{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;margin-top:16px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+    @media (max-width: 980px){.grid2,.grid3{grid-template-columns:1fr}}
+    .tile,.moduleCard,.panelCard{padding:18px}
+    .tile p,.moduleCard p,.panelCard p,.muted{color:var(--muted);line-height:1.6}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .select,input[type="text"],input[type="number"],textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--text);border-radius:14px;padding:12px 13px}
+    select.select{appearance:none;-webkit-appearance:none}
+    textarea{min-height:180px;resize:vertical}
+    .field{display:flex;flex-direction:column;gap:8px}
+    .field label{font-weight:850;font-size:14px}
+    .status{padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid var(--line);font-weight:850}
+    .status.ok{border-color:rgba(214,168,102,.28);background:rgba(214,168,102,.08)}
+    .status.warn{border-color:rgba(241,194,125,.28);background:rgba(241,194,125,.08)}
+    .status.bad{border-color:rgba(255,155,122,.28);background:rgba(255,155,122,.08)}
+    .moduleHeader{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .tag{display:inline-flex;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.18);font-size:12px;color:var(--muted);font-weight:850}
+    .response{min-height:340px;white-space:pre-wrap}
+    .list{display:grid;gap:10px}
+    .listItem{padding:12px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10)}
+    .imageSlots{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .imageSlot{min-height:120px;border:1px dashed rgba(255,255,255,.14);border-radius:18px;background:rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;color:var(--muted)}
+    @media (max-width: 720px){.imageSlots{grid-template-columns:1fr}}
+    .footerBar{padding:26px 0 42px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    /* Same native-dropdown dark fix as assets/premium.css (not loaded here):
+       without it the open <select> list is white-on-white. */
+    select{color-scheme:dark}
+    select option{background-color:#24150d;color:#f6efe8}
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div class="navInner">
+      <a class="navBrand" href="/">WinLEW</a>
+      <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+      <div class="navRight">
+        <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+        <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+        <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+        <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="pageBanner"><img src="/images/page-headers/winlew-forge.png" alt="WinLEW Forge — tools, resources, and utilities for builders" loading="lazy" /></div>
+      <div class="card heroLeft">
+        <div class="kicker">🛠️ Internal studio dashboard • Multi-AI routing • WinLEW game systems</div>
+        <h1>The $WinLEW Forge.</h1>
+        <p class="sub">A creation hub for building WinLEW games, assets, and reward logic. Switch between AI brains for gameplay systems, creative writing, and future asset generation — all inside one cleaner workspace.</p>
+        <div class="toolbar">
+          <span class="pill">🧠 Brain Selector</span>
+          <span class="pill">🖼️ Asset Forge</span>
+          <span class="pill">🪙 Web3 Module</span>
+          <span class="pill">📦 Project Vault</span>
+        </div>
+        <div class="miniRow">
+          <span>OpenAI for logic + systems</span>
+          <span>Anthropic for writing + worldbuilding</span>
+          <span>Built to expand to image + Web3 tooling</span>
+        </div>
+      </div>
+      <div class="card heroRight">
+        <img src="/images/mole-dirt-hero.png" alt="WinLEW Forge hero art" style="display:block;width:100%;max-width:360px;height:auto;margin:0 auto 14px;border-radius:18px;border:1px solid rgba(255,255,255,.12)" />
+        <div class="status warn">🔒 Internal, owner-only studio. The AI routing backend is live — but running a brain requires a connected WinLEW <strong>maintainer</strong> wallet, since it uses the project's own API keys. Anyone can view the workspace; only maintainers can run it. Image generation and Web3 reward helpers come later.</div>
+      </div>
+    </section>
+
+    <div class="sectionTitle">Forge workspace</div>
+    <section class="grid2">
+      <div class="card panel">
+        <div class="moduleHeader">
+          <h3>Brain Selector</h3>
+          <span class="tag">🔒 Maintainer only</span>
+        </div>
+        <div class="stack">
+          <div class="field">
+            <label for="provider">AI brain</label>
+            <select id="provider" class="select">
+              <option value="openai">OpenAI • Logic / systems</option>
+              <option value="anthropic">Anthropic • Writing / narrative</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="task">Task focus</label>
+            <select id="task" class="select">
+              <option value="logic">Gameplay logic</option>
+              <option value="creative">Creative writing</option>
+              <option value="web3">Web3 scripting</option>
+              <option value="analysis">System analysis</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="systemPrompt">System prompt</label>
+            <textarea id="systemPrompt">You are a senior game systems designer helping build the WinLEW ecosystem. Prefer practical architecture, modular design, and user-first flows.</textarea>
+          </div>
+          <div class="field">
+            <label for="prompt">Prompt</label>
+            <textarea id="prompt">Create a high-level folder structure for a Multi-AI Gaming Hub and write a basic AI router that can send a prompt to either OpenAI or Anthropic depending on a toggle switch.</textarea>
+          </div>
+          <div class="grid2" style="margin-top:0;">
+            <div class="field">
+              <label for="temperature">Temperature</label>
+              <input id="temperature" type="number" min="0" max="1.5" step="0.1" value="0.7" />
+            </div>
+            <div class="field">
+              <label for="maxTokens">Max tokens</label>
+              <input id="maxTokens" type="number" min="100" max="4000" step="100" value="1200" />
+            </div>
+          </div>
+          <div class="toolbar">
+            <button class="btn primary" id="runForge">Run selected brain</button>
+            <button class="btn" id="loadArchitecturePrompt">Load architecture prompt</button>
+            <button class="btn ghost" id="loadWeb3Prompt">Load Web3 prompt</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <div class="moduleHeader">
+          <h3>Output panel</h3>
+          <span class="tag">Provider response</span>
+        </div>
+        <div id="forgeStatus" class="status warn">Connect a maintainer wallet, choose a brain, and run a prompt. Live responses appear here.</div>
+        <div id="forgeMeta" class="muted" style="margin-top:10px;">No request sent yet.</div>
+        <div id="forgeResponse" class="response" style="margin-top:12px;">The Forge response panel is ready.</div>
+      </div>
+    </section>
+
+    <div class="sectionTitle">Forge modules</div>
+    <section class="grid3">
+      <div class="card moduleCard">
+        <div class="moduleHeader"><h3>🖼️ Asset Forge</h3><span class="tag">Scaffolded</span></div>
+        <p>Use image providers later for sprites, textures, UI concepts, and visual direction while keeping the WinLEW look consistent.</p>
+        <div class="imageSlots" style="margin-top:14px;">
+          <div class="imageSlot">Character / sprite concepts</div>
+          <div class="imageSlot">Textures / UI / item mockups</div>
+        </div>
+      </div>
+      <div class="card moduleCard">
+        <div class="moduleHeader"><h3>🪙 Web3 Module</h3><span class="tag">Planned</span></div>
+        <p>Draft score hooks, achievement rewards, daily participation logic, and gameplay-to-$WinLEW utility scripts without wiring them live yet.</p>
+        <div class="list" style="margin-top:14px;">
+          <div class="listItem">High score reward script outlines</div>
+          <div class="listItem">Quest completion reward events</div>
+          <div class="listItem">Achievement + streak utility mapping</div>
+        </div>
+      </div>
+      <div class="card moduleCard">
+        <!-- Tagged "Ready". Nothing is built: the page has no localStorage,
+             no indexedDB and no save path of any kind, and the only Forge route
+             the backend serves is /api/forge/ai — there is no vault endpoint.
+             Its two sibling modules are honestly tagged "Scaffolded" and
+             "Planned", which is what makes this one stand out: on a page whose
+             own hero says the Forge is internal and half-built, one module
+             claiming to be finished is the only line that isn't straight.
+             "Keep … in one place" reworded to describe the intent, not a
+             capability. -->
+        <div class="moduleHeader"><h3>📦 Project Vault</h3><span class="tag">Planned</span></div>
+        <p>Intended as one place for prompts, architecture notes, game concepts, and reward-loop ideas, so the Forge becomes a real internal studio dashboard. Nothing is stored yet — there is no save path built.</p>
+        <div class="list" style="margin-top:14px;">
+          <div class="listItem">Game loop concepts</div>
+          <div class="listItem">Narrative / worldbuilding seeds</div>
+          <div class="listItem">Reward systems / anti-abuse notes</div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footerBar">
+      <div>Built for creation. Built for iteration. Built to turn ideas into WinLEW systems.</div>
+      <div>Live route: <span class="glow">/winlew-forge/</span></div>
+    </footer>
+  </div>
+
+  <script>
+    const architecturePrompt = `I am building $WinLEW Forge, a web-based Multi-AI Gaming Hub for the $WinLEW ecosystem. Create a high-level folder structure and a basic AI router that can send prompts to OpenAI or Anthropic depending on a toggle switch.`;
+    const web3Prompt = `Design a Web3 gameplay module for WinLEW that can later connect high scores, quest completions, and daily participation to $WinLEW token rewards with anti-abuse guardrails.`;
+
+    const provider = document.getElementById('provider');
+    const task = document.getElementById('task');
+    const systemPrompt = document.getElementById('systemPrompt');
+    const prompt = document.getElementById('prompt');
+    const temperature = document.getElementById('temperature');
+    const maxTokens = document.getElementById('maxTokens');
+    const statusEl = document.getElementById('forgeStatus');
+    const metaEl = document.getElementById('forgeMeta');
+    const responseEl = document.getElementById('forgeResponse');
+
+    document.getElementById('loadArchitecturePrompt').addEventListener('click', () => {
+      task.value = 'logic';
+      provider.value = 'openai';
+      prompt.value = architecturePrompt;
+    });
+
+    document.getElementById('loadWeb3Prompt').addEventListener('click', () => {
+      task.value = 'web3';
+      provider.value = 'anthropic';
+      prompt.value = web3Prompt;
+    });
+
+    document.getElementById('runForge').addEventListener('click', async () => {
+      statusEl.className = 'status warn';
+      statusEl.textContent = 'Running selected brain...';
+      metaEl.textContent = 'Sending request to the Forge router.';
+      responseEl.textContent = 'Waiting for provider response...';
+
+      const auth = window.WinLEWAuth?.getAuth?.() || {};
+      try {
+        // Fixed 2026-08-08 alongside the same bug on the landing page and
+        // /home/. Apache 404s every /api/* path on winlew.co; only
+        // /verify/api-proxy.php reaches Node, so this POST never arrived and
+        // the Forge's AI step failed in production while working locally.
+        // Safe to read window.WinLEWAuth here even though wallet-auth.js is
+        // loaded further down the page — this runs from a user action, long
+        // after every script has parsed (the getAuth() call above relies on
+        // exactly the same thing).
+        const forgeUrl = window.WinLEWAuth?.hubApiUrl
+          ? window.WinLEWAuth.hubApiUrl('/api/forge/ai')
+          : '/api/forge/ai';
+        const res = await fetch(forgeUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            session: auth.session || '',
+            provider: provider.value,
+            task: task.value,
+            prompt: prompt.value,
+            systemPrompt: systemPrompt.value,
+            temperature: Number(temperature.value),
+            maxTokens: Number(maxTokens.value),
+          }),
+        });
+
+        const data = await res.json().catch(() => ({}));
+        if (res.status === 401) throw new Error('Connect your maintainer wallet first — use "Connect wallet" up top.');
+        if (res.status === 403) throw new Error('Owner-only tool: your account isn’t a WinLEW maintainer, so the Forge won’t run a brain for it.');
+        if (!res.ok || !data?.ok) throw new Error(data?.error || 'Forge request failed.');
+
+        statusEl.className = 'status ok';
+        statusEl.textContent = 'Forge response ready.';
+        metaEl.textContent = `${data.result.provider} • ${data.result.model}`;
+        responseEl.textContent = data.result.content || 'No content returned.';
+      } catch (error) {
+        statusEl.className = 'status bad';
+        statusEl.textContent = 'Forge request failed.';
+        metaEl.textContent = '';
+        responseEl.textContent = error.message || 'Unknown error.';
+      }
+    });
+  </script>
+  <script src="/assets/wallet-auth.js"></script>
+<script>
+  (function () {
+    const { getAuth, setConnectedUi, walletLogin, getCachedWallet, refreshWalletBalance } = window.WinLEWAuth;
+    document.getElementById('navWalletConnect')?.addEventListener('click', (e) => void walletLogin({ triggerBtn: e.currentTarget, onSuccess: () => window.location.reload() }));
+    if (getAuth().session) setConnectedUi(getCachedWallet() || 'connected');
+    refreshWalletBalance();
+  })();
+</script>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

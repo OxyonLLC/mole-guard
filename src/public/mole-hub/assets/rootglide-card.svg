@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" fill="none">
+<defs>
+  <linearGradient id="bg" x1="140" y1="24" x2="1060" y2="646" gradientUnits="userSpaceOnUse"><stop stop-color="#21140E"/><stop offset="1" stop-color="#0F121B"/></linearGradient>
+  <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(310 210) rotate(90) scale(260 320)"><stop stop-color="#F4B356" stop-opacity=".35"/><stop offset="1" stop-color="#F4B356" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1200" height="675" rx="28" fill="url(#bg)"/>
+<rect width="1200" height="675" rx="28" fill="url(#glow)"/>
+<path d="M0 540C120 516 214 438 270 358C342 254 366 128 472 70C594 2 740 90 832 154C920 214 1010 266 1200 248V675H0V540Z" fill="#3E2416"/>
+<path d="M0 612C174 540 278 520 398 538C536 558 660 640 812 640C938 640 1052 588 1200 604V675H0V612Z" fill="#5A3825"/>
+<g opacity=".9">
+  <path d="M182 0V214" stroke="#7F5638" stroke-width="42" stroke-linecap="round"/>
+  <path d="M258 0V282" stroke="#8F674A" stroke-width="18" stroke-linecap="round"/>
+  <path d="M916 0V178" stroke="#72513B" stroke-width="28" stroke-linecap="round"/>
+  <path d="M980 0V250" stroke="#8A674D" stroke-width="16" stroke-linecap="round"/>
+</g>
+<rect x="875" y="370" width="190" height="40" rx="20" fill="#988E7A" transform="rotate(-24 875 370)"/>
+<rect x="986" y="316" width="104" height="108" rx="18" fill="#D6D1C3" transform="rotate(-24 986 316)"/>
+<g transform="translate(418 352) rotate(-18)">
+  <ellipse cx="0" cy="0" rx="78" ry="56" fill="#5A3B24"/>
+  <ellipse cx="18" cy="16" rx="44" ry="34" fill="#E9BEA1"/>
+  <circle cx="-20" cy="-10" r="10" fill="#101014"/>
+  <circle cx="8" cy="-6" r="9" fill="#101014"/>
+  <path d="M-2 20C8 28 24 28 34 20" stroke="#2E1C13" stroke-width="6" stroke-linecap="round"/>
+  <path d="M-42 -36L8 -76L52 -28" fill="#63B35B"/>
+  <path d="M-42 -36L8 -76L52 -28" stroke="#A8E296" stroke-width="4" stroke-linejoin="round"/>
+  <rect x="-18" y="-74" width="46" height="24" rx="12" fill="#D58A23"/>
+  <circle cx="4" cy="-62" r="8" fill="#FFF2CA"/>
+</g>
+<g fill="#C9A153">
+  <circle cx="616" cy="184" r="14"/><circle cx="676" cy="154" r="12"/><circle cx="742" cy="190" r="10"/>
+</g>
+<g fill="#A59E8A">
+  <circle cx="188" cy="546" r="34"/><circle cx="222" cy="572" r="18"/><circle cx="880" cy="556" r="44"/><circle cx="942" cy="580" r="22"/>
+</g>
+</svg>

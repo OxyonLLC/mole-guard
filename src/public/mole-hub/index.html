@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+  <title>WinLEW Mole Hub</title>
+  <meta name="description" content="WinLEW Mole Hub — browser-based games built in the same Proof of Value direction as the main WinLEW website." />
+  <meta property="og:title" content="WinLEW Mole Hub" />
+  <meta property="og:description" content="Eight browser games in the WinLEW Mole Hub: DigLEW, Pac-Mole, Root Glide, Burrow Blaster, Tunnel Tap, Grub Drop, Mole Spades, and experimental Mole Ice." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/mole-hub/" />
+  <link rel="canonical" href="https://winlew.co/mole-hub/" />
+  <meta property="og:image" content="https://winlew.co/images/mole-dirt-hero.png" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="./css/styles.css?v=v56-play-for-xl1" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+</head>
+<body>
+  <div class="nav">
+    <div class="navInner navArcade">
+      <a class="brandMark arcadeBrand" href="/">
+        <img class="brandAvatar" src="/images/avatars/mole-guard-128.png" alt="The WinLEW Mole" />
+        <span class="brandCopy">
+          <span class="brandTitle">WinLEW</span>
+          <span class="brandSub">MOLE HUB • PLAY • PARTICIPATE</span>
+        </span>
+      </a>
+      <div class="navLinks arcadeLinks" id="siteNavLinks">
+        <a class="pill" href="/">🏠 WinLEW</a>
+        <a class="pill active" href="/mole-hub/">Play</a>
+        <a class="pill" href="/quiz/">Quiz</a>
+        <a class="pill" href="/faucet/">Faucet</a>
+        <a class="pill" href="/about/">About</a>
+      </div>
+      <div class="navRight">
+        <a class="pill navProfile" id="hubProfileLink" href="/verify/profile.html">📊 Dashboard</a>
+        <div class="walletPill" id="navWalletChip" aria-label="WinLEW wallet balance">
+          <span class="walletIcon">◎</span>
+          <span id="navWalletAmount">0.00</span>
+          <span class="walletTicker">LEW</span>
+        </div>
+        <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet so your winnings save (links to your Discord-verified wallet)">Connect wallet</button>
+        <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="app" class="wrap">
+    <div id="walletVerificationNotice" class="wallet-verification-notice hidden" role="status" aria-live="polite">
+      <span id="walletVerificationText"></span>
+      <!-- Through the api-proxy on purpose: /linked-role/* is a route on the NODE app, not a file on this static host, so a bare /linked-role/mole 404s. Reported live 2026-08-21. -->
+      <a id="walletVerificationLink" class="pill" href="/verify/api-proxy.php/linked-role/mole">Verify on Discord</a>
+    </div>
+    <div id="guestNudge" class="hidden" style="display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin:12px auto 0;max-width:1100px;padding:10px 16px;border:1px solid var(--line,#2a2a44);border-radius:14px;background:rgba(124,92,255,.14);font-weight:700">
+      <span>🎮 Playing as guest — keep playing, then connect to review account-linked participation. A local score does not guarantee a reward; server eligibility and claim confirmation apply.</span>
+      <button id="guestNudgeBtn" class="pill" type="button">Connect wallet</button>
+    </div>
+    <div id="discordModeNotice" class="wallet-verification-notice hidden" role="status" aria-live="polite">
+      <span id="discordModeText"></span>
+    </div>
+    <main>
+      <section id="hubView" class="view active">
+        <section class="catalog-shell">
+          <div class="hub-banner phase4a-hero-art"><img src="./assets/hub-banner-600.webp" alt="WinLEW moles exploring the Gaming Hub arcade" /></div>
+          <div class="catalog-top">
+            <div class="catalog-copy">
+              <div class="catalog-kicker">WINLEW PLAY • EIGHT PLAYABLE EXPERIENCES • ONE MOLE HUB</div>
+              <h1 class="catalog-title">Pick a game.<br />Start digging.</h1>
+              <p class="catalog-sub">Play immediately as a guest, or connect your existing WinLEW identity when you want eligible participation and reward records tied to your profile. Every game keeps its own controls, state and rules.</p>
+              <div class="phase4a-hero-actions">
+                <a class="btn primary" href="#catalogGrid">Choose a game</a>
+                <a class="btn ghost" href="/verify/profile.html">View participation</a>
+              </div>
+            </div>
+            <div class="catalog-utility card">
+              <div class="catalog-utility-row">
+                <div>
+                  <div class="catalog-utility-label">Your play setup</div>
+                  <div class="catalog-utility-copy">Sound and device guidance live here. Wallet connection remains optional for trying the games.</div>
+                </div>
+                <div class="catalog-utility-actions">
+                  <button id="soundToggle" class="copyBtn">Sound: On</button>
+                  <button id="homeBtn" class="copyBtn hidden">Back to Hub</button>
+                </div>
+              </div>
+              <div class="catalog-mini-row">
+                <span>🎮 Guest play available</span>
+                <span>💾 Local progress varies by game</span>
+                <span>📱 Touch and keyboard options</span>
+                <span id="gatewayHint">📱 Mobile users: touch-first lane recommended</span>
+              </div>
+              <div class="catalog-cta-row">
+                <a class="btn ghost" href="/">WinLEW home</a>
+                <a class="btn" href="/verify/">Connect / Verify</a>
+              </div>
+            </div>
+          </div>
+
+          <section class="phase4a-trust-grid" aria-label="How Play works">
+            <article class="card"><span>01</span><div><b>Play first</b><p>Every live card launches an existing game runtime. No wallet is required just to try a game.</p></div></article>
+            <article class="card"><span>02</span><div><b>Know what is recorded</b><p>Some progress and leaderboards are local to this browser. Reward claims use the existing server path.</p></div></article>
+            <article class="card"><span>03</span><div><b>Connect when useful</b><p>Use the existing Verify and Profile experiences to link eligible participation—never a new Play-only account.</p></div></article>
+          </section>
+
+          <section id="yourPlay" class="your-play card" aria-labelledby="yourPlayTitle">
+            <div class="your-play-heading">
+              <div>
+                <span class="eyebrow">YOUR PLAY</span>
+                <h2 id="yourPlayTitle">Know what this browser can prove.</h2>
+                <p>Connection, verification, and recorded participation are separate states. This panel uses the existing WinLEW session and history services—never a Play-only identity.</p>
+              </div>
+              <img src="/images/avatars/mole-guard-128.png" alt="Mole Guard" width="82" height="82" loading="lazy" />
+            </div>
+            <div class="your-play-states" role="list" aria-live="polite">
+              <div class="your-play-state" role="listitem"><span>Connection</span><strong id="yourPlayConnection">Checking…</strong><small id="yourPlayConnectionHelp">Reading this browser's existing WinLEW session.</small></div>
+              <div class="your-play-state" role="listitem"><span>Verification</span><strong id="yourPlayVerification">Checking…</strong><small id="yourPlayVerificationHelp">Verification is confirmed only by the profile service.</small></div>
+              <div class="your-play-state" role="listitem"><span>Recorded play</span><strong id="yourPlayHistory">Checking…</strong><small id="yourPlayHistoryHelp">A local score and a server record are different states.</small></div>
+            </div>
+            <div class="your-play-actions">
+              <a class="btn primary" href="/verify/profile.html">Open full profile</a>
+              <a class="btn ghost" href="/verify/">Verify or reconnect</a>
+              <span id="yourPlayNext" class="your-play-next">You can play as a guest while these checks finish.</span>
+            </div>
+          </section>
+
+          <section class="gateway-row">
+            <button id="laneWeb" type="button" class="catalog-lane card" data-jump-filter="web">
+              <div class="catalog-lane-icon" aria-hidden="true">
+                <svg viewBox="0 0 64 64" class="lane-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="32" cy="32" r="21" stroke="currentColor" stroke-width="3.5"/>
+                  <path d="M11 32H53" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                  <path d="M32 11C37 16.5 40 24 40 32C40 40 37 47.5 32 53" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                  <path d="M32 11C27 16.5 24 24 24 32C24 40 27 47.5 32 53" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                  <path d="M15 22.5C20 26 25.5 27.5 32 27.5C38.5 27.5 44 26 49 22.5" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                  <path d="M15 41.5C20 38 25.5 36.5 32 36.5C38.5 36.5 44 38 49 41.5" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <div class="catalog-lane-title">Instant Web Play <span>⚡</span></div>
+                <p>Play instantly in your browser. Optimized for keyboard, mouse, and longer score-chase sessions.</p>
+              </div>
+            </button>
+            <button id="laneMobile" type="button" class="catalog-lane card featured" data-jump-filter="mobile">
+              <div class="catalog-lane-icon" aria-hidden="true">
+                <svg viewBox="0 0 64 64" class="lane-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="20" y="10" width="24" height="44" rx="7" stroke="currentColor" stroke-width="3.5"/>
+                  <rect x="25" y="17" width="14" height="24" rx="3" fill="currentColor" opacity=".18"/>
+                  <circle cx="32" cy="47" r="2.8" fill="currentColor"/>
+                </svg>
+              </div>
+              <div>
+                <div class="catalog-lane-title">Mobile-Native Play <span class="featured-badge">Featured</span></div>
+                <p>Built for touch. Faster retries, portrait-friendly layouts, and strong short-session hook loops.</p>
+              </div>
+            </button>
+          </section>
+
+          <div class="phase4a-section-heading"><span>THE ARCADE FLOOR</span><h2>Eight ways to play right now.</h2><p>Product state and reward boundaries are shown on every card. “Live” means the game launches—not that every score guarantees a payout.</p></div>
+
+          <section class="catalog-controls card">
+            <div class="catalog-filters" id="catalogFilters">
+              <button type="button" class="catalog-filter is-active" data-filter="all">All</button>
+              <button type="button" class="catalog-filter" data-filter="mobile">Mobile</button>
+              <button type="button" class="catalog-filter" data-filter="web">Web</button>
+              <button type="button" class="catalog-filter" data-filter="new">New</button>
+              <button type="button" class="catalog-filter" data-filter="popular">Popular</button>
+              <button type="button" class="catalog-filter" data-filter="planned">Coming Soon</button>
+            </div>
+            <label class="catalog-sort-wrap" for="catalogSort">
+              <span>Sort by:</span>
+              <select id="catalogSort" class="catalog-sort">
+                <option value="featured">Featured</option>
+                <option value="mobile">Mobile first</option>
+                <option value="web">Web first</option>
+                <option value="az">A–Z</option>
+              </select>
+            </label>
+          </section>
+
+          <section id="catalogGrid" class="catalog-grid"></section>
+
+          <section id="catalogBoards" class="catalog-board-strip">
+            <article class="catalog-board card">
+              <h3>DigLEW Best Runs</h3>
+              <ol id="hubDiglewBoard" class="leaderboard"></ol>
+            </article>
+            <article class="catalog-board card">
+              <h3>Pac-Mole High Scores</h3>
+              <ol id="hubPacBoard" class="leaderboard"></ol>
+            </article>
+            <article class="catalog-board card">
+              <h3>Root Glide Records</h3>
+              <ol id="hubGlideBoard" class="leaderboard"></ol>
+            </article>
+            <article class="catalog-board card">
+              <h3>Burrow Blaster Records</h3>
+              <ol id="hubBlasterBoard" class="leaderboard"></ol>
+            </article>
+          </section>
+
+          <footer id="catalogFooter" class="catalog-footer card">
+            <div class="catalog-footer-item">
+              <strong>🏆 Scores need context</strong>
+              <span>Hub leaderboards are browser-local today unless a game explicitly confirms a server record.</span>
+            </div>
+            <div class="catalog-footer-item">
+              <strong>🎁 Claims remain authoritative</strong>
+              <span>A reward reveal is immediate feedback. The existing server response determines what was actually recorded.</span>
+            </div>
+            <div class="catalog-footer-item">
+              <strong>🛡️ One WinLEW identity</strong>
+              <span>Verify and Profile remain the trusted connection points. Mole Hub does not create another account system.</span>
+            </div>
+            <div class="catalog-footer-actions">
+              <a class="btn primary" href="/verify/profile.html">View participation</a>
+              <a class="btn ghost" href="/">WinLEW home</a>
+            </div>
+            <div style="grid-column:1 / -1;text-align:center;font-size:13px;opacity:.82;border-top:1px solid rgba(255,255,255,.12);padding-top:14px;margin-top:4px;">
+              <strong>Proof before promises:</strong> local scores, submitted claims, and profile records are different states. Mole Hub labels the boundary instead of treating them as interchangeable.
+            </div>
+          </footer>
+        </section>
+        <div id="catalogToast" class="catalog-toast" aria-live="polite"></div>
+      </section>
+
+      <section id="diglewView" class="view hidden">
+        <div class="game-shell">
+          <aside class="sidebar card">
+            <div class="panelTitle"><div>DigLEW</div><div class="muted" style="font-size:13px;">Web / 3-Road Runner</div></div>
+            <p class="muted">Read the road, chase top-road treasure, smash cracked-rock gates, build clean combos, and reach the checkpoint for a stronger reward reveal.</p>
+            <div id="diglewResources" class="stats-grid"></div>
+            <h3>Colony Upgrades</h3>
+            <div id="diglewUpgrades" class="stack"></div>
+            <div class="stack compact">
+              <button id="diglewStartBtn" class="btn primary">Start Run</button>
+              <button id="diglewResetBtn" class="btn ghost">Reset Progress</button>
+            </div>
+            <div class="howto">
+              <h4>How it works</h4>
+              <p>Lew runs forward automatically through choreographed 3-road tunnel gates. Risk Road pays best, Safe Road helps recovery but pays less, and cracked-rock gates reward clean dash timing.</p>
+              <p><strong>Controls:</strong> W / ↑ = road up, S / ↓ = road down, SPACE / SHIFT / X = dash, P / Esc = pause. On mobile, swipe up/down or use Road Up / Dash / Road Down buttons.</p><p><strong>Road rules:</strong> Top road = highest rewards and most risk. Middle road = balanced pathing. Bottom road = recovery route with lighter rewards, so camping does not pay.</p>
+            </div>
+          </aside>
+
+          <section class="play-area">
+            <div class="floating-panel card slim gameHeader">
+              <div>
+                <div class="eyebrow" id="diglewMissionYard">Tunnel Run</div>
+                <h3 id="diglewMissionTitle">Prepare your colony</h3>
+                <p id="diglewMissionText">Read the road, dash cracked rocks, and reach the checkpoint.</p>
+              </div>
+              <div class="headerActions">
+                <button id="diglewStartTop" class="btn primary">Start Run</button>
+                <button id="diglewPauseTop" class="btn ghost hidden">Pause</button>
+                <button id="diglewResetTop" class="btn ghost">Reset Progress</button>
+                <button id="diglewHomeTop" class="btn ghost">Back to Hub</button>
+                <div class="turn-pill" id="diglewTurns">Turns: --</div>
+              </div>
+            </div>
+            <canvas id="diglewCanvas" width="1240" height="840"></canvas>
+            <div class="hud-strip card slim">
+              <div id="diglewSense">Sense: --</div>
+              <div id="diglewRunInfo">Run: --</div>
+              <div id="diglewUpgradeHint">Upgrade hint: --</div>
+            </div>
+          </section>
+
+          <aside class="rightbar card">
+            <h3>Run Log</h3>
+            <div id="diglewLog" class="log"></div>
+            <h3>Best Runs</h3>
+            <ol id="diglewBoard" class="leaderboard"></ol>
+          </aside>
+        </div>
+      </section>
+
+      <section id="pacmoleView" class="view hidden">
+        <div class="game-shell pac-layout">
+          <aside class="sidebar card">
+            <div class="panelTitle"><div>Pac-Mole</div><div class="muted" style="font-size:13px;">Arcade / 20 levels</div></div>
+            <p class="muted">20 levels. Validator-built corridors, one-tile borders, no isolated wall islands, filled paths, and rotating beetle dens.</p>
+            <div id="pacStats" class="stats-grid"></div>
+            <div class="stack compact">
+              <button id="pacStartBtn" class="btn primary">Start / Resume</button>
+              <button id="pacResetBtn" class="btn ghost">Reset Run</button>
+            </div>
+            <div class="howto">
+              <h4>How it works</h4>
+              <p>Clear every worm/globe in a validated classic maze. Borders stay one tile thick, loose 1x1 wall islands are removed, every path tile is filled, and Burrow shortcuts still matter.</p>
+              <p><strong>Controls:</strong> Arrow keys / WASD to move, P to pause, SPACE for Burrow Dash.</p>
+            </div>
+          </aside>
+          <section class="play-area">
+            <div class="floating-panel card slim gameHeader">
+              <div>
+                <div class="eyebrow">Arcade Chase</div>
+                <h3 id="pacBanner">Level 1 — Pantry Tunnels</h3>
+                <p id="pacSub">Collect every worm and stay one turn ahead.</p>
+              </div>
+              <div class="headerActions">
+                <button id="pacStartTop" class="btn primary">Start / Resume</button>
+                <button id="pacResetTop" class="btn ghost">Reset Run</button>
+                <button id="pacHomeTop" class="btn ghost">Back to Hub</button>
+                <div class="turn-pill" id="pacMode">Ready</div>
+              </div>
+            </div>
+            <canvas id="pacCanvas" width="1280" height="860"></canvas>
+            <div class="hud-strip card slim">
+              <div id="pacHint">Tip: Glow-grubs flip the chase.</div>
+              <div id="pacProgress">Progress: 0 / 20</div>
+              <div id="pacEnemyInfo">Beetles: --</div>
+            </div>
+          </section>
+          <aside class="rightbar card">
+            <h3>Scoreboard</h3>
+            <ol id="pacBoard" class="leaderboard"></ol>
+            <h3>Level Select</h3>
+            <div id="pacLevelButtons" class="level-grid"></div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="rootglideView" class="view hidden">
+        <div class="game-shell mobile-game-shell">
+          <aside class="sidebar card mobile-side">
+            <div class="panelTitle"><div>Root Glide</div><div class="muted" style="font-size:13px;">Mobile / Tap survival</div></div>
+            <p class="muted">Tap to glide through root gaps and reach the beacon burrow in one piece.</p>
+            <div id="glideStats" class="stats-grid"></div>
+            <div class="stack compact">
+              <button id="glideStartBtn" class="btn primary">Start / Resume</button>
+              <button id="glideResetBtn" class="btn ghost">Reset Run</button>
+            </div>
+            <div class="howto">
+              <h4>How it works</h4>
+              <p>Tap, click, or press SPACE to hop upward. Drift through the safe gaps, avoid boots, shovel heads, and burst pipes, and build a longer route streak.</p>
+              <p><strong>Controls:</strong> Tap / click / SPACE to hop. Hold nothing — the mole glides forward automatically.</p>
+            </div>
+          </aside>
+          <section class="play-area mobile-play-area">
+            <div class="floating-panel card slim gameHeader">
+              <div>
+                <div class="eyebrow">Touch-first courier run</div>
+                <h3 id="glideBanner">Beacon Run</h3>
+                <p id="glideSub">Tap to hop. Stay centered. Build distance for bigger medals.</p>
+              </div>
+              <div class="headerActions">
+                <button id="glideStartTop" class="btn primary">Start / Resume</button>
+                <button id="glideResetTop" class="btn ghost">Reset Run</button>
+                <button id="glideHomeTop" class="btn ghost">Back to Hub</button>
+                <div class="turn-pill" id="glideMode">Ready</div>
+              </div>
+            </div>
+            <canvas id="glideCanvas" width="900" height="1280"></canvas>
+            <div class="touch-callout">Tap anywhere inside the game to hop. Desktop also supports click and SPACE.</div>
+            <div class="hud-strip card slim">
+              <div id="glideHint">Avoid boots, shovels, and burst pipes.</div>
+              <div id="glideProgress">Distance: 0 m</div>
+              <div id="glideMilestone">Milestone: Rookie</div>
+            </div>
+          </section>
+          <aside class="rightbar card mobile-side">
+            <h3>Records</h3>
+            <ol id="glideBoard" class="leaderboard"></ol>
+            <h3>Run Notes</h3>
+            <div class="log compact-log" id="glideLog"></div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="burrowblasterView" class="view hidden">
+        <div class="game-shell mobile-game-shell">
+          <aside class="sidebar card mobile-side">
+            <div class="panelTitle"><div>Burrow Blaster</div><div class="muted" style="font-size:13px;">Mobile / Arcade blaster</div></div>
+            <p class="muted">Reclaim the stolen stash. Drag to move, auto-fire, and clear the tunnel swarm.</p>
+            <div id="blasterStats" class="stats-grid"></div>
+            <div class="stack compact">
+              <button id="blasterStartBtn" class="btn primary">Start / Resume</button>
+              <button id="blasterResetBtn" class="btn ghost">Reset Run</button>
+            </div>
+            <div class="howto">
+              <h4>How it works</h4>
+              <p>Pilot Lew's drill-ship through the tunnel and auto-fire at raider beetles. Pick up shards and power cores, then clear all 6 waves to open the next round.</p>
+              <p><strong>Controls:</strong> Drag on mobile. Arrow keys / WASD on desktop. Mouse movement also works when hovering the canvas.</p>
+            </div>
+          </aside>
+          <section class="play-area mobile-play-area">
+            <div class="floating-panel card slim gameHeader">
+              <div>
+                <div class="eyebrow">Touch shooter</div>
+                <h3 id="blasterBanner">Stolen Stash Recovery</h3>
+                <p id="blasterSub">Drag to steer Lew's drill-ship and auto-fire into the swarm.</p>
+              </div>
+              <div class="headerActions">
+                <button id="blasterStartTop" class="btn primary">Start / Resume</button>
+                <button id="blasterResetTop" class="btn ghost">Reset Run</button>
+                <button id="blasterHomeTop" class="btn ghost">Back to Hub</button>
+                <div class="turn-pill" id="blasterMode">Ready</div>
+              </div>
+            </div>
+            <canvas id="blasterCanvas" width="900" height="1280"></canvas>
+            <div class="touch-callout">Drag to move on touch screens. Desktop supports keyboard and mouse hover aiming.</div>
+            <div class="hud-strip card slim">
+              <div id="blasterHint">Clear beetles, dodge rocks, reclaim glowing shards.</div>
+              <div id="blasterProgress">Wave: 1 / 6</div>
+              <div id="blasterMilestone">Stash: 0 recovered</div>
+            </div>
+          </section>
+          <aside class="rightbar card mobile-side">
+            <h3>Records</h3>
+            <ol id="blasterBoard" class="leaderboard"></ol>
+            <h3>Combat Feed</h3>
+            <div class="log compact-log" id="blasterLog"></div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="tunneltapView" class="view hidden">
+        <div class="game-shell mobile-game-shell">
+          <aside class="sidebar card mobile-side">
+            <div class="panelTitle"><div>Tunnel Tap</div><div class="muted" style="font-size:13px;">Mobile / Tap Survival</div></div>
+            <p class="muted">Dodge cave traps, scoop up glowing W coins, and survive each 30-second sprint to reach the next safe burrow.</p>
+            <div class="stats-grid">
+              <div class="stat"><div class="stat-label">Score</div><div class="stat-value" id="tunnelTapScore">0</div></div>
+              <div class="stat"><div class="stat-label">Best</div><div class="stat-value" id="tunnelTapBest">0</div></div>
+              <div class="stat"><div class="stat-label">Time</div><div class="stat-value" id="tunnelTapTime">30s</div></div>
+              <div class="stat"><div class="stat-label">Hearts</div><div class="stat-value" id="tunnelTapHearts">● ● ●</div></div>
+            </div>
+            <div class="stack compact">
+              <button id="tunnelTapStartBtn" class="btn primary">Start / Resume</button>
+              <button id="tunnelTapResetBtn" class="btn ghost">New Run</button>
+            </div>
+            <div class="howto">
+              <h4>How it works</h4>
+              <p>Tap the left or right half of the tunnel to move one lane. Warning shadows reveal where hazards will land.</p>
+              <p><strong>Goal:</strong> survive 30 seconds, collect W coins, and reach the safe burrow. Each new tunnel gets faster.</p>
+            </div>
+          </aside>
+          <section class="play-area mobile-play-area">
+            <div class="floating-panel card slim gameHeader">
+              <div>
+                <div class="eyebrow">Three-lane survival</div>
+                <h3 id="tunnelTapBanner">Race to the safe burrow</h3>
+                <p id="tunnelTapSub">Tap left or right to change lanes. Read the warning shadows.</p>
+              </div>
+              <div class="headerActions">
+                <button id="tunnelTapStartTop" class="btn primary">Start / Resume</button>
+                <button id="tunnelTapPauseTop" class="btn ghost">Pause</button>
+                <button id="tunnelTapResetTop" class="btn ghost">New Run</button>
+                <button id="tunnelTapHomeTop" class="btn ghost">Back to Hub</button>
+                <div class="turn-pill" id="tunnelTapMode">Ready</div>
+              </div>
+            </div>
+            <canvas id="tunnelTapCanvas" width="900" height="1280"></canvas>
+            <div class="touch-callout">Tap the left half to dodge left and the right half to dodge right. Desktop: arrow keys or A / D.</div>
+            <div class="hud-strip card slim">
+              <div id="tunnelTapHint">Tap either side to dodge. Collect glowing W coins when the lane is safe.</div>
+              <div id="tunnelTapProgress">Tunnel 1 ready</div>
+              <div id="tunnelTapCoins">Coins: 0</div>
+            </div>
+          </section>
+          <aside class="rightbar card mobile-side">
+            <h3>Best Runs</h3>
+            <ol id="tunnelTapBoard" class="leaderboard"></ol>
+            <h3>Survival Notes</h3>
+            <p class="muted">Red landing shadows warn of danger. A safe burrow restores one heart before the next tunnel.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="grubdropView" class="view hidden">
+        <div class="game-shell mobile-game-shell">
+          <aside class="sidebar card mobile-side">
+            <div class="panelTitle"><div>Grub Drop</div><div class="muted" style="font-size:13px;">Mobile / Puzzle Tap</div></div>
+            <p class="muted">Match cave collectibles, collapse the board, uncover rare treasures, and chain quick clears for a bigger reward box.</p>
+            <div id="grubStats" class="stats-grid">
+              <div class="stat"><div class="stat-label">Score</div><div class="stat-value" id="grubScore">0</div></div>
+              <div class="stat"><div class="stat-label">Best</div><div class="stat-value" id="grubBest">0</div></div>
+              <div class="stat"><div class="stat-label">Combo</div><div class="stat-value" id="grubCombo">—</div></div>
+              <div class="stat"><div class="stat-label">Pops</div><div class="stat-value" id="grubMoves">0</div></div>
+            </div>
+            <div class="stack compact">
+              <button id="grubStartBtn" class="btn primary">Start / Resume</button>
+              <button id="grubResetBtn" class="btn ghost">New Board</button>
+            </div>
+            <div class="howto">
+              <h4>How it works</h4>
+              <p>Tap any group of 2 or more matching cave collectibles. Pieces above drop and empty columns slide together. Larger groups score exponentially; quick clears raise the combo multiplier. Crystals, coins, and golden grubs always enter as playable pairs.</p>
+              <p><strong>Goal:</strong> keep clearing until no group of 2+ is left. Clear the whole board for a bonus, then pick your reward box.</p>
+            </div>
+          </aside>
+          <section class="play-area mobile-play-area">
+            <div class="floating-panel card slim gameHeader">
+              <div>
+                <div class="eyebrow">Tap puzzle</div>
+                <h3 id="grubBanner">Hold the burrow</h3>
+                <p id="grubSub">Pop clumps of 2+ while new rows rise from below. Every 30 seconds they come faster, and new colours join.</p>
+              </div>
+              <div class="headerActions">
+                <button id="grubStartTop" class="btn primary">Start / Resume</button>
+                <button id="grubResetTop" class="btn ghost">New Board</button>
+                <button id="grubHomeTop" class="btn ghost">Back to Hub</button>
+                <div class="turn-pill" id="grubMode">Ready</div>
+              </div>
+            </div>
+            <canvas id="grubDropCanvas" width="900" height="1280"></canvas>
+            <div class="touch-callout">Tap 2+ matching collectibles. Hover on desktop to preview the whole group before popping it.</div>
+            <div class="hud-strip card slim">
+              <div id="grubHint">Pop clumps of 2+ before the burrow fills: a new row rises from below, faster every 30 seconds.</div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="moleiceView" class="view hidden">
+        <div class="game-shell">
+          <aside class="sidebar card">
+            <div class="panelTitle"><div>Mole Ice</div><div class="muted" style="font-size:13px;">Web / Arcade Grid Puzzle</div></div>
+            <p class="muted">Push ice blocks down frozen mine corridors to slide, shatter, and crush every Glitch Bug before they corner you.</p>
+            <div class="stats-grid">
+              <div class="stat-card"><small>Score</small><strong id="moleiceScore">0</strong></div>
+              <div class="stat-card"><small>Best</small><strong id="moleiceBest">0</strong></div>
+              <div class="stat-card"><small>Round</small><strong id="moleiceRound">1</strong></div>
+              <div class="stat-card"><small>Lives</small><strong id="moleiceLives">● ● ●</strong></div>
+            </div>
+            <div class="stack compact">
+              <button id="moleiceStartBtn" class="btn primary">Start / Resume</button>
+              <button id="moleiceResetBtn" class="btn ghost">New Run</button>
+            </div>
+            <div class="howto">
+              <h4>How it works</h4>
+              <p>Move onto an ice block and push it. With nothing behind it, it shatters for points. With room to slide, it slides until it hits a wall, another block, or a Glitch Bug — crush multiple bugs in one slide for a big combo.</p>
+              <p><strong>Controls:</strong> Arrow keys / WASD to move and face a direction, SPACE to push, P to pause. On mobile, use the D-pad and PUSH button below the board.</p>
+            </div>
+          </aside>
+
+          <section class="play-area">
+            <div class="floating-panel card slim gameHeader">
+              <div>
+                <div class="eyebrow">Frozen mine</div>
+                <h3 id="moleiceBanner">Ready to dig?</h3>
+                <p id="moleiceSub">Move through the frozen mine. Push ice blocks to crush every Glitch Bug.</p>
+              </div>
+              <div class="headerActions">
+                <button id="moleiceStartTop" class="btn primary">Start / Resume</button>
+                <button id="moleicePauseTop" class="btn ghost">Pause</button>
+                <button id="moleiceResetTop" class="btn ghost">New Run</button>
+                <button id="moleiceHomeTop" class="btn ghost">Back to Hub</button>
+                <div class="turn-pill" id="moleiceMode">Ready</div>
+              </div>
+            </div>
+            <canvas id="moleiceCanvas" width="1200" height="1040"></canvas>
+            <div class="moleice-controls" aria-label="Touch controls">
+              <div class="moleice-dpad">
+                <button class="up" type="button" data-move="up" aria-label="Move up">▲</button>
+                <button class="left" type="button" data-move="left" aria-label="Move left">◀</button>
+                <button class="right" type="button" data-move="right" aria-label="Move right">▶</button>
+                <button class="down" type="button" data-move="down" aria-label="Move down">▼</button>
+              </div>
+              <button id="moleicePushBtn" class="moleice-push" type="button">💥 PUSH</button>
+            </div>
+            <div class="hud-strip card slim">
+              <div id="moleiceHint">Push ice into a Glitch Bug to crush it. Chain crushes for bigger combos.</div>
+              <div id="moleiceProgress">Round 1</div>
+              <div id="moleiceEnemies">Bugs: 0</div>
+            </div>
+          </section>
+
+          <aside class="rightbar card">
+            <h3>Best Runs</h3>
+            <ol id="moleiceBoard" class="leaderboard"></ol>
+          </aside>
+        </div>
+      </section>
+
+      <section id="molespadesView" class="view hidden">
+        <div class="game-shell mole-spades-shell">
+          <aside class="sidebar card">
+            <div class="panelTitle"><div>Mole Spades</div><div class="muted" style="font-size:13px;">Web / Strategy Cards</div></div>
+            <p class="muted">Contract trick-taking at the Deep Table. You and Dirt Digger face Molegan and Lady Burrow in a first-to-25 team match.</p>
+            <div id="moleSpadesStats" class="stats-grid"></div>
+            <div class="stack compact">
+              <button id="moleSpadesStartBtn" class="btn primary">Take Your Seat</button>
+              <button id="moleSpadesResetBtn" class="btn ghost">Leave Match</button>
+            </div>
+            <div class="howto">
+              <h4>How it works</h4>
+              <p>Study all 13 cards, bid 0–7 tricks, and choose 1×–3× risk. Follow the led faction when possible. Deep Spades are trump and cannot lead until broken unless you hold only trump.</p>
+              <p><strong>Teams:</strong> Dirt Digger sits across from you as your partner. Your combined score races Molegan and Lady Burrow to a unique lead of 25 or more.</p>
+              <p><strong>WinLEW Wild:</strong> the gold WinLEW card is the highest Deep Spade. Exact contracts add 3× risk; missing by one is safe; larger misses lose the risk.</p>
+              <p><strong>Reward:</strong> complete the match to reveal a WinLEW reward box. To earn XL1 for Mole Spades instead, play it from the XL1 Arcade (Play for XL1 on its Mole Hub card).</p>
+            </div>
+          </aside>
+          <section class="play-area mole-spades-play">
+            <div class="floating-panel card slim gameHeader">
+              <div><div class="eyebrow">Trick-taking</div><h3>The Deep Table</h3><p>Your Burrow Crew versus the Deep Rivals. First team to a unique lead of 25 wins.</p></div>
+              <div class="headerActions">
+                <button id="moleSpadesStartTop" class="btn primary">Start / Resume</button>
+                <button id="moleSpadesResetTop" class="btn ghost">Leave Match</button>
+                <button id="moleSpadesHomeTop" class="btn ghost">Back to Hub</button>
+                <div class="turn-pill" id="moleSpadesStatus">Ready</div>
+              </div>
+            </div>
+            <div id="moleSpadesBoard" class="mole-spades-board" aria-live="polite"></div>
+          </section>
+          <aside class="rightbar card">
+            <h3>Table Log</h3><div id="moleSpadesLog" class="log"></div>
+            <h3>Currency Rail</h3>
+            <div class="ms-currency active"><span>WINLEW</span><strong>LIVE</strong><small>Current reward currency</small></div>
+            <div class="ms-currency planned"><span>XL1</span><strong>IN XL1 ARCADE</strong><small>Earn XL1 for this game from the XL1 Arcade</small></div>
+          </aside>
+        </div>
+      </section>
+
+      <div id="rewardOverlay" class="rewardOverlay hidden" aria-hidden="true">
+        <div class="rewardModal card">
+          <div class="panelTitle">
+            <div id="rewardTitle">Round Reward</div>
+            <div class="muted" id="rewardBadge">Reward reveal</div>
+          </div>
+          <p id="rewardText" class="rewardText">Pick one reward box to reveal your multiplier.</p>
+          <div id="rewardBoxes" class="rewardBoxGrid"></div>
+          <div id="rewardResult" class="rewardResult hidden"></div>
+          <div class="actions">
+            <button id="rewardContinueBtn" class="btn primary hidden" type="button">Continue</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <div id="gameLaunchModal" class="game-launch-modal hidden" aria-hidden="true">
+    <div class="game-launch-backdrop" data-close-launch-modal="true"></div>
+    <div class="game-launch-panel card" role="dialog" aria-modal="true" aria-labelledby="gameLaunchTitle">
+      <button id="gameLaunchClose" class="game-launch-close" type="button" aria-label="Close">×</button>
+      <img id="gameLaunchThumb" class="game-launch-thumb" src="./assets/rootglide-card-600.jpg" alt="Game preview" />
+      <div class="game-launch-copy">
+        <div id="gameLaunchEyebrow" class="eyebrow">Game preview</div>
+        <h2 id="gameLaunchTitle">Ready to play?</h2>
+        <p id="gameLaunchDesc">Review the controls, then start when you're ready.</p>
+        <ul id="gameLaunchList" class="game-launch-list"></ul>
+        <div class="game-launch-actions">
+          <button id="gameLaunchGo" class="btn primary" type="button">Go</button>
+          <button id="gameLaunchBack" class="btn ghost" type="button">Go back</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script defer src="/assets/wallet-auth.js"></script>
+  <script type="module" src="./js/discord-activity.js?v=2026-07-20-activity-auth"></script>
+  <script defer src="./js/games/diglew.js?v=v53-animated-runner"></script>
+  <script defer src="./js/games/pac-mole.js?v=v51-instant-reward"></script>
+  <script defer src="./js/games/root-glide.js?v=v51-instant-reward"></script>
+  <script defer src="./js/games/burrow-blaster.js?v=v51-instant-reward"></script>
+  <script defer src="./js/games/grub-drop.js?v=v53-rising-burrow"></script>
+  <script defer src="./js/games/mole-ice.js?v=v1-hub-launch"></script>
+  <script defer src="./js/games/tunnel-tap.js?v=v2-directional-avatar"></script>
+  <script defer src="./js/games/mole-spades.js?v=v3-trick-taking-label"></script>
+  <script defer src="./js/app.js?v=v60-xl1-arcade-text"></script>
+  <script defer src="./js/keep-in-view.js?v=v1-round-end"></script>
+  <script defer src="/assets/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>WinLEW Leaderboards</title>
+  <meta name="description" content="Top WinLEW players across Quiz, Faucet, and the Gaming Hub — ranked by real earnings, Web and Discord." />
+  <link rel="canonical" href="https://winlew.co/leaderboards/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    :root{--bg:#130b08;--bg2:#24150d;--panel:rgba(255,255,255,.05);--line:rgba(255,255,255,.12);--text:#f6efe8;--muted:rgba(246,239,232,.85);--brand:#d6a866;--shadow:0 28px 80px rgba(0,0,0,.42);--radius:24px}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:radial-gradient(1000px 620px at 10% 0%, rgba(214,168,102,.10), transparent 60%), linear-gradient(180deg, var(--bg) 0%, var(--bg2) 52%, #130b08 100%)}
+    /* This page never set a colour for <a>, so every inline link in the .fine
+       footnotes and in Clout's Solscan column rendered as the browser default
+       rgb(0,0,238) on a near-black card — measured at 1.92:1, well under the
+       4.5:1 WCAG AA needs for body text. .pill/.btn/.navBrand all set their own
+       colour with higher specificity, so they are unaffected. */
+    a{color:var(--brand)}
+    a:hover{color:#f0c989}
+    .wrap{max-width:1080px;margin:0 auto;padding:22px}
+    .nav{position:sticky;top:0;background:rgba(19,11,8,.86);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
+    .navInner{max-width:2000px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .navBrand{text-decoration:none;color:inherit;font-weight:950}
+    .navLinks{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .pill,.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 13px;border-radius:999px;text-decoration:none;background:rgba(255,255,255,.06);border:1px solid var(--line);color:inherit;font-weight:850;cursor:pointer;font:inherit}
+    .btn{border-radius:14px}
+    .pill:hover,.btn:hover{background:rgba(255,255,255,.10)}
+    .pill.active{background:linear-gradient(180deg, rgba(214,168,102,.30), rgba(214,168,102,.14));border-color:rgba(214,168,102,.5);color:#ffe6b0}
+    .pill:disabled,.btn:disabled{opacity:.55;cursor:not-allowed;color:var(--text)}
+    .pill:disabled:hover,.btn:disabled:hover{background:rgba(255,255,255,.06)}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.02));
+      border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;
+    }
+    h1{font-size:clamp(32px,4vw,54px);margin:0 0 10px;line-height:1.02}
+    h2{font-size:clamp(20px,2.6vw,26px);margin:0 0 4px}
+    .muted{color:var(--muted);line-height:1.7}
+    .board{margin-top:16px}
+    .boardHead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+    .tabRow{display:flex;gap:8px;flex-wrap:wrap}
+    .gameSelect{appearance:none;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);font:inherit;font-weight:850}
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    th,td{text-align:left;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)}
+    th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:800}
+    td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+    tr.masked td:first-child{opacity:.75}
+    .rankCell{font-weight:950;width:44px}
+    .rankCell.top1{color:#ffd76a}
+    .rankCell.top2{color:#d7d7e0}
+    .rankCell.top3{color:#d6a866}
+    .emptyRow td{color:var(--muted);text-align:center;padding:26px 12px}
+    .comingSoon{padding:26px 16px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:16px;margin-top:10px}
+    .fine{font-size:12px;color:var(--muted);margin-top:12px}
+    .sectionIcon{font-size:26px}
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div class="navInner">
+      <a class="navBrand" href="/">WinLEW</a>
+      <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+      <div class="navRight">
+        <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+        <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+        <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+        <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <section class="card wlGlow" style="margin-bottom:16px;">
+      <!-- Eyebrow was "Ranked by real earnings" and the subtitle named three of
+           the five boards. Both were the same over-claim as the paragraph
+           below: Quiz ranks on points and Governance on participation, neither
+           of which is earnings, and Clout and Governance were missing from the
+           list entirely despite having their own sections. -->
+      <div class="wlEyebrow">Five boards · each says what it ranks on</div>
+      <h1>Leaderboards<br><span class="wlHeroTitleAccent">Games. Quiz. Faucet. Clout. Governance.</span></h1>
+      <!-- This said "Every board below ranks players by WinLEW actually earned
+           or claimed — not raw score". That was true of three boards and wrong
+           about two, and the Quiz card two sections down said the opposite of it
+           in its own subtitle ("Ranked by platform points... separate from real
+           payout totals"). Governance ranks by proposals voted, and Clout ranks
+           by WinLEW sent TO the reserves — the opposite direction from earning.
+           Replaced with what each board actually sorts on. -->
+      <p class="muted">
+        Boards rank on different things, so each one says which. The Gaming Hub and Faucet rank by WinLEW
+        actually earned or claimed; Clout ranks by WinLEW contributed to the reserves; Quiz ranks by platform
+        points; Governance ranks by how many proposals someone voted on. Where WinLEW is the measure it is
+        real payout, never raw score, and each board adds a second signal — top level, top score or claim
+        count — so a handful of grinders can't flood everyone else out.
+        Discord and Web are tracked separately wherever both exist.
+      </p>
+      <div class="wlChipRow">
+        <span class="wlChip">🎮 Gaming Hub</span>
+        <span class="wlChip">🧠 Quiz</span>
+        <span class="wlChip">🚰 Faucet</span>
+        <span class="wlChip">🏆 Clout</span>
+        <span class="wlChip">🗳️ Governance</span>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
+        <a class="btn primary" href="#gamesBoard">Games ↓</a>
+        <a class="btn" href="#quizBoard">Quiz ↓</a>
+        <a class="btn" href="#faucetBoard">Faucet ↓</a>
+        <a class="btn" href="#cloutBoard">Clout ↓</a>
+        <a class="btn" href="#governanceBoard">Governance ↓</a>
+      </div>
+    </section>
+
+    <section class="card" id="quizBoard" style="margin-bottom:16px;">
+      <div class="boardHead">
+        <div><span class="sectionIcon">🧠</span> <h2 style="display:inline;">Quiz</h2><div class="muted" style="font-size:13px;">Ranked by platform points (informational — separate from real payout totals).</div></div>
+        <div class="tabRow" data-tabs="quiz">
+          <button class="pill active" data-platform="web" type="button">Web</button>
+          <button class="pill" data-platform="discord" type="button">Discord</button>
+        </div>
+      </div>
+      <div class="board"><div id="quizTableWrap"><p class="muted">Loading…</p></div></div>
+      <p class="fine">Points are the informational Web-vs-Discord tracker, not the payout-linked cycle leaderboard — see <a href="/quiz/">/quiz/</a> for that.</p>
+    </section>
+
+    <section class="card" id="faucetBoard" style="margin-bottom:16px;">
+      <div class="boardHead">
+        <div><span class="sectionIcon">🚰</span> <h2 style="display:inline;">Faucet</h2><div class="muted" style="font-size:13px;">Ranked by total confirmed WinLEW claimed.</div></div>
+        <div class="tabRow" data-tabs="faucet">
+          <button class="pill active" data-platform="web" type="button">Web</button>
+          <button class="pill" data-platform="discord" type="button">Discord</button>
+        </div>
+      </div>
+      <div class="board"><div id="faucetTableWrap"><p class="muted">Loading…</p></div></div>
+      <p class="fine" id="faucetLifetimeNote" style="display:none;"></p>
+    </section>
+
+    <section class="card" id="gamesBoard">
+      <div class="boardHead">
+        <div><span class="sectionIcon">🎮</span> <h2 style="display:inline;">Gaming Hub</h2><div class="muted" style="font-size:13px;">Ranked by total WinLEW earned in that game.</div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+          <select class="gameSelect" id="gameSelect">
+            <option value="rootglide">Root Glide</option>
+            <option value="burrowblaster">Burrow Blaster</option>
+            <option value="pacmole">Pac-Mole</option>
+            <option value="diglew">DigLEW</option>
+            <option value="grubdrop">Grub Drop</option>
+          </select>
+          <div class="tabRow" data-tabs="games">
+            <button class="pill active" data-platform="web" type="button">Web</button>
+            <button class="pill" data-platform="discord" type="button" disabled title="The Gaming Hub isn't on Discord yet">Discord (Coming Soon)</button>
+          </div>
+        </div>
+      </div>
+      <div class="board"><div id="gamesTableWrap"><p class="muted">Loading…</p></div></div>
+      <p class="fine">Every Gaming Hub game is web-only today — a top level/round shows for progression games; Grub Drop (no levels) shows top score instead.</p>
+    </section>
+
+    <!-- Clout mirrors /contribute/'s board off the same API, so a contributor
+         who comes looking for their name on the Leaderboards page finds it
+         here instead of assuming they were missed. -->
+    <section class="card" id="cloutBoard" style="margin-top:16px;">
+      <div class="boardHead">
+        <div><span class="sectionIcon">🏆</span> <h2 style="display:inline;">Clout</h2><div class="muted" style="font-size:13px;">Ranked by total WinLEW contributed to the reserves — every total independently verified on-chain.</div></div>
+        <div class="tabRow" data-tabs="clout">
+          <button class="pill active" data-cause="" type="button">Overall</button>
+          <button class="pill" data-cause="dev" type="button">Dev</button>
+          <button class="pill" data-cause="faucet" type="button">Faucet</button>
+          <button class="pill" data-cause="xFaucet" type="button">X Faucet</button>
+          <button class="pill" data-cause="burn" type="button">Burn</button>
+          <button class="pill" data-cause="governance" type="button">🗳️ Governance</button>
+        </div>
+      </div>
+      <div class="board"><div id="cloutTableWrap"><p class="muted">Loading…</p></div></div>
+      <p class="fine">Contributed and don't see yourself? Totals are recorded only after on-chain confirmation — see <a href="/contribute/">/contribute/</a> to send or to claim a transfer you made outside the buttons.</p>
+    </section>
+
+    <section class="card" id="governanceBoard" style="margin-top:16px;">
+      <div class="boardHead">
+        <div><span class="sectionIcon">🗳️</span> <h2 style="display:inline;">Governance</h2><div class="muted" style="font-size:13px;">Ranked by participation — how many proposals you've voted on.</div></div>
+      </div>
+      <div class="board"><div id="governanceTableWrap"><p class="muted">Loading…</p></div></div>
+      <!-- The vote-weight sentence here was already correct on 2026-08-04 — it
+           is what exposed /governance/ still publishing "one wallet, one vote"
+           (fixed in fd86521). What it did not say is the cap, which is the part
+           that makes the "Vote Weight" column above safe to read: without it a
+           visitor sees a number with no stated ceiling. Cap added, sourced from
+           /governance/rules/. -->
+      <p class="fine">
+        <strong>How anyone voted is never shown here, or anywhere else.</strong> This board counts participation only —
+        which proposals someone took part in, never their choice. Every verified holder gets one free vote per proposal,
+        and can add up to 10 more at $1 each through the <a href="/contribute/?cause=governance">Governance Vote Fund</a> —
+        so the Vote Weight column is capped at 11 per proposal and no balance alone can decide an outcome.
+        See <a href="/governance/rules/">the full rules</a> or <a href="/governance/">/governance/</a>.
+      </p>
+    </section>
+  </div>
+  <script src="/assets/wallet-auth.js"></script>
+  <script src="./js/app.js"></script>
+  <script defer src="/assets/nav.js"></script>
+</body>
+</html>

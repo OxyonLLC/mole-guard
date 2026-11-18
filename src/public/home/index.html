@@ -1,0 +1,2133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>WinLEW Home — Ecosystem Hub</title>
+  <meta name="description" content="Your WinLEW ecosystem hub: Proof of Value, active modules, token references, roadmap, and everything else once you're inside the platform." />
+  <link rel="canonical" href="https://winlew.co/home/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="WinLEW Home — Ecosystem Hub" />
+  <meta property="og:description" content="Proof of Value, active modules, token references, roadmap, and everything else once you're inside the platform." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/home/" />
+  <meta property="og:image" content="https://winlew.co/images/mole-dirt-square.png" />
+
+  <style>
+    :root{
+      --bg:#130b08;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.10);
+      --text:#e9eefc;
+      --muted:rgba(233,238,252,.85);
+      --line:rgba(255,255,255,.12);
+      --brand:#d6a866;
+      --brand2:#7d5837;
+      --gold:#fbbf24;
+
+      --shadow: 0 22px 80px rgba(0,0,0,.60);
+      --radius: 22px;
+      --max: 1120px;
+
+      --ring: 0 0 0 3px rgba(214,168,102,.18);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 18% 8%, rgba(214,168,102,.16), transparent 60%),
+        radial-gradient(1100px 680px at 84% 18%, rgba(125,88,55,.18), transparent 55%),
+        radial-gradient(900px 600px at 55% 86%, rgba(236,201,140,.09), transparent 60%),
+        linear-gradient(180deg, #0d0705 0%, #24150d 55%, #130b08 100%);
+      overflow-x:hidden;
+    }
+
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:22px}
+
+    /* Top nav */
+    .nav{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(5,6,10,.82), rgba(5,6,10,.55));
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .navInner{
+      max-width:2000px;
+      margin:0 auto;
+      padding:14px 32px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .navBrand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:950; letter-spacing:.2px;
+      text-decoration:none;
+      color:var(--text);
+    }
+    .glow{
+      text-shadow: 0 0 22px rgba(214,168,102,.25);
+    }
+    .navLinks{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px; border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      text-decoration:none;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      font-weight:750;
+      font-size:13px;
+      white-space:nowrap;
+    }
+    .pill:hover{transform: translateY(-1px); background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.22)}
+    .pill:focus{outline:none; box-shadow: var(--ring)}
+
+    /* Cards */
+    .card{
+      background: var(--panel);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(700px 220px at 26% 0%, rgba(214,168,102,.20), transparent 55%),
+        radial-gradient(700px 240px at 78% 0%, rgba(125,88,55,.20), transparent 55%);
+      filter: blur(18px);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .card > *{position:relative}
+
+    /* Hero */
+    .hero{
+      padding:22px 0 10px;
+      display:grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){
+      .hero{grid-template-columns:1fr}
+      .navLinks{justify-content:flex-start}
+    }
+
+    .heroLeft{padding:26px}
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      font-size:13px; color:var(--muted);
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.22);
+      padding:8px 12px;
+      border-radius: 999px;
+      margin-bottom:14px;
+    }
+    .kicker strong{color:var(--text)}
+    h1{
+      margin:0 0 10px;
+      font-size: clamp(34px, 4.4vw, 58px);
+      line-height:1.02;
+      letter-spacing:-.8px;
+    }
+    .sub{
+      color:var(--muted);
+      font-size: 16px;
+      line-height:1.65;
+      max-width: 62ch;
+      margin: 12px 0 18px;
+    }
+
+    .ctaRow{display:flex; gap:10px; flex-wrap:wrap}
+    .btn{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      text-decoration:none;
+      padding:12px 14px;
+      border-radius: 14px;
+      font-weight:900;
+      letter-spacing:.2px;
+      display:inline-flex; align-items:center; gap:10px;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.22)}
+    .btn:focus{outline:none; box-shadow: var(--ring)}
+    .btn.primary{
+      background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.20));
+      border-color: rgba(255,255,255,.22);
+    }
+    .btn.ghost{
+      background: rgba(0,0,0,.16);
+    }
+    .btn small{
+      display:block;
+      color:var(--muted);
+      font-weight:750;
+      margin-top:2px;
+      line-height:1.2;
+    }
+
+    .miniRow{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:16px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .miniRow span{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+    }
+    .graduateBanner{
+      margin-top:16px;
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(214,168,102,.26);
+      background: linear-gradient(180deg, rgba(214,168,102,.14), rgba(125,88,55,.14));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    }
+    .graduateTag{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 11px;
+      border-radius:999px;
+      background: rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.12);
+      font-size:12px;
+      font-weight:850;
+      color:#f8ddb0;
+      margin-bottom:10px;
+    }
+    .graduateBanner strong{
+      display:block;
+      font-size:18px;
+      margin-bottom:8px;
+    }
+    .graduateBanner p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:14px;
+    }
+    .graduateBanner p + p{margin-top:8px}
+
+    /* Right panel */
+    .heroRight{padding:22px}
+    .panelTitle{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      font-weight:950; letter-spacing:.2px; margin:2px 0 10px;
+    }
+    .muted{color:var(--muted)}
+    .stack{display:flex; flex-direction:column; gap:10px}
+
+    .addrCard{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      border-radius: 16px;
+      padding:14px;
+    }
+    .addrTop{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom:10px;
+    }
+    .addrLabel{font-weight:900}
+    .addrLabelRow{
+      display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    }
+    .marketBadge{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:4px 9px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.2px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+    }
+    .marketBadge.identity{
+      border-color: rgba(214,168,102,.28);
+      background: rgba(214,168,102,.12);
+      color:#f7ddb0;
+    }
+    .marketBadge.active{
+      border-color: rgba(85,240,165,.28);
+      background: rgba(85,240,165,.12);
+      color:#8ef0bf;
+    }
+    .marketBadge.secondary{
+      border-color: rgba(93,173,255,.28);
+      background: rgba(93,173,255,.12);
+      color:#a9d2ff;
+    }
+    .marketBadge.history{
+      border-color: rgba(255,179,71,.28);
+      background: rgba(255,179,71,.12);
+      color:#ffd189;
+    }
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.5px;
+      line-height:1.4;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      padding:10px 12px;
+      border-radius: 12px;
+      overflow:auto;
+      max-width:100%;
+      user-select:all;
+    }
+
+
+    .copyBtn{
+      cursor:pointer;
+      flex: 0 0 auto;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      font-weight:950;
+    }
+    .copyBtn:hover{background: rgba(255,255,255,.12)}
+    .copyBtn:focus{outline:none; box-shadow: var(--ring)}
+
+    .twoCol{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    @media (max-width: 980px){ .twoCol{grid-template-columns:1fr} }
+    .addrSummary{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:12.5px;
+      line-height:1.55;
+    }
+    .verifyNote{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(251,191,36,.24);
+      background: rgba(251,191,36,.10);
+      color:#f8ddb0;
+      font-size:12.5px;
+      line-height:1.5;
+    }
+
+    /* Sections */
+    .sectionTitle{
+      margin: 18px 0 10px;
+      font-weight:950;
+      letter-spacing:.2px;
+      font-size:16px;
+    }
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+      margin: 14px 0 10px;
+    }
+    @media (max-width: 980px){ .grid3{grid-template-columns:1fr} }
+
+    .tile{padding:18px}
+    .tile h3{margin:0 0 8px; font-size:16px}
+    .tile p{margin:0; color:var(--muted); line-height:1.55; font-size:14px}
+
+    /* Link hub */
+    .hub{padding:18px}
+    .hubIntro{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    }
+    .hubIntro p{margin:6px 0 0; color:var(--muted); line-height:1.55}
+
+    details{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding:12px 12px;
+    }
+    details[open]{background: rgba(255,255,255,.06)}
+    summary{
+      cursor:pointer;
+      list-style:none;
+      font-weight:950;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      user-select:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    .summaryHint{color:var(--muted); font-weight:750; font-size:13px}
+    .linkGrid{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:10px;
+    }
+    @media (max-width: 980px){ .linkGrid{grid-template-columns:1fr} }
+
+    .linkBtn{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+      padding:12px 12px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      text-decoration:none;
+      font-weight:900;
+    }
+    .linkBtn small{color:var(--muted); font-weight:750}
+    .linkBtn:hover{background: rgba(255,255,255,.10)}
+    .linkBtn:focus{outline:none; box-shadow: var(--ring)}
+
+    /* Domain block */
+    .domain{
+      padding:18px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+      align-items:center;
+    }
+    @media (max-width: 980px){ .domain{grid-template-columns:1fr} }
+    .domain img{
+      width:100%;
+      height:auto;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.20);
+    }
+/* Live Stats */
+.stats{padding:18px}
+.statsTop{
+  display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  margin-bottom:12px;
+}
+
+.statsActions{
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+}
+
+.toggle{
+  display:inline-flex;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.18);
+  padding:6px;
+  border-radius: 999px;
+  gap:6px;
+}
+
+.tbtn{
+  cursor:pointer;
+  border:1px solid transparent;
+  background: rgba(255,255,255,.06);
+  color: var(--text);
+  font-weight:950;
+  font-size:12.5px;
+  padding:8px 10px;
+  border-radius: 999px;
+  transition: transform .12s ease, background .12s ease, border-color .12s ease;
+}
+.tbtn:hover{transform: translateY(-1px); background: rgba(255,255,255,.10)}
+.tbtn:focus{outline:none; box-shadow: var(--ring)}
+
+.tbtn.active{
+  background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.20));
+  border-color: rgba(255,255,255,.22);
+}
+
+.statsTitle{font-weight:950; font-size:16px}
+.statsSub{color:var(--muted); font-size:13px; margin-top:4px}
+.statsGrid{
+  display:grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap:10px;
+}
+@media (max-width: 1100px){ .statsGrid{grid-template-columns: repeat(2, 1fr);} }
+@media (max-width: 520px){ .statsGrid{grid-template-columns: 1fr;} }
+
+
+.statBox{
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  border-radius:16px;
+  padding:14px;
+}
+.statLabel{color:var(--muted); font-size:12px; font-weight:850; letter-spacing:.2px}
+.statValue{font-size:20px; font-weight:950; margin-top:8px; letter-spacing:-.2px}
+.statHint{color:var(--muted); font-size:12px; margin-top:6px; line-height:1.35}
+
+.statsFoot{
+  margin-top:12px;
+  color:var(--muted);
+  font-size:13px;
+  border-top:1px solid rgba(255,255,255,.10);
+  padding-top:12px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+}
+
+.good{color: rgba(214,168,102,.95)}
+.bad{color: rgba(236,201,140,.95)}
+
+.shimmer{
+  display:inline-block;
+  padding:2px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background: linear-gradient(90deg, rgba(255,255,255,.06), rgba(255,255,255,.12), rgba(255,255,255,.06));
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite linear;
+  color: transparent;
+}
+@keyframes shimmer{
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
+}
+/* Roadmap Teaser */
+.roadmap{padding:18px}
+.roadTop{
+  display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  margin-bottom:12px;
+}
+.roadTitle{font-weight:950; font-size:16px}
+.roadSub{color:var(--muted); font-size:13px; margin-top:4px}
+.roadActions{display:flex; gap:10px; flex-wrap:wrap}
+
+.roadBar{
+  height:10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+  overflow:hidden;
+}
+.roadBarFill{
+  height:100%;
+  border-radius:999px;
+  background: linear-gradient(90deg, rgba(214,168,102,.35), rgba(125,88,55,.35));
+  box-shadow: 0 0 24px rgba(214,168,102,.15);
+}
+.roadBarMeta{
+  display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+  font-size:13px;
+  margin-top:10px;
+  color: var(--text);
+}
+.roadGrid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:12px;
+  margin-top:14px;
+}
+@media (max-width: 980px){ .roadGrid{grid-template-columns:1fr} }
+
+.roadItem{
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  border-radius: 18px;
+  padding:16px;
+  position:relative;
+}
+.roadItem.active{
+  border-color: rgba(214,168,102,.28);
+  background: rgba(214,168,102,.06);
+}
+.roadTag{
+  display:inline-flex;
+  font-size:12px;
+  font-weight:950;
+  letter-spacing:.3px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.18);
+  color: var(--muted);
+  margin-bottom:10px;
+}
+.roadItem.active .roadTag{
+  background: linear-gradient(90deg, rgba(214,168,102,.18), rgba(125,88,55,.18));
+  color: var(--text);
+}
+.roadItem h3{margin:0 0 8px; font-size:16px}
+.roadItem ul{
+  margin:0;
+  padding-left:18px;
+  color: var(--muted);
+  line-height:1.6;
+  font-size:14px;
+}
+.roadHint{
+  margin-top:10px;
+  color: var(--muted);
+  font-size:12.5px;
+  border-top:1px solid rgba(255,255,255,.10);
+  padding-top:10px;
+}
+
+.roadMore{
+  margin-top:12px;
+  border-radius: 18px;
+}
+.roadExplain{
+  margin-top:12px;
+  color: var(--muted);
+  line-height:1.65;
+  font-size:14px;
+}
+/* Mystery Modules */
+
+/* Make module cards clickable (they are buttons now) */
+
+.module:focus{outline:none; box-shadow: var(--ring);}
+
+/* subtle icon */
+.mIcon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width: 22px;
+  height: 22px;
+  border-radius: 8px;
+  margin-right:8px;
+  background: rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.10);
+  font-size: 14px;
+  transform: translateY(-1px);
+}
+
+/* selected line */
+.roadPick{
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid rgba(255,255,255,.10);
+  color: var(--text);
+  font-size:13px;
+}
+
+.moduleGrid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:12px;
+  margin-top:14px;
+}
+@media (max-width: 980px){ .moduleGrid{grid-template-columns:1fr} }
+
+
+
+
+.module{
+  appearance:none;
+  -webkit-appearance:none;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  color: inherit;
+  font: inherit;
+  text-align:left;
+  text-align:left;
+  width:100%;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  border-radius: 18px;
+  padding:16px;
+  position:relative;
+  transition: transform .14s ease, border-color .14s ease, background .14s ease;
+}
+
+.module.active{
+  border-color: rgba(214,168,102,.30);
+  background: rgba(214,168,102,.06);
+}
+.module.selected{
+  border-color: rgba(214,168,102,.30);
+  box-shadow: 0 18px 60px rgba(0,0,0,.45);
+}
+.module.warming{
+  border-color: rgba(236,201,140,.22);
+  background: rgba(236,201,140,.05);
+}
+.module.locked{
+  border-style:dashed;
+  opacity:.92;
+}
+.module.coming{
+  border-color: rgba(125,88,55,.22);
+  background: rgba(125,88,55,.05);
+}
+
+.moduleTop{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  margin-bottom:10px;
+}
+.moduleCode{
+  font-size:12px;
+  color: var(--muted);
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+  padding:6px 10px;
+  border-radius: 999px;
+  font-weight:850;
+  letter-spacing:.2px;
+}
+
+.moduleTag{
+  font-size:12px;
+  font-weight:950;
+  letter-spacing:.3px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.18);
+  color: var(--muted);
+}
+.moduleTag.on{
+  background: linear-gradient(90deg, rgba(214,168,102,.18), rgba(125,88,55,.18));
+  color: var(--text);
+  border-color: rgba(255,255,255,.22);
+}
+.moduleTag.warm{
+  background: rgba(236,201,140,.12);
+  color: var(--text);
+  border-color: rgba(236,201,140,.22);
+}
+.moduleTag.lock{
+  background: rgba(255,255,255,.06);
+  color: var(--muted);
+  border-style:dashed;
+}
+.moduleTag.soon{
+  background: rgba(125,88,55,.12);
+  color: var(--text);
+  border-color: rgba(125,88,55,.22);
+}
+
+.module h3{margin:0 0 8px; font-size:16px}
+.module p{margin:0; color:var(--muted); line-height:1.6; font-size:14px}
+
+.moduleLine{
+  margin-top:12px;
+  height:1px;
+  background: rgba(255,255,255,.10);
+}
+
+.moduleMeta{
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:12.5px;
+  color: var(--text);
+  flex-wrap:wrap;
+}
+
+/* Hover-only behaviors (desktop/laptop) */
+@media (hover: hover) and (pointer: fine){
+  .module{ cursor: pointer; }
+  .module:hover{
+    transform: translateY(-2px);
+    background: rgba(255,255,255,.06);
+  }
+}
+
+.dot{
+  width:9px; height:9px; border-radius:50%;
+  display:inline-block;
+  box-shadow: 0 0 16px rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.16);
+}
+.dot.on{ background: rgba(214,168,102,.9); box-shadow: 0 0 18px rgba(214,168,102,.20); }
+.dot.warm{ background: rgba(236,201,140,.95); box-shadow: 0 0 18px rgba(236,201,140,.16); }
+.dot.lock{ background: rgba(255,255,255,.35); }
+.dot.soon{ background: rgba(125,88,55,.9); box-shadow: 0 0 18px rgba(125,88,55,.16); }
+
+
+
+
+/* Milestone */
+.milestone{
+  padding:20px;
+  display:grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap:16px;
+  align-items:center;
+}
+@media (max-width: 980px){ .milestone{grid-template-columns:1fr} }
+.milestoneCopy h2{
+  margin:0 0 10px;
+  font-size: clamp(28px, 3.2vw, 42px);
+  line-height:1.05;
+  letter-spacing:-.5px;
+}
+.milestoneCopy p{
+  color:var(--muted);
+  line-height:1.7;
+  margin:0 0 14px;
+}
+.milestoneList{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin:14px 0 18px;
+}
+@media (max-width: 720px){ .milestoneList{grid-template-columns:1fr} }
+.milestoneItem{
+  border:1px solid var(--line);
+  border-radius:16px;
+  background: rgba(0,0,0,.18);
+  padding:14px;
+}
+.milestoneItem strong{display:block; margin-bottom:6px}
+.milestoneItem span{color:var(--muted); font-size:14px; line-height:1.5}
+.milestoneVisual{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  justify-content:center;
+  min-height:100%;
+}
+.milestoneFrame{
+  position:relative;
+  border-radius:26px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow: var(--shadow);
+  background: rgba(0,0,0,.20);
+  min-height:300px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+.milestoneFrame img{
+  display:block;
+  width:100%;
+  max-width:360px;
+  height:auto;
+  margin:0 auto;
+}
+.milestoneBadge{
+  position:static;
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.15);
+  background: rgba(19,11,8,.82);
+  backdrop-filter: blur(8px);
+  font-weight:900;
+  width:max-content;
+  max-width:100%;
+}
+.milestoneLinks{
+  margin-top:2px;
+}
+.milestoneLinks .linkGrid{
+  margin-top:0;
+}
+.milestoneLinks .linkBtn{
+  background: rgba(0,0,0,.22);
+}
+.milestoneLinks .linkBtn small{
+  color:var(--muted);
+  font-weight:750;
+}
+.milestoneDot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background: rgba(214,168,102,.95);
+  box-shadow: 0 0 14px rgba(214,168,102,.35);
+}
+
+
+    footer{
+      padding: 26px 0 42px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Sticky Nav -->
+  <div class="nav">
+    <div class="navInner">
+      <a class="navBrand" href="#top">WinLEW</a>
+      <!-- Intentionally empty. nav.js's buildTwoLevelNav() calls links.remove()
+           on this element and builds both the primary row and the grouped Menu
+           panel from NAV_SETS/NAV_GROUPS, so anything authored here never
+           renders. It previously held 16 hand-written pills that had silently
+           gone stale — no /leaderboards/, /policies/, /who-we-are/, /roadmap/,
+           /ecosystem/, /contribute/ or /merch/ — meaning the only situation
+           where they could ever appear (nav.js failing to load) was also the
+           only situation where they would show visitors an out-of-date menu.
+           The element itself must stay: nav.js needs it to exist, and reuses
+           its id so the .navToggle's aria-controls still resolves. -->
+      <div class="navLinks" id="siteNavLinks"></div>
+      <div class="navRight">
+        <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+        <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+        <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+        <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap" id="top">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="card heroLeft">
+        <div class="kicker">🚀 Built on <strong>Solana</strong> • rewarding <strong>knowledge + skill</strong></div>
+
+        <!-- Was <h2> with no <h1> anywhere on the page, so the document had no
+             top-level heading at all and the h1 rule in this file's own <style>
+             block was dead. Every other audited page leads with an h1. -->
+        <h1>Proof of Value, NOT Wealth.</h1>
+        <h2 class="heroTagline">🦔 Dig Deep, Win Big</h2>
+
+        <p class="sub">
+          <strong>$WinLEW</strong> <br> Lets<strong>EveryOne</strong>Win is a utility-first community project built around participation, learning, and transparency.
+          <strong>Proof of Value</strong> rewards real contribution — where showing up matters.
+        </p>
+
+        <div class="ctaRow">
+          <a class="btn primary" href="/community/">
+            🤝 Try it on Discord <small>Token Holders </small>
+          </a>    
+          <a class="btn" href="https://pump.fun/coin/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">
+            🏁 Open on pump.fun <small>Verified PumpSwap market</small>
+          </a>
+          <a class="btn" href="https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">
+            💱 Swap on pump.fun <small>PumpSwap market</small>
+          </a>
+          <a class="btn" href="https://raydium.io/swap/?inputMint=sol&outputMint=DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">
+            💱 Swap on Raydium <small>Established pool</small>
+          </a>
+          <a class="btn ghost" href="#links">
+            🔎 Explore Links <small>Everything in one place</small>
+          </a>
+          <a class="btn" href="/verify/profile.html">
+            &#128100; My Profile <small>Wallet, rewards + payouts</small>
+          </a>
+          <a class="btn " href="https://solscan.io/account/EX5nxVKgRKaJVZLfDUinXie6HQ5GPhKwkZ419pRGaZ74" target="_blank" rel="noreferrer noopener">
+            🔥 The WinLEW Burn Wallet<small>burn.winlew.sol</small>
+          </a>
+        </div>
+
+        <div class="graduateBanner" aria-label="WinLEW graduation milestone">
+          <!-- Was "Graduated This Week", which silently went stale the moment
+               the week turned. The date is the durable fact; anything relative
+               to "now" has to be rewritten to stay true, so it isn't used. -->
+          <div class="graduateTag">✅ Graduated • Verified market created July 22, 2026</div>
+          <strong>$WinLEW Has Graduated</strong>
+          <p>What began on pump.fun has moved into its post-launch market phase. The official WinLEW mint did not change, existing holders still hold the same token, the established Raydium market remains available, and the retired pump.fun pool stays documented for transparency.</p>
+          <p><strong>Search for $WinLEW, WinLEW, or verify using the official mint.</strong> Availability varies by platform. Always verify the mint. Symbols and names can be copied.</p>
+        </div>
+
+        <div class="miniRow">
+          <span>🧠 Trivia + Games</span>
+          <span>🧰 Utility-first culture</span>
+          <span>🤝 Community-forward</span>
+        </div>
+      </div>
+
+      <!-- Right: Contracts + Actions -->
+      <div class="card heroRight" id="contract">
+        <div class="panelTitle">
+          <div>Verified Token &amp; Market References</div>
+          <div class="muted" style="font-size:13px;">Copy, verify, and separate active from historical</div>
+        </div>
+
+        <div class="stack">
+          <!-- Token -->
+          <div class="addrCard">
+            <div class="addrTop">
+              <div class="addrLabelRow">
+                <div class="addrLabel">🧩 Official Token Mint</div>
+                <span class="marketBadge identity">Permanent ID</span>
+              </div>
+              <button class="copyBtn" data-copy="DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump">Copy</button>
+            </div>
+            <div class="mono">DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump</div>
+            <div class="twoCol">
+              <a class="btn" href="https://solscan.io/token/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+              <a class="btn" href="https://rugcheck.xyz/tokens/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">RugCheck ↗</a>
+              <a class="btn" href="https://dex.coinmarketcap.com/token/solana/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump/" target="_blank" rel="noreferrer noopener">CMC Dexscan ↗</a>
+              <a class="btn" href="https://www.mexc.com/dex/onchain/sol/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">MEXC DEX ↗</a>
+            </div>
+            <div class="addrSummary">Broad discovery is improving across supported platforms, but the mint remains the only permanent token identity.</div>
+            <div class="verifyNote"><strong>Always verify the mint.</strong> Symbols and names can be copied.</div>
+          </div>
+
+          <!-- Primary post-graduation market -->
+          <div class="addrCard">
+            <div class="addrTop">
+              <div class="addrLabelRow">
+                <div class="addrLabel">🏁 Primary Post-Graduation Market</div>
+                <span class="marketBadge active">Active</span>
+              </div>
+              <button class="copyBtn" data-copy="Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL">Copy</button>
+            </div>
+            <div class="mono">Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL</div>
+            <div class="twoCol">
+              <a class="btn" href="https://dexscreener.com/solana/Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL" target="_blank" rel="noreferrer noopener">DexScreener ↗</a>
+              <a class="btn" href="https://www.geckoterminal.com/solana/pools/Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL" target="_blank" rel="noreferrer noopener">GeckoTerminal ↗</a>
+              <a class="btn" href="https://solscan.io/account/Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+              <a class="btn" href="https://pump.fun/coin/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">pump.fun Coin ↗</a>
+            </div>
+            <div style="margin-top:10px;">
+              <a class="btn primary" href="https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">
+                🔁 Swap on pump.fun
+              </a>
+            </div>
+            <div class="addrSummary">PumpSwap • WinLEW / SOL • the verified active post-graduation market tied to the permanent mint.</div>
+          </div>
+
+          <div class="addrCard">
+            <div class="addrTop">
+              <div class="addrLabelRow">
+                <div class="addrLabel">💧 Raydium Market</div>
+                <span class="marketBadge secondary">Established</span>
+              </div>
+              <button class="copyBtn" data-copy="5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx">Copy</button>
+            </div>
+            <div class="mono">5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx</div>
+            <div class="twoCol">
+              <a class="btn" href="https://dexscreener.com/solana/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer noopener">DexScreener ↗</a>
+              <a class="btn" href="https://www.geckoterminal.com/solana/pools/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer noopener">GeckoTerminal ↗</a>
+              <a class="btn" href="https://solscan.io/account/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+              <a class="btn" href="https://dex.coinmarketcap.com/token/solana/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump/" target="_blank" rel="noreferrer noopener">CMC Dexscan ↗</a>
+            </div>
+            <div style="margin-top:10px;">
+              <a class="btn primary" href="https://raydium.io/swap/?inputMint=sol&outputMint=DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">
+                🔁 Swap on Raydium
+              </a>
+              <a class="btn primary" href="https://raydium.io/liquidity/increase/?mode=add&pool_id=5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer noopener" style="margin-top:8px;">
+                🤝 Add Liquidity <small>Deposit WinLEW + SOL</small>
+              </a>
+            </div>
+            <!-- Campaign pointer, added 2026-08-20. Deliberately states NO
+                 rules: the article is the single canonical copy, and a second
+                 summary here would be a fourth thing to keep in sync. It names
+                 only the committed 1,000,000 prize — never the conditional 6M —
+                 because a teaser is exactly where a conditional figure gets
+                 mistaken for a promise. -->
+            <p style="margin-top:10px;font-size:13.5px;">
+              🎟️ <strong>1,000,000 $WinLEW HODL + Liquidity Campaign</strong> — adding liquidity earns an entry.
+              <a href="/news/liquidity-and-hodl-campaign/">Learn more →</a>
+            </p>
+            <div class="addrSummary">Established WinLEW / SOL pool • still available as a verified secondary route after graduation.</div>
+          </div>
+
+          <!-- Was "Historical Launch Market", which the chain contradicts.
+               Pool creation dates, read from GeckoTerminal 2026-08-04:
+                 Raydium 5nTz… 2025-02-10
+                 this pool H3Ho… 2025-07-19
+                 PumpSwap Hmif… 2026-07-22
+               So this pool is five months YOUNGER than the Raydium market it
+               was presented as predating, and the token itself launched on the
+               bonding curve in Dec 2024, earlier than all three. It is the
+               retired pump.fun AMM pool, not the launch market. Its $0.00
+               liquidity was re-confirmed the same day, so that half was right. -->
+          <div class="addrCard">
+            <div class="addrTop">
+              <div class="addrLabelRow">
+                <div class="addrLabel">🧑‍🚀 Retired pump.fun AMM Pool</div>
+                <span class="marketBadge history">Historical</span>
+              </div>
+              <button class="copyBtn" data-copy="H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg">Copy</button>
+            </div>
+            <div class="mono">H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg</div>
+            <div class="twoCol">
+              <a class="btn" href="https://solscan.io/account/H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+              <a class="btn" href="https://www.geckoterminal.com/solana/pools/H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg" target="_blank" rel="noreferrer noopener">GeckoTerminal ↗</a>
+            </div>
+            <div class="addrSummary">Retired pump.fun AMM pool, created 2025-07-19 and currently reporting no liquidity. Preserved for transparency, not presented as the active trading route.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <div class="sectionTitle" id="milestone">What This Unlocks For You</div>
+    <section class="card milestone">
+      <div class="milestoneCopy">
+        <div class="kicker">🪵 Cleaner routes • first-party home</div>
+        <!-- "are now being consolidated" described the subdomain migration as
+             in-progress. It finished: no subdomain URL remains anywhere in
+             src/public/ (verified repo-wide 2026-08-04). Stated as done. -->
+        <h3>Every WinLEW service lives on one domain.</h3>
+        <p>
+          Verification, Discord tools, and public support pages all run under first-party routes on
+          <code>winlew.co</code> itself — so a link never depends on a separate host staying alive or its
+          certificate staying valid, on mobile or desktop.
+        </p>
+
+        <div class="milestoneList">
+          <div class="milestoneItem">
+            <strong>✅ Verify faster</strong>
+            <span>Wallet verification now lives on a clearer first-party route, so linking your wallet feels smoother and more trustworthy from the start.</span>
+          </div>
+          <div class="milestoneItem">
+            <strong>🤖 Find bot tools faster</strong>
+            <span>Discord services, legal pages, and support links are grouped in one place, so you spend less time hunting and more time participating.</span>
+          </div>
+          <div class="milestoneItem">
+            <strong>📱 Better mobile flow</strong>
+            <span>Desktop-to-phone handoff and wallet-specific guidance make onboarding easier across devices, especially for real users on mobile.</span>
+          </div>
+          <div class="milestoneItem">
+            <strong>🧭 More stable pages</strong>
+            <span>Cleaner routing and simpler hosting reduce friction behind the scenes, which means fewer broken paths and a more reliable experience for everyone.</span>
+          </div>
+          <div class="milestoneItem">
+            <strong>&#128100; One connected profile</strong>
+            <span>Your verified wallet, game rewards, quiz progress, payout status, and public identity now live together on your WinLEW Profile.</span>
+          </div>
+        </div>
+
+        <div class="ctaRow">
+          <a class="btn primary" href="/verify/">✍️ Open Verify</a>
+          <a class="btn" href="/verify/profile.html">&#128100; Open My Profile</a>
+          <a class="btn" href="/discord-bots/">🤖 Open Discord Bots</a>
+          <a class="btn ghost" href="/health/">🩺 View Health Page</a>
+        </div>
+      </div>
+
+      <div class="milestoneVisual">
+        <div class="milestoneFrame">
+          <picture>
+            <source srcset="/images/mole-dirt-hero.webp" type="image/webp" />
+            <img src="/images/mole-dirt-hero.png" alt="WinLEW verification and community services under one first-party home" loading="lazy" />
+          </picture>
+        </div>
+        <div class="milestoneBadge"><span class="milestoneDot"></span> Jump into what is already live</div>
+        <div class="milestoneLinks">
+          <div class="linkGrid">
+            <a class="linkBtn" href="/verify/">
+              <div>✅ Verify <small>Wallet linking</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="/verify/profile.html">
+              <div>&#128100; Profile <small>Wallets, rewards + payouts</small></div><div>&rarr;</div>
+            </a>
+            <a class="linkBtn" href="/discord-bots/">
+              <div>🤖 Discord Bots <small>Tools + policies</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="/mole-hub/">
+              <div>🎮 Mole Hub <small>Play + participate</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="/quiz/">
+              <div>🧠 Quiz <small>Play + climb the leaderboard</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="/modules/proof-of-value-engine.html">
+              <div>🧠 Proof of Value Engine <small>Contribution logic</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="/modules/games-trivia.html">
+              <div>🕹️ Games &amp; Trivia Layer <small>Knowledge-first play</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="/governance/">
+              <div>🗳️ Governance <small>Vote on real proposals</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="/burn/">
+              <div>🔥 Burn Center <small>Verified burn records</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="/modules/">
+              <div>🧩 Modules &amp; Roadmap <small>Full status center</small></div><div>↗</div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+<!-- LIVE STATS -->
+<div class="sectionTitle" id="stats">Live Stats</div>
+<section class="card stats">
+ <div class="statsTop">
+  <div>
+    <div class="statsTitle">📡 Live market snapshot</div>
+    <div class="statsSub">Verified market data from DexScreener and GeckoTerminal • active and historical markets kept separate</div>
+  </div>
+
+  <div class="statsActions">
+    <div class="toggle" role="tablist" aria-label="Stats source">
+      <button class="tbtn active" type="button" data-view="primary" aria-selected="true">Primary</button>
+      <button class="tbtn" type="button" data-view="raydium" aria-selected="false">Raydium</button>
+      <button class="tbtn" type="button" data-view="historical" aria-selected="false">History</button>
+    </div>
+
+    <!-- Initial href only — the JS below rewrites it from the selected
+         market's defaultLink. Kept in step with WINLEW_MARKETS.primary so the
+         pre-script value isn't a link that renders "no pair found". -->
+    <a class="pill" id="statsDexLink" href="https://www.geckoterminal.com/solana/pools/Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL" target="_blank" rel="noreferrer noopener">
+      <span id="statsLinkLabel">Open market ↗</span>
+    </a>
+  </div>
+</div>
+
+
+  <div class="statsGrid">
+    <div class="statBox">
+      <div class="statLabel">Price</div>
+      <div class="statValue" id="statPrice"><span class="shimmer">Loading…</span></div>
+      <div class="statHint" id="statPair">Pair: —</div>
+    </div>
+
+    <div class="statBox">
+      <div class="statLabel">Liquidity</div>
+      <div class="statValue" id="statLiquidity"><span class="shimmer">Loading…</span></div>
+      <div class="statHint">Total pool liquidity</div>
+    </div>
+
+    <div class="statBox">
+      <div class="statLabel">24h Volume</div>
+      <div class="statValue" id="statVol24"><span class="shimmer">Loading…</span></div>
+      <div class="statHint">Trading volume (24h)</div>
+    </div>
+
+    <div class="statBox">
+      <div class="statLabel">24h Change</div>
+      <div class="statValue" id="statChange"><span class="shimmer">Loading…</span></div>
+      <div class="statHint" id="statUpdated">Updated: —</div>
+    </div>
+
+    <div class="statBox">
+      <div class="statLabel">Market Cap / FDV</div>
+      <div class="statValue" id="statMcap"><span class="shimmer">Loading…</span></div>
+      <div class="statHint">Pair-selected source</div>
+    </div>
+  </div>
+
+  <div class="statsFoot" id="statsStatus">
+    Loading verified market data…
+  </div>
+</section>
+
+
+<!-- ROADMAP TEASER (MYSTERY MODULES) -->
+<div class="sectionTitle" id="roadmap">What We’re Building</div>
+<section class="card roadmap">
+
+  <div class="roadTop">
+  <div>
+    <div class="roadTitle">🧭 What’s taking shape</div>
+    <div class="roadSub">
+      Of the six modules shown here, <strong>five are live</strong> and one is partly shipped.
+      Explore what is running today and what is still being built.
+      <span class="muted">• click a module to preview</span>
+    </div>
+  </div>
+
+  <div class="roadActions">
+    <a class="btn primary" href="/community/">💬 Build with us</a>
+    <a class="btn" href="https://x.com/LetEveryOneWin" target="_blank" rel="noreferrer noopener">𝕏 Updates ↗</a>
+  </div>
+</div>
+
+
+<!-- The bar and the two labels below it describe the SELECTED module, not the
+     roadmap as a whole. applySelection() runs unconditionally on load (restored
+     from localStorage, else the first card), so whatever is authored here is
+     overwritten before it can be read. This markup used to open with
+     width:88% and "5 of 6 shown here are LIVE" — an honest, useful summary
+     that no visitor has ever seen, because load immediately replaced it with
+     MODULE-01's own figures. The standing count now lives in .roadSub above,
+     where nothing overwrites it, and these are neutral placeholders. -->
+ <div class="roadBar">
+  <div class="roadBarFill" id="roadBarFill" style="width: 0%;"></div>
+</div>
+<div class="roadBarMeta">
+  <span id="roadPhase">Select a module</span>
+  <span class="muted" id="roadStatus">—</span>
+</div>
+<div class="moduleGrid" id="moduleGrid">
+<!-- ACTIVE -->
+<!-- data-progress was 38. Every other LIVE module here uses 100, and
+     /modules/core-infrastructure.html states ONLINE / "Live foundations".
+     Because this card is the default selection, that stray 38 was what the
+     roadmap bar rendered on first load — the page opened by reporting its own
+     finished foundation as roughly a third built. -->
+<button class="module active" type="button"
+  data-code="MODULE-01"
+  data-phase="Foundations"
+  data-phaseLabel="Phase 1 — Foundation & Tokenomics"
+  data-time="Q1 2026"
+  data-status="online"
+  data-progress="100"
+  data-desc="Base layer is live: routing, link hub, live stats, verified endpoints."
+  data-short="The foundation is live: clarity, navigation, verification, live market data."
+  data-long="This is the base layer WinLEW is built on: a clean public home, a verified link hub, contract + pool references, and synced live stats. Everything is designed to be easy to verify, hard to spoof, and fast to understand — so newcomers don’t get lost and the community always has a source of truth."
+  data-points="Verified contract + pool references|Copy-to-clipboard actions|Verified market stats toggle|Official link hub (no spam)|Stable layout + mobile-ready UI"
+  data-link="/modules/core-infrastructure.html"
+>
+  <div class="moduleTop">
+    <div class="moduleTag on">LIVE</div>
+    <div class="moduleCode">Foundation</div>
+  </div>
+  <h3><span class="mIcon" aria-hidden="true">⚙️</span> Core Infrastructure</h3>
+  <p>Routing, link hub, live stats, verified endpoints — the base layer.</p>
+
+  <div class="moduleLine"></div>
+  <div class="moduleMeta">
+    <span class="dot on"></span> Live features visible
+    <span class="muted">• stability-first</span>
+  </div>
+</button>
+
+<!-- LIVE -->
+<button class="module active" type="button"
+  data-code="MODULE-02"
+  data-phase="Core Infrastructure"
+  data-phaseLabel="Phase 2 — Core Infrastructure"
+  data-time="2026"
+  data-status="online"
+  data-progress="100"
+  data-desc="Contribution tracking, unified scoring, and the Dashboard that shows it — live."
+  data-short="Rewards tied to participation, not wallet size — with guardrails."
+  data-long="This phase turned WinLEW from a public site into a working system. Contribution signals from Quiz, Faucet, Games, and Wallet Verification feed a single unified Proof of Value score, shown on the Dashboard alongside real-data milestones and a weekly activity summary — with anti-farm guardrails already in place. Rewards go to real participation, not wallet size."
+  data-points="Unified Proof of Value score (Quiz + Faucet + Games + Verification)|Anti-farm / anti-bot guardrails|Transparency logs + verifiable rules|Unified Dashboard|Real-data milestones + activity streaks"
+  data-link="/modules/proof-of-value-engine.html"
+>
+  <div class="moduleTop">
+    <div class="moduleTag on">LIVE</div>
+    <div class="moduleCode">Engine</div>
+  </div>
+  <h3><span class="mIcon" aria-hidden="true">🧠</span> Proof of Value Engine</h3>
+  <p>Contribution tracking — rewards tied to action, not wallet size.</p>
+
+  <div class="moduleLine"></div>
+  <div class="moduleMeta">
+    <span class="dot on"></span> Live on the Dashboard
+    <span class="muted">• guardrails enabled</span>
+  </div>
+</button>
+
+<!-- PARTIAL -->
+<!-- Was rendered LOCKED / "Access pending" while its own data-desc said
+     "Streaks and milestone badges are live", and while
+     /modules/quests-progression.html states PARTIAL (40%) with both sub-items
+     shipped and running on the Dashboard. A visitor scanning the grid saw
+     LOCKED for something 40% delivered. Switched to the warming/PARTIAL state
+     (styles already existed in this file, unused) so the badge agrees with the
+     description under it and with the module's own page.
+     Two other corrections here: data-phaseLabel said "Phase 3 — Engagement &
+     Mechanism Rollout" where the module page says "Phase 3 — Platform Launch",
+     and data-time="Q3 2026" was a forward-looking date that has arrived —
+     August 2026 IS Q3 2026, so it promised nothing. The module page carries no
+     date; this one no longer invents one. Verified 2026-08-04. -->
+<button class="module warming" type="button"
+  data-code="MODULE-03"
+  data-phase="Proof of Value"
+  data-phaseLabel="Phase 3 — Platform Launch"
+  data-status="warming"
+  data-progress="40"
+  data-desc="Streaks and milestone badges are live. Seasonal ladders, skill brackets, and access tiers are not yet built."
+  data-short="Streaks + milestones are live; seasonal ladders and skill brackets are not."
+  data-long="Streak-based rewards (feeding the Proof of Value streak multiplier) and milestone badges are real and shipped today. Seasonal leagues/ladders, skill brackets, and dedicated access-tier gates from the original concept do not exist yet — 2 of 5 documented sub-items complete."
+  data-points="Streak rewards — done|Milestone badges — done|Seasonal leagues/ladders — not started|Skill brackets — not started|Access tiers + role gates — not started"
+  data-link="/modules/quests-progression.html"
+>
+  <div class="moduleTop">
+    <div class="moduleTag warm">PARTIAL</div>
+    <div class="moduleCode">Progression</div>
+  </div>
+  <h3><span class="mIcon" aria-hidden="true">🎯</span> Quests & Progression</h3>
+  <p>Streaks and milestone badges are live; seasons and skill brackets are not.</p>
+
+  <div class="moduleLine"></div>
+  <div class="moduleMeta">
+    <span class="dot warm"></span> 2 of 5 shipped
+    <span class="muted">• staged rollout</span>
+  </div>
+</button>
+
+<!-- LIVE -->
+<button class="module active" type="button"
+  data-code="MODULE-04"
+  data-phase="Proof of Value"
+  data-phaseLabel="Phase 3 — Engagement & Mechanism Rollout"
+  data-time="2026"
+  data-status="online"
+  data-progress="100"
+  data-desc="Interactive loops that reward knowledge. Anti-farm checks included."
+  data-short="Interactive loops that reward knowledge — not spam."
+  data-long="WinLEW is now a skill-first playground: trivia, mini-games, and challenge rounds that pay out based on correctness, consistency, and contribution. Play the Quiz and the Mole Hub in your browser — built with anti-farm checks so rewards go to humans, not scripts, with throttles to protect the pool and keep the economy healthy."
+  data-points="Timed rounds + streak logic|Anti-farm & anti-bot guardrails|Live leaderboards (Quiz + Mole Hub)|Reward throttles to protect the pool|Fair-play rules + transparency"
+  data-link="/modules/games-trivia.html"
+>
+  <div class="moduleTop">
+    <div class="moduleTag on">LIVE</div>
+    <div class="moduleCode">Play</div>
+  </div>
+  <h3><span class="mIcon" aria-hidden="true">🕹️</span> Games & Trivia Layer</h3>
+  <p>Interactive engagement loops designed to reward knowledge and focus.</p>
+
+  <div class="moduleLine"></div>
+  <div class="moduleMeta">
+    <span class="dot on"></span> Live — Quiz &amp; Mole Hub
+    <span class="muted">• anti-farm checks</span>
+  </div>
+</button>
+
+<!-- LIVE -->
+<button class="module active" type="button"
+  data-code="MODULE-05"
+  data-phase="Burn Program"
+  data-phaseLabel="Phase 4 — Engagement & Mechanism Roll-out"
+  data-time="2026"
+  data-status="online"
+  data-progress="100"
+  data-desc="Verified, on-chain-evidenced burn records. Software is live; future burns are an ongoing program, not a one-time deliverable."
+  data-short="Verified burn records with on-chain evidence — live software, ongoing burns."
+  data-long="Publishes every confirmed WinLEW burn with real transaction evidence, progress toward the public burn target, and staged/pending amounts. No burn ever executes automatically — from this system or from a Governance vote — every burn is a manually authorized, separately verified transaction added here only after the fact."
+  data-points="Verified on-chain burn evidence|Public progress toward the burn target|Staged/pending amount tracking|No automatic execution, by design|Cross-linked with Governance burn-program proposals"
+  data-link="/burn/"
+>
+  <div class="moduleTop">
+    <div class="moduleTag on">LIVE</div>
+    <div class="moduleCode">Transparency</div>
+  </div>
+  <h3><span class="mIcon" aria-hidden="true">🔥</span> Burn Center</h3>
+  <p>Verified burn records — live software, ongoing burn program.</p>
+
+  <div class="moduleLine"></div>
+  <div class="moduleMeta">
+    <span class="dot on"></span> Live and verifiable
+    <span class="muted">• burns are ongoing</span>
+  </div>
+</button>
+
+<!-- LIVE -->
+<!-- This card said "one verified wallet, one vote" in both data-long and
+     data-points. That stopped being true on 2026-07-28, when capped
+     pay-per-vote weight shipped: web.js computes
+     totalWeight = 1 + purchasedWeight for every proposal, castVote() stores
+     it, and computeResults() tallies by it. The /governance/ hero chip and
+     /governance/rules/ were corrected in fd86521; this card was missed, and
+     was the last place in src/public/ still publishing the superseded rule. -->
+<button class="module active" type="button"
+  data-code="MODULE-06"
+  data-phase="Governance Module v1"
+  data-phaseLabel="Phase 5 — Governance & Beyond"
+  data-time="2026"
+  data-status="online"
+  data-progress="100"
+  data-desc="Server-verified community voting with an eligibility snapshot and a proposal-submission queue. Software is live; proposals themselves are an ongoing program."
+  data-short="Verified holders vote on real proposals — live software, ongoing votes."
+  data-long="Verified $WinLEW holders vote on community/feature/reward/burn-program proposals — private individual choice, public aggregate results. Every verified wallet gets one free vote, and may add up to 10 more at $1 USD each, so the largest possible voice is capped at 11× the smallest rather than unbounded. v1.1 added a per-proposal eligibility snapshot and a community proposal-submission review queue. No signing, treasury access, or burn-execution capability exists anywhere in this module."
+  data-points="One free vote per verified wallet|Up to 10 extra votes at $1 each, hard-capped at 11|Private choice, public aggregate results|Per-proposal eligibility snapshot (v1.1)|No automatic treasury/burn execution, ever"
+  data-link="/governance/"
+>
+  <div class="moduleTop">
+    <div class="moduleTag on">LIVE</div>
+    <div class="moduleCode">Governance</div>
+  </div>
+  <h3><span class="mIcon" aria-hidden="true">🗳️</span> Governance</h3>
+  <p>Verified community voting — live software, proposals ongoing.</p>
+
+  <div class="moduleLine"></div>
+  <div class="moduleMeta">
+    <span class="dot on"></span> Live and verifiable
+    <span class="muted">• proposals are ongoing</span>
+  </div>
+</button>
+</div>
+<p class="muted" style="text-align:center;margin-top:14px;font-size:13px;">
+  <a href="/modules/">See the full module &amp; roadmap status center →</a>
+</p>
+
+
+
+<!-- Small line under the grid that updates on click -->
+<div class="roadPick" id="roadPick">
+  <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+    <div>
+      <div style="font-weight:950;">
+        Selected: <span class="glow" id="pickCode">Core Infrastructure</span>
+        <span class="muted" id="pickPhase">• Foundations</span>
+      </div>
+      <div class="muted" id="pickShort" style="margin-top:6px;">—</div>
+    </div>
+
+    <a class="btn" id="pickLink" href="#" style="display:none;">Open module ↗</a>
+  </div>
+
+  <div id="pickLong" style="margin-top:10px; line-height:1.65; color:var(--muted);"></div>
+
+  <ul id="pickPoints" style="margin:10px 0 0; padding-left:18px; color:var(--muted); line-height:1.6;"></ul>
+</div>
+
+
+<br>
+  <details class="roadMore">
+    <summary>
+      <span>🔍 What “Proof of Value” means here</span>
+      <span class="summaryHint">tap to expand</span>
+    </summary>
+    <div class="roadExplain">
+      Proof of Value is a culture + system: you earn recognition and access by learning, contributing,
+      and showing up consistently — not by flexing wallet size.
+      <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn ghost" href="#what">Read the mission</a>
+        <a class="btn" href="#links">Open the link hub</a>
+      </div>
+    </div>
+  </details>
+
+</section>
+
+
+
+    <!-- WHAT -->
+    <div class="sectionTitle" id="what">What is WinLEW?</div>
+    <section class="grid3">
+      <div class="card tile">
+        <h3>🧠 Earn by contribution</h3>
+        <p>We reward participation — learning, playing, and showing up consistently. Proof of Value is about action, not clout.</p>
+      </div>
+      <div class="card tile">
+        <h3>🛠️ Utility on purpose</h3>
+        <p>Trivia + games + community tools designed to build momentum without fake hype.</p>
+      </div>
+      <div class="card tile">
+        <h3>🤝 Community-first growth</h3>
+        <p>Not chasing whales — building with people who stick around, help, and ship.</p>
+      </div>
+    </section>
+
+    <!-- DOMAIN -->
+    <!-- Was: "Domain: winlew.token — instead of pasting long addresses, you can
+         type winlew.token into your explorer to find the token faster."
+         This DID work once — /images/solscan-domain.png is a real screenshot of
+         Solscan resolving winlew.token with Domain Owner set to the WinLEW mint.
+         It does not work now. The lookup came from a RugCheck-paid verification
+         package that the owner confirms lapsed over a year ago; re-registering
+         an equivalent (AllDomains, whose current 48-TLD list no longer offers
+         `.token`) is a parked idea, not a shipped feature. Nothing else in the
+         repo registers or resolves the name.
+         So the page was telling every visitor to type a name that no longer
+         resolves, illustrated by a screenshot of when it did. Replaced with the
+         lookup that is true today; the screenshot is dropped rather than
+         presented as current proof. File left in place, not deleted.
+         Verified 2026-08-04. -->
+    <div class="sectionTitle">Simplified discovery</div>
+    <section class="card domain">
+      <div>
+        <div style="font-weight:950; font-size:16px;">🌐 Find WinLEW by <span class="glow">mint address</span></div>
+        <p class="muted" style="margin:10px 0 0; line-height:1.65;">
+          The mint is the only permanent, spoof-proof way to identify WinLEW — searching by name or symbol
+          can surface copies. Copy it from the panel above, paste it into any Solana explorer, and you will
+          land on the real token every time.
+        </p>
+        <p class="muted" style="margin:10px 0 0; line-height:1.65; font-size:13px;">
+          A short, memorable name you could type instead is something we would like to offer — it is not
+          registered today, so we are not going to tell you it works.
+        </p>
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn" href="https://solscan.io/token/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">View on Solscan ↗</a>
+          <a class="btn ghost" href="#contract">Back to Contracts</a>
+        </div>
+      </div>
+      <!-- This column held /images/solscan-domain.png, a screenshot of Solscan
+           resolving the now-lapsed winlew.token domain. Removing it outright
+           would leave an empty grid column (.domain is 1.1fr/.9fr), so it is
+           replaced by the thing the section now points at: the mint itself,
+           copyable. The .copyBtn handler binds every button on load, so this
+           one needs no extra wiring. -->
+      <div class="addrCard">
+        <div class="addrTop">
+          <div class="addrLabelRow">
+            <div class="addrLabel">🧩 Official Token Mint</div>
+            <span class="marketBadge identity">Permanent ID</span>
+          </div>
+          <button class="copyBtn" data-copy="DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump">Copy</button>
+        </div>
+        <div class="mono">DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump</div>
+        <div class="addrSummary">Paste this into any Solana explorer. It is the one identifier that cannot be copied by an imitator.</div>
+      </div>
+    </section>
+
+    <!-- LINK HUB -->
+    <div class="sectionTitle" id="links">Official Link Hub</div>
+    <section class="card hub">
+      <div class="hubIntro">
+        <div>
+          <div style="font-weight:950; font-size:16px;">Everything organized — no link spam.</div>
+          <p>Expand a category to find what you need. Fast, clean, and mobile-friendly.</p>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn primary" href="/community/">💬 Join Discord ↗</a>
+          <a class="btn" href="https://x.com/LetEveryOneWin" target="_blank" rel="noreferrer noopener">𝕏 Token ↗</a>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
+
+        <details open>
+          <summary>
+            <span>📊 Charts & Trackers</span>
+            <span class="summaryHint">Active + historical</span>
+          </summary>
+          <div class="linkGrid">
+            <a class="linkBtn" href="https://dexscreener.com/solana/Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL" target="_blank" rel="noreferrer noopener">
+              <div>📈 DexScreener <small>(Primary PumpSwap market)</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="https://www.geckoterminal.com/solana/pools/Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL" target="_blank" rel="noreferrer noopener">
+              <div>🦎 GeckoTerminal <small>(Primary PumpSwap market)</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="https://dexscreener.com/solana/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer noopener">
+              <div>📊 DexScreener <small>(Raydium market)</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="https://www.geckoterminal.com/solana/pools/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer noopener">
+              <div>🦎 GeckoTerminal <small>(Raydium market)</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="https://www.geckoterminal.com/solana/pools/H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg" target="_blank" rel="noreferrer noopener">
+              <div>🧑‍🚀 GeckoTerminal <small>(Historical launch market)</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="https://dex.coinmarketcap.com/token/solana/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump/" target="_blank" rel="noreferrer noopener">
+              <div>🌐 CoinMarketCap <small>(Mint-level Dexscan)</small></div><div>↗</div>
+            </a>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>🧩 Contracts & Verification</span>
+            <span class="summaryHint">Solscan • RugCheck</span>
+          </summary>
+          <div class="linkGrid">
+            <a class="linkBtn" href="https://solscan.io/token/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">
+              <div>🧩 Official Token Mint <small>(Solscan)</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="https://solscan.io/account/Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL" target="_blank" rel="noreferrer noopener">
+              <div>🏁 Primary PumpSwap Market <small>(Solscan)</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="https://solscan.io/account/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer noopener">
+              <div>💧 Raydium Market <small>(Solscan)</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="https://solscan.io/account/H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg" target="_blank" rel="noreferrer noopener">
+              <div>🧑‍🚀 Historical Launch Market <small>(Solscan)</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="https://rugcheck.xyz/tokens/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">
+              <div>🛡️ RugCheck <small>(Risk view)</small></div><div>↗</div>
+            </a>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>🧑‍🚀 Buy / Swap / Liquidity</span>
+            <span class="summaryHint">Canonical + Raydium</span>
+          </summary>
+          <div class="linkGrid">
+            <a class="linkBtn" href="https://pump.fun/coin/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">
+              <div>🏁 View Coin Page <small>(pump.fun / PumpSwap)</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="https://swap.pump.fun/?input=So11111111111111111111111111111111111111112&output=DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">
+              <div>💱 Swap <small>(pump.fun)</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="https://raydium.io/swap/?inputMint=sol&outputMint=DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">
+              <div>💱 Swap <small>(Raydium)</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="https://raydium.io/liquidity/increase/?mode=add&pool_id=5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer noopener">
+              <div>🤝 Add Liquidity <small>(Raydium)</small></div><div>↗</div>
+            </a>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>🐾 Community</span>
+            <span class="summaryHint">Discord • X • LewCrew</span>
+          </summary>
+          <div class="linkGrid">
+            <a class="linkBtn" href="/community/">
+              <div>💬 Discord <small>(Join)</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="https://x.com/WinLewToken" target="_blank" rel="noreferrer noopener">
+              <div>𝕏 Faucet <small>(@WinLewToken)</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="https://x.com/LetEveryOneWin" target="_blank" rel="noreferrer noopener">
+              <div>𝕏 Token <small>(@LetEveryOneWin)</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="https://x.com/LewSales" target="_blank" rel="noreferrer noopener">
+              <div>𝕏 Developer <small>(@LewSales)</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="https://x.com/i/communities/1890899109684683068" target="_blank" rel="noreferrer noopener">
+              <div>🐾 LewCrew <small>(𝕏 Community)</small></div><div>↗</div>
+            </a>
+            <a class="linkBtn" href="https://t.me/LetsEveryOneWin" target="_blank" rel="noreferrer noopener">
+              <div>📢 Telegram <small>(Closed chat)</small></div><div>↗</div>
+            </a>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>🧪 Services & Tools</span>
+            <span class="summaryHint">Bots • Verify • Health</span>
+          </summary>
+          <!-- Three fixes here.
+               (1) These three internal routes carried target="_blank" while the
+                   same destinations elsewhere on this page do not, so the same
+                   link opened differently depending on which section you used.
+                   Dropped, along with the ↗ marks that promised a new tab.
+               (2) "GeoAgora (Under construction)" pointed at
+                   https://winlew.co/GeoAgora, which .htaccess 302s to
+                   /geoagora/, whose index.html is a redirect stub to /. So the
+                   one link here labelled as a destination actually bounced the
+                   visitor back to the landing page. /ecosystem/geoagora/ is the
+                   real, intentionally-published page for it — the underlying
+                   build stays unexposed, which is why the raw path is locked
+                   down in the first place. Verified 2026-08-04. -->
+          <div class="linkGrid">
+            <a class="linkBtn" href="/discord-bots/">
+              <div>🔗 Services <small>(Discord bots)</small></div><div>&rarr;</div>
+            </a>
+            <a class="linkBtn" href="/health/">
+              <div>🔗 Health <small>(Status)</small></div><div>&rarr;</div>
+            </a>
+            <a class="linkBtn" href="/verify/">
+              <div>🔗 Verification <small>(Roles)</small></div><div>&rarr;</div>
+            </a>
+            <a class="linkBtn" href="/ecosystem/geoagora/">
+              <div>🏪 GeoAgora <small>(Ecosystem project)</small></div><div>&rarr;</div>
+            </a>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+    <footer>
+      <div>Built for clarity. Built for community. Built to ship — now with consolidated first-party routes.</div>
+      <div style="margin-top:6px;">© <span id="year"></span> WinLEW • <span class="glow">#LetsEveryOneWin</span></div>
+    </footer>
+
+  </div>
+<script>
+  // Year
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Copy buttons (multiple)
+  document.querySelectorAll(".copyBtn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const text = btn.getAttribute("data-copy") || "";
+      if (!text) return;
+
+      const original = btn.textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = "Copied ✅";
+      } catch (e) {
+        btn.textContent = "Copy failed";
+      }
+      setTimeout(() => (btn.textContent = original), 1400);
+    });
+  });
+// ===== Verified live market stats =====
+  const WINLEW_MARKETS = {
+    mint: "DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump",
+    // Re-verified 2026-08-04 during the /home/ content audit: all three pair
+    // addresses resolve in GeckoTerminal's index to a WinLEW/SOL pool on the
+    // dex each is labelled with (pumpswap / raydium / pump-fun), and the
+    // PumpSwap pool's on-chain creation date of 2026-07-22 matches the
+    // graduation date this page states in the hero banner.
+    lastVerified: "2026-08-04",
+    primary: {
+      key: "primary",
+      label: "Primary Post-Graduation Market",
+      dexName: "PumpSwap",
+      status: "active",
+      pairAddress: "Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL",
+      // GeckoTerminal, not DexScreener, and for a different reason than the
+      // sitewide DexScreener→Raydium switch made on 2026-08-12. This link is
+      // market-SPECIFIC — it sits under the "Primary Post-Graduation Market"
+      // heading, so it has to open THIS pool. Pointing it at the Raydium
+      // DexScreener page would show a different market's data under that
+      // heading. DexScreener hides a zero-volume pair and every WinLEW pool is
+      // at $0/24h, so its page for this pool renders "no pair found";
+      // GeckoTerminal still serves it (reserve $6,162 verified 2026-08-12).
+      // The Raydium tab below already links GeckoTerminal for the same reason.
+      defaultLink: "https://www.geckoterminal.com/solana/pools/Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL",
+    },
+    raydium: {
+      key: "raydium",
+      label: "Raydium Market",
+      dexName: "Raydium",
+      status: "active",
+      pairAddress: "5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx",
+      defaultLink: "https://www.geckoterminal.com/solana/pools/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx",
+    },
+    historical: {
+      key: "historical",
+      label: "Historical Launch Market",
+      dexName: "pump.fun launch market",
+      status: "historical",
+      pairAddress: "H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+      defaultLink: "https://www.geckoterminal.com/solana/pools/H3HoYtV5tg6a2UZqSJhnCidgWcwX4h3KdNewfJMLMgfg",
+    },
+  };
+  let CURRENT_VIEW = "primary";
+
+  const el = (id) => document.getElementById(id);
+
+  function fmtUSD(n){
+    const v = Number(n);
+    if (!Number.isFinite(v)) return "—";
+    if (v === 0) return "$0";
+    if (v >= 1e9) return "$" + (v/1e9).toFixed(2) + "B";
+    if (v >= 1e6) return "$" + (v/1e6).toFixed(2) + "M";
+    if (v >= 1e3) return "$" + (v/1e3).toFixed(2) + "K";
+    if (Math.abs(v) < 0.01) return "$" + v.toFixed(8).replace(/0+$/,'').replace(/\.$/,'');
+    return "$" + v.toFixed(6).replace(/0+$/,'').replace(/\.$/,'');
+  }
+
+  function fmtPct(n){
+    const v = Number(n);
+    if (!Number.isFinite(v)) return "—";
+    const sign = v > 0 ? "+" : "";
+    return `${sign}${v.toFixed(2)}%`;
+  }
+
+  function shortAddr(addr){
+    const s = String(addr || "");
+    return s.length > 12 ? `${s.slice(0, 6)}…${s.slice(-6)}` : s || "—";
+  }
+
+  async function fetchJson(url, label){
+    // Fixed 2026-08-08. On winlew.co there is NO direct route to the Node
+    // backend at /api/* — Apache 404s it, and only /verify/api-proxy.php
+    // (forwarding to the active ngrok tunnel) reaches Node. A direct
+    // fetch("/api/...") works in local/Docker testing, where Node serves /api
+    // itself, which is exactly why this shipped broken and stayed broken: the
+    // widget was correct everywhere except production.
+    //
+    // hubApiUrl() (assets/wallet-auth.js, already loaded by this page)
+    // rewrites /api/x?y=z into /verify/api-proxy.php?path=/api/x&y=z on the
+    // shared host and leaves it untouched locally. Route every /api/ call
+    // through it — see the same fix on the landing page.
+    const target = (String(url).startsWith("/api/") && window.WinLEWAuth?.hubApiUrl)
+      ? window.WinLEWAuth.hubApiUrl(url)
+      : url;
+    const res = await fetch(target, {
+      cache: "no-store",
+      headers: { accept: "application/json" },
+    });
+    if (!res.ok) throw new Error(`${label} HTTP ${res.status}`);
+    return res.json();
+  }
+
+  // Fixed 2026-07-27: this used to fetch DexScreener+GeckoTerminal directly
+  // from the browser and merge them client-side. Two confirmed real
+  // problems with that: GeckoTerminal's public API sends no
+  // Access-Control-Allow-Origin header (a browser silently can't read the
+  // response even though the request succeeds), and DexScreener's own API
+  // is genuinely flaky for this token — it returned real data on one
+  // request and {pairs:null} on the very next request in testing, no code
+  // change in between. loadStats() below now calls this site's own
+  // /api/price/status (src/mole/web.js), which does the same multi-source
+  // fallback server-side, where CORS doesn't apply and one source's
+  // flakiness doesn't sink the whole widget.
+
+  function setToggle(view){
+    CURRENT_VIEW = view;
+
+    document.querySelectorAll(".tbtn").forEach((button) => {
+      const on = button.getAttribute("data-view") === view;
+      button.classList.toggle("active", on);
+      button.setAttribute("aria-selected", on ? "true" : "false");
+    });
+
+    loadStats(true);
+  }
+
+  function applyUI({ priceUsd, liquidityUsd, vol24, chg24, mcText, linkMeta, pairLine, footerHtml }){
+    el("statPrice").textContent = priceUsd != null ? fmtUSD(priceUsd) : "—";
+    el("statLiquidity").textContent = liquidityUsd != null ? fmtUSD(liquidityUsd) : "—";
+    el("statVol24").textContent = vol24 != null ? fmtUSD(vol24) : "—";
+    el("statMcap").textContent = mcText || "—";
+
+    const changeEl = el("statChange");
+    changeEl.textContent = chg24 != null ? fmtPct(chg24) : "—";
+    changeEl.classList.remove("good","bad");
+    if (Number(chg24) > 0) changeEl.classList.add("good");
+    if (Number(chg24) < 0) changeEl.classList.add("bad");
+
+    el("statsDexLink").href = linkMeta?.href || WINLEW_MARKETS.primary.defaultLink;
+    el("statsLinkLabel").textContent = linkMeta?.label || "Open market ↗";
+    el("statPair").textContent = pairLine || "Pair: —";
+
+    const now = new Date();
+    el("statUpdated").textContent = `Updated: ${now.toLocaleTimeString()}`;
+    el("statsStatus").innerHTML = footerHtml || "Verified market data loaded.";
+  }
+
+  function applyUnavailableStats(statusMessage, market){
+    el("statPrice").textContent = "—";
+    el("statLiquidity").textContent = "—";
+    el("statVol24").textContent = "—";
+    el("statChange").textContent = "—";
+    el("statChange").classList.remove("good","bad");
+    el("statMcap").textContent = "—";
+    el("statPair").textContent = market ? `${market.label} • unavailable` : "Pair: —";
+    el("statUpdated").textContent = "Updated: —";
+    el("statsDexLink").href = market?.defaultLink || WINLEW_MARKETS.primary.defaultLink;
+    el("statsLinkLabel").textContent = market?.status === "historical" ? "Open historical reference ↗" : "Open market reference ↗";
+    el("statsStatus").textContent = statusMessage;
+  }
+
+  async function loadStats(fromToggle=false){
+    const status = el("statsStatus");
+    const market = WINLEW_MARKETS[CURRENT_VIEW] || WINLEW_MARKETS.primary;
+    try{
+      if (!fromToggle) status.textContent = "Loading verified market data…";
+
+      const data = await fetchJson(`/api/price/status?market=${market.key}`, "Price");
+
+      if (!data?.ok) {
+        applyUnavailableStats(
+          `Couldn’t load the ${market.label.toLowerCase()} right now. ${data?.error || "market data unavailable"}. Market references last manually verified: ${WINLEW_MARKETS.lastVerified}.`,
+          market,
+        );
+        return;
+      }
+
+      const sourceLabel = data.source === "geckoterminal" ? "GeckoTerminal" : data.source === "dexscreener" ? "DexScreener" : "pump.fun";
+      const linkMeta = data.source === "dexscreener"
+        ? { href: `https://dexscreener.com/solana/${market.pairAddress}`, label: "View on DexScreener ↗" }
+        : { href: market.defaultLink, label: data.source === "geckoterminal" ? "View on GeckoTerminal ↗" : "Open reference ↗" };
+
+      const footerParts = [];
+      if (data.stale) {
+        footerParts.push("⚠️ This source's own snapshot may lag behind live trading — treat as approximate");
+      }
+      footerParts.push(`Source: ${sourceLabel}`);
+      footerParts.push(`Pair: ${shortAddr(market.pairAddress)}`);
+
+      if (market.key === "primary") {
+        footerParts.push("Selected by official mint + verified post-graduation pair address");
+      } else if (market.key === "raydium") {
+        footerParts.push("Established Raydium market kept separate from the post-graduation market");
+      } else {
+        footerParts.push("Historical launch reference only");
+      }
+
+      if (market.key === "historical") {
+        footerParts.push(`Current reported liquidity: ${fmtUSD(data.liquidityUsd)}`);
+        footerParts.push(`24h volume: ${fmtUSD(data.volume24hUsd)}`);
+      }
+
+      footerParts.push(`Market references last manually verified: ${WINLEW_MARKETS.lastVerified}`);
+
+      applyUI({
+        priceUsd: data.priceUsd,
+        liquidityUsd: data.liquidityUsd,
+        vol24: data.volume24hUsd,
+        chg24: data.priceChange24h,
+        mcText: data.marketCapUsd != null ? fmtUSD(data.marketCapUsd) : "—",
+        linkMeta,
+        pairLine: `${market.label} • ${market.dexName} • Source: ${sourceLabel}`,
+        footerHtml: footerParts.join(' <span style="opacity:.85">•</span> '),
+      });
+    } catch(err){
+      console.error(err);
+      applyUnavailableStats(
+        `Couldn’t load verified market data right now. Use the active market links above to verify. Market references last manually verified: ${WINLEW_MARKETS.lastVerified}.`,
+        market,
+      );
+    }
+  }
+
+  // Wire toggle buttons
+  document.querySelectorAll(".tbtn").forEach(btn => {
+    btn.addEventListener("click", () => setToggle(btn.getAttribute("data-view")));
+  });
+
+  // Initial + refresh loop.
+  //
+  // The first call MUST wait for DOMContentLoaded. This script block sits at
+  // ~line 1711, but assets/wallet-auth.js — which defines the
+  // window.WinLEWAuth.hubApiUrl() that fetchJson() needs to reach the backend
+  // through /verify/api-proxy.php — is loaded further down the page. Calling
+  // loadStats() inline here runs it before that script exists, so the very
+  // first fetch falls back to a bare /api/... URL and 404s on winlew.co.
+  // DOMContentLoaded fires only after every synchronous script in the
+  // document has run, so the helper is guaranteed to be there.
+  //
+  // The 30s interval would have recovered on its own, which is precisely what
+  // made this hard to see: the card was broken on load and fine 30 seconds
+  // later. Do not "simplify" this back to a bare loadStats() call.
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => loadStats());
+  } else {
+    loadStats();
+  }
+  setInterval(() => loadStats(false), 30000);
+
+
+
+ // ===== Roadmap: clickable modules (with persistence) =====
+  (function(){
+    const grid = document.getElementById("moduleGrid");
+    if (!grid) return;
+
+    const bar = document.getElementById("roadBarFill");
+    const phase = document.getElementById("roadPhase");
+    const status = document.getElementById("roadStatus");
+    const pick = document.getElementById("roadPick");
+
+    const STORAGE_KEY = "winlew_roadmap_module";
+
+    function statusText(s){
+      const v = String(s || "").toLowerCase();
+      if (v === "online") return "Status: online";
+      if (v === "warming") return "Status: warming up";
+      if (v === "locked") return "Status: locked";
+      if (v === "coming") return "Status: coming online";
+      return "Status: updating";
+    }
+
+    function clampPct(n){
+      const v = Number(n);
+      if (!isFinite(v)) return 0;
+      return Math.max(0, Math.min(100, v));
+    }
+
+    function labelFromCard(card){
+  const code = card.getAttribute("data-code") || "section";
+  const title = (card.querySelector("h3")?.textContent || "").trim();
+  const short = card.getAttribute("data-short") || card.getAttribute("data-desc") || "";
+  const long = card.getAttribute("data-long") || "";
+  const pointsRaw = card.getAttribute("data-points") || "";
+  const points = pointsRaw ? pointsRaw.split("|").map(s => s.trim()).filter(Boolean) : [];
+  const link = card.getAttribute("data-link") || "";
+  const phaseLabel = card.getAttribute("data-phaseLabel") || card.getAttribute("data-phase") || "—";
+  const time = card.getAttribute("data-time") || "";
+  return { code, title, short, long, points, link, phaseLabel, time };
+}
+
+
+  function applySelection(card){
+  // highlight selected
+  grid.querySelectorAll(".module").forEach(m => m.classList.remove("selected"));
+  card.classList.add("selected");
+
+  // top bar + labels
+  const prog = clampPct(card.getAttribute("data-progress"));
+  const st = card.getAttribute("data-status") || "—";
+  const phaseLabel = card.getAttribute("data-phaseLabel") || card.getAttribute("data-phase") || "—";
+  const time = card.getAttribute("data-time") || "";
+
+  if (bar) bar.style.width = prog + "%";
+  if (status) status.textContent = statusText(st);
+  if (phase) phase.textContent = `Phase: ${phaseLabel}${time ? ` (${time})` : ""}`;
+
+  // pull module info
+  const info = labelFromCard(card); // { code,title,short,long,points,link,phaseLabel,time }
+
+  // Fill the existing UI (NO innerHTML wipe)
+  const pickCode = document.getElementById("pickCode");
+  const pickPhase = document.getElementById("pickPhase");
+  const pickShort = document.getElementById("pickShort");
+  const pickLong = document.getElementById("pickLong");
+  const pickPoints = document.getElementById("pickPoints");
+  const pickLink = document.getElementById("pickLink");
+
+  if (pickCode) pickCode.textContent = info.title;
+  if (pickPhase) pickPhase.textContent = `• ${info.phaseLabel}${info.time ? ` (${info.time})` : ""}`;
+
+  // short line (title + short desc)
+  if (pickShort) pickShort.textContent = info.short;
+
+  // long description
+  if (pickLong) pickLong.textContent = info.long || "";
+
+  // bullets
+  if (pickPoints){
+    pickPoints.innerHTML = ""; // clear
+    // Was .slice(0, 4). Every one of the six cards defines exactly 5 points,
+    // so the last one was always dropped — including MODULE-06's "No automatic
+    // treasury/burn execution, ever", which is the strongest safety claim on
+    // the card and the one a sceptical reader most needs to see.
+    (info.points || []).forEach(p => {
+      const li = document.createElement("li");
+      li.textContent = p;
+      pickPoints.appendChild(li);
+    });
+  }
+
+  // link button
+  if (pickLink){
+    if (info.link){
+      pickLink.href = info.link;
+      pickLink.style.display = "";
+      pickLink.textContent = "Open module ↗";
+    } else {
+      pickLink.style.display = "none";
+      pickLink.href = "#";
+    }
+  }
+
+  // persist selection
+  try { localStorage.setItem(STORAGE_KEY, info.code); } catch(e) {}
+}
+
+    // click handlers
+    grid.querySelectorAll(".module").forEach(card => {
+      card.addEventListener("click", () => applySelection(card));
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          applySelection(card);
+        }
+      });
+    });
+
+    // restore selection
+    let restored = null;
+    try { restored = localStorage.getItem(STORAGE_KEY); } catch(e) {}
+    if (restored){
+      const found = Array.from(grid.querySelectorAll(".module"))
+        .find(m => (m.getAttribute("data-code") || "").toLowerCase() === restored.toLowerCase());
+      if (found) applySelection(found);
+      else applySelection(grid.querySelector(".module") || grid.firstElementChild);
+    } else {
+      // default: first module
+      applySelection(grid.querySelector(".module") || grid.firstElementChild);
+    }
+  })();
+
+
+
+</script>
+
+<script src="/assets/wallet-auth.js"></script>
+<script>
+  (function () {
+    const { getAuth, setConnectedUi, walletLogin, getCachedWallet, refreshWalletBalance } = window.WinLEWAuth;
+    document.getElementById('navWalletConnect')?.addEventListener('click', (e) => void walletLogin({ triggerBtn: e.currentTarget, onSuccess: () => window.location.reload() }));
+    if (getAuth().session) setConnectedUi(getCachedWallet() || 'connected');
+    refreshWalletBalance();
+  })();
+</script>
+<script defer src="/assets/nav.js"></script>
+
+</body>
+</html>

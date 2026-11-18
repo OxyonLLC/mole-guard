@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" fill="none">
+<defs>
+  <linearGradient id="bg" x1="18" y1="12" x2="110" y2="118" gradientUnits="userSpaceOnUse"><stop stop-color="#2B1A11"/><stop offset="1" stop-color="#120A08"/></linearGradient>
+  <linearGradient id="helm" x1="32" y1="18" x2="96" y2="62" gradientUnits="userSpaceOnUse"><stop stop-color="#FFCA6C"/><stop offset="1" stop-color="#C7760A"/></linearGradient>
+</defs>
+<rect width="128" height="128" rx="32" fill="url(#bg)"/>
+<circle cx="64" cy="64" r="42" fill="#5B3B24"/>
+<ellipse cx="64" cy="78" rx="24" ry="18" fill="#EEC0A0"/>
+<circle cx="49" cy="58" r="6" fill="#0E0E12"/>
+<circle cx="79" cy="58" r="6" fill="#0E0E12"/>
+<ellipse cx="64" cy="70" rx="6" ry="4" fill="#2B1A11"/>
+<path d="M54 82C58 88 70 88 74 82" stroke="#2B1A11" stroke-width="4" stroke-linecap="round"/>
+<circle cx="34" cy="36" r="11" fill="#5B3B24"/>
+<circle cx="94" cy="36" r="11" fill="#5B3B24"/>
+<path d="M28 44C28 25.222 43.222 10 62 10H68C86.778 10 102 25.222 102 44V48H28V44Z" fill="url(#helm)"/>
+<rect x="24" y="42" width="80" height="14" rx="7" fill="#8E5114"/>
+<circle cx="64" cy="30" r="8" fill="#FFF1CC" opacity=".88"/>
+<circle cx="64" cy="30" r="4" fill="#FFD784"/>
+</svg>

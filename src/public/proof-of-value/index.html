@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Proof of Value — WinLEW</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="What Proof of Value means at WinLEW: rewards should track participation, consistency, and contribution — not wallet size. How the live 0–100 score actually works." />
+  <link rel="canonical" href="https://winlew.co/proof-of-value/" />
+  <meta property="og:title" content="Proof of Value — WinLEW" />
+  <meta property="og:description" content="Proof of Value, NOT Wealth. How WinLEW's live scoring engine actually works, and why it exists." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/proof-of-value/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    html { overflow-x: hidden; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      line-height: 1.7;
+    }
+    .wlPageShell { max-width: 1000px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin: 0 0 10px; }
+    h2 { font-size: clamp(20px, 2.8vw, 26px); }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624;
+      border-radius: 20px;
+      padding: 26px;
+      margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: 0.85; }
+    .quote { border-left: 3px solid #d6a866; padding: 10px 16px; background: rgba(214,168,102,.08); border-radius: 0 12px 12px 0; font-style: italic; font-size: 14.5px; margin: 14px 0; }
+    .signalGrid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; margin-top: 14px; }
+    .signalCard { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.10); border-radius: 14px; padding: 14px; text-align: center; }
+    .signalCard .pct { font-size: 20px; font-weight: 950; color: #f0c989; }
+    .signalCard .label { font-size: 12.5px; color: rgba(246,239,232,.8); margin-top: 4px; }
+    .rankLadder { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; align-items: center; }
+    .rankStep { padding: 7px 14px; border-radius: 999px; background: rgba(255,255,255,.05); border: 1px solid #4e3624; font-size: 12.5px; font-weight: 700; }
+    .rankStep.range { opacity: .7; font-weight: 400; font-size: 11.5px; margin-left: -4px; }
+    .rankArrow { opacity: .5; }
+    .ctaRow { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid #4e3624;
+      font-weight: 850;
+      font-size: 13px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .btn.primary { background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22)); }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .notReadyNote { border-left: 3px solid rgba(255,179,71,.5); padding: 10px 14px; background: rgba(255,179,71,.08); border-radius: 0 10px 10px 0; margin-top: 14px; font-size: 13.5px; }
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+    @media (max-width: 700px) { .signalGrid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 900px) { .wlPageShell { padding: 22px 16px 32px; } }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+  <header class="wlHero" id="pov-overview">
+    <div class="wlHeroMain">
+      <span class="wlKicker">WINLEW • PROOF OF VALUE</span>
+      <h1 class="wlHeroTitle">Proof of Value,<br><span class="wlHeroTitleAccent">NOT Wealth.</span></h1>
+      <p class="wlHeroSub">$WinLEW — Let's EveryOne Win — is a utility-first community project built around participation, learning, and transparency. Proof of Value rewards real contribution — where showing up matters, not how much you hold.</p>
+      <div class="ctaRow">
+        <a class="btn primary" href="/verify/profile.html">See your score →</a>
+        <a class="btn" href="/modules/proof-of-value-engine.html">Read the technical breakdown</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="box">
+    <div class="wlEyebrow" style="color:#f0c989;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">Why WinLEW exists</div>
+    <p>WinLEW did not start as a token with a community bolted on afterward. It started as a Discord server and a simple idea: participation should create value. Knowledge should have value. Showing up, contributing, and learning should be rewarded — not just holding a large wallet.</p>
+    <p>Most token projects launch a chart first and a community second, if at all. WinLEW built in the opposite direction: community and utility first, token mechanics layered on top of things people were already doing — answering trivia, playing games, helping each other verify wallets, showing up daily.</p>
+  </div>
+
+  <div class="box">
+    <div class="wlEyebrow" style="color:#f0c989;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">What Proof of Value means</div>
+    <p>Everything at WinLEW is in service of one idea: rewards should track participation, consistency, and contribution — not the size of your wallet. A large holder and a small holder answering the same quiz question correctly earn the same points for that answer. A faucet claim is the same claim whether it comes from Discord or the website. WinLEW isn't organized around trading mechanics — it's organized around things people actually do.</p>
+    <p class="quote">A large holder and a small holder answering the same quiz question correctly earn the same points for that answer.</p>
+    <p>The Proof of Value Engine is <strong>live</strong> — not a slogan. It's a unified 0–100 score computed from four equally-weighted signals:</p>
+    <div class="signalGrid">
+      <div class="signalCard"><div class="pct">25%</div><div class="label">🧠 Quiz<br>lifetime points</div></div>
+      <div class="signalCard"><div class="pct">25%</div><div class="label">💧 Faucet<br>confirmed claims</div></div>
+      <div class="signalCard"><div class="pct">25%</div><div class="label">🎮 Games<br>Mole Hub claims</div></div>
+      <div class="signalCard"><div class="pct">25%</div><div class="label">🪪 Verification<br>signed wallet proof</div></div>
+    </div>
+    <!-- Said "a square-root curve". That was v2.4. The exponent was softened
+         from 0.5 (sqrt) to 0.75 in v2.5 on 2026-07-30, deliberately, so that
+         reaching the top is roughly a six-month task instead of a two-week one
+         — proofOfValue.js documents the change and the reasoning at lines
+         35-55. Describing it as a square root understated how much work the
+         back half takes. -->
+    <p style="margin-top:14px;">Each sub-score scales with diminishing returns — early participation counts for more than pure grinding, while the last stretch of each sub-score takes roughly half its cap on its own, so the top is a months-long climb rather than a weekend one. A small streak-based bonus, sourced from your quiz streak, sits on top. Tiers:</p>
+    <div class="rankLadder">
+      <span class="rankStep">Newcomer</span><span class="rankStep range">0–19</span><span class="rankArrow">→</span>
+      <span class="rankStep">Participant</span><span class="rankStep range">20–44</span><span class="rankArrow">→</span>
+      <span class="rankStep">Contributor</span><span class="rankStep range">45–69</span><span class="rankArrow">→</span>
+      <span class="rankStep">Pillar</span><span class="rankStep range">70–89</span><span class="rankArrow">→</span>
+      <span class="rankStep">Legend</span><span class="rankStep range">90–100</span>
+    </div>
+    <!-- This said Proof of Value "never touches a payout-eligible field (quiz
+         points, faucet claims, or game payouts directly)". That is not true and
+         has not been for some time. povRewardMultiplier() feeds
+         getCombinedRewardMultiplier(), which is passed into validateRewardClaim
+         as rewardMultiplier and drives the amount actually banked — so tier
+         changes what a Quiz or Mole Hub claim pays. Verified 2026-08-05 at
+         quiz/db.js:51 and web.js:2996.
+         Hiding a real earnings bonus on the page whose whole argument is
+         "we reward participation, not wealth" was the wrong way round: the
+         bonus IS the argument, and a user comparing two payouts for identical
+         work deserves to know why they differ. Stated plainly instead, with
+         the caps, and with the faucet correctly excluded — it pays a flat
+         DRIP_AMOUNT and applies no multiplier at all.
+
+         v4.0.0 UPDATE: the faucet still applies no TIER multiplier, and that
+         distinction is now stated rather than implied. It does gain a
+         consecutive-day streak bonus, which is a different thing entirely —
+         it rewards showing up rather than rank or holdings, so the principle
+         quoted above survives intact. This paragraph was rewritten in the same
+         commit that built the streak, because a page saying "every claim pays
+         the same" would have become false the moment that shipped. -->
+    <div class="notReadyNote">
+      <strong>Your tier does affect what you earn — a little, and with a hard ceiling.</strong>
+      Reaching a higher tier applies a small bonus to what a <strong>Quiz</strong> or <strong>Mole Hub</strong>
+      claim pays: Contributor +5%, Pillar +8%, Legend +12%. Newcomer and Participant get no bonus and no penalty —
+      the multiplier never drops below 1. It stacks with the separate Clout bonus from
+      <a href="/contribute/">contributions</a> (up to +5%), and the two together are capped at <strong>+25%</strong>,
+      whatever else changes.
+      <br><br>
+      The <strong>faucet pays a flat amount regardless of TIER</strong> — a Legend and a Newcomer claim exactly
+      the same base drip, because an equal drip is the one place a tier bonus would feel least fair.
+      What the faucet does reward is <strong>turning up</strong>: claim on consecutive days and a streak bonus
+      grows on top of the base — +1 a day for the first month, then +2 a day, and
+      <a href="/mole-link/">verifying your wallet</a> carries it further still. That is a bonus for consistency,
+      not for holdings or rank.
+      <br><br>
+      And Proof of Value never alters the underlying record: it does not add quiz points, invent faucet claims,
+      or change a game score. It adjusts the payout on work you already did, which is the whole point —
+      showing up consistently is worth slightly more than showing up once.
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="wlEyebrow" style="color:#f0c989;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">Where to see it</div>
+    <p>Your live score, full component breakdown, milestones, faucet streak, and a weekly activity summary all show on your Dashboard — the same score, computed the same way, every time, never stored (so it can't drift out of sync with what you've actually done).</p>
+    <div class="ctaRow">
+      <a class="btn primary" href="/verify/profile.html">Open your Dashboard →</a>
+      <a class="btn" href="/modules/proof-of-value-engine.html">Technical module page</a>
+      <a class="btn" href="/whitepaper/">Read the whitepaper</a>
+    </div>
+  </div>
+
+  <div class="box">
+    <p class="muted" style="margin:0;font-style:italic;">Parts of the whitepaper describe things that are still incomplete — that's intentional. A whitepaper that only describes finished, polished features isn't transparent, it's marketing.</p>
+  </div>
+
+  <footer>
+    <a href="/">← Back to WinLEW</a> · <a href="/who-we-are/">Who We Are</a> · <a href="/links/">Links</a> · <a href="/whitepaper/">Whitepaper</a> · <a href="/governance/">Governance</a>
+  </footer>
+</div>
+
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

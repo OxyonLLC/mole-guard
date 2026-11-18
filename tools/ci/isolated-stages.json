@@ -1,0 +1,15 @@
+{
+  "_doc": "Supervised stages (tools/test-audit/policy.cjs) run by CI's Isolated job. Their files are excluded from test:ci (tools/ci/run-suite.mjs) because they need the supervisor. Add a stage only after it passes on CI. Not yet here: GPAC (pacMoleWinning flaky under CI: 1 of 2 runs), L (practiceLifecycle: third game never settles headless), E and DEP (androidCompatibility needs src/public/jdid93hf8dh/winlew-beta-0.2.1.apk, not in git), P5 (needs a release-candidate manifest from a prior build).",
+  "stages": [
+    "A",
+    "B",
+    "C",
+    "F",
+    "GBLAST",
+    "GICE",
+    "I",
+    "J",
+    "R",
+    "U5"
+  ]
+}

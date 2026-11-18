@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verify your wallet · WinLEW XL1</title>
+<meta name="description" content="Prove you control an XL1 wallet by signing a one-time challenge. Signing costs nothing, moves nothing, and approves no transaction.">
+<link rel="canonical" href="https://winlew.co/xl1/verify/">
+<meta name="theme-color" content="#0c0907">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="WinLEW">
+<meta property="og:title" content="Verify your wallet · WinLEW XL1">
+<meta property="og:description" content="Prove you control an XL1 wallet by signing a one-time challenge. Signing costs nothing, moves nothing, and approves no transaction.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" href="/images/avatars/mole-guard-128.png">
+<link rel="stylesheet" href="/xl1/shared/oxyon.css?v=ox1004b">
+<link rel="stylesheet" href="/xl1/shared/xl1.css?v=ox1004b">
+<link rel="stylesheet" href="/xl1/shared/winlew-theme.css?v=wl1024-start">
+</head>
+<body class="xl1-shell">
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+<a class="brand" href="/" aria-label="WinLEW home">
+      <img class="brand-mark" src="/images/avatars/mole-guard-128.png" alt="" aria-hidden="true" width="28" height="28">
+      <span class="brand-word">WinLEW</span><span class="brand-sub">XL1</span>
+    </a>
+    <nav aria-label="XL1"><a href="/xl1/">XL1 hub</a><a href="/xl1/arcade/">Arcade</a><a href="/xl1/arcade/play/?game=molespades">Mole Spades</a><a href="/xl1/geohackers/">GeoHackers</a><a href="/xl1/verify/" aria-current="page">Verify</a><a href="https://oxyon.io/xl1/" rel="noopener">Network<span class="ext" aria-hidden="true">↗</span></a></nav>
+</header>
+
+<main id="main">
+    <section class="product-hero">
+      <p class="crumb"><a href="/xl1/">XL1</a> · Verify</p>
+      <h1>Verify your wallet</h1>
+      <p class="role">Not that you typed the address. That you control it.</p>
+      <div class="hero-status"><span class="chip chip-in-development">In development</span><span class="card-kind">Runs inside GeoHackers</span></div>
+      <p class="lede">
+        Before GeoHackers sends XL1 anywhere, it needs to know the address belongs to you. You prove
+        that by signing a one-off message with the wallet itself. <strong>Signing costs nothing, moves
+        nothing, and approves no transaction.</strong>
+      </p>
+    </section>
+
+    <section class="section reveal" aria-labelledby="v-how">
+      <p class="eyebrow">How it works</p>
+      <h2 id="v-how">Three steps, one signature.</h2>
+      <ol class="pipeline">
+        <li><b>Ask the bot</b><span>Run the verify command in Discord. The bot generates a challenge unique to you that expires, so a signature cannot be replayed or reused by anyone else.</span></li>
+        <li><b>Sign it</b><span>Open the link the bot gives you and sign the message it shows. The prompt comes from your wallet extension itself, not from a page asking you to type anything.</span></li>
+        <li><b>Payouts enabled</b><span>The bot checks the signature against the challenge and records the address as yours. From then on it sends XL1 there.</span></li>
+      </ol>
+    </section>
+
+    <section class="section reveal" aria-labelledby="v-wallets">
+      <p class="eyebrow">Wallets that work</p>
+      <h2 id="v-wallets">Either one signs.</h2>
+      <div class="cards">
+        <article class="card">
+          <header><span class="card-kind">XYO Network</span><span class="chip chip-in-development">Official</span></header>
+          <h3><a href="https://chromewebstore.google.com/detail/fblbagcjeigmhakkfgjpdlcapcgmcfbm" rel="noopener">XL1 Wallet</a></h3>
+          <p>XYO's own wallet for XL1, as a Chrome extension. If you are not sure which to use, use this one.</p>
+          <footer><a class="card-action" href="https://chromewebstore.google.com/detail/fblbagcjeigmhakkfgjpdlcapcgmcfbm" rel="noopener">Chrome Web Store →</a></footer>
+        </article>
+        <article class="card">
+          <header><span class="card-kind">Oxyon</span><span class="chip chip-research">Ours</span></header>
+          <h3><a href="https://oxyon.io/products/oxyon-wallet" rel="noopener">Oxyon Wallet</a></h3>
+          <p>Built alongside GeoHackers, by us. Same signing flow, same verification: an alternative, not a requirement.</p>
+          <footer><a class="card-action" href="https://chromewebstore.google.com/detail/dmppahjigfpdddppjhnekgealjbkbljn" rel="noopener">Chrome Web Store →</a></footer>
+        </article>
+      </div>
+      <p class="doc-note">
+        <strong>The bot does the verifying, not this page.</strong> The challenge, the signature check
+        and the record all live in GeoHackers. A second implementation of a signing flow would be a
+        second thing to keep correct, and the wrong place to be clever.
+      </p>
+      <p class="doc-note">
+        You will never be asked here for a seed phrase, a private key, or a transaction approval.
+        Signing a message is not spending. <strong>If anything ever asks you for more than a signature,
+        it is not us.</strong>
+      </p>
+    </section>
+</main>
+
+<footer>
+<div class="plate">
+      <img class="plate-mark" src="/images/avatars/mole-guard-128.png" alt="" aria-hidden="true" width="26" height="26">
+      <p class="plate-name">WinLEW</p>
+      <p class="plate-role">XL1 · VERIFY&nbsp;&nbsp;·&nbsp;&nbsp;LET'S EVERYONE WIN</p>
+      <hr>
+      <nav class="plate-groups" aria-label="All XL1 pages"><div><p class="plate-h">Play</p><a href="/xl1/arcade/">Arcade</a><a href="/mole-hub/">Mole Hub</a><a href="/xl1/arcade/play/?game=molespades">Mole Spades</a></div><div><p class="plate-h">Take part</p><a href="/xl1/geohackers/">GeoHackers</a><a href="/xl1/geohackers/#faucet">XL1 faucet</a><a href="/xl1/verify/" aria-current="page">Verify</a><a href="https://discord.gg/PSCrBzqdbE" rel="noopener">Discord<span class="ext" aria-hidden="true">↗</span></a></div><div><p class="plate-h">Check it</p><a href="/xl1/arcade/#activity">Arcade ledger</a><a href="https://explore.xyo.network/xl1/mainnet" rel="noopener">XL1 explorer<span class="ext" aria-hidden="true">↗</span></a><a href="https://oxyon.io/xl1/" rel="noopener">Network<span class="ext" aria-hidden="true">↗</span></a><a href="https://oxyon.io/status/" rel="noopener">What's live<span class="ext" aria-hidden="true">↗</span></a></div><div><p class="plate-h">WinLEW</p><a href="/">winlew.co</a><a href="/xl1/#learn">Who does what</a></div></nav>
+      <p class="plate-net" id="xl1-net" data-state="unknown" role="status" aria-live="polite"><span class="net-dot" aria-hidden="true"></span><span id="xl1-net-label">XL1 network</span></p>
+      <p class="plate-copy">WinLEW is independent community work, not affiliated with, sponsored by or endorsed by XYO Network. XL1 is XYO Network's blockchain. © <span id="year">2026</span> WinLEW</p>
+    </div>
+</footer>
+<script src="/xl1/shared/shell.js?v=wl1024-start" defer></script>
+</body>
+</html>

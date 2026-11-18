@@ -1,0 +1,8 @@
+Options -Indexes
+DirectoryIndex index.html
+
+# Hidden files and common secret/config artifacts must never be served if they
+# are accidentally uploaded. Explicit public JSON/Markdown assets still work.
+<FilesMatch "(^\.|\.(env|ini|log|bak|sql|key|pem)$|secret|credential|token|private)">
+  Require all denied
+</FilesMatch>

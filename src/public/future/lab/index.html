@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oxyon Lab — Developer</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="stylesheet" href="../assets/oxyon.css">
+</head>
+<body class="lab-page">
+<header class="top"><div class="wrap top-in">
+  <a class="mark" href="../"><img src="../assets/oxyon-symbol.webp" alt="" width="28" height="28"><span>OXYON</span><em>Lab</em></a>
+  <a class="top-link" href="../">&larr; Back to Oxyon</a>
+</div></header>
+
+<main class="wrap section">
+  <p class="eyebrow">Developer Lab · not indexed</p>
+  <h1 class="h2">Hosting diagnostics</h1>
+  <p class="lead">Read-only checks of what this hosting account can run. They change nothing
+    and touch no WinLEW production system.</p>
+
+  <div class="cards">
+    <article class="card">
+      <span class="tag tag-live">Browser</span>
+      <h3>JavaScript</h3>
+      <p id="js-status" class="bad">FAIL: browser JavaScript did not run.</p>
+    </article>
+    <article class="card">
+      <span class="tag tag-proto">Server</span>
+      <h3><a href="probe.php">PHP capability probe</a></h3>
+      <p>PHP limits, functions, extensions, outbound HTTPS to XL1 endpoints, a temp-file write, in-memory SQLite. Plain text.</p>
+    </article>
+    <article class="card">
+      <span class="tag tag-exp">Server</span>
+      <h3><a href="node-test.js">Node.js file test</a></h3>
+      <p>If this shows source code, the host serves <code>.js</code> as a static file and does not run Node.</p>
+    </article>
+  </div>
+
+  <h2 class="h3 mt">Findings so far (2 Oct 2026)</h2>
+  <ul class="plain">
+    <li>Apache + PHP 8.2 (FastCGI); <code>exec</code>/<code>shell_exec</code>/<code>system</code>/<code>passthru</code> disabled.</li>
+    <li>cURL, <code>fsockopen</code>, <code>proc_open</code>, file writes, PDO/MySQL/SQLite available.</li>
+    <li>Node.js is not executed. Persistent processes are not available.</li>
+    <li>Outbound HTTPS works: PHP reaches the XL1 RPC, sequence RPC and data lake, and gets live JSON-RPC results. Calls back to winlew.co itself time out (hairpin), which is why the first probe looked like a failure.</li>
+  </ul>
+</main>
+<script src="js-test.js"></script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>WinLEW Contribute</title>
+  <meta name="description" content="Send WinLEW directly to the Dev, Faucet, X Faucet, or Burn reserve — a real, verified on-chain contribution, ranked on the Clout leaderboard." />
+  <link rel="canonical" href="https://winlew.co/contribute/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    :root{--bg:#130b08;--bg2:#24150d;--panel:rgba(255,255,255,.05);--line:rgba(255,255,255,.12);--text:#f6efe8;--muted:rgba(246,239,232,.85);--brand:#d6a866;--shadow:0 28px 80px rgba(0,0,0,.42);--radius:24px}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:radial-gradient(1000px 620px at 10% 0%, rgba(160,90,230,.10), transparent 60%), linear-gradient(180deg, var(--bg) 0%, var(--bg2) 52%, #130b08 100%)}
+    .wrap{max-width:1240px;margin:0 auto;padding:22px}
+    /* Content links default to the page's gold accent — the browser default
+       blue/purple was unreadable on this brown background (the "Held by"
+       boxes especially). Pills/buttons set color:inherit, so unaffected. */
+    a{color:#f0c989;text-decoration-color:rgba(240,201,137,.45)}
+    a:hover{color:#ffe0ad}
+    .nav{position:sticky;top:0;background:rgba(19,11,8,.86);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
+    .navInner{max-width:2000px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .navBrand{text-decoration:none;color:inherit;font-weight:950}
+    .navLinks{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .pill,.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 13px;border-radius:999px;text-decoration:none;background:rgba(255,255,255,.06);border:1px solid var(--line);color:inherit;font-weight:850;cursor:pointer;font:inherit}
+    .btn{border-radius:14px}
+    .pill:hover,.btn:hover{background:rgba(255,255,255,.10)}
+    .pill.active{background:linear-gradient(180deg, rgba(160,90,230,.32), rgba(160,90,230,.16));border-color:rgba(160,90,230,.5);color:#e2c8ff}
+    .pill:disabled,.btn:disabled{opacity:.45;cursor:not-allowed}
+    .btn.primary{background:linear-gradient(90deg, rgba(160,90,230,.32), rgba(110,60,180,.30));border-color:rgba(160,90,230,.5)}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.02));
+      border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;
+    }
+    h1{font-size:clamp(32px,4vw,54px);margin:0 0 10px;line-height:1.02}
+    h2{font-size:clamp(20px,2.6vw,26px);margin:0 0 4px}
+    .muted{color:var(--muted);line-height:1.7}
+    /* 3-up, not 4 — four across left each card ~250px wide, which is what
+       made the wallet/held-by details unreadably smushed (2026-07-30). */
+    .causeGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+    @media (max-width:1100px){.causeGrid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:640px){.causeGrid{grid-template-columns:1fr}}
+    .causeCard{padding:20px;border:1px solid var(--line);border-radius:18px;background:rgba(0,0,0,.18)}
+    /* Destination wallet block — every .sol name and address here is verified
+       on-chain (SNS resolution + TRANSPARENCY_COMPONENTS) before being shown. */
+    .destWallet{margin:10px 0 2px;display:flex;flex-direction:column;gap:7px;font-size:13px}
+    .destNames{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+    .destNames code{background:rgba(214,168,102,.08);border:1px solid rgba(214,168,102,.25);border-radius:8px;padding:3px 9px;font-size:12.5px;color:#e7c18f}
+    .destAddrRow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .destAddrRow>code{font-size:12.5px;opacity:.92}
+    .copyMini{background:none;border:1px solid var(--line);border-radius:8px;padding:3px 8px;cursor:pointer;color:inherit;font-size:11.5px;line-height:1.4}
+    .copyMini:hover{border-color:rgba(214,168,102,.4)}
+    .destAddrRow a{font-size:12px;font-weight:700}
+    .destWho{font-size:13px;line-height:1.6;color:rgba(246,239,232,.9)}
+    .destWho a{font-weight:700}
+    /* Boxed "who holds this / verify it" info — same idea as /who-we-are/'s
+       .personCard, restyled with this page's own tokens. */
+    .destInfo{margin-top:8px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.035);display:flex;flex-direction:column;gap:8px}
+    .destInfo .destWho{margin:0}
+    .destTransparency{align-self:flex-start;font-size:12px;font-weight:800}
+    .btnRow{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+    .btnRow .contributeBtn{flex:1;min-width:0}
+    .manualBtn{font-size:12.5px;white-space:nowrap}
+    /* "Manually send" panel — the no-dApp path: user sends from their own
+       wallet's Send screen, then pastes the signature for Clout credit. */
+    .manualPanel{margin-top:10px;padding:13px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.03);display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.55}
+    .manualPanel[hidden]{display:none}
+    .manualPanel code{word-break:break-all;font-size:12px;background:rgba(0,0,0,.25);padding:3px 6px;border-radius:6px;display:inline-block;margin:2px 0}
+    .manualPanel input{width:100%;padding:9px 11px;border-radius:10px;border:1px solid var(--line);background:rgba(0,0,0,.25);color:inherit;font-size:13px;margin-top:4px}
+    .manualLabel{font-weight:800;font-size:11px;letter-spacing:.4px;text-transform:uppercase;color:rgba(246,239,232,.85)}
+    .causeIcon{font-size:26px}
+    .presetRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .presetBtn{padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);font-weight:850;cursor:pointer;font-size:13px}
+    .presetBtn.active{background:linear-gradient(180deg, rgba(160,90,230,.32), rgba(160,90,230,.16));border-color:rgba(160,90,230,.5)}
+    .customRow{display:flex;gap:8px;margin-top:10px}
+    .customRow input{flex:1;min-width:0;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text);font:inherit}
+    .contributeBtn{margin-top:12px;width:100%;justify-content:center}
+    .statusLine{margin-top:10px;font-size:13px;min-height:18px}
+    .statusLine.ok{color:#c9a6ff}
+    .statusLine.error{color:#ff9b7a}
+    .board{margin-top:16px}
+    .boardHead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+    .tabRow{display:flex;gap:8px;flex-wrap:wrap}
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    th,td{text-align:left;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)}
+    th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:800}
+    td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+    tr.masked td:first-child{opacity:.75}
+    .rankCell{font-weight:950;width:44px}
+    .rankCell.top1{color:#e2c8ff}
+    .rankCell.top2{color:#d7d7e0}
+    .rankCell.top3{color:#d6a866}
+    .emptyRow td{color:var(--muted);text-align:center;padding:26px 12px}
+    .fine{font-size:12px;color:var(--muted);margin-top:12px}
+    .externalGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+    @media (max-width:900px){.externalGrid{grid-template-columns:1fr}}
+    .externalCard{padding:16px;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.16)}
+    .externalCard h3{margin:6px 0 4px;font-size:16px}
+    .externalCard .platformTag{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+    .externalOpenLink{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:13px;font-weight:850;color:#e2c8ff;text-decoration:none}
+    .externalOpenLink:hover{text-decoration:underline}
+    .externalReminder{margin-top:8px;font-size:12px;color:var(--muted);display:none}
+    .externalReminder.show{display:block}
+    .submitReview{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+    .submitReview .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .submitReview select,.submitReview input{padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text);font:inherit}
+    .submitReview select{flex:0 0 auto}
+    .submitReview input[data-external-address]{flex:1;min-width:220px}
+    .submitReview input[data-external-note]{flex:1;min-width:220px}
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div class="navInner">
+      <a class="navBrand" href="/">WinLEW</a>
+      <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+      <div class="navRight">
+        <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+        <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+        <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+        <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <section class="card wlGlow" style="margin-bottom:16px;">
+      <div class="wlEyebrow">Real, verified on-chain support</div>
+      <h1>Contribute<br><span class="wlHeroTitleAccent">Give back. Get Clout.</span></h1>
+      <p class="muted">
+        Send WinLEW directly to the Dev, Faucet, X Faucet, or Burn reserve from your own connected wallet. Every
+        contribution is a real transaction — verified independently on-chain before it's recorded, never a
+        typed-in number — and ranks you on the Clout leaderboard below.
+      </p>
+      <p class="muted" id="walletNotice"></p>
+    </section>
+
+    <div class="causeGrid">
+      <div class="causeCard" data-cause="dev">
+        <div class="causeIcon">🛠️</div>
+        <h2>Dev</h2>
+        <p class="muted" style="font-size:13px;">Development and ecosystem funding.</p>
+        <div class="destWallet">
+          <div class="destNames"><code title="Resolves on-chain to the address below">dev.winlew.sol</code><code title="Resolves on-chain to the address below">lewsales.sol</code></div>
+          <div class="destAddrRow">
+            <code title="D6d5byBxBcddovgQ2UPUMpPDpJukjyC7C4Hcg3v4FRkZ">D6d5b…FRkZ</code>
+            <button class="copyMini" type="button" data-copy="D6d5byBxBcddovgQ2UPUMpPDpJukjyC7C4Hcg3v4FRkZ">📋 Copy</button>
+            <a href="https://solscan.io/account/D6d5byBxBcddovgQ2UPUMpPDpJukjyC7C4Hcg3v4FRkZ" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+          </div>
+          <div class="destInfo">
+            <div class="destWho">Held by <a href="https://x.com/LewSales" target="_blank" rel="noreferrer noopener">𝕏 @LewSales</a><br>WinLEW founder &amp; developer</div>
+            <a class="destTransparency" href="/transparency/#component-developer">Transparency →</a>
+          </div>
+        </div>
+        <div class="presetRow" data-presets>
+          <button class="presetBtn" type="button" data-amount="100000">100K</button>
+          <button class="presetBtn" type="button" data-amount="1000000">1M</button>
+          <button class="presetBtn" type="button" data-amount="5000000">5M</button>
+        </div>
+        <div class="customRow">
+          <input type="number" min="1" step="1" placeholder="Custom amount" data-custom-amount />
+        </div>
+        <div class="btnRow">
+          <button class="btn primary contributeBtn" type="button" data-contribute>Contribute</button>
+          <button class="btn manualBtn" type="button" data-manual-toggle>Manually send</button>
+        </div>
+        <div class="manualPanel" data-manual-panel hidden></div>
+        <div class="statusLine" data-status></div>
+      </div>
+
+      <div class="causeCard" data-cause="faucet">
+        <div class="causeIcon">🚰</div>
+        <h2>Faucet</h2>
+        <p class="muted" style="font-size:13px;">Funds Discord + Web faucet claims.</p>
+        <div class="destWallet">
+          <div class="destNames"><code title="Resolves on-chain to the address below">diglew.sol</code></div>
+          <div class="destAddrRow">
+            <code title="FcEtZqVowuhF2hdysy7qxJYRhu1eNZ8ws2JqHUDmPPjE">FcEtZ…PPjE</code>
+            <button class="copyMini" type="button" data-copy="FcEtZqVowuhF2hdysy7qxJYRhu1eNZ8ws2JqHUDmPPjE">📋 Copy</button>
+            <a href="https://solscan.io/account/FcEtZqVowuhF2hdysy7qxJYRhu1eNZ8ws2JqHUDmPPjE" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+          </div>
+          <div class="destInfo">
+            <div class="destWho">Held by the WinLEW faucet bot (<a href="https://discord.com/users/1465588126515990692" target="_blank" rel="noreferrer noopener">bot profile ↗</a>)<br><a href="/community/">💬 join the Discord</a></div>
+            <a class="destTransparency" href="/transparency/#component-faucetReserveDiscordWeb">Transparency →</a>
+          </div>
+        </div>
+        <div class="presetRow" data-presets>
+          <button class="presetBtn" type="button" data-amount="100000">100K</button>
+          <button class="presetBtn" type="button" data-amount="1000000">1M</button>
+          <button class="presetBtn" type="button" data-amount="5000000">5M</button>
+        </div>
+        <div class="customRow">
+          <input type="number" min="1" step="1" placeholder="Custom amount" data-custom-amount />
+        </div>
+        <div class="btnRow">
+          <button class="btn primary contributeBtn" type="button" data-contribute>Contribute</button>
+          <button class="btn manualBtn" type="button" data-manual-toggle>Manually send</button>
+        </div>
+        <div class="manualPanel" data-manual-panel hidden></div>
+        <div class="statusLine" data-status></div>
+      </div>
+
+      <div class="causeCard" data-cause="burn">
+        <div class="causeIcon">🔥</div>
+        <h2>Burn</h2>
+        <!-- Contributing here STAGES tokens in the burn wallet; destruction is a
+             separate spl-token burn transaction recorded in the Burn Center.
+             This card previously read "Permanently removed from supply", which
+             contradicted /burn/ ("Awaiting burn — in wallet, not yet
+             destroyed") and burnEvents.js's own TRANSFERRED_TO_BURN_WALLET
+             status. Transferring tokens does not destroy them. -->
+        <p class="muted" style="font-size:13px;">Sent to the burn wallet, then destroyed in a recorded burn.</p>
+        <div class="destWallet">
+          <div class="destNames"><code title="Resolves on-chain to the address below">burn.winlew.sol</code></div>
+          <div class="destAddrRow">
+            <code title="EX5nxVKgRKaJVZLfDUinXie6HQ5GPhKwkZ419pRGaZ74">EX5nx…aZ74</code>
+            <button class="copyMini" type="button" data-copy="EX5nxVKgRKaJVZLfDUinXie6HQ5GPhKwkZ419pRGaZ74">📋 Copy</button>
+            <a href="https://solscan.io/account/EX5nxVKgRKaJVZLfDUinXie6HQ5GPhKwkZ419pRGaZ74" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+          </div>
+          <div class="destInfo">
+            <div class="destWho">Project burn wallet — <a href="/burn/">🔥 Burn Center →</a><br><a href="https://x.com/LetEveryOneWin" target="_blank" rel="noreferrer noopener">𝕏 @LetEveryOneWin</a></div>
+            <a class="destTransparency" href="/transparency/#component-burn">Transparency →</a>
+          </div>
+        </div>
+        <div class="presetRow" data-presets>
+          <button class="presetBtn" type="button" data-amount="100000">100K</button>
+          <button class="presetBtn" type="button" data-amount="1000000">1M</button>
+          <button class="presetBtn" type="button" data-amount="5000000">5M</button>
+        </div>
+        <div class="customRow">
+          <input type="number" min="1" step="1" placeholder="Custom amount" data-custom-amount />
+        </div>
+        <div class="btnRow">
+          <button class="btn primary contributeBtn" type="button" data-contribute>Contribute</button>
+          <button class="btn manualBtn" type="button" data-manual-toggle>Manually send</button>
+        </div>
+        <div class="manualPanel" data-manual-panel hidden></div>
+        <div class="statusLine" data-status></div>
+      </div>
+
+      <div class="causeCard" data-cause="xFaucet">
+        <div class="causeIcon">𝕏</div>
+        <h2>X Faucet</h2>
+        <p class="muted" style="font-size:13px;">Funds the @WinLewToken X/Twitter faucet program.</p>
+        <div class="destWallet">
+          <div class="destNames"><code title="Resolves on-chain to the address below">winlew.sol</code></div>
+          <div class="destAddrRow">
+            <code title="GFxz42bib3o6kxmPgK95fMtBxRk16yaTvt5UBwC7EhAp">GFxz4…EhAp</code>
+            <button class="copyMini" type="button" data-copy="GFxz42bib3o6kxmPgK95fMtBxRk16yaTvt5UBwC7EhAp">📋 Copy</button>
+            <a href="https://solscan.io/account/GFxz42bib3o6kxmPgK95fMtBxRk16yaTvt5UBwC7EhAp" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+          </div>
+          <div class="destInfo">
+            <div class="destWho">Held by <a href="https://x.com/WinLewToken" target="_blank" rel="noreferrer noopener">𝕏 @WinLewToken</a><br>the X giveaway host account</div>
+            <a class="destTransparency" href="/transparency/#component-xFaucetReserve">Transparency →</a>
+          </div>
+        </div>
+        <div class="presetRow" data-presets>
+          <button class="presetBtn" type="button" data-amount="100000">100K</button>
+          <button class="presetBtn" type="button" data-amount="1000000">1M</button>
+          <button class="presetBtn" type="button" data-amount="5000000">5M</button>
+        </div>
+        <div class="customRow">
+          <input type="number" min="1" step="1" placeholder="Custom amount" data-custom-amount />
+        </div>
+        <div class="btnRow">
+          <button class="btn primary contributeBtn" type="button" data-contribute>Contribute</button>
+          <button class="btn manualBtn" type="button" data-manual-toggle>Manually send</button>
+        </div>
+        <div class="manualPanel" data-manual-panel hidden></div>
+        <div class="statusLine" data-status></div>
+      </div>
+
+      <div class="causeCard" data-cause="governance">
+        <div class="causeIcon">🗳️</div>
+        <h2>Governance Vote Weight</h2>
+        <p class="muted" style="font-size:13px;">Add weight to your vote on an open <a href="/governance/">proposal</a> — roughly $1 per additional vote, capped at 10 per proposal, priced off a 3-day average (never a single moment's spot price) so a brief pump can't cheapen a vote. On top of your one free vote as a verified holder — never a substitute for it.</p>
+        <div class="destWallet">
+          <div class="destNames"><code title="Resolves on-chain to the address below">winlew.sol</code> <span class="muted" style="font-size:12px;">— same wallet as X Faucet</span></div>
+          <div class="destAddrRow">
+            <code title="GFxz42bib3o6kxmPgK95fMtBxRk16yaTvt5UBwC7EhAp">GFxz4…EhAp</code>
+            <button class="copyMini" type="button" data-copy="GFxz42bib3o6kxmPgK95fMtBxRk16yaTvt5UBwC7EhAp">📋 Copy</button>
+            <a href="https://solscan.io/account/GFxz42bib3o6kxmPgK95fMtBxRk16yaTvt5UBwC7EhAp" target="_blank" rel="noreferrer noopener">Solscan ↗</a>
+          </div>
+          <div class="destInfo">
+            <div class="destWho">Deliberately reused, not a new wallet —<br>see "Why this wallet?" on <a href="/governance/#eligibility">the Governance page</a>.</div>
+            <a class="destTransparency" href="/transparency/#component-xFaucetReserve">Transparency →</a>
+          </div>
+        </div>
+        <div class="presetRow" data-presets>
+          <button class="presetBtn" type="button" data-amount="100000">~1 vote</button>
+          <button class="presetBtn" type="button" data-amount="500000">~5 votes</button>
+          <button class="presetBtn" type="button" data-amount="1000000">~10 votes (max)</button>
+        </div>
+        <div class="customRow">
+          <input type="number" min="1" step="1" placeholder="Custom amount" data-custom-amount />
+        </div>
+        <div class="btnRow">
+          <button class="btn primary contributeBtn" type="button" data-contribute>Contribute</button>
+          <button class="btn manualBtn" type="button" data-manual-toggle>Manually send</button>
+        </div>
+        <div class="manualPanel" data-manual-panel hidden></div>
+        <div class="statusLine" data-status></div>
+      </div>
+    </div>
+
+    <section class="card" id="growEcosystem" style="margin-top:16px;">
+      <h2>🌱 Grow the Ecosystem</h2>
+      <p class="muted" style="font-size:13px;">
+        Locking, vesting, staking, and adding liquidity all happen on third-party programs (Jupiter,
+        Streamflow, Raydium) — we can't build or verify those transactions ourselves the way we do for
+        the reserve wallets above. Open one below, complete it in your own wallet, then submit the
+        resulting address so we can check it on-chain and add it to <a href="/transparency/">/transparency/</a>.
+      </p>
+      <div class="externalGrid">
+        <div class="externalCard" data-link="jupiterLock">
+          <div class="platformTag">Jupiter</div>
+          <h3>🔒 Lock</h3>
+          <p class="muted" style="font-size:13px;">Lock WinLEW supply on Jupiter Lock.</p>
+          <a class="externalOpenLink" data-external-open href="https://lock.jup.ag/create" target="_blank" rel="noreferrer noopener">Open Jupiter Lock ↗</a>
+          <div class="externalReminder" data-external-reminder>📋 After adding funds, copy the resulting contract/lock address and submit it below so we can verify and display it.</div>
+        </div>
+        <div class="externalCard" data-link="streamflowLock">
+          <div class="platformTag">Streamflow</div>
+          <h3>🔐 Token Lock</h3>
+          <p class="muted" style="font-size:13px;">Lock WinLEW supply on Streamflow.</p>
+          <a class="externalOpenLink" data-external-open href="https://app.streamflow.finance/token-lock" target="_blank" rel="noreferrer noopener">Open Streamflow Lock ↗</a>
+          <div class="externalReminder" data-external-reminder>📋 After adding funds, copy the resulting contract/lock address and submit it below so we can verify and display it.</div>
+        </div>
+        <div class="externalCard" data-link="streamflowVesting">
+          <div class="platformTag">Streamflow</div>
+          <h3>📅 Vesting</h3>
+          <p class="muted" style="font-size:13px;">Create a WinLEW vesting stream.</p>
+          <a class="externalOpenLink" data-external-open href="https://app.streamflow.finance/vesting" target="_blank" rel="noreferrer noopener">Open Streamflow Vesting ↗</a>
+          <div class="externalReminder" data-external-reminder>📋 After adding funds, copy the resulting contract/stream address and submit it below so we can verify and display it.</div>
+        </div>
+        <div class="externalCard" data-link="streamflowStaking">
+          <div class="platformTag">Streamflow</div>
+          <h3>📈 Staking</h3>
+          <p class="muted" style="font-size:13px;">Stake WinLEW on Streamflow.</p>
+          <a class="externalOpenLink" data-external-open href="https://app.streamflow.finance/staking?created=true" target="_blank" rel="noreferrer noopener">Open Streamflow Staking ↗</a>
+          <div class="externalReminder" data-external-reminder>📋 After staking, copy the resulting contract/stake address and submit it below so we can verify and display it.</div>
+        </div>
+        <div class="externalCard" data-link="raydiumLiquidity">
+          <div class="platformTag">Raydium</div>
+          <h3>💧 Add Liquidity</h3>
+          <p class="muted" style="font-size:13px;">Add liquidity to the WinLEW/SOL pool.</p>
+          <a class="externalOpenLink" data-external-open href="https://raydium.io/liquidity/increase/?mode=add&amp;pool_id=5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer noopener">Open Raydium Liquidity ↗</a>
+          <div class="externalReminder" data-external-reminder>📋 After adding liquidity, copy the resulting LP/position address and submit it below so we can verify and display it.</div>
+        </div>
+        <div class="externalCard" data-link="directTransfer">
+          <div class="platformTag">WinLEW</div>
+          <h3>💜 Already Sent Directly?</h3>
+          <p class="muted" style="font-size:13px;">Sent WinLEW straight to a reserve wallet above without using the Contribute buttons — e.g. before connecting a wallet?</p>
+          <a class="externalOpenLink" data-external-open href="#causeGrid">↑ Back to reserve wallets</a>
+          <div class="externalReminder" data-external-reminder>📋 Paste the transaction signature below (not an address) so we can verify it on-chain and credit it on the Clout leaderboard.</div>
+        </div>
+      </div>
+
+      <div class="submitReview">
+        <h3 style="margin:0 0 4px;font-size:15px;">Submit for review</h3>
+        <p class="muted" style="font-size:12px;margin:0;">Not auto-verified — a maintainer checks this on-chain before it's ever credited (added to Clout for a direct transfer, or to Transparency for a lock/vesting/staking/liquidity position).</p>
+        <div class="row">
+          <select data-external-platform>
+            <option value="jupiterLock">Jupiter Lock</option>
+            <option value="streamflowLock">Streamflow Token Lock</option>
+            <option value="streamflowVesting">Streamflow Vesting</option>
+            <option value="streamflowStaking">Streamflow Staking</option>
+            <option value="raydiumLiquidity">Raydium Add Liquidity</option>
+            <option value="directTransfer">Direct Transfer (sent outside Contribute)</option>
+          </select>
+          <input type="text" placeholder="Resulting contract/lock address" data-external-address />
+        </div>
+        <div class="row">
+          <input type="text" placeholder="Optional note (e.g. amount, duration)" data-external-note />
+          <button class="btn primary" type="button" data-external-submit>Submit for review</button>
+        </div>
+        <div class="statusLine" data-external-status></div>
+      </div>
+    </section>
+
+    <section class="card" id="cloutBoard" style="margin-top:16px;">
+      <div class="boardHead">
+        <div><h2 style="display:inline;">🏆 Clout Leaderboard</h2><div class="muted" style="font-size:13px;">Ranked by total WinLEW contributed, all causes combined.</div></div>
+        <div class="tabRow" data-tabs="clout">
+          <button class="pill active" data-cause="" type="button">Overall</button>
+          <button class="pill" data-cause="dev" type="button">Dev</button>
+          <button class="pill" data-cause="faucet" type="button">Faucet</button>
+          <button class="pill" data-cause="xFaucet" type="button">X Faucet</button>
+          <button class="pill" data-cause="burn" type="button">Burn</button>
+          <button class="pill" data-cause="governance" type="button">🗳️ Governance</button>
+        </div>
+      </div>
+      <div class="board"><div id="cloutTableWrap"><p class="muted">Loading…</p></div></div>
+      <p class="fine">Every total here is independently confirmed on-chain — see <a href="/transparency/">/transparency/</a> for the underlying reserve wallets.</p>
+    </section>
+  </div>
+  <!-- Pinned to the exact build @1 resolved to on 2026-10-03, with Subresource Integrity:
+       a floating "@1" lets any future 1.x (or a compromised CDN) run here unannounced.
+       Hash checked identical on unpkg and jsDelivr. To upgrade: change the version and
+       recompute with  openssl dgst -sha384 -binary FILE | openssl base64 -A  -->
+  <script src="https://unpkg.com/@solana/web3.js@1.99.0/lib/index.iife.min.js"
+          integrity="sha384-DjHoHg45N+L5RZPO5p+uK874TyHExfoonwFDUKKpozAERZGg+SY8y+ntxvWd672b"
+          crossorigin="anonymous"></script>
+  <script src="/assets/wallet-auth.js"></script>
+  <script src="./js/app.js"></script>
+  <script defer src="/assets/nav.js"></script>
+</body>
+</html>

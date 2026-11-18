@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en" data-api-base="/verify/api-proxy.php">
+<head>
+  <meta charset="UTF-8" />
+  <title>WinLEW Roadmap — Building WinLEW Together</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="The official WinLEW roadmap — a living document: what's completed, what's actively being built, what's planned, and what's still only research." />
+  <link rel="canonical" href="https://winlew.co/roadmap/" />
+  <meta property="og:title" content="WinLEW Roadmap — Building WinLEW Together" />
+  <meta property="og:description" content="A transparent look at where we've been, what we're building today, and where we're heading next." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/roadmap/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    html { overflow-x: hidden; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      line-height: 1.7;
+    }
+    .wlPageShell { max-width: 1120px; margin: 0 auto; padding: 32px; }
+    h1, h2, h3 { color: #e7c18f; margin: 0 0 10px; }
+    h1 { font-size: clamp(32px, 4.8vw, 50px); }
+    h2 { font-size: clamp(20px, 2.8vw, 28px); }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624;
+      border-radius: 20px;
+      padding: 26px;
+      margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: 0.85; }
+    .rmGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
+    .rmGrid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .rmCard {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .rmCard h3 { font-size: 16px; margin: 0; color: #f6efe8; }
+    .rmCard p { margin: 0; font-size: 13px; color: rgba(246,239,232,.78); }
+    .rmCard.hidden, .visionCard.hidden { display: none; }
+    .rmDate { font-size: 11px; color: rgba(246,239,232,.85); }
+    .rmLinks { margin-top: auto; padding-top: 6px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .rmLinks a { font-size: 12px; font-weight: 800; }
+    .statusChip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      align-self: flex-start;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      border: 1px solid rgba(214,168,102,.28);
+      background: rgba(214,168,102,.09);
+      color: #e7c18f;
+      white-space: nowrap;
+    }
+    .statusChip.complete    { border-color: rgba(85,240,165,.28);  background: rgba(85,240,165,.10);  color: #a8ffd2; }
+    .statusChip.progress    { border-color: rgba(85,150,240,.28);  background: rgba(85,150,240,.10);  color: #b7d9ff; }
+    .statusChip.planned     { border-color: rgba(214,168,102,.28); background: rgba(214,168,102,.09); color: #e7c18f; }
+    .statusChip.research    { border-color: rgba(160,90,230,.30);  background: rgba(160,90,230,.10);  color: #d9baff; }
+    .statusChip.partnership { border-color: rgba(85,220,240,.28);  background: rgba(85,220,240,.10);  color: #aeeef8; }
+    .statusChip.future      { border-color: rgba(240,201,137,.35); background: rgba(240,201,137,.10); color: #f0c989; }
+    /* "Deferred" is a real state in the module registry (ROADMAP_ITEM_STATES.DEFERRED)
+       that this page previously had no vocabulary for — so the one item carrying it,
+       the Cross-Chain Bridge, was simply absent. Committed-then-paused is not the
+       same as "research" and must not be shown as such. */
+    .statusChip.deferred    { border-color: rgba(255,255,255,.26);  background: rgba(255,255,255,.07);  color: #ded3c8; }
+    .filterRow { display: flex; gap: 8px; flex-wrap: wrap; margin: 14px 0 4px; }
+    .filterBtn {
+      padding: 8px 13px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: #f6efe8;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 850;
+      cursor: pointer;
+    }
+    .filterBtn:hover { background: rgba(255,255,255,.10); }
+    .filterBtn.active {
+      background: linear-gradient(180deg, rgba(214,168,102,.30), rgba(214,168,102,.14));
+      border-color: rgba(214,168,102,.5);
+      color: #f0c989;
+    }
+    .quarterTag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(246,239,232,.85);
+    }
+    .visionGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
+    .visionCard {
+      padding: 20px;
+      border-radius: 18px;
+      border: 1px solid rgba(214,168,102,.22);
+      background: linear-gradient(180deg, rgba(214,168,102,.08), rgba(214,168,102,.02));
+    }
+    .visionCard h3 { font-size: 20px; }
+    .visionCard p { margin: 0; font-size: 13px; color: rgba(246,239,232,.78); }
+    .ctaRow { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid #4e3624;
+      font-weight: 850;
+      text-decoration: none;
+      color: inherit;
+    }
+    .btn.primary { background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22)); }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+    @media (max-width: 900px) {
+      .rmGrid, .rmGrid.two, .visionGrid { grid-template-columns: 1fr; }
+      .wlPageShell { padding: 22px 16px 32px; }
+    }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlPageShell">
+  <header class="wlHero" id="roadmap-overview">
+    <div class="wlHeroMain">
+      <span class="wlKicker">ROADMAP • BUILD • ADVANCE</span>
+      <h1 class="wlHeroTitle">Building WinLEW<br><span class="wlHeroTitleAccent">Together</span></h1>
+      <p class="wlHeroSub">A transparent look at where we've been, what we're building today, and where we're heading next.</p>
+      <p class="wlHeroSub">
+        WinLEW is developed publicly. Our roadmap evolves through community feedback, engineering progress,
+        ecosystem opportunities, and real-world testing. Rather than promising dates for everything, we publish
+        our direction, report our progress honestly, and update this page as milestones are completed.
+      </p>
+      <div class="wlChipRow">
+        <span class="wlChip">A living document, not marketing</span>
+        <span class="wlChip">Planned ≠ guaranteed — we say which is which</span>
+        <span class="wlChip">Updated as milestones complete</span>
+      </div>
+      <div class="ctaRow">
+        <a class="btn primary" href="/modules/">Open Modules Center</a>
+        <a class="btn" href="/transparency/">View Transparency</a>
+        <a class="btn" href="/governance/submit/">Submit a Proposal</a>
+      </div>
+    </div>
+    <div class="wlHeroSide">
+      <div class="wlEyebrow">Status legend</div>
+      <div class="wlHeroStatGrid">
+        <div class="wlStat"><div class="n">✅ Complete</div><div class="l">Shipped and live today</div></div>
+        <div class="wlStat"><div class="n">🚧 In Progress</div><div class="l">Active engineering priority</div></div>
+        <div class="wlStat"><div class="n">🗓 Planned</div><div class="l">Direction set, not yet started</div></div>
+        <div class="wlStat"><div class="n">🔬 Research</div><div class="l">Explored — not a commitment</div></div>
+        <div class="wlStat"><div class="n">⏸ Deferred</div><div class="l">Committed, then paused — still on the roadmap</div></div>
+        <div class="wlStat"><div class="n">🤝 Partnership</div><div class="l">Depends on another party too</div></div>
+        <div class="wlStat"><div class="n">🎯 Future Goal</div><div class="l">Long-term direction</div></div>
+      </div>
+      <div class="wlHeroNote">If a visitor returns every month, this page should immediately show what's done, what's active, what's planned, and what's still only research.</div>
+    </div>
+  </header>
+
+  <div class="filterRow" data-roadmap-filters aria-label="Filter roadmap items by status">
+    <button class="filterBtn active" type="button" data-filter="">All</button>
+    <button class="filterBtn" type="button" data-filter="complete">✅ Complete</button>
+    <button class="filterBtn" type="button" data-filter="progress">🚧 In Progress</button>
+    <button class="filterBtn" type="button" data-filter="planned">🗓 Planned</button>
+    <button class="filterBtn" type="button" data-filter="research">🔬 Research</button>
+    <button class="filterBtn" type="button" data-filter="deferred">⏸ Deferred</button>
+    <button class="filterBtn" type="button" data-filter="partnership">🤝 Partnership</button>
+    <button class="filterBtn" type="button" data-filter="future">🎯 Future Goal</button>
+  </div>
+
+  <div class="box wlGlow wlIn" id="completed">
+    <div class="wlEyebrow">Section 1</div>
+    <h2>Completed Milestones</h2>
+    <p class="muted" style="font-size:14px;">Everything below is shipped and live — each links to the real surface so you can check it yourself.</p>
+    <div class="rmGrid">
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Discord Ecosystem</h3>
+        <p>The WinLEW Discord community — verification, roles, faucet, quiz, and moderation all live in one place.</p>
+        <div class="rmLinks"><a href="/discord-bots/">View Discord Bots →</a></div>
+      </div>
+      <!-- GENERATED from src/mole/modulesData.js by npm run roadmap:build.
+           Do not hand-edit between the markers.
+           
+           Register #22. Every card below is derived from a registry record, so
+           this section can no longer say something modulesData.js contradicts,
+           nor stay silent about a module the way it did about six of them until
+           2026-08-12. The Discord Ecosystem card above is editorial — no
+           registry record — and is deliberately outside the generated region. -->
+      <!-- roadmap:generated:start completed-modules -->
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Core Infrastructure</h3>
+        <p>The base layer WinLEW runs on: verified links, contract/pool references, live market stats, and consistent site-wide navigation.</p>
+        <div class="rmLinks"><a href="/modules/core-infrastructure.html">Open Core Infrastructure →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Whitepaper</h3>
+        <p>The project's founding document: tokenomics, mechanics, and the original roadmap this registry reconciles against.</p>
+        <div class="rmLinks"><a href="/whitepaper/">Open Whitepaper →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Transparency Center</h3>
+        <p>Public, verifiable source-of-truth for holdings, wallet activity, and platform financial transparency.</p>
+        <div class="rmLinks"><a href="/transparency/">Open Transparency Center →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Burn Center</h3>
+        <p>Verified, on-chain-evidenced record of every confirmed WinLEW burn — software is live, future burns are ongoing.</p>
+        <div class="rmLinks"><a href="/burn/">Open Burn Center →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Sponsors &amp; Partners</h3>
+        <p>Structured, evidence-backed record of community partners, sponsors, and ecosystem collaborators.</p>
+        <div class="rmLinks"><a href="/partners/">Open Sponsors &amp; Partners →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Community Events</h3>
+        <p>The events platform is live; individual community events are an ongoing recurring program, not a one-time deliverable.</p>
+        <div class="rmLinks"><a href="/events/">Open Community Events →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Bug Bounties</h3>
+        <p>A public ledger of bounties earned for finding real bugs — what is owed, what has been paid, and the on-chain proof of each payment.</p>
+        <div class="rmLinks"><a href="/bounties/">Open Bug Bounties →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Policies &amp; Legal</h3>
+        <p>Every Terms of Service and Privacy Policy for the website and all five Discord bots, collected in one place.</p>
+        <div class="rmLinks"><a href="/policies/">Open Policies &amp; Legal →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Quiz</h3>
+        <p>Discord-played trivia with a live web leaderboard and web-based point redemption, subject to a holder requirement and a minimum payout.</p>
+        <div class="rmLinks"><a href="/quiz/">Open Quiz →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Faucet</h3>
+        <p>WinLEW token faucet on web and Discord, with a shared cooldown, claim history, and verification required after 10 claims.</p>
+        <div class="rmLinks"><a href="/faucet/">Open Faucet →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Mole Hub</h3>
+        <p>Multi-game arcade gateway with desktop and mobile-optimized play lanes.</p>
+        <div class="rmLinks"><a href="/mole-hub/">Open Mole Hub →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Wallet Verification</h3>
+        <p>Mobile-first wallet linking and signature verification, with Discord role sync.</p>
+        <div class="rmLinks"><a href="/verify/">Open Wallet Verification →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Dashboard</h3>
+        <p>The unified profile: wallets, rewards, quiz stats, milestones, and a Governance summary in one place.</p>
+        <div class="rmLinks"><a href="/verify/profile.html">Open Dashboard →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Proof of Value</h3>
+        <p>Unified contribution score across Quiz, Faucet, Games, and verification — with anti-farm guardrails.</p>
+        <div class="rmLinks"><a href="/modules/proof-of-value-engine.html">Open Proof of Value →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Leaderboards</h3>
+        <p>Cross-system rankings for Quiz, Faucet and the Gaming Hub, ranked by real earnings rather than raw score.</p>
+        <div class="rmLinks"><a href="/leaderboards/">Open Leaderboards →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Contribution System</h3>
+        <p>Send WinLEW to the Dev, Faucet, X Faucet or Burn reserve as a wallet-signed, on-chain-verified contribution.</p>
+        <div class="rmLinks"><a href="/contribute/">Open Contribution System →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Discord ↔ Web Parity</h3>
+        <p>Discord bots and web surfaces share the same underlying data and settlement logic.</p>
+        <div class="rmLinks"><a href="/discord-bots/">Open Discord ↔ Web Parity →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Health &amp; Status</h3>
+        <p>First-party destination for service health and routing status, replacing brittle subdomain references.</p>
+        <div class="rmLinks"><a href="/health/">Open Health &amp; Status →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>21 of 30 Platform Modules Live</h3>
+        <p>The module registry tracks every platform capability — most are already shipped, and the rest are listed with their real status.</p>
+        <div class="rmLinks"><a href="/modules/">Open Modules &amp; Roadmap Status →</a></div>
+      </div>
+      <div class="rmCard" data-status="complete">
+        <span class="statusChip complete">✅ Complete</span>
+        <h3>Governance</h3>
+        <p>Live, server-verified community voting with a point-in-time eligibility snapshot and a proposal-submission review queue. Governance proposals themselves are an ongoing program.</p>
+        <div class="rmLinks"><a href="/governance/">Open Governance →</a></div>
+      </div>
+      <!-- roadmap:generated:end completed-modules -->
+    </div>
+  </div>
+
+  <div class="box wlIn" id="current-focus">
+    <div class="wlEyebrow">Section 2</div>
+    <h2>Current Focus</h2>
+    <p class="muted" style="font-size:14px;">Active engineering priorities — being worked on now, in public.</p>
+    <div class="rmGrid two">
+      <div class="rmCard" data-status="progress">
+        <span class="statusChip progress">🚧 In Progress</span>
+        <h3>Partner Expansion</h3>
+        <p>Growing relationships with projects, builders, and communities aligned with WinLEW.</p>
+        <div class="rmLinks"><a href="/partners/">View Partners →</a></div>
+      </div>
+      <div class="rmCard" data-status="progress">
+        <span class="statusChip progress">🚧 In Progress</span>
+        <h3>Mole Hub Expansion</h3>
+        <p>Additional games, polish on existing games, improved artwork, and a more unified experience.</p>
+        <div class="rmLinks"><a href="/mole-hub/">Open Mole Hub →</a></div>
+      </div>
+      <div class="rmCard" data-status="progress">
+        <span class="statusChip progress">🚧 In Progress</span>
+        <h3>Quiz Expansion</h3>
+        <p>Additional quiz categories and more educational questions. The goal is to keep making learning rewarding.</p>
+        <div class="rmLinks"><a href="/quiz/">Open Quiz →</a></div>
+      </div>
+      <div class="rmCard" data-status="progress">
+        <span class="statusChip progress">🚧 In Progress</span>
+        <h3>Platform Optimization</h3>
+        <p>Improving consistency across the website, reducing duplicated systems, and improving responsiveness and performance for a more coherent experience.</p>
+      </div>
+      <div class="rmCard" data-status="progress">
+        <span class="statusChip progress">🚧 In Progress</span>
+        <h3>Security Improvements</h3>
+        <p>Continuing security reviews, improving wallet verification, strengthening anti-abuse systems, and improving transparency.</p>
+        <div class="rmLinks"><a href="/transparency/">View Transparency →</a></div>
+      </div>
+      <div class="rmCard" data-status="progress">
+        <span class="statusChip progress">🚧 In Progress</span>
+        <h3>Community Tools</h3>
+        <p>Improving Discord bots, expanding moderation utilities, and adding quality-of-life improvements requested by the community.</p>
+        <div class="rmLinks"><a href="/discord-bots/">View Discord Bots →</a></div>
+      </div>
+      <!-- GENERATED from src/mole/modulesData.js by npm run roadmap:build.
+           Do not hand-edit between the markers.
+           
+           Every module here carries real, non-final state. Omitting an
+           in-progress item is not neutral: it makes the roadmap look like it
+           holds only finished work and vague programs. The cards above this
+           block are editorial programmes with no registry record, and stay
+           hand-written. -->
+      <!-- roadmap:generated:start current-focus-modules -->
+      <div class="rmCard" data-status="progress">
+        <span class="statusChip progress">🚧 In Progress</span>
+        <h3>Quests &amp; Progression</h3>
+        <p>Streaks and milestone badges are live; seasonal ladders, skill brackets, and access tiers are not yet built.</p>
+        <div class="rmLinks"><a href="/modules/quests-progression.html">Open Quests &amp; Progression →</a></div>
+      </div>
+      <div class="rmCard" data-status="progress">
+        <span class="statusChip progress">🚧 In Progress</span>
+        <h3>Merch</h3>
+        <p>Official WinLEW merch with a holder discount. The catalogue is open at /merch/; XYO gear checks out today, WinLEW drops are browse-only until payment is switched on.</p>
+        <div class="rmLinks"><a href="/merch/">Open Merch →</a></div>
+      </div>
+      <div class="rmCard" data-status="progress">
+        <span class="statusChip progress">🚧 In Progress</span>
+        <h3>Mobile App Beta</h3>
+        <p>Android has a signed release build targeting API 35, with its own app home; iOS remains structurally complete but has never been compiled.</p>
+      </div>
+      <div class="rmCard" data-status="progress">
+        <span class="statusChip progress">🚧 In Progress</span>
+        <h3>WinLEW Forge</h3>
+        <p>A maintainer-only workbench for building WinLEW content with AI. One of its three modules is real; the other two are placeholders.</p>
+        <div class="rmLinks"><a href="/winlew-forge/">Open WinLEW Forge →</a></div>
+      </div>
+      <!-- roadmap:generated:end current-focus-modules -->
+    </div>
+  </div>
+
+  <div class="box wlIn" id="upcoming">
+    <div class="wlEyebrow">Section 3</div>
+    <h2>Upcoming</h2>
+    <p class="muted" style="font-size:14px;">Direction we've committed to — quarters, not fake dates. Planned means planned, not guaranteed.</p>
+    <div class="rmGrid two">
+      <!-- Quarter tags carried no year. On a page that describes itself as a
+           living document, a bare "Q4" reads as permanently-almost-here no
+           matter how long it sits there. Years added so a stale item becomes
+           visibly stale. -->
+      <div class="rmCard" data-status="partnership">
+        <span class="statusChip partnership">🤝 Partnership</span>
+        <span class="quarterTag">Q3 2026</span>
+        <h3>Community Collaboration</h3>
+        <p>We plan to welcome @2brz from X into the WinLEW ecosystem. This collaboration is intended to strengthen community engagement and expand educational content.</p>
+      </div>
+      <div class="rmCard" data-status="planned">
+        <span class="statusChip planned">🗓 Planned</span>
+        <span class="quarterTag">Q3 / Q4 2026</span>
+        <h3>More Educational Content</h3>
+        <p>Continue expanding quizzes, improving documentation, and improving guides for new users.</p>
+        <div class="rmLinks"><a href="/quiz/">Open Quiz →</a><a href="/whitepaper/">Open Whitepaper →</a></div>
+      </div>
+      <!-- This card said "Continue integrating WinLEW records into XL1", which
+           contradicted its own chip ("Planned — direction set, not yet started")
+           and isn't supported by the code. The only XL1 touchpoint that exists
+           is read-only: web.js reads a user's XL1 wallet out of the GeoAgora
+           ownership summary to build a profile link. Nothing writes any WinLEW
+           record to XL1, and the registry says plainly that no official public
+           XL1 bridging mechanism exists yet. "Continue" claimed an in-flight
+           effort that isn't in flight. -->
+      <div class="rmCard" data-status="planned">
+        <span class="statusChip planned">🗓 Planned</span>
+        <span class="quarterTag">Q4 2026</span>
+        <h3>XL1 Integration</h3>
+        <p>One of our largest engineering priorities, and not yet started. Today the only XL1 touchpoint is read-only — we can read a linked XL1 wallet to build a profile link. The intent is to begin recording WinLEW data to XL1 where it genuinely adds verifiability, once a public mechanism for doing so is available.</p>
+      </div>
+      <!-- GENERATED from src/mole/modulesData.js by npm run roadmap:build.
+           Do not hand-edit between the markers; the next build overwrites it,
+           and test/mole/roadmapGenerated.test.mjs fails if the committed page
+           and the registry disagree.
+           
+           The Cross-Chain Bridge lives in here. It was once absent from this
+           page entirely, which is the one outcome modulesData.js explicitly
+           guards against: a 2026-07-12 product decision recorded it as RETAINED
+           on the roadmap — deferred, not cancelled — and
+           validateModulesRegistry() fails loudly if that is reversed in code.
+           The public roadmap it is "retained on" has to actually show it, or
+           the guard protects a promise no visitor can see. Generating the card
+           is what now makes that structural rather than remembered. -->
+      <!-- roadmap:generated:start upcoming-modules -->
+      <div class="rmCard" data-status="deferred">
+        <span class="statusChip deferred">⏸ Deferred</span>
+        <h3>Cross-Chain Bridge</h3>
+        <p>Deferred, not removed — created with future interoperability with XL1 in mind. No official public XL1 bridging mechanism exists yet, so implementation has not started.</p>
+      </div>
+      <div class="rmCard" data-status="planned">
+        <span class="statusChip planned">🗓 Planned</span>
+        <h3>Platform v2 Enhancements</h3>
+        <p>Advanced analytics and multi-language support — not started. No repository evidence of implementation.</p>
+      </div>
+      <!-- roadmap:generated:end upcoming-modules -->
+      <div class="rmCard" data-status="partnership">
+        <span class="statusChip partnership">🤝 Partnership</span>
+        <span class="quarterTag">Q4 2026</span>
+        <h3>Sponsorship Announcement</h3>
+        <p>During December we plan to announce an organization or entity that WinLEW will sponsor to help grow their ecosystem. We are intentionally keeping details private until discussions are complete — we have already had the opportunity to test one of their projects and look forward to sharing more when appropriate.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box wlIn" id="research">
+    <div class="wlEyebrow">Section 4</div>
+    <h2>Research</h2>
+    <p class="muted" style="font-size:14px;"><strong>Research items are not commitments.</strong> These are areas we're exploring — some will ship, some won't, and we'll say which as we learn.</p>
+    <div class="rmGrid">
+      <div class="rmCard" data-status="research">
+        <span class="statusChip research">🔬 Research</span>
+        <h3>Additional Games</h3>
+        <p>Exploring new game concepts beyond the current Mole Hub lineup.</p>
+      </div>
+      <div class="rmCard" data-status="research">
+        <span class="statusChip research">🔬 Research</span>
+        <h3>Community Incentives</h3>
+        <p>Exploring new ways to reward meaningful participation.</p>
+      </div>
+      <div class="rmCard" data-status="research">
+        <span class="statusChip research">🔬 Research</span>
+        <h3>Expanded Educational Experiences</h3>
+        <p>Exploring formats beyond the quiz for learning that rewards.</p>
+      </div>
+      <div class="rmCard" data-status="research">
+        <span class="statusChip research">🔬 Research</span>
+        <h3>Additional XL1 Capabilities</h3>
+        <p>Exploring what else XL1 could verify or record for the ecosystem.</p>
+      </div>
+      <div class="rmCard" data-status="research">
+        <span class="statusChip research">🔬 Research</span>
+        <h3>More Transparent Reputation Systems</h3>
+        <p>Exploring how participation, contribution, and learning could build verifiable reputation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="box wlGlow wlIn" id="vision">
+    <div class="wlEyebrow">Section 5 — Vision</div>
+    <h2>Build • Map • Empower</h2>
+    <p class="muted" style="font-size:14px;">
+      WinLEW is evolving beyond a token. The long-term vision is a community platform where people can:
+    </p>
+    <div class="visionGrid">
+      <div class="visionCard" data-status="future">
+        <span class="statusChip future">🎯 Future Goal</span>
+        <h3>Build</h3>
+        <p>Create projects, communities, partnerships, and tools.</p>
+      </div>
+      <div class="visionCard" data-status="future">
+        <span class="statusChip future">🎯 Future Goal</span>
+        <h3>Map</h3>
+        <p>Connect participation, reputation, learning, achievements, and on-chain records.</p>
+      </div>
+      <div class="visionCard" data-status="future">
+        <span class="statusChip future">🎯 Future Goal</span>
+        <h3>Empower</h3>
+        <p>Reward meaningful participation while supporting transparency, education, and community growth.</p>
+      </div>
+    </div>
+    <div class="ctaRow">
+      <a class="btn primary" href="/modules/">Open Modules Center</a>
+      <a class="btn" href="/governance/submit/">Submit a Proposal</a>
+      <a class="btn" href="/transparency/">View Transparency</a>
+    </div>
+  </div>
+
+  <footer>
+    <a href="/">← Back to WinLEW</a> · <a href="/modules/">Modules</a> · <a href="/about/">About</a> · <a href="/whitepaper/">Whitepaper</a>
+  </footer>
+</div>
+
+<script>
+  // Status filter — hides cards whose data-status doesn't match. "All" (empty
+  // filter) shows everything.
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('[data-roadmap-filters] .filterBtn');
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        buttons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter || '';
+        document.querySelectorAll('.rmCard[data-status], .visionCard[data-status]').forEach((card) => {
+          card.classList.toggle('hidden', !!filter && card.dataset.status !== filter);
+        });
+        // Collapse sections left with no visible cards so filtering reads
+        // as a view change, not a page full of empty boxes.
+        document.querySelectorAll('.box[id]').forEach((section) => {
+          const cards = section.querySelectorAll('.rmCard[data-status], .visionCard[data-status]');
+          if (!cards.length) return;
+          const anyVisible = [...cards].some((c) => !c.classList.contains('hidden'));
+          section.style.display = anyVisible ? '' : 'none';
+        });
+      });
+    });
+  });
+</script>
+<script src="/assets/wallet-auth.js"></script>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>

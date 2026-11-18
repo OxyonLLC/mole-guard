@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WinLEW Whitepaper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover" />
+  <meta name="description" content="The official WinLEW Whitepaper — why WinLEW exists, tokenomics, liquidity and locks, faucet, quiz, games, wallet verification, security, and roadmap." />
+  <link rel="canonical" href="https://winlew.co/whitepaper/" />
+  <meta property="og:title" content="WinLEW Whitepaper" />
+  <meta property="og:description" content="The definitive document for the WinLEW project — transparency over hype." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://winlew.co/whitepaper/" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="stylesheet" href="/assets/nav.css" />
+  <link rel="stylesheet" href="/assets/premium.css" />
+  <style>
+    /* The root scroller for the whole document is <html>, not <body> —
+       overflow-x:hidden on body alone doesn't stop the page itself from
+       being draggable/scrollable sideways on mobile, so both need it.
+       2026-07-18: body's version genuinely IS load-bearing here (unlike 6
+       sibling pages where it was pure redundant belt-and-suspenders) —
+       this page's wide tables (§3/§5/§13) still overflow body's own box at
+       390px even with .tableWrap, and removing body's overflow-x:hidden
+       reproduced a real mobile horizontal-scroll regression (390 -> 529px
+       scrollWidth). So instead of removing it from body, `.wlBodyScroll`
+       (wrapping everything except `.nav`, added just below in the body)
+       carries it instead — same page-overflow protection, scoped to NOT
+       also clip `.nav`'s intentional full-bleed edge-to-edge extension
+       past body's own centered max-width box (see assets/nav.css). */
+    html { overflow-x: hidden; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #20120c, #130b08 70%);
+      color: #f6efe8;
+      padding: 0;
+      margin: 0;
+      line-height: 1.7;
+    }
+    .wlBodyScroll { max-width: 900px; margin: 0 auto; padding: 32px; overflow-x: hidden; }
+    h1, h2, h3 { color: #e7c18f; margin-bottom: 8px; }
+    h1 { font-size: clamp(30px, 5vw, 44px); margin-top: 0; }
+    h2 { font-size: clamp(20px, 3vw, 26px); margin-top: 0; }
+    a { color: #d6a866; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header.wlHero { text-align: left; margin-bottom: 8px; }
+    header.wlHero .ctaRow { justify-content: flex-start; }
+    .meta { font-size: 13px; opacity: 0.75; }
+    .box {
+      background: linear-gradient(180deg, rgba(27,18,14,.94), rgba(19,12,9,.98));
+      border: 1px solid #4e3624;
+      border-radius: 20px;
+      padding: 26px;
+      margin: 18px 0;
+      box-shadow: 0 18px 54px rgba(0,0,0,.32);
+    }
+    .muted { opacity: 0.85; }
+    ul, ol { margin-top: 10px; padding-left: 20px; }
+    /* Wide tables (§3, §5, §13) were forcing the whole page to scroll
+       horizontally on mobile instead of just the table — the table itself
+       now scrolls within its own container. */
+    .tableWrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 12px; }
+    .tableWrap table { margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+    th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #4e3624; vertical-align: top; }
+    th { color: #e7c18f; font-size: 12px; text-transform: uppercase; letter-spacing: 0.4px; }
+    code { background: #2e1f16; padding: 2px 6px; border-radius: 6px; font-size: 0.92em; word-break: break-all; }
+    .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .pill { display: inline-block; padding: 6px 12px; border-radius: 999px; background: #33241b; border: 1px solid #4e3624; font-size: 12px; }
+    a.pill:hover { text-decoration: none; filter: brightness(1.1); }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 14px; background: rgba(255,255,255,.06); border: 1px solid #4e3624; font-weight: 850; text-decoration: none; }
+    .btn.primary { background: linear-gradient(90deg, rgba(214,168,102,.20), rgba(125,88,55,.22)); }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .ctaRow { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 18px 0 0; }
+    .status-note { border-left: 3px solid #d6a866; padding: 10px 14px; background: rgba(214,168,102,.08); border-radius: 0 10px 10px 0; margin-top: 14px; font-size: 14px; }
+    footer { margin-top: 40px; font-size: 12px; opacity: 0.75; text-align: center; }
+
+    @media print {
+      .nav, .toc, .wlQuickNav, .ctaRow, .wlHeroSide { display: none !important; }
+      body { background: #fff; color: #111; max-width: none; padding: 0; }
+      .wlBodyScroll { max-width: none; padding: 0 24px; overflow: visible; }
+      .box { background: #fff; border: 1px solid #ccc; break-inside: avoid; }
+      h1, h2, h3 { color: #111; }
+      a { color: #111; }
+      code { background: #eee; color: #111; }
+    }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <div class="navInner">
+    <a class="navBrand" href="/">WinLEW</a>
+    <div class="navLinks" id="siteNavLinks">
+        <!-- Intentionally empty. nav.js removes and rebuilds this row from
+             NAV_GROUPS on every page, so any <a> written here never renders —
+             it can only appear in the instant nav.js fails to load, which is
+             precisely when showing a stale menu is worst. The ELEMENT must
+             stay: nav.js bails out entirely if .navLinks is absent. -->
+      </div>
+    <div class="navRight">
+      <a class="pill navProfile" href="/verify/profile.html">📊 Dashboard</a>
+      <div class="navBalanceChip" aria-label="Your WinLEW balance"><span class="navBalanceIcon">◎</span><span id="navWalletAmount">—</span><span class="navBalanceTicker">LEW</span></div>
+      <button id="navWalletConnect" class="pill" type="button" title="Connect your wallet (links to your Discord-verified wallet)">Connect wallet</button>
+      <button class="navToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="wlBodyScroll">
+<header class="wlHero">
+  <div class="wlHeroBanner"><img src="/images/page-headers/whitepaper.png" alt="Whitepaper — learn about the vision, technology, and tokenomics" loading="lazy" /></div>
+  <div class="wlHeroMain">
+    <span class="wlKicker">📜 Living document · Transparency over hype</span>
+    <h1 class="wlHeroTitle">The Whitepaper<br><span class="wlHeroTitleAccent">Everything, written down.</span></h1>
+    <p class="wlHeroSub"><strong>$WinLEW — "Let's EveryOne Win"</strong> · Version 1.0 · Built on Solana</p>
+    <p class="meta">Last updated: 2026-08-01. This is a living document — see §14.</p>
+    <div class="wlChipRow">
+      <span class="wlChip">📜 v1.0</span>
+      <span class="wlChip">🔄 Living document</span>
+      <span class="wlChip">🐙 GitHub history</span>
+    </div>
+    <div class="ctaRow" style="margin-top:16px;">
+      <a class="btn primary" href="./whitepaper.md" download>⬇ Download Markdown</a>
+      <a class="btn" href="#" onclick="window.print(); return false;">🖨 Print / Save as PDF</a>
+      <a class="btn" href="/community/">💬 Discord</a>
+    </div>
+  </div>
+  <div class="wlHeroSide">
+    <div class="wlEyebrow">This document</div>
+    <div class="wlHeroStatGrid">
+      <div class="wlStat"><div class="n">14</div><div class="l">Sections</div></div>
+      <div class="wlStat"><div class="n">v1.0</div><div class="l">Version</div></div>
+      <div class="wlStat"><div class="n">2026</div><div class="l">Last updated</div></div>
+      <div class="wlStat"><div class="n">Solana</div><div class="l">Built on</div></div>
+    </div>
+    <div class="wlHeroNote">Section §14 covers exactly what's still incomplete — a whitepaper that only describes finished features isn't transparent, it's marketing.</div>
+  </div>
+</header>
+
+<div class="box wlIn">
+  <div class="wlEyebrow">Reading navigation</div>
+  <h2>Contents</h2>
+  <div class="wlQuickNav">
+    <a class="wlQuickNavCard" href="#why"><span class="num">01</span><span class="label">Why WinLEW Exists</span></a>
+    <a class="wlQuickNavCard" href="#history"><span class="num">02</span><span class="label">History &amp; Evolution</span></a>
+    <a class="wlQuickNavCard" href="#tokenomics"><span class="num">03</span><span class="label">Tokenomics</span></a>
+    <a class="wlQuickNavCard" href="#burn"><span class="num">04</span><span class="label">Burn History</span></a>
+    <a class="wlQuickNavCard" href="#treasury"><span class="num">05</span><span class="label">Ecosystem Architecture</span></a>
+    <a class="wlQuickNavCard" href="#faucet"><span class="num">06</span><span class="label">Faucet</span></a>
+    <a class="wlQuickNavCard" href="#quiz"><span class="num">07</span><span class="label">Quiz Platform</span></a>
+    <a class="wlQuickNavCard" href="#games"><span class="num">08</span><span class="label">Games</span></a>
+    <a class="wlQuickNavCard" href="#verification"><span class="num">09</span><span class="label">Wallet Verification</span></a>
+    <a class="wlQuickNavCard" href="#security"><span class="num">10</span><span class="label">Security</span></a>
+    <a class="wlQuickNavCard" href="#pov"><span class="num">11</span><span class="label">Proof of Value</span></a>
+    <a class="wlQuickNavCard" href="#community"><span class="num">12</span><span class="label">Community-First Development</span></a>
+    <a class="wlQuickNavCard" href="#roadmap"><span class="num">13</span><span class="label">Roadmap</span></a>
+    <a class="wlQuickNavCard" href="#transparency"><span class="num">14</span><span class="label">A Note on Transparency</span></a>
+  </div>
+</div>
+
+<div class="box" id="why">
+  <h2>1. Why WinLEW Exists</h2>
+  <p>WinLEW did not start as a token with a community bolted on afterward. It started as a Discord server and a simple idea: <strong>participation should create value.</strong> Knowledge should have value. Showing up, contributing, and learning should be rewarded — not just holding a large wallet.</p>
+  <p>Most token projects launch a chart first and a community second, if at all. WinLEW built in the opposite direction: community and utility first, token mechanics layered on top of things people were already doing — answering trivia, playing games, helping each other verify wallets, showing up daily.</p>
+  <p>This document exists because that history matters, and because a project built on transparency should be willing to write down exactly how it works, including the parts that are still incomplete.</p>
+</div>
+
+<div class="box" id="history">
+  <h2>2. Project History and Evolution</h2>
+  <p>WinLEW's features were not planned in a single design document and then built in order. They grew in response to what the community was already doing, roughly in this sequence:</p>
+  <ol>
+    <li><strong>Community</strong> — a Discord server organized around the $WinLEW token and its holders.</li>
+    <li><strong>Discord Utility Bot</strong> — market data commands (price, supply, DexScreener/GeckoTerminal/Pump.fun/Raydium/Solscan lookups), wallet tools, and general server utility.</li>
+    <li><strong>Daily Faucet</strong> — a way for holders to claim a small amount of $WinLEW directly in Discord (<code>!faucet</code> / <code>!drip</code>), with a cooldown to keep it sustainable.</li>
+    <li><strong>Educational Quiz</strong> — trivia questions about crypto, Solana, and the ecosystem, rewarding correct answers with points that convert to $WinLEW each payout cycle.</li>
+    <li><strong>Games</strong> — browser-based mini-games (DigLEW, Pac-Mole, Root Glide, Burrow Blaster, Grub Drop) at the Mole Hub, extending "play to earn small amounts" beyond trivia.</li>
+    <li><strong>Wallet Verification</strong> — a linked-roles flow (<code>/mole link</code>) so a Discord identity and a Solana wallet can be cryptographically tied together, unlocking holder-tier roles and letting the faucet/quiz/games pay the right person.</li>
+    <li><strong>Web Platform</strong> — the same faucet and quiz mechanics, rebuilt as first-party website pages (<a href="/faucet/">/faucet/</a>, <a href="/quiz/">/quiz/</a>) sharing the exact same cooldowns, points, and eligibility rules as their Discord counterparts, so a claim or a quiz answer counts the same regardless of where it happened.</li>
+    <li><strong>Dashboard</strong> — a single unified dashboard now exists at <a href="/verify/profile.html">/verify/profile.html</a>: wallet identity, verification, live holdings, Proof of Value, quiz, faucet, and game activity in one place, reusing the same shared authentication as everywhere else on the site rather than a second login. See §11.</li>
+    <li><strong>Proof of Value</strong> — the philosophy that ties all of the above together: rewards should track participation, consistency, and contribution — not wallet size. A Proof of Value engine is live: a single 0–100 score, balanced across Quiz, Faucet, Games, and Wallet Verification with a small streak bonus, shown on the Dashboard alongside real-data milestones and a weekly activity summary. See §11.</li>
+    <li><strong>Governance</strong> — a live, on-chain-eligibility proposal-voting system (<a href="/governance/">/governance/</a>). Verified holders above a WinLEW threshold vote on community proposals; eligibility is checked against live on-chain balances using the same wallet-verification layer as the rest of the platform, and every vote is recorded transparently. See §13.</li>
+    <li><strong>Contributions</strong> — a real, on-chain way to give back (<a href="/contribute/">/contribute/</a>): send $WinLEW to the Dev, Faucet, X Faucet, or Burn reserve directly from your own wallet. Each contribution is independently re-verified on-chain before it's recorded and ranks you on a public Clout leaderboard.</li>
+  </ol>
+  <p class="muted">This whitepaper is being published at a point where the great majority of the above is live and working: the Transparency Center (§5) is public, and the unified dashboard, Proof of Value engine, Governance, and Contributions described above are all live. What remains unbuilt is the broader quests/seasonal-ladder/skill-bracket layer described in the Roadmap (§13) — genuinely locked, not yet started.</p>
+  <p class="muted">This history now includes a new market milestone. On <strong>July 22, 2026</strong>, the verified post-graduation PumpSwap market for the permanent WinLEW mint went live. What changed was the active market structure, not the token identity: the mint remained <code>DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump</code>, existing holders kept the same token, the established Raydium pool remained available, and the launch-stage pump.fun infrastructure is preserved as historical documentation rather than erased. Search for <code>$WinLEW</code>, <code>WinLEW</code>, or verify with the official mint; availability varies by platform.</p>
+</div>
+
+<div class="box" id="tokenomics">
+  <h2>3. Tokenomics</h2>
+  <div class="tableWrap"><table>
+    <tr><th>Property</th><th>Value</th></tr>
+    <tr><td>Token</td><td>$WinLEW</td></tr>
+    <tr><td>Network</td><td>Solana (SPL Token)</td></tr>
+    <tr><td>Mint address</td><td><code>DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump</code></td></tr>
+    <tr><td>Decimals</td><td>6</td></tr>
+    <tr><td>Total supply</td><td>949,999,960.615828 $WinLEW <span class="muted">(read from the mint 2026-08-19; falls whenever a holder burns)</span></td></tr>
+    <tr><td>Mint authority</td><td>None (renounced — no further tokens can ever be minted)</td></tr>
+    <tr><td>Freeze authority</td><td>None</td></tr>
+  </table></div>
+  <p class="muted">These token-identity fields were last manually checked against the mint on <strong>August 1, 2026</strong>. For live confirmation, verify on-chain:
+    <a href="https://solscan.io/token/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">Solscan</a> ·
+    <!-- Raydium pool: DexScreener hides a zero-volume pair, so the PumpSwap
+         page renders "no pair found" (verified 2026-08-12). Keep this in sync
+         with whitepaper.md, the hand-maintained twin of this page. -->
+    <a href="https://dexscreener.com/solana/5nTz6Cq7U54TArLEFMgFUatcZXh5NG9BVrecqMrJ92Lx" target="_blank" rel="noreferrer noopener">DexScreener (Raydium)</a> ·
+    <a href="https://www.geckoterminal.com/solana/pools/Hmif58VXfzzjHmWnX7dDcRh6MKwoz5cTw676HbvSgFtL" target="_blank" rel="noreferrer noopener">GeckoTerminal</a> ·
+    <a href="https://rugcheck.xyz/tokens/DnrcdQVH7fdbmm4EyD7LjT9mNNozF5HuWMeKcpvjpump" target="_blank" rel="noreferrer noopener">RugCheck</a>.
+  </p>
+  <p>Because mint authority is renounced, the total supply figure above is a hard ceiling — it can only go down (via burns, §4), never up.</p>
+  <p><strong>Always verify the mint. Symbols and names can be copied.</strong></p>
+  <h3>Where tokens go</h3>
+  <ul>
+    <li><strong>Circulating supply</strong> — held by the community, traded via the post-graduation PumpSwap market and the established Raydium pool.</li>
+    <li><strong>Liquidity, locks, and reserves</strong> — several distinct components, not one wallet, discussed in §5.</li>
+    <li><strong>Burn wallet</strong> — tokens permanently removed from supply, discussed in §4.</li>
+    <li><strong>Reward payouts</strong> — a day-to-day operational wallet (separate from the locked treasury) funds faucet claims, quiz cycle payouts, and daily game-winnings batches. This wallet is the signer the bot uses to actually send tokens; it is deliberately kept out of the reach of the public web process (see §10, Security).</li>
+  </ul>
+  <h3>Original launch allocation (historical)</h3>
+  <p class="muted">At launch, the project communicated an intended allocation through a community tokenomics graphic. It was shared explicitly as an approximate, illustrative breakdown — <em>"not 100% accurate, but at least an attempt"</em> — and is preserved here as historical context, <strong>not</strong> as a current, verified statement of holdings. Allocations have evolved since; the live, on-chain, independently-verifiable components are in §5 and at the <a href="/transparency/">Transparency Center</a>.</p>
+  <div class="tableWrap"><table>
+    <tr><th>Segment (as communicated at launch)</th><th>Share</th></tr>
+    <tr><td>Community / Utility allocation (≈700,000,000 $WinLEW)</td><td>~70%</td></tr>
+    <tr><td>Locked liquidity</td><td>~10%</td></tr>
+    <tr><td>Burn reserve (long-term 100M target — see §4)</td><td>~10%</td></tr>
+    <tr><td>Faucet reserve</td><td>~5%</td></tr>
+    <tr><td>Dev &amp; partnerships (incl. 2BRZ, the first partner — 1% sent)</td><td>~5%</td></tr>
+    <tr><td>Treasury reserve</td><td>~5%</td></tr>
+  </table></div>
+  <div class="status-note"><strong>On the figures.</strong> As drawn, the launch graphic's segments add to roughly 105%, not a clean 100% — a reflection of its own stated approximate nature, not a precise ledger. It is reproduced here as intent and history rather than silently "corrected." For the actual current state of every liquidity, lock, and reserve component — read live from Solana, address by address — see §5 and the <a href="/transparency/">Transparency Center</a>.</div>
+</div>
+
+<div class="box" id="burn">
+  <h2>4. Burn History</h2>
+  <p>WinLEW's original tokenomics set aside a <strong>10% burn allocation</strong>, with a long-term goal of permanently burning <strong>100,000,000 $WinLEW</strong> total. Full live status, verified burn events, and progress toward that goal now live at the dedicated <strong><a href="/burn/">Burn Center</a></strong> — this section is a summary, not the canonical source.</p>
+  <ul>
+    <li><strong>Burn wallet address:</strong> <code>EX5nxVKgRKaJVZLfDUinXie6HQ5GPhKwkZ419pRGaZ74</code> (<code>burn.winlew.sol</code>)</li>
+    <li><strong>Verify independently:</strong> <a href="https://solscan.io/account/EX5nxVKgRKaJVZLfDUinXie6HQ5GPhKwkZ419pRGaZ74" target="_blank" rel="noreferrer noopener">Solscan ↗</a></li>
+  </ul>
+  <p><strong>Two things are tracked separately, not collapsed into one number:</strong> tokens currently <em>held</em> in the burn wallet (<strong>50,000,000</strong> as of August 1, 2026 — still part of total supply, not yet destroyed) versus tokens <em>independently verified as permanently destroyed</em> via Solana's actual token <code>burn</code> instruction (<strong>~49.71M</strong> confirmed across 32 verified transactions, each checked directly against its own on-chain instruction data — not assumed from "sent to the burn wallet"). See the <a href="/burn/">Burn Center</a> for the full breakdown, verified transaction links, and progress toward the 100M target.</p>
+  <p>On <strong>August 1, 2026</strong>, the project executed a burn of <strong>14,878,231.210253 $WinLEW</strong> (<a href="https://solscan.io/tx/2ixvHEKgdq71C41QKy6Fr4JNCeuh8Borsq2YLLUdLEG3VYg9Y5NTCa824oa7KiSu7EikQsfCk1wvU2q7AnoPHcD1" target="_blank" rel="noreferrer noopener"><code>2ixvHEKg…noPHcD1</code></a>) — an amount chosen to bring total supply to a round <strong>950,000,000</strong>, confirmed by reading the mint's supply after the fact rather than assuming it. That burn brings verified lifetime destruction to <strong>~49.71M</strong>, just under half the 100M long-term target.</p>
+  <!-- Added 2026-08-11 by the second audit. The ~49.71M figure is CORRECT and
+       deliberately not overwritten: it is what the project can evidence
+       transaction by transaction. But a reader checking Solscan sees supply
+       950,000,000 (= 50,000,000 destroyed) and had no way to reconcile the
+       292,922.812516 difference. That gap was the single most likely thing a
+       listing reviewer would catch. Verified 2026-08-11 via getTokenSupply. -->
+  <p><strong>Reconciling that with the chain:</strong> the mint&rsquo;s total supply read <strong>949,999,960.615828</strong> on 2026-08-19, so <strong>50,000,039.384172</strong> has been destroyed in total. The project&rsquo;s own ledger accounts for <strong>49,707,077.187484</strong> of it, every token tied to a transaction it executed. A further <strong>100,830.472170</strong> is now proven to have been burned by holders themselves &mdash; six transactions, each with a signature, found by walking the wallets the project&rsquo;s own <a href="/giveaways/">giveaway ledger</a> names. The remaining <strong>192,131.724518</strong> is holders this project cannot enumerate: buyers on the open market burning outright, and accounts closing with remainders. All three figures are correct and they measure different things &mdash; what the project did, what its known recipients did, and what happened to the supply. Supply can only fall via a burn instruction, so every part of the difference is destroyed tokens by definition.</p>
+  <p>This burn was <strong>already planned before</strong> the #1 holder's 50,000,000 donation arrived on July 25 — the donation did not prompt it and was not its purpose. The burn was executed with Sol Incinerator, which destroys a token account's <em>entire</em> balance and offers no partial option, so tokens not being burned had to be moved out first and the account was emptied in the process. Immediately afterward the project transferred a <strong>matching 50,000,000</strong> back in, so the burn wallet once again holds a full 50,000,000 attributable to that donation, keeping the donor's intent and provenance whole. Those 50,000,000 are <strong>staged, not destroyed</strong>, and the project's stated intent is to decide the next burn at the one-year anniversary.</p>
+  <p><strong>Community contributions to the burn wallet.</strong> Two holders have voluntarily sent tokens there, unprompted: <strong>FreeCryptoA</strong> (4,000,000 on May 30, 2026) and <strong>millerknoll</strong>, WinLEW's #1 holder (50,000,000 on July 25, 2026). Both are <strong>staged, not destroyed</strong> — they raise the "awaiting burn" balance but move nothing on the verified-progress bar until a real burn instruction executes. The project has also run <strong>buy-and-burn</strong> purchases, acquiring <strong>2,702,442.845862</strong> on the open market into the burn wallet across two buys (77,932.510911 on February 22, 2025 and 2,624,510.334951 on January 6, 2026); buying is likewise not burning, and those count only once a burn transaction destroys them.</p>
+  <p><strong>What happened before this ledger existed is recorded as unknown.</strong> A standard pump.fun launch mints 1,000,000,000. Current supply plus every verified burn implies an original of 999,707,077.187484, leaving roughly <strong>192,131 tokens (~0.019%) unaccounted for</strong> (it was 292,922 until 2026-08-19, when 100,830.472170 of it was traced to six community burns). That gap is not reconstructible and is not guessed at: $WinLEW was distributed early, including giveaways on X, and some recipients burned their own tokens from their own wallets — real reductions in supply, scattered across arbitrary addresses, with no reason to touch the project's burn wallet or announce themselves. Inventing entries to make the arithmetic close would defeat the purpose of keeping a verifiable ledger at all. This is the same boundary the rest of the project uses — Discord activity counts from when the bot began recording, web activity from when the site did — and it is precisely <em>why</em> the burn ledger was built: not to reconstruct an unknowable past, but to ensure every claim from here forward has a signature behind it. Note this affects only the <em>attribution</em> of historical reductions, never the supply itself: <strong>current total supply is read live from the mint and was 949,999,960.615828 on 2026-08-19</strong> &mdash; no longer a round 950,000,000, because two holders burned 39.384172 between them on 2026-08-18.</p>
+  <div class="status-note">These figures change over time as more tokens are burned. The Burn Center reads the burn wallet's balance live from Solana on every request, so the "awaiting burn" number is never a stale snapshot. The verified-destroyed total is deliberately different: it comes from a curated log in which every entry was individually confirmed to be a real on-chain <code>burn</code> instruction, because proving destruction requires checking a specific transaction — not inferring it from a balance going down.</div>
+</div>
+
+<div class="box" id="treasury">
+  <h2>5. Ecosystem Architecture: Liquidity, Locks, and Reserves</h2>
+  <p>WinLEW is not held in one wallet. Earlier drafts of this document described a single "treasury" — that framing was inaccurate and has been corrected. In reality, supply is distributed across several distinct, independently-verifiable on-chain components, each with a different job. All of them are documented — with live balances read directly from Solana, not typed in as static numbers — at <strong><a href="/transparency/">/transparency/</a></strong>, this project's Transparency Center.</p>
+  <p class="muted">Public trading now spans two current, verified market surfaces: the post-graduation PumpSwap market tied to the permanent mint, plus the established Raydium pool below. The original pump.fun launch-stage market remains documented historically at the Transparency Center rather than being silently relabeled as the active venue.</p>
+  <div class="tableWrap"><table>
+    <tr><th>Component</th><th>Purpose</th><th>Mechanism</th></tr>
+    <tr><td><strong>Liquidity</strong> (Raydium pool <code>5nTz6…92Lx</code>)</td><td>Lets anyone buy or sell $WinLEW on-chain, no centralized order book</td><td>Standard Raydium CPMM pool</td></tr>
+    <tr><td><strong>50M Token Lock</strong></td><td>Long-term supply lock</td><td>Jupiter Lock — vests 10M/year, Apr 25 2025 → Apr 24 2030</td></tr>
+    <tr><td><strong>15M Team Lock</strong></td><td>Team allocation, locked rather than liquid at launch</td><td>Jupiter Lock — vests 7.5M/year, Mar 1 2025 → Mar 1 2027</td></tr>
+    <tr><td><strong>Streamflow Lock (22M)</strong></td><td>Additional supply under vesting</td><td>Streamflow on-chain vesting contract — full cliff unlock, 0% until Oct 29 2035; ~22.07M locked</td></tr>
+    <tr><td><strong>Streamflow Lock (7M)</strong></td><td>A second, separate supply lock</td><td>Streamflow on-chain vesting contract — full cliff unlock, 0% until Oct 29 2030; ~7.01M locked</td></tr>
+    <tr><td><strong>Burn Wallet</strong> (<code>EX5nx…aZ74</code>, <code>burn.winlew.sol</code>)</td><td>Permanent removal of supply</td><td>Standard wallet — tokens sent here are irrecoverable (§4)</td></tr>
+    <tr><td><strong>X (Twitter) Faucet Reserve</strong> (<code>GFxz4…EhAp</code>, <code>winlew.sol</code>)</td><td>Funds the separate X/Twitter faucet program run via @WinLewToken — <em>not</em> the website faucet</td><td>Standard wallet</td></tr>
+    <tr><td><strong>Discord &amp; Web Faucet Reserve</strong> (<code>FcEtZ…PPjE</code>, <code>diglew.sol</code>)</td><td>Funds rewards distributed through <em>both</em> the Discord Faucet Bot and the website faucet (§6) — they share one treasury keypair, not two separate reserves. Currently also the signer that pays out quiz and game rewards.</td><td>Standard wallet</td></tr>
+    <tr><td><strong>Developer Reserve</strong> (<code>D6d5b…FRkZ</code>)</td><td>Development and ecosystem funding</td><td>Standard wallet</td></tr>
+  </table></div>
+  <p class="muted" style="margin-top:12px;">Every address above was independently verified against Solana mainnet (two RPC providers) before being published here or on the Transparency Center — including confirming each lock's actual on-chain balance matches its stated amount (the 50M and 15M locks resolve to token accounts holding exactly 50,000,000 and 15,000,000 $WinLEW respectively; the two Streamflow contracts resolve to ~22.07M and ~7.01M, ~29.08M combined).</p>
+  <div class="status-note"><strong>Public accountability.</strong> The point of documenting all of this by address, not just by category, is that none of it has to be taken on faith. Every row above links to Solscan on the Transparency Center; anyone can independently confirm balances, lock schedules, and transaction history themselves.</div>
+  <p class="muted" style="margin-top:12px;"><strong>On historical figures.</strong> The tokenomics graphic communicated at launch represents the original allocation and is preserved as historical documentation rather than edited retroactively (§3, §13). Allocations have evolved since — the components above reflect the current, real state. Where the two differ, this document says so rather than quietly reconciling them.</p>
+  <p class="muted" style="margin-top:12px;">Two separate 90-day Raydium liquidity farms ran historically and back-to-back (the first March–June 2025, the second June 16 → September 14 2025) — LP providers staked WinLEW/SOL LP tokens to share a scheduled WinLEW reward pool on top of ordinary trading fees. Both programs have ended; they are documented as historical, not currently active, at <a href="/partners/">Sponsors &amp; Partners</a>, alongside the project's community-partnership history.</p>
+</div>
+
+<div class="box" id="faucet">
+  <h2>6. Faucet</h2>
+  <p>The faucet lets eligible holders claim a small amount of $WinLEW on a rolling cooldown (default 24 hours, configurable), either through Discord (<code>!faucet</code> / <code>!drip</code>) or the website (<a href="/faucet/">/faucet/</a>).</p>
+  <p>The important design point: <strong>both surfaces share one cooldown.</strong> A claim from Discord blocks a claim from the website for the same identity and wallet, and vice versa — there is one claim record per person per cooldown window, not two independent systems that could be played against each other. Claims are reserved atomically (a claim is either fully reserved or not reserved at all, with no window where two simultaneous claims could both succeed), and token amounts are computed with exact decimal arithmetic rather than floating-point math, to avoid rounding drift in either direction.</p>
+  <p>Eligibility can require a minimum holder balance (configurable, default enabled at a low floor) so the faucet is a benefit for people who actually hold the token, not an open tap for outside wallets.</p>
+
+  <h3>How much has actually been given away</h3>
+  <p>As of <strong>August 1, 2026</strong>, the faucet reserve wallet has distributed <strong>1,287,846.66 $WinLEW</strong> across <strong>1,001 payouts</strong> to <strong>41 distinct wallets</strong>, beginning with its first payout on <strong>May 18, 2025</strong>.</p>
+  <p>That figure is read from the chain, not from this project's own records, and it is <strong>verified complete</strong>: every transaction the wallet has ever had was fetched and decoded, and total received minus total sent equals its live on-chain balance exactly. Nothing is missing from it. Anyone can reproduce the check against <a href="https://solscan.io/account/FcEtZqVowuhF2hdysy7qxJYRhu1eNZ8ws2JqHUDmPPjE#transfers" target="_blank" rel="noreferrer noopener">the wallet on Solscan</a>.</p>
+  <p><strong>Two different numbers are published, deliberately.</strong> The <a href="/faucet/">/faucet/</a> page also shows a claim counter sourced from this platform's own records — that one counts claims <em>this codebase processed and confirmed</em>, and it is far smaller: <strong>63 claims totalling 64,500</strong> against 1,001 on-chain payouts.</p>
+  <p><strong>That gap is fully accounted for.</strong> It was investigated transaction by transaction in August 2026, and three things make it up:</p>
+  <ul>
+    <li><strong>No claim recording existed before July 10, 2026.</strong> The claim store and the shared Discord/web claim flow shipped that day. For the ~14 months before it, the bot sent drips directly and wrote no record. The counter's earliest entry (2025-05-25) comes from a one-time import of legacy cooldown timestamps, which is also why 20 of its rows carry no amount at all.</li>
+    <li><strong>Quiz and game rewards are signed by the same wallet</strong> (§3, "Reward payouts") and are not faucet claims, so they appear in the on-chain total and never in the claim counter.</li>
+    <li><strong>A <code>!drip</code> race double-paid 28 times</strong>, sending <strong>41,500 $WinLEW</strong> more than was owed between May 2025 and April 2026. The cause was two copies of the bot running under different process supervisors, each answering the same command. Both the cause and a startup guard preventing it are fixed.</li>
+  </ul>
+  <p>Since recording began, <strong>every real user claim has a record.</strong> A reverse check of every on-chain payout against the claim store found zero unexplained: one claim whose transfer had landed but whose confirmation timed out (since credited), one payout made eight hours before the recording code shipped, and one self-send to the project's own wallet.</p>
+  <div class="status-note">This is the §4 discipline applied to distribution rather than burns: the on-chain figure is the one backed by signatures, and it is the one to trust — but the difference is explained rather than left hanging.</div>
+  <div class="status-note">Like the supply figure in §3, the total above is a <strong>point-in-time snapshot</strong> and rises with every payout. The live values are on <a href="/faucet/">/faucet/</a>, the <a href="/transparency/">Transparency Center</a>, and <a href="/leaderboards/#faucetBoard">/leaderboards/</a>, each stamped with when it was last checked.</div>
+</div>
+
+<div class="box" id="quiz">
+  <h2>7. Quiz Platform</h2>
+  <p>The quiz rewards correct answers to crypto/Solana/ecosystem trivia with points, which convert to $WinLEW at the end of each payout cycle. Like the faucet, it exists in two places that share the same underlying state:</p>
+  <ul>
+    <li><strong>Discord</strong>: <code>/startquiz [level]</code>, <code>/sponsorquiz sponsor:&lt;xyo|winlew&gt;</code>, <code>/leaderboard</code>, <code>/mypoints</code>, <code>/cycleinfo</code>.</li>
+    <li><strong>Website</strong> (<a href="/quiz/">/quiz/</a>): the same question pools, presented as four tiles — Easy, Medium, Hard, and Sponsor — each showing your own accuracy for that tier.</li>
+  </ul>
+  <p>Sponsor questions (currently XYO- and WinLEW-branded pools) are playable from either surface and credit the same per-sponsor breakdown either way. The website additionally shows a Web-vs-Discord comparison — informational only, and never a factor in payout-eligible points, which are tracked once regardless of platform.</p>
+  <p class="muted">Anti-farm measures include a per-question timer, one submission per question instance, answer-once-per-cycle enforcement, and a daily cap on scored answers.</p>
+</div>
+
+<div class="box" id="games">
+  <h2>8. Games</h2>
+  <p>The <a href="/mole-hub/">Mole Hub</a> hosts a small catalog of browser games — DigLEW, Pac-Mole, Root Glide, Burrow Blaster, and Grub Drop — built around short, skill-based sessions rather than passive holding. Winnings are earned in-session and paid out in a daily batch, with reward caps and anti-farm guardrails in place to keep payouts sustainable and resistant to scripted play. Guest play is supported (winnings save locally) and reconciled into your account once you connect a wallet, so trying a game doesn't require signing anything up front.</p>
+</div>
+
+<div class="box" id="verification">
+  <h2>9. Wallet Verification</h2>
+  <p>Verification (<a href="/verify/">/verify/</a>, or <code>/mole link</code> in Discord) ties a Discord identity to a Solana wallet through a signed-message challenge — the wallet proves ownership by signing a message, not by sharing a private key or seed phrase. Once linked, that wallet becomes the identity the faucet, quiz, and games all pay out to, and it unlocks Discord roles:</p>
+  <ul>
+    <li><strong>Verified Wallet</strong> — base role for anyone with a linked wallet.</li>
+    <li><strong>Verified Holders</strong> — for wallets holding $WinLEW.</li>
+    <li><strong>LewCREW 1 Million Club / 10 Million Club / 100 Million Club</strong> — holder-tier roles at increasing balance thresholds.</li>
+  </ul>
+  <p class="muted"><code>.sol</code> domain names (SNS) are supported as an alternative to pasting a raw address, on the faucet, quiz, and verification flows alike.</p>
+</div>
+
+<div class="box" id="security">
+  <h2>10. Security</h2>
+  <p>A few concrete measures, described honestly rather than as generic reassurance:</p>
+  <ul>
+    <li><strong>Treasury key isolation.</strong> The keypair that actually signs and sends tokens is loaded only by the Discord bot process and the dedicated payout-worker process — never by the public-facing web server. Website faucet claims are <em>reserved</em> by the web process and <em>executed</em> by a separate worker that is the only other process with access to the signing key.</li>
+    <li><strong>Atomic claim reservation.</strong> Faucet claims use a locking mechanism (file-lock or database transaction, depending on deployment) so two simultaneous claim attempts for the same identity can't both succeed — one wins, the other is correctly told "already claimed."</li>
+    <li><strong>Exact decimal math.</strong> Token amounts are computed with exact base-unit arithmetic, not floating-point numbers, to eliminate a class of rounding bugs that have caused real problems for other projects' payout systems.</li>
+    <li><strong>Watchdog.</strong> A separate bot service monitors the server for impersonation attempts (auto-flag/auto-ban on suspicious display-name patterns), common scam text patterns (e.g. "buying aged wallets" / seed-phrase-harvesting messages), and sends heartbeat/health signals so downtime is noticed quickly.</li>
+    <li><strong>Live health checks.</strong> Beyond the Watchdog's heartbeat, a public status endpoint (<code>GET /api/health/status</code>, surfaced on the <a href="/health/">/health/</a> page) actively probes each first-party page and data API on demand and reports per-route latency. For the JSON APIs it goes a level deeper than an HTTP 200 — it parses each response and requires <code>ok: true</code> before calling that service healthy. Anyone can load <a href="/health/">/health/</a> to read the current, live status rather than a claimed one.</li>
+    <li><strong>Anti-farm guardrails.</strong> Present throughout the reward systems described above — cooldowns, daily caps, answer-once enforcement, holder-balance floors — because a rewards system that can be trivially scripted stops being a rewards system for the community that plays fair.</li>
+  </ul>
+  <p class="muted">Security is an ongoing practice, not a one-time claim. This section will be updated as the system evolves.</p>
+</div>
+
+<div class="box" id="pov">
+  <h2>11. Proof of Value — The Community Philosophy</h2>
+  <p>Everything above is in service of one idea: <strong>rewards should track participation, consistency, and contribution — not the size of your wallet.</strong> A large holder and a small holder answering the same quiz question correctly earn the same points for that answer. A faucet claim is the same claim whether it comes from Discord or the website. This is why WinLEW is not organized around trading mechanics — it's organized around things people actually do.</p>
+  <p>The "Proof of Value Engine" is live: a unified 0–100 score computed from Quiz, Faucet, Games, and Wallet Verification (balanced ~25% weight each, plus a small streak bonus), shown on the Dashboard with a full component breakdown, real-data milestones, a faucet claim streak, and a weekly activity summary — see <a href="/verify/profile.html">/verify/profile.html</a>. What's genuinely still unbuilt is the broader quests/seasonal-ladder/skill-bracket layer described in the Roadmap below — that remains locked, not staged or in progress.</p>
+</div>
+
+<div class="box" id="community">
+  <h2>12. Community-First Development</h2>
+  <p>WinLEW's feature history (§2) reflects how it's actually built: in response to what the Discord community was already doing, not from a roadmap decided in isolation. Development priorities have consistently favored things that make the existing community's experience better and more trustworthy — fixing a broken mobile menu, unifying a faucet cooldown so it can't be gamed across platforms, adding a wallet picker so mobile users aren't stuck — over adding entirely new surface area. This whitepaper itself, and the Transparency Center described in §5, exist because the community and project maintainers agreed that visibility and transparency were overdue, not because either was required by any external party.</p>
+</div>
+
+<div class="box" id="roadmap">
+  <h2>13. Roadmap</h2>
+  <p>WinLEW's public roadmap (visible on the <a href="/#roadmap">homepage</a>) is organized into four phases:</p>
+  <div class="tableWrap"><table>
+    <tr><th>Phase</th><th>Focus</th><th>Status</th></tr>
+    <tr><td><strong>Phase 1 — Foundation &amp; Tokenomics</strong></td><td>Core site, link hub, live market stats, verified contract/pool references</td><td>Live</td></tr>
+    <tr><td><strong>Phase 2 — Core Infrastructure / Proof of Value Engine</strong></td><td>Contribution-signal tracking, unified Proof of Value score, transparency logs, unified Dashboard</td><td>Live</td></tr>
+    <tr><td><strong>Phase 3 — Engagement &amp; Mechanism Rollout</strong></td><td>Games &amp; Trivia Layer (live); on-chain Governance proposal voting (live, <a href="/governance/">/governance/</a>); on-chain Contributions &amp; Clout leaderboard (live, <a href="/contribute/">/contribute/</a>); milestone/streak/weekly-activity visibility (live); seasonal ladders, skill brackets (locked / staged rollout)</td><td>Partially live</td></tr>
+    <tr><td><strong>Phase 4 — Expansion &amp; Sustainability</strong></td><td>Utility Expansion (automation, integrations); Community Ops (events, coordination tooling)</td><td>Coming soon</td></tr>
+  </table></div>
+  <p>Separately, this document and the accompanying engineering work track three additional near-term milestones that don't change token mechanics but materially affect the platform experience:</p>
+  <ol>
+    <li><strong>This whitepaper</strong> — the definitive public description of the project (this document).</li>
+    <li><strong>A Transparency Center</strong> — live on-chain visibility into every liquidity, lock, and reserve component described in §5, not a single wallet.</li>
+    <li><strong>Unified authentication</strong> — one shared wallet-connect module (<code>/assets/wallet-auth.js</code>) now backs Mole Hub, Faucet, Quiz, and the profile editor, replacing what were several independent copies of the same logic. Connecting on any of those apps carries over to the others automatically — no reconnect required — via the same shared session already used by all of them.</li>
+  </ol>
+</div>
+
+<div class="box" id="transparency">
+  <h2>14. A Note on Transparency</h2>
+  <p>Parts of this document describe things that are still incomplete — the treasury's on-chain visibility, the unified dashboard, the Proof of Value Engine's more advanced scoring. That's intentional. A whitepaper that only describes finished, polished features isn't transparent, it's marketing. This one will be updated as those pieces ship. The project's codebase was open-source through version 3.3.3; the repository is currently private while active development continues, and this document's update history is tracked internally rather than silently edited.</p>
+</div>
+
+<p class="muted" style="text-align:center;">This whitepaper is a living document. For the most current on-chain figures, verify directly against the addresses listed above rather than relying on any number printed here.</p>
+
+<footer>
+  <a href="/">← Back to WinLEW</a> · <a href="/community/">Discord</a>
+</footer>
+</div>
+
+<script src="/assets/wallet-auth.js"></script>
+<script>
+  (function () {
+    const { getAuth, setConnectedUi, walletLogin, getCachedWallet, refreshWalletBalance } = window.WinLEWAuth;
+    document.getElementById('navWalletConnect')?.addEventListener('click', (e) => void walletLogin({ triggerBtn: e.currentTarget, onSuccess: () => window.location.reload() }));
+    if (getAuth().session) setConnectedUi(getCachedWallet() || 'connected');
+    refreshWalletBalance();
+  })();
+</script>
+<script defer src="/assets/nav.js"></script>
+</body>
+</html>
