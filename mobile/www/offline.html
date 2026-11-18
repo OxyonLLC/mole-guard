@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>WinLEW · Offline</title>
+<style>
+  html,body{margin:0;height:100%;background:#130b08;color:#f6efe8;font-family:ui-sans-serif,system-ui,-apple-system,Roboto,sans-serif}
+  main{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+  .ico{font-size:52px;margin:0 0 12px}
+  h1{font-size:24px;margin:0 0 8px}
+  p{max-width:320px;line-height:1.55;color:rgba(246,239,232,.75);margin:0 0 22px}
+  button{border:0;border-radius:14px;padding:14px 28px;font-size:16px;font-weight:800;background:linear-gradient(180deg,#e6be7f,#c9944f);color:#24150d}
+</style>
+</head>
+<body>
+  <!-- Bundled in the app (capacitor.config server.errorPath): shown when winlew.co can't be reached,
+       instead of a browser error page. It has no plugin access, so it only retries. -->
+  <main>
+    <div class="ico" aria-hidden="true">📡</div>
+    <h1>You're offline</h1>
+    <p>WinLEW needs an internet connection. Check your Wi-Fi or mobile data, then try again.</p>
+    <button type="button" onclick="location.href='https://winlew.co/app/start/'">Try again</button>
+  </main>
+</body>
+</html>

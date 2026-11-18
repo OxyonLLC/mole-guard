@@ -21,7 +21,8 @@ test('3.0 keeps app discovery and native entry route without replacing the beta'
   assert.match(build, /href="\/app\/"/); assert.match(build, /href="\/jdid93hf8dh\/"/);
   assert.match(app, /completeNativeHandoff/); assert.match(app, /href="\/jdid93hf8dh\/"/);
   const config = JSON.parse(fs.readFileSync('mobile/capacitor.config.json', 'utf8'));
-  assert.equal(new URL(config.server.url).pathname.replace(/\/$/, ''), '/app');
+  // 1.0.1+: the app starts at /app/start/ (welcome + 18+ confirmation), which then opens /app/.
+  assert.ok(['/app', '/app/start'].includes(new URL(config.server.url).pathname.replace(/\/$/, '')), config.server.url);
 });
 const updater = app.slice(app.indexOf('async function checkForUpdate()'), app.indexOf('async function finishHandoff('));
 async function updateFixture(build, native = true) {

@@ -3,9 +3,10 @@
   "appName": "WinLEW",
   "webDir": "www",
   "server": {
-    "url": "https://winlew.co/app/",
+    "url": "https://winlew.co/app/start/",
     "cleartext": false,
-    "androidScheme": "https"
+    "androidScheme": "https",
+    "errorPath": "offline.html"
   },
   "android": {
     "allowMixedContent": false
@@ -13,5 +14,14 @@
   "ios": {
     "contentInset": "never",
     "backgroundColor": "#130b08"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1500,
+      "launchAutoHide": true,
+      "backgroundColor": "#130b08",
+      "showSpinner": false,
+      "androidScaleType": "CENTER_CROP"
+    }
   }
 }

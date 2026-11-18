@@ -12,7 +12,7 @@ test('Android staging has a separate app/storage identity and only local origins
     assert.deepEqual(config.server.allowNavigation, [host]);
   }
   const production = JSON.parse(fs.readFileSync('mobile/capacitor.config.json', 'utf8'));
-  assert.equal(production.appId, 'co.winlew.app'); assert.equal(production.server.url, 'https://winlew.co/app/'); assert.equal(production.server.cleartext, false);
+  assert.equal(production.appId, 'co.winlew.app'); assert.equal(production.server.url, 'https://winlew.co/app/start/'); /* 1.0.1: welcome + 18+ step first */ assert.equal(production.server.cleartext, false);
 });
 test('Android staging refuses arbitrary URLs, unknown transports and invalid ports', () => {
   for (const port of ['https://winlew.co', 80, 65536, '../.env']) assert.throws(() => createStagingConfig(port));
