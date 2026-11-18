@@ -26,15 +26,19 @@
 // reflexively is one that stops being read.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const read = (p) => JSON.parse(readFileSync(resolve(repoRoot, p), 'utf8'));
 
-const REGISTRATIONS = read('src/faucet/registrations.json');
-const AIRDROPS = read('src/faucet/airdrops.json');
+// The lists hold holders' wallet addresses: runtime data, git-ignored and NOT in the public repository
+// (OxyonLLC/mole-guard). These checks run wherever the lists exist, i.e. on the operator's machine.
+const HAVE_LISTS = existsSync(resolve(repoRoot, 'src/faucet/registrations.json')) && existsSync(resolve(repoRoot, 'src/faucet/airdrops.json'));
+const REGISTRATIONS = HAVE_LISTS ? read('src/faucet/registrations.json') : [];
+const AIRDROPS = HAVE_LISTS ? read('src/faucet/airdrops.json') : [];
+const testLists = (name, fn) => test(name, { skip: !HAVE_LISTS && 'airdrop lists are runtime data, not in the public repository' }, fn);
 
 // Length-bounded on purpose. src/mole/solana.js's BASE58_RE has no bound, so it
 // would accept "lewsales.sol"-length junk as valid base58 characters.
@@ -52,7 +56,7 @@ function projectOwned() {
 
 const OWNED = projectOwned();
 
-test('the component registry parsed sanely', () => {
+testLists('the component registry parsed sanely', () => {
   // Guard the guard: if this returns nothing, every exclusion test below passes
   // vacuously and the airdrop would happily pay the treasury.
   assert.ok(OWNED.size >= 8, `only parsed ${OWNED.size} project addresses from web.js`);
@@ -77,7 +81,7 @@ for (const [label, list] of [['registrations.json', REGISTRATIONS], ['airdrops.j
   });
 }
 
-test('the two lists agree', () => {
+testLists('the two lists agree', () => {
   // They are meant to be the same set. They diverged historically because the
   // legacy handler wrote a raw SNS name to one and not the other.
   const a = new Set(REGISTRATIONS);
