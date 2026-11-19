@@ -7,9 +7,6 @@
     <loc>https://winlew.co/about/</loc>
   </url>
   <url>
-    <loc>https://winlew.co/app/start/</loc>
-  </url>
-  <url>
     <loc>https://winlew.co/bounties/</loc>
   </url>
   <url>
@@ -29,6 +26,9 @@
   </url>
   <url>
     <loc>https://winlew.co/contribute/</loc>
+  </url>
+  <url>
+    <loc>https://winlew.co/delete-account/</loc>
   </url>
   <url>
     <loc>https://winlew.co/discord-bots/</loc>
