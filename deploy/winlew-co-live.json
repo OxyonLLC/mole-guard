@@ -5,7 +5,7 @@
       "htdocs": "xl1/verify/api-proxy.php",
       "sha256": "219c03485d35a27ac527f7f88bf96fb83a8c6de03b727da09432c0058b416f75",
       "release": "R2b (OxyonLLC/mole-guard PR #5; was LewSales/mole-gaurd#30)",
-      "deployedUtc": "2026-11-19T06:00:00Z",
+      "deployedUtc": "2026-11-19T06:07:40Z",
       "rollback": "File Manager (htdocs/xl1/verify): api-proxy.php -> api-proxy.php.r2b-failed, then api-proxy.php.bak-20261119 (R2) -> api-proxy.php (one rename per page load)",
       "superseded": {
         "4f774777fb170f029b34ed36eeffecdaafc9f2c22797b219391bd0aa21fc918f": "R2 (PR #29, 62f14a0), live 2026-11-12T13:50:07Z to R2b; co-witness links answered 400 invalid_proxy_path",
