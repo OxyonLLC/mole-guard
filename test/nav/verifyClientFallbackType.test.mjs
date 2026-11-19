@@ -24,7 +24,19 @@ const code = source
   .join("\n");
 
 test("the client fallback path is recognised by exact shape", () => {
-  assert.match(code, /preg_match\('#\^\/verify\/client-\(\[0-9a-f\]\{16\}\)\$#', \$pathInfo, \$vcm\)/);
+  assert.match(code, /preg_match\('#\^\/\(\?:verify\|cosign\)\/client-\(\[0-9a-f\]\{16\}\)\$#', \$pathInfo, \$vcm\)/);
+});
+
+// R2b: the co-sign routes the bot's co-witness links use, with pinned methods.
+test("co-sign routes are allowlisted with exact shapes and pinned methods (R2b)", () => {
+  assert.match(code, /'#\^\/\(\?:verify\|api\/session\|cosign\|api\/cosign\)\/\[A-Za-z0-9_-\]\{1,64\}\$\|\^\/api\/verify\$\|\^\/health\$#'/);
+  assert.match(code, /preg_match\('#\^\/cosign\/#', \$pathInfo\) \? \['GET', 'HEAD'\]/);
+  assert.match(code, /preg_match\('#\^\/api\/cosign\/#', \$pathInfo\) \? \['GET', 'HEAD', 'POST'\] : null/);
+  assert.match(code, /http_response_code\(405\);/);
+  // The method check runs before any request leaves this host.
+  assert.ok(code.indexOf("http_response_code(405);") < code.indexOf("curl_init($target)"));
+  // The co-sign page is relayed like the verify page (HTML allowlist), nothing broader.
+  assert.match(code, /\$isVerifyPagePath = \(bool\) preg_match\('#\^\/\(\?:verify\|cosign\)\/#', \$pathInfo\);/);
 });
 
 test("JavaScript is served only after the body's SHA-256 matches the name", () => {

@@ -100,11 +100,31 @@ if (preg_match('#(?:^|/)\.\.?(?:/|$)#', $decodedPath)
 //   /api/session/<session>   the nonce and signing domain for that session
 //   /api/verify              the signed result going back
 //   /health                  so a check can tell "down" from "misconfigured"
+//   /cosign/<event>          the co-witness approval page (GET only)
+//   /api/cosign/<event>      its signing options (GET) and the signed approval (POST)
 // Nothing else on that backend is reachable through this file.
-if (!preg_match('#^/(?:verify|api/session)/[A-Za-z0-9_-]{1,64}$|^/api/verify$|^/health$#', $pathInfo)) {
+//
+// The co-sign routes (R2b, 2026-11-12): the bot builds co-witness links as
+// <this file>/cosign/<event>?me=&exp=&sig=, and this allowlist had no /cosign/,
+// so every link answered 400 invalid_proxy_path. They add no authority: the bot
+// checks the HMAC invite token (sig over event, member and expiry), the expiry,
+// that the member is the invitee, that the event is still pending, and on POST
+// the member's wallet signature. Methods are pinned per route.
+if (!preg_match('#^/(?:verify|api/session|cosign|api/cosign)/[A-Za-z0-9_-]{1,64}$|^/api/verify$|^/health$#', $pathInfo)) {
     http_response_code(400);
     header('Content-Type: application/json');
     echo json_encode(['ok' => false, 'error' => 'invalid_proxy_path']);
+    exit;
+}
+$requestMethod = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
+$allowedMethods = preg_match('#^/cosign/#', $pathInfo) ? ['GET', 'HEAD']
+    : (preg_match('#^/api/cosign/#', $pathInfo) ? ['GET', 'HEAD', 'POST'] : null);
+if ($allowedMethods !== null && !in_array($requestMethod, $allowedMethods, true)) {
+    http_response_code(405);
+    header('Allow: ' . implode(', ', $allowedMethods));
+    header('Content-Type: application/json');
+    header('Cache-Control: no-store');
+    echo json_encode(['ok' => false, 'error' => 'method_not_allowed']);
     exit;
 }
 
@@ -135,7 +155,7 @@ $isOAuthCallbackPath = (bool) preg_match('#^/(?:discord|x)-oauth-callback(?:/|$)
 // The verify page is HTML by design; everything else here is JSON. The
 // content-type allowlist below still applies, so this cannot become a
 // file-download or script-hosting surface on winlew.co.
-$isVerifyPagePath = (bool) preg_match('#^/verify/#', $pathInfo);
+$isVerifyPagePath = (bool) preg_match('#^/(?:verify|cosign)/#', $pathInfo);
 // The verify page's FALLBACK SCRIPT (R2, 2026-11-12). When the oxyon.io copy of
 // the ~3 MB client cannot load, the page appends
 //   <script type="module" integrity="sha384-…" src="<this file>/verify/client-<hex16>">
@@ -148,7 +168,8 @@ $isVerifyPagePath = (bool) preg_match('#^/verify/#', $pathInfo);
 // the first 16 hex digits of the SHA-256 of the exact bytes (verifyClientAsset()
 // in the bot), and this file checks that before calling the body JavaScript. Any
 // other body on this path is refused, and the page's SRI pins the bytes as well.
-$verifyClientHash = preg_match('#^/verify/client-([0-9a-f]{16})$#', $pathInfo, $vcm) ? $vcm[1] : '';
+// The co-sign page loads its client the same way (/cosign/client-<hex16>, R2b).
+$verifyClientHash = preg_match('#^/(?:verify|cosign)/client-([0-9a-f]{16})$#', $pathInfo, $vcm) ? $vcm[1] : '';
 $wantsPlainText = $isPublicSupplyPath
     && isset($_GET['format'])
     && strtolower((string) $_GET['format']) === 'plain';
