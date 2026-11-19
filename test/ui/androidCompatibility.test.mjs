@@ -6,8 +6,8 @@ import vm from 'node:vm';
 const app = fs.readFileSync('src/public/app/index.html', 'utf8');
 const latest = JSON.parse(fs.readFileSync('src/public/jdid93hf8dh/latest.json', 'utf8'));
 test('existing Android package matches published integrity metadata', () => {
-  assert.equal(latest.version, '0.2.1'); assert.equal(latest.build, 201);
-  assert.equal(latest.url, '/jdid93hf8dh/winlew-beta-0.2.1.apk');
+  assert.equal(latest.version, '1.0.1'); assert.equal(latest.build, 10001);
+  assert.equal(latest.url, '/jdid93hf8dh/app-release.apk');
   const bytes = fs.readFileSync('src/public' + latest.url);
   assert.equal(bytes.length, 25840435);
   assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'), latest.sha256);
@@ -42,7 +42,9 @@ test('older native build offers existing local APK through explicit browser hand
   assert.equal(fixture.calls.at(-1)[1], 'http://127.0.0.1:12345' + latest.url);
 });
 test('current native build has no update banner; ordinary browser makes no update request', async () => {
-  const current = await updateFixture(201); assert.equal(current.elements.btnUpdate, undefined);
+  const current = await updateFixture(latest.build); assert.equal(current.elements.btnUpdate, undefined);
+  // Play builds (10000+) never offer the APK, even when the page lists a newer one.
+  assert.equal((await updateFixture(10000)).elements.btnUpdate, undefined);
   assert.equal(current.calls.length, 1);
   assert.deepEqual((await updateFixture(0, false)).calls, []);
 });
