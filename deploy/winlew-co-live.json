@@ -3,11 +3,12 @@
   "files": {
     "src/public/xl1/verify/api-proxy.php": {
       "htdocs": "xl1/verify/api-proxy.php",
-      "sha256": "4f774777fb170f029b34ed36eeffecdaafc9f2c22797b219391bd0aa21fc918f",
-      "release": "R2 (PR #29, 62f14a0)",
-      "deployedUtc": "2026-11-12T13:50:07Z",
-      "rollback": "File Manager: api-proxy.php -> api-proxy.php.r2-failed, then api-proxy.php.bak-20261112 -> api-proxy.php (one rename per page load)",
+      "sha256": "219c03485d35a27ac527f7f88bf96fb83a8c6de03b727da09432c0058b416f75",
+      "release": "R2b (OxyonLLC/mole-guard PR #5; was LewSales/mole-gaurd#30)",
+      "deployedUtc": "2026-11-19T06:00:00Z",
+      "rollback": "File Manager (htdocs/xl1/verify): api-proxy.php -> api-proxy.php.r2b-failed, then api-proxy.php.bak-20261119 (R2) -> api-proxy.php (one rename per page load)",
       "superseded": {
+        "4f774777fb170f029b34ed36eeffecdaafc9f2c22797b219391bd0aa21fc918f": "R2 (PR #29, 62f14a0), live 2026-11-12T13:50:07Z to R2b; co-witness links answered 400 invalid_proxy_path",
         "940c930e72d4eab35228818f6d958f78e977b7e07f40046bcea307cd876fbbf7": "pre-R2 baseline; serves the verify-client fallback as text/html (members stuck on 'Loading verification...')"
       }
     }
