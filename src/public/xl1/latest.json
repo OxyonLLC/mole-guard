@@ -1,11 +1,11 @@
 {
-  "version": "1.0.6",
-  "build": 106,
-  "tag": "v1.0.6",
+  "version": "2.5.0",
+  "build": 250,
+  "tag": "v2.5.0",
   "cli": "5.7.2",
   "sdk": "5.9.1",
-  "released": "2026-11-20T19:38:53Z",
-  "notes": "xl1-cli 5.7.2",
+  "released": "2026-11-20T21:22:57Z",
+  "notes": "xl1-cli 5.7.2, dashboard 2.5.0",
   "pi": "OxyonLLC/xl1-oxyonode",
   "windows": "LewSales/xl1-block-producer-windows",
   "minCliToSkip": null
