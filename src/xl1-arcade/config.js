@@ -44,6 +44,11 @@ export function getArcadeConfig(env = process.env) {
   if (!Number.isInteger(minDiscordAgeDays) || minDiscordAgeDays < 0 || minDiscordAgeDays > 3650) throw new Error('XL1_MIN_DISCORD_AGE_DAYS_invalid');
   if (!Number.isInteger(roundCapSeconds) || roundCapSeconds < 30 || roundCapSeconds > 3600) throw new Error('XL1_ROUND_CAP_SECONDS_invalid');
   const dailyCap = decimalToUnits(env.XL1_DAILY_REWARD_CAP || '10', 'XL1_DAILY_REWARD_CAP');
+  // Wallet-only players (signed in with an XL1 wallet, no Discord): owner-approved 2026-11-21, 5 XL1/day, and the wallet
+  // must hold at least 10 XL1 to cash out. Never above the full cap.
+  const walletOnlyDailyCapRaw = decimalToUnits(String(env.XL1_WALLET_ONLY_DAILY_CAP ?? '').trim() || '5', 'XL1_WALLET_ONLY_DAILY_CAP');
+  const walletOnlyDailyCap = walletOnlyDailyCapRaw < dailyCap ? walletOnlyDailyCapRaw : dailyCap;
+  const walletOnlyMinBalance = decimalToUnits(String(env.XL1_WALLET_ONLY_MIN_BALANCE ?? '').trim() || '10', 'XL1_WALLET_ONLY_MIN_BALANCE');
   const mode = String(env.XL1_REWARD_MODE || 'dry-run').trim().toLowerCase();
   if (!['dry-run', 'live'].includes(mode)) throw new Error('XL1_REWARD_MODE_invalid');
   const signerAdapter = String(env.XL1_REWARD_SIGNER_ADAPTER || '').trim();
@@ -57,8 +62,8 @@ export function getArcadeConfig(env = process.env) {
   const payoutPausedThreshold = String(env.DISTRIBUTOR_PAYOUT_PAUSED_THRESHOLD || '').trim();
   if (lowBalanceWarning) decimalToUnits(lowBalanceWarning, 'DISTRIBUTOR_LOW_BALANCE_WARNING');
   if (payoutPausedThreshold) decimalToUnits(payoutPausedThreshold, 'DISTRIBUTOR_PAYOUT_PAUSED_THRESHOLD');
-  return Object.freeze({ enabled: bool(env.XL1_GAME_REWARDS_ENABLED, true), mode,
-    rewardPerPoint, roundCapSeconds, minDiscordAgeDays, review, reviewCashoutUnits, reviewToken, dailyCap, distributor, holdTiers: parseHoldTiers(env.XL1_HOLD_TIERS), network: payout?.network || null, chainId: payout?.chainId || null, rewardDayTimezone: 'UTC', signerAdapter,
+  return Object.freeze({ enabled: bool(env.XL1_GAME_REWARDS_ENABLED, true), mode, walletLogin: bool(env.XL1_WALLET_LOGIN_ENABLED, false),
+    rewardPerPoint, roundCapSeconds, minDiscordAgeDays, review, reviewCashoutUnits, reviewToken, dailyCap, walletOnlyDailyCap, walletOnlyMinBalance, distributor, holdTiers: parseHoldTiers(env.XL1_HOLD_TIERS), network: payout?.network || null, chainId: payout?.chainId || null, rewardDayTimezone: 'UTC', signerAdapter,
     lowBalanceWarning, payoutPausedThreshold });
 }
 

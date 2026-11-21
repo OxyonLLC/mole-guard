@@ -26,3 +26,24 @@ export async function getVerifiedXl1Wallet(identityId, file = process.env.XL1_VE
     throw new Error('xl1_verification_unavailable');
   }
 }
+
+/** The Discord account a signed GeoHackers record links to this XL1 wallet, or null (used by "Sign in with XL1 wallet":
+ *  a wallet already verified to Discord signs into that Discord account). The newest record wins if there are several. */
+export function discordIdForXl1Wallet(database, address) {
+  const a = normalizeWallet(address);
+  if (!a) return null;
+  let best = null;
+  for (const [id, record] of Object.entries(database?.users ?? {})) {
+    if (!record || record.discordUserId !== id || !signedRecord(record)) continue;
+    if (normalizeWallet(record.xl1?.xl1Address) !== a) continue;
+    const at = Date.parse(record.updatedAt);
+    if (Number.isFinite(at) && (!best || at > best.at)) best = { id, at };
+  }
+  return best ? best.id : null;
+}
+
+export async function getDiscordIdForXl1Wallet(address, file = process.env.XL1_VERIFICATION_FILE) {
+  if (!file) return null;
+  try { return discordIdForXl1Wallet(JSON.parse(await readFile(file, 'utf8')), address); }
+  catch { return null; }
+}
