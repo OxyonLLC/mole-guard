@@ -8,6 +8,16 @@ import { processPayout } from '../xl1-arcade/payout-worker.js';
 import { enqueueRewardTrail, evidenceConfig, OUTBOX_COLLECTION } from '../xl1-arcade/evidence-outbox.js';
 
 const once = process.argv.includes('--once');
+const NAME = 'XL1 worker';
+// Never become a silent zombie (incident 2026-11-17: a failing database write in the error path escaped the loop, main()
+// gave up, but SDK handles kept the process alive, so pm2 showed "online" for 4 days while nothing ran).
+// If no cycle has finished for STALL_MS, exit so pm2 restarts the process.
+const STALL_MS = 15 * 60000;
+let lastCycleMs = Date.now();
+const stallTimer = setInterval(() => {
+  if (Date.now() - lastCycleMs > STALL_MS) { console.error('%s: no cycle finished for 15 minutes; exiting so pm2 restarts it.', NAME); process.exit(1); }
+}, 60000);
+stallTimer.unref();
 let stopped = false;
 process.on('SIGINT', () => { stopped = true; });
 process.on('SIGTERM', () => { stopped = true; });
@@ -96,17 +106,23 @@ async function main() {
     } catch {
       // Do not emit upstream SDK errors, URLs or credential-bearing diagnostics.
       console.error('XL1 payout cycle failed; durable transaction state retained for recovery.');
-      await controls.updateOne({ _id: 'health' }, { $set: { status: 'ERROR', checkedAt: new Date() } }, { upsert: true });
+      // These writes can fail for the same reason the cycle did (e.g. the database is unreachable): never let them escape.
+      await controls.updateOne({ _id: 'health' }, { $set: { status: 'ERROR', checkedAt: new Date() } }, { upsert: true })
+        .catch(() => console.error('XL1 worker: could not record ERROR health (database unreachable?).'));
       if (once) process.exitCode = 1;
     } finally {
-      await controls.updateOne({ _id: leaseId, owner }, { $set: { expiresAt: new Date(0) } });
+      // An unreleased lease simply expires after 120 s.
+      await controls.updateOne({ _id: leaseId, owner }, { $set: { expiresAt: new Date(0) } }).catch(() => {});
     }
   }
   do {
-    await tick();
+    // Acquiring the lease itself can fail (database down): count that as a failed cycle, not a fatal error.
+    await tick().catch(() => console.error('XL1 payout cycle failed before it started (lease); retrying.'));
+    lastCycleMs = Date.now();
     if (!once && !stopped) await new Promise(resolve => setTimeout(resolve, 10000));
   } while (!once && !stopped);
 }
 
 main().catch(() => { console.error('XL1 worker startup failed; check server-only configuration.'); process.exitCode = 1; })
-  .finally(closeMongo);
+  // Exit for real, so pm2 restarts a failed worker (SDK handles would otherwise keep a dead loop "online").
+  .finally(async () => { await closeMongo().catch(() => {}); process.exit(process.exitCode ?? 0); });

@@ -21,6 +21,16 @@ import { createBlitzClient } from '../xl1-blitz/blitz-client.js';
 import { createMongoBlitzStore } from '../xl1-blitz/mongo-store.js';
 
 const once = process.argv.includes('--once');
+const NAME = 'blitz-bridge';
+// Never become a silent zombie (incident 2026-11-17: a failing database write in the error path escaped the loop, main()
+// gave up, but SDK handles kept the process alive, so pm2 showed "online" for 4 days while nothing ran).
+// If no cycle has finished for STALL_MS, exit so pm2 restarts the process.
+const STALL_MS = 15 * 60000;
+let lastCycleMs = Date.now();
+const stallTimer = setInterval(() => {
+  if (Date.now() - lastCycleMs > STALL_MS) { console.error('%s: no cycle finished for 15 minutes; exiting so pm2 restarts it.', NAME); process.exit(1); }
+}, 60000);
+stallTimer.unref();
 let stopped = false;
 process.on('SIGINT', () => { stopped = true; });
 process.on('SIGTERM', () => { stopped = true; });
@@ -50,7 +60,8 @@ async function main() {
   do {
     // Shared lease with the arcade worker: the reserve never signs two transactions at once.
     const lease = await controls.findOneAndUpdate({ _id: leaseId, expiresAt: { $lte: new Date() } },
-      { $set: { owner, expiresAt: new Date(Date.now() + 120000) } }, { returnDocument: 'after' });
+      { $set: { owner, expiresAt: new Date(Date.now() + 120000) } }, { returnDocument: 'after' })
+      .catch(() => { console.error('blitz-bridge: could not take the distributor lease (database unreachable?); retrying.'); return null; });
     if (lease) {
       try {
         const result = await tick({ store, client, adapter: adapter ?? dryAdapter, config, readVerification, log: m => console.log(m) });
@@ -59,12 +70,13 @@ async function main() {
       } catch (error) {
         // Never print SDK errors, URLs or tokens. Durable batch state is kept for the next tick.
         console.error(`blitz-bridge cycle failed (${String(error?.message || '').replace(/[^a-z0-9_]/gi, '').slice(0, 60)}); state kept for recovery.`);
-        await controls.updateOne({ _id: 'blitz-health' }, { $set: { status: 'ERROR', checkedAt: new Date() } }, { upsert: true });
+        await controls.updateOne({ _id: 'blitz-health' }, { $set: { status: 'ERROR', checkedAt: new Date() } }, { upsert: true }).catch(() => {});
         if (once) process.exitCode = 1;
       } finally {
-        await controls.updateOne({ _id: leaseId, owner }, { $set: { expiresAt: new Date(0) } });
+        await controls.updateOne({ _id: leaseId, owner }, { $set: { expiresAt: new Date(0) } }).catch(() => {});
       }
     }
+    lastCycleMs = Date.now();
     if (!once && !stopped) await new Promise(resolve => setTimeout(resolve, Number(env.BLITZ_TICK_SECONDS || 60) * 1000));
   } while (!once && !stopped);
 }
@@ -74,4 +86,4 @@ const dryAdapter = { balance: async () => 0n, prepareBatch: async () => { throw 
   broadcast: async () => { throw new Error('dry_run'); }, confirmed: async () => false, expired: async () => false };
 
 main().catch(error => { console.error(`blitz-bridge startup failed (${String(error?.message || '').replace(/[^a-z0-9_]/gi, '').slice(0, 60)})`); process.exitCode = 1; })
-  .finally(closeMongo);
+  .finally(async () => { await closeMongo().catch(() => {}); process.exit(process.exitCode ?? 0); });
