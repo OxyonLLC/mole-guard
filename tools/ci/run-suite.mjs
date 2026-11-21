@@ -21,7 +21,7 @@ import { dirname, resolve } from 'node:path';
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const require = createRequire(import.meta.url);
 
-export const PATTERNS = ['src/xl1-arcade/*.test.js', 'src/xl1-connect/*.test.js', 'src/xl1-faucet/*.test.js', 'test/**/*.test.cjs', 'test/**/*.test.mjs', 'src/faucet/test/**/*.test.mjs'];
+export const PATTERNS = ['src/xl1-arcade/*.test.js', 'src/xl1-blitz/*.test.js', 'src/xl1-connect/*.test.js', 'src/xl1-faucet/*.test.js', 'test/**/*.test.cjs', 'test/**/*.test.mjs', 'src/faucet/test/**/*.test.mjs'];
 
 export function isolatedStages() {
   return JSON.parse(readFileSync(resolve(repoRoot, 'tools/ci/isolated-stages.json'), 'utf8')).stages;

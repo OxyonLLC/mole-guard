@@ -47,7 +47,7 @@
     "xl1:rewards-worker": "node src/scripts/xl1-rewards-worker.js",
     "xl1:sender-check": "node src/scripts/xl1-sender-check.js",
     "test:xl1-arcade": "node --test src/xl1-arcade/*.test.js",
-    "test": "node --test src/xl1-arcade/*.test.js src/xl1-connect/*.test.js src/xl1-faucet/*.test.js test/**/*.test.cjs test/**/*.test.mjs src/faucet/test/**/*.test.mjs",
+    "test": "node --test src/xl1-arcade/*.test.js src/xl1-blitz/*.test.js src/xl1-connect/*.test.js src/xl1-faucet/*.test.js test/**/*.test.cjs test/**/*.test.mjs src/faucet/test/**/*.test.mjs",
     "test:ci": "node tools/ci/run-suite.mjs",
     "test:isolated": "node test/support/run-isolated.cjs",
     "mobile:publish": "node src/scripts/publish-mobile-beta.mjs",

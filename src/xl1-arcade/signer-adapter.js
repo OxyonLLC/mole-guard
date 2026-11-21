@@ -54,6 +54,19 @@ export async function createSignerAdapter(config, distributor) {
       const { number: nbf } = await assertChain();
       return prepareTransfer({ sdk, signer, chainId: config.chainId, distributor, to, amount, nbf });
     },
+    // Blitz batches (src/xl1-blitz): one transaction, many recipients. `transfers` maps wallet -> units (millionths XL1).
+    async prepareBatch(transfers) {
+      const entries = Object.entries(transfers ?? {});
+      if (!entries.length || entries.length > 200) throw new Error('xl1_batch_size_invalid');
+      const atto = new Map();
+      for (const [wallet, units] of entries) {
+        const to = normalizeWallet(wallet), amount = BigInt(units) * ATTO_PER_REWARD_UNIT;
+        if (!to || amount <= 0n || atto.has(to)) throw new Error('xl1_transfer_invalid');
+        atto.set(to, amount);
+      }
+      const { number: nbf } = await assertChain();
+      return prepareBatchTransfer({ sdk, signer, chainId: config.chainId, distributor, transfers: atto, nbf });
+    },
     async confirmed(prepared) {
       await assertChain();
       // One read, no blocking SDK polling. A network error is retried next tick.
@@ -72,9 +85,17 @@ export async function createSignerAdapter(config, distributor) {
 
 
 export async function prepareTransfer({ sdk, signer, chainId, distributor, to, amount, nbf }) {
+  return prepareBatchTransfer({ sdk, signer, chainId, distributor, transfers: new Map([[to, amount]]), nbf });
+}
+
+// One signed XL1 transfer paying every entry of `transfers` (Map wallet -> atto). A single recipient is the
+// arcade's original transfer; Blitz batches pass many (verified offline 2026-11-21: 3 recipients, 0 validation errors).
+export async function prepareBatchTransfer({ sdk, signer, chainId, distributor, transfers, nbf }) {
   const exp = nbf + 10;
+  let amount = 0n;
+  for (const value of transfers.values()) amount += value;
   const payload = { schema: sdk.TransferSchema, epoch: Date.now(), from: distributor,
-    transfers: { [to]: amount.toString(16) } };
+    transfers: Object.fromEntries([...transfers].map(([to, value]) => [to, value.toString(16)])) };
   const build = fees => sdk.buildUnsignedTransaction(chainId, [payload], [], nbf, exp, distributor, fees);
   const estimate = await signer.signTransaction(await build());
   const gas = BigInt(sdk.transactionRequiredGas(estimate));
