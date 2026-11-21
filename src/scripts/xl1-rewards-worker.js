@@ -18,6 +18,10 @@ const stallTimer = setInterval(() => {
   if (Date.now() - lastCycleMs > STALL_MS) { console.error('%s: no cycle finished for 15 minutes; exiting so pm2 restarts it.', NAME); process.exit(1); }
 }, 60000);
 stallTimer.unref();
+// A process that keeps running but keeps failing is also stuck (2026-11: arcade payouts failed for two weeks until a
+// restart fixed them, most likely a stale connection). After MAX_FAILED_IN_A_ROW failed cycles, exit: pm2 restarts it fresh.
+const MAX_FAILED_IN_A_ROW = 20;
+let failedInARow = 0;
 let stopped = false;
 process.on('SIGINT', () => { stopped = true; });
 process.on('SIGTERM', () => { stopped = true; });
@@ -47,6 +51,7 @@ async function main() {
     const lease = await controls.findOneAndUpdate({ _id: leaseId, expiresAt: { $lte: now } },
       { $set: { owner, expiresAt: new Date(Date.now() + 120000) } }, { returnDocument: 'after' });
     if (!lease) return;
+    let failed = false;
     const assertLease = async () => {
       const result = await controls.updateOne({ _id: leaseId, owner, expiresAt: { $gt: new Date() } },
         { $set: { expiresAt: new Date(Date.now() + 120000) } });
@@ -105,6 +110,7 @@ async function main() {
       await controls.updateOne({ _id: 'health' }, { $set: { status: result.state || result.status, checkedAt: new Date() } });
     } catch {
       // Do not emit upstream SDK errors, URLs or credential-bearing diagnostics.
+      failed = true;
       console.error('XL1 payout cycle failed; durable transaction state retained for recovery.');
       // These writes can fail for the same reason the cycle did (e.g. the database is unreachable): never let them escape.
       await controls.updateOne({ _id: 'health' }, { $set: { status: 'ERROR', checkedAt: new Date() } }, { upsert: true })
@@ -113,12 +119,14 @@ async function main() {
     } finally {
       // An unreleased lease simply expires after 120 s.
       await controls.updateOne({ _id: leaseId, owner }, { $set: { expiresAt: new Date(0) } }).catch(() => {});
+      failedInARow = failed ? failedInARow + 1 : 0;
     }
   }
   do {
     // Acquiring the lease itself can fail (database down): count that as a failed cycle, not a fatal error.
     await tick().catch(() => console.error('XL1 payout cycle failed before it started (lease); retrying.'));
     lastCycleMs = Date.now();
+    if (failedInARow >= MAX_FAILED_IN_A_ROW) { console.error('XL1 worker: 20 failed cycles in a row; exiting so pm2 restarts it fresh.'); process.exitCode = 1; break; }
     if (!once && !stopped) await new Promise(resolve => setTimeout(resolve, 10000));
   } while (!once && !stopped);
 }
