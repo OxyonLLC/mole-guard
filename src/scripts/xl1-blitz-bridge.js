@@ -31,6 +31,10 @@ const stallTimer = setInterval(() => {
   if (Date.now() - lastCycleMs > STALL_MS) { console.error('%s: no cycle finished for 15 minutes; exiting so pm2 restarts it.', NAME); process.exit(1); }
 }, 60000);
 stallTimer.unref();
+// A process that keeps running but keeps failing is also stuck (2026-11: arcade payouts failed for two weeks until a
+// restart fixed them, most likely a stale connection). After MAX_FAILED_IN_A_ROW failed cycles, exit: pm2 restarts it fresh.
+const MAX_FAILED_IN_A_ROW = 20;
+let failedInARow = 0;
 let stopped = false;
 process.on('SIGINT', () => { stopped = true; });
 process.on('SIGTERM', () => { stopped = true; });
@@ -67,9 +71,11 @@ async function main() {
         const result = await tick({ store, client, adapter: adapter ?? dryAdapter, config, readVerification, log: m => console.log(m) });
         await controls.updateOne({ _id: 'blitz-health' }, { $set: { status: result.state, checkedAt: new Date(), mode, network: payout.network } }, { upsert: true });
         if (result.state !== 'IDLE') console.log(`blitz-bridge: ${result.state}${result.batchId ? ` ${result.batchId}` : ''}`);
+        failedInARow = 0;
       } catch (error) {
         // Never print SDK errors, URLs or tokens. Durable batch state is kept for the next tick.
         console.error(`blitz-bridge cycle failed (${String(error?.message || '').replace(/[^a-z0-9_]/gi, '').slice(0, 60)}); state kept for recovery.`);
+        failedInARow++;
         await controls.updateOne({ _id: 'blitz-health' }, { $set: { status: 'ERROR', checkedAt: new Date() } }, { upsert: true }).catch(() => {});
         if (once) process.exitCode = 1;
       } finally {
@@ -77,6 +83,7 @@ async function main() {
       }
     }
     lastCycleMs = Date.now();
+    if (failedInARow >= MAX_FAILED_IN_A_ROW) { console.error('blitz-bridge: 20 failed cycles in a row; exiting so pm2 restarts it fresh.'); process.exitCode = 1; break; }
     if (!once && !stopped) await new Promise(resolve => setTimeout(resolve, Number(env.BLITZ_TICK_SECONDS || 60) * 1000));
   } while (!once && !stopped);
 }
