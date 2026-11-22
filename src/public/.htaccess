@@ -60,13 +60,13 @@ RewriteRule ^log(/|$) - [F,L]
 
 # Redirect only legacy direct requests to the new subdirectories.
 RewriteCond %{THE_REQUEST} \s/+verify(?:\.html)?[\s?] [NC]
-RewriteRule ^verify(?:\.html)?$ /verify/ [R=302,L,NC]
+RewriteRule ^verify(?:\.html)?$ https://%{HTTP_HOST}/verify/ [R=302,L,NC]
 
 RewriteCond %{THE_REQUEST} \s/+discord-bots(?:\.html)?[\s?] [NC]
-RewriteRule ^discord-bots(?:\.html)?$ /discord-bots/ [R=302,L,NC]
+RewriteRule ^discord-bots(?:\.html)?$ https://%{HTTP_HOST}/discord-bots/ [R=302,L,NC]
 
 RewriteCond %{THE_REQUEST} \s/+health(?:\.html)?[\s?] [NC]
-RewriteRule ^health(?:\.html)?$ /health/ [R=302,L,NC]
+RewriteRule ^health(?:\.html)?$ https://%{HTTP_HOST}/health/ [R=302,L,NC]
 # /mole-hub/ is the canonical games route. Three older names still exist as
 # static JS redirect stubs (game-hub, gamehub, gaming-hub — each as both a
 # directory and a root .html). Only gaming-hub had a server rule, so the other
@@ -75,23 +75,23 @@ RewriteRule ^health(?:\.html)?$ /health/ [R=302,L,NC]
 # without mod_rewrite, and are marked noindex so they can't compete with
 # /mole-hub/ in search results.
 RewriteCond %{THE_REQUEST} \s/+gaming-hub(?:/|\.html)?[\s?] [NC]
-RewriteRule ^gaming-hub(?:\.html)?/?$ /mole-hub/ [R=301,L,NC]
+RewriteRule ^gaming-hub(?:\.html)?/?$ https://%{HTTP_HOST}/mole-hub/ [R=301,L,NC]
 
 RewriteCond %{THE_REQUEST} \s/+game-hub(?:/|\.html)?[\s?] [NC]
-RewriteRule ^game-hub(?:\.html)?/?$ /mole-hub/ [R=301,L,NC]
+RewriteRule ^game-hub(?:\.html)?/?$ https://%{HTTP_HOST}/mole-hub/ [R=301,L,NC]
 
 RewriteCond %{THE_REQUEST} \s/+gamehub(?:/|\.html)?[\s?] [NC]
-RewriteRule ^gamehub(?:\.html)?/?$ /mole-hub/ [R=301,L,NC]
+RewriteRule ^gamehub(?:\.html)?/?$ https://%{HTTP_HOST}/mole-hub/ [R=301,L,NC]
 
 # The Treasury page was retired in favor of the Transparency Center — the
 # static redirect-stub file (src/public/treasury/index.html) was removed,
 # so this server-level rule is now the only thing keeping old /treasury/
 # links (bookmarks, external posts) from 404ing.
 RewriteCond %{THE_REQUEST} \s/+treasury(?:/|\.html)?[\s?] [NC]
-RewriteRule ^treasury(?:\.html)?/?$ /transparency/ [R=301,L,NC]
+RewriteRule ^treasury(?:\.html)?/?$ https://%{HTTP_HOST}/transparency/ [R=301,L,NC]
 
 RewriteCond %{THE_REQUEST} \s/+geoagora(?:\.html)?[\s?] [NC]
-RewriteRule ^geoagora(?:\.html)?$ /geoagora/ [R=302,L,NC]
+RewriteRule ^geoagora(?:\.html)?$ https://%{HTTP_HOST}/geoagora/ [R=302,L,NC]
 
 # --- Oxyon: the technology moved home (2026-10-04) -------------------------
 # oxyon.io is now the canonical home of Oxyon and of the XL1 producers and
@@ -110,5 +110,13 @@ RewriteRule ^oxyon/(.+)$ https://oxyon.io/$1 [R=301,L,NC]
 RewriteRule ^future/lab(/.*)?$ https://oxyon.io/labs/ [R=302,L,NC]
 RewriteRule ^future(/.*)?$ https://oxyon.io/ [R=302,L,NC]
 RewriteRule ^xl1/(rbpi3|windows|compare|race)/?(index\.html)?$ https://oxyon.io/xl1/$1/ [R=301,L,NC]
+
+# --- Folder links without a trailing slash (2026-11-22) -------------------
+# Apache's own slash redirect points at http:// here (SSL ends upstream), and
+# Oxyon Wallet's browser refuses http, so winlew.co/xl1/arcade failed there.
+# Add the slash ourselves and stay on https. 302 until it has proven itself.
+# (Folders with their own rewrite .htaccess, e.g. /geoagora, are not covered.)
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.+[^/])$ https://%{HTTP_HOST}/$1/ [R=302,L]
 
 </IfModule>
