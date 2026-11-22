@@ -109,7 +109,8 @@ import {
 } from "./governanceSubmissions.js";
 import { validateRewardClaim, getRewardRulesConfig, resolveRewardMode } from "./rewardRules.js";
 import { registerXL1ArcadeRoutes } from "../xl1-arcade/routes.js";
-import { getVerifiedXl1Wallet } from "../xl1-arcade/verified-wallet.js";
+import { getVerifiedXl1Wallet, getDiscordIdForXl1Wallet } from "../xl1-arcade/verified-wallet.js";
+import { createXl1Login, loadSdkAccount, xl1AccountId, xl1WalletOf } from "../xl1-arcade/xl1-login.js";
 import { makeStartVerification } from "../xl1-arcade/verify-start.js";
 import { registerXl1ConnectRoutes } from "../xl1-connect/routes.js";
 import { registerXl1FaucetRoutes } from "../xl1-faucet/routes.js";
@@ -2397,12 +2398,48 @@ export async function startWeb() {
   );
 
   app.use(express.json({ limit: "250kb" }));
+  // "Sign in with XL1 wallet" (owner 2026-11-21: anyone with a website and an XL1 wallet can play and cash out).
+  // Off unless XL1_WALLET_LOGIN_ENABLED=true. One fee-free wallet signature (xl1-login.js) is the login and the proof
+  // of the payout wallet. A wallet already verified to Discord through GeoHackers signs into that Discord account;
+  // any other wallet gets a wallet-only account "xl1:<address>" (lower daily cap, minimum balance to cash out).
+  const xl1Login = createXl1Login({
+    audience: process.env.XL1_LOGIN_AUDIENCE || "https://winlew.co/xl1/login",
+    loadAccount: loadSdkAccount(process.env.XL1_ACCOUNT_SDK_MODULE),
+  });
+  const xl1LoginOn = () => process.env.XL1_WALLET_LOGIN_ENABLED === "true";
+  const xl1LoginLimit = simpleRateLimit({ windowMs: 60_000, max: 20 });
+  app.post("/api/xl1-login/start", xl1LoginLimit, (req, res) => {
+    if (!xl1LoginOn()) return res.status(404).json({ error: "not_found" });
+    res.setHeader("cache-control", "no-store");
+    try { return res.json(xl1Login.start(req.body?.address)); }
+    catch (error) { return res.status(400).json({ error: String(error?.message || "xl1_login_failed") }); }
+  });
+  app.post("/api/xl1-login/complete", xl1LoginLimit, async (req, res) => {
+    if (!xl1LoginOn()) return res.status(404).json({ error: "not_found" });
+    res.setHeader("cache-control", "no-store");
+    try {
+      const { address } = await xl1Login.complete({ challengeId: req.body?.challengeId, token: req.body?.token });
+      const discordId = await getDiscordIdForXl1Wallet(address);
+      const accountId = discordId || xl1AccountId(address);
+      const session = createSession(accountId, cfg.DISCORD_ACTIVITY_SESSION_TTL_SEC);
+      void logSiteEvent({
+        type: "xl1_wallet_signin", icon: "🔑", source: SITE_LOG_SOURCES.WALLET,
+        title: discordId ? "Signed in with XL1 wallet (Discord-verified)" : "Signed in with XL1 wallet (wallet-only)",
+        fields: { Wallet: `${address.slice(0, 6)}…${address.slice(-4)}`, Tier: discordId ? "full" : "wallet" },
+      });
+      return res.json({ session, address, tier: discordId ? "full" : "wallet" });
+    } catch (error) {
+      const code = String(error?.message || "");
+      return res.status(code === "xl1_login_unavailable" ? 503 : 401).json({ error: /^xl1_/.test(code) ? code : "xl1_login_failed" });
+    }
+  });
   registerXL1ArcadeRoutes(app, {
     getIdentity: async (req) => {
       const session = getSession(sessionFromRequest(req));
       return session ? { id: String(session.discordUserId) } : null;
     },
-    getVerifiedWallet: getVerifiedXl1Wallet,
+    // A wallet-only account IS its wallet (proven by the sign-in signature); others use the GeoHackers record.
+    getVerifiedWallet: async (id) => xl1WalletOf(id) ?? getVerifiedXl1Wallet(id),
     startVerification: makeStartVerification({ base: geoHackersVerifyTarget }),
     rateLimit: simpleRateLimit({ windowMs: 10_000, max: 30 }),
   });

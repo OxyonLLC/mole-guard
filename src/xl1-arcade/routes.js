@@ -4,15 +4,16 @@ import { MongoArcadeStore } from './mongo-store.js';
 import { getArcadeConfig } from './config.js';
 import { checkPayoutAllowed } from '../services/payoutGate.js';
 import { isDiscordIdentity } from './verify-start.js';
+import { makeXl1Balance } from './xl1-login.js';
 
 // Who may be paid: WinLEW's own bans (the same gate as every Mole Guard payout) and the XL1
 // rewards block list that GeoHackers moderators keep. An unreachable list is a reason, not a pass.
 const XL1_BLOCKLIST_URL=(process.env.XL1_BLOCKLIST_URL||'http://127.0.0.1:8791').replace(/\/$/,'');
 export async function rewardGate({identityId,wallet}){const winlew=checkPayoutAllowed({wallet,discordUserId:identityId});if(!winlew.allowed)return winlew.reason;try{const q=new URLSearchParams({wallet:wallet||'',discordUserId:identityId||''});const r=await fetch(`${XL1_BLOCKLIST_URL}/blocklist/check?${q}`,{signal:AbortSignal.timeout(5000)});if(!r.ok)return 'blocklist_unavailable';return (await r.json()).blocked?'xl1_blocked':null}catch{return 'blocklist_unavailable'}}
 
-function errorStatus(message){if(message==='authentication_required'||message==='verified_xl1_wallet_required')return 401;if(message==='session_not_found')return 404;if(message==='nothing_to_cash_out')return 409;if(message==='xl1_rewards_blocked'||message==='needs_identity_sync'||message==='discord_account_too_new')return 403;if(message==='blocklist_unavailable')return 503;if(message.includes('requires_mongodb')||message==='xl1_verification_unavailable'||message==='xl1_verify_unavailable')return 503;return 400;}
-export function registerXL1ArcadeRoutes(app,{getIdentity,getVerifiedWallet,startVerification,rateLimit}={}){
-  const config=getArcadeConfig();const store=new MongoArcadeStore();const service=new ArcadeRewardService({store,config,gate:rewardGate});const limited=rateLimit||((_req,_res,next)=>next());
+function errorStatus(message){if(message==='authentication_required'||message==='verified_xl1_wallet_required')return 401;if(message==='session_not_found')return 404;if(message==='nothing_to_cash_out')return 409;if(message==='xl1_rewards_blocked'||message==='needs_identity_sync'||message==='discord_account_too_new'||message==='xl1_balance_below_minimum')return 403;if(message==='xl1_balance_unavailable')return 503;if(message==='blocklist_unavailable')return 503;if(message.includes('requires_mongodb')||message==='xl1_verification_unavailable'||message==='xl1_verify_unavailable')return 503;return 400;}
+export function registerXL1ArcadeRoutes(app,{getIdentity,getVerifiedWallet,startVerification,rateLimit,walletBalance=makeXl1Balance()}={}){
+  const config=getArcadeConfig();const store=new MongoArcadeStore();const service=new ArcadeRewardService({store,config,gate:rewardGate,walletBalance});const limited=rateLimit||((_req,_res,next)=>next());
   app.get('/api/xl1-arcade/config',(_req,res)=>res.json(service.publicConfig()));
   app.get('/api/xl1-arcade/activity',limited,async(_req,res)=>{try{res.json({...service.publicConfig(),...(await store.publicStats(rewardDay(),config.dailyCap,config.mode))})}catch(error){res.status(errorStatus(error.message)).json({error:error.message})}});
   app.get('/api/xl1-arcade/me',limited,async(req,res)=>{try{const identity=await getIdentity(req);if(!identity)throw new Error('authentication_required');res.json({...await service.summary(identity.id),wallet:await getVerifiedWallet(identity.id),discord:isDiscordIdentity(identity.id)})}catch(error){res.status(errorStatus(error.message)).json({error:error.message})}});
