@@ -149,3 +149,36 @@ test('client: https only, token required, errors never include the token', async
   const c = createBlitzClient({ apiUrl: 'https://blitz.example', token, fetchImpl: async () => ({ ok: false, status: 404, json: async () => ({}) }) });
   await assert.rejects(c.claim(10), e => /blitz_bridge_http_404_claim/.test(e.message) && !e.message.includes(token));
 });
+
+test('auto-approve (owner 2026-11-26): flagged and already-held cash-outs pay on the next run, each one logged', async () => {
+  const w = world(); const events = [];
+  // Held from before the switch (the bridge stored it as REVIEW).
+  w.queue.push(w.item('old', W('a'), 1.302, { status: 'in_review', needsReview: true, reviewReason: 'first_payout_discord_fast_track' }));
+  const held = () => tick({ store: w.store, client: w.client, adapter: w.adapter, config: w.config, now: () => T0 });
+  assert.equal((await held()).state, 'IDLE'); assert.equal((await w.store.item('old')).status, 'REVIEW');
+  w.queue.push(w.item('big', W('b'), 250, { status: 'in_review', needsReview: true, reviewReason: 'large_cashout' }), w.item('plain', W('c'), 2));
+  const auto = { ...w.config, autoApprove: true };
+  const r = await tick({ store: w.store, client: w.client, adapter: w.adapter, config: auto, now: () => T0, notify: e => events.push(e) });
+  assert.equal(r.state, 'SUBMITTED'); assert.equal(r.recipients, 3);
+  assert.deepEqual(JSON.parse(w.chain.sent[0].transaction), { [W('a')]: '1302000', [W('b')]: '250000000', [W('c')]: '2000000' });
+  assert.equal((await w.store.item('old')).approvedBy, 'auto');
+  assert.deepEqual(events.map(e => e.kind), ['auto_approved', 'auto_approved', 'submitted']);
+  assert.equal(events[2].txHash, w.chain.sent[0].hash);
+  w.chain.confirmed.add(w.chain.sent[0].hash);
+  await tick({ store: w.store, client: w.client, adapter: w.adapter, config: auto, now: () => T0, notify: e => events.push(e) });
+  assert.equal(events.at(-1).kind, 'paid'); assert.equal(w.settled.length, 3);
+});
+
+test('auto-approve keeps every other guard: daily ceiling, low balance, and a broken log never stops a payment', async () => {
+  const w = world();
+  w.queue.push(w.item('big', W('a'), 250, { needsReview: true, reviewReason: 'large_cashout' }));
+  const tight = { ...w.config, autoApprove: true, dailyCeilingUnits: '1000000' };
+  assert.equal((await tick({ store: w.store, client: w.client, adapter: w.adapter, config: tight, now: () => T0 })).state, 'DAILY_CEILING');
+  assert.equal(w.chain.sent.length, 0);
+  const poor = world({ balanceXl1: 22 }); poor.queue.push(poor.item('f', W('a'), 3, { needsReview: true, reviewReason: 'first_payout_discord_fast_track' }));
+  assert.equal((await tick({ store: poor.store, client: poor.client, adapter: poor.adapter, config: { ...poor.config, autoApprove: true }, now: () => T0 })).state, 'LOW_BALANCE');
+  const loud = world(); loud.queue.push(loud.item('x', W('a'), 1, { needsReview: true }));
+  const r = await tick({ store: loud.store, client: loud.client, adapter: loud.adapter, config: { ...loud.config, autoApprove: true }, now: () => T0,
+    notify: () => { throw new Error('discord down'); } });
+  assert.equal(r.state, 'SUBMITTED');
+});

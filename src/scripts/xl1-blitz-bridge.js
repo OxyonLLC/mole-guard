@@ -5,6 +5,10 @@
 //   XL1_NETWORK, XL1_RPC_URL, XL1_CHAIN_ID, XL1_SENDER_FILE, XL1_SDK_MODULE, XL1_DISTRIBUTOR_ADDRESS (same as the arcade)
 //   XL1_VERIFICATION_FILE (GeoHackers bot store, for the Discord fast track), XL1_MIN_DISCORD_AGE_DAYS (default 30)
 //   DISTRIBUTOR_PAYOUT_PAUSED_THRESHOLD (default 20 XL1, never dip below)
+//   BLITZ_AUTO_APPROVE (default true, owner 2026-11-26): pay flagged cash-outs without a moderator; set 'false' to hold them
+//   Discord log: every auto-approval, batch sent, batch paid, decline, and any change into a stopped state (low balance,
+//   daily ceiling, batch review, paused, errors) goes to the site activity log (siteLog.js: SITE_LOG_WEBHOOK_URL, else the
+//   bot token + SITE_LOG_CHANNEL_ID). Never a secret: amounts, masked wallets, transaction hashes.
 // Pause everything (arcade + Blitz): db.xl1_arcade_worker.updateOne({_id:'control'},{$set:{paused:true}})
 // Pause Blitz only:                  db.xl1_arcade_worker.updateOne({_id:'blitz-control'},{$set:{paused:true}},{upsert:true})
 import 'dotenv/config';
@@ -19,6 +23,7 @@ import { tick } from '../xl1-blitz/bridge.js';
 import { blitzNetworkFor, DEFAULT_BATCH_MAX } from '../xl1-blitz/batch.js';
 import { createBlitzClient } from '../xl1-blitz/blitz-client.js';
 import { createMongoBlitzStore } from '../xl1-blitz/mongo-store.js';
+import { discordNotifier, STOPPED_STATES } from '../xl1-blitz/notify.js';
 
 const once = process.argv.includes('--once');
 const NAME = 'blitz-bridge';
@@ -49,7 +54,8 @@ async function main() {
   if (!distributor) throw new Error('XL1_DISTRIBUTOR_ADDRESS_required');
   const config = { mode, blitzNetwork, batchMax: Math.min(200, Number(env.BLITZ_BATCH_MAX || DEFAULT_BATCH_MAX)),
     dailyCeilingUnits: decimalToUnits(env.BLITZ_DAILY_CEILING_XL1 || '500', 'BLITZ_DAILY_CEILING_XL1').toString(),
-    pausedBalanceUnits: payout.pausedBalanceUnits.toString(), minDiscordAgeDays: Number(env.XL1_MIN_DISCORD_AGE_DAYS || 30) };
+    pausedBalanceUnits: payout.pausedBalanceUnits.toString(), minDiscordAgeDays: Number(env.XL1_MIN_DISCORD_AGE_DAYS || 30),
+    autoApprove: env.BLITZ_AUTO_APPROVE !== 'false' };
   const token = (await readFile(env.BLITZ_BRIDGE_TOKEN_FILE, 'utf8')).trim();
   const client = createBlitzClient({ apiUrl: env.BLITZ_API_URL, token });
   // Dry-run never opens the sender file: it only reads, batches and logs.
@@ -60,7 +66,9 @@ async function main() {
   const controls = db.collection('xl1_arcade_worker');
   const leaseId = `distributor:${distributor}`, owner = crypto.randomUUID();
   const readVerification = env.XL1_VERIFICATION_FILE ? async () => JSON.parse(await readFile(env.XL1_VERIFICATION_FILE, 'utf8')) : null;
-  console.log(`blitz-bridge: ${mode} on ${payout.network} (Blitz '${blitzNetwork}'), batches up to ${config.batchMax} wallets`);
+  console.log(`blitz-bridge: ${mode} on ${payout.network} (Blitz '${blitzNetwork}'), batches up to ${config.batchMax} wallets, auto-approve ${config.autoApprove ? 'on' : 'off'}`);
+  const notify = discordNotifier(payout.network, mode);
+  let lastState = null;
   do {
     // Shared lease with the arcade worker: the reserve never signs two transactions at once.
     const lease = await controls.findOneAndUpdate({ _id: leaseId, expiresAt: { $lte: new Date() } },
@@ -68,7 +76,9 @@ async function main() {
       .catch(() => { console.error('blitz-bridge: could not take the distributor lease (database unreachable?); retrying.'); return null; });
     if (lease) {
       try {
-        const result = await tick({ store, client, adapter: adapter ?? dryAdapter, config, readVerification, log: m => console.log(m) });
+        const result = await tick({ store, client, adapter: adapter ?? dryAdapter, config, readVerification, log: m => console.log(m), notify });
+        if (result.state !== lastState && STOPPED_STATES[result.state]) notify({ kind: 'stopped', state: result.state, batchId: result.batchId });
+        lastState = result.state;
         await controls.updateOne({ _id: 'blitz-health' }, { $set: { status: result.state, checkedAt: new Date(), mode, network: payout.network } }, { upsert: true });
         if (result.state !== 'IDLE') console.log(`blitz-bridge: ${result.state}${result.batchId ? ` ${result.batchId}` : ''}`);
         failedInARow = 0;
@@ -76,6 +86,7 @@ async function main() {
         // Never print SDK errors, URLs or tokens. Durable batch state is kept for the next tick.
         console.error(`blitz-bridge cycle failed (${String(error?.message || '').replace(/[^a-z0-9_]/gi, '').slice(0, 60)}); state kept for recovery.`);
         failedInARow++;
+        if (failedInARow === 3) notify({ kind: 'stopped', state: 'ERROR' });
         await controls.updateOne({ _id: 'blitz-health' }, { $set: { status: 'ERROR', checkedAt: new Date() } }, { upsert: true }).catch(() => {});
         if (once) process.exitCode = 1;
       } finally {
