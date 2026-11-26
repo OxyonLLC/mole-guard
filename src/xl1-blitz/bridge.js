@@ -13,7 +13,11 @@ export const ATTO_PER_UNIT = 1_000_000_000_000n; // 1 unit = 1 millionth XL1
 const WALLET_SYNC_EVERY_MS = 30 * 60000;
 const OPEN = ['QUEUED', 'PREPARED', 'SUBMITTED', 'REVIEW'];
 
-export async function tick({ store, client, adapter, config, readVerification, now = Date.now, log = () => {} }) {
+// config.autoApprove (owner 2026-11-26): cash-outs Blitz flags for a moderator (first fast-track payout, 200+ XL1) are paid
+// on the next run like any other, and each one is reported through `notify` so it shows in the Discord log instead of
+// waiting on a person. Caps, the daily ceiling, the low-balance floor, the pause switch and batch review are unchanged.
+// notify(event) is fire-and-forget: { kind: 'auto_approved' | 'submitted' | 'paid' | 'declined', ... }.
+export async function tick({ store, client, adapter, config, readVerification, now = Date.now, log = () => {}, notify = () => {} }) {
   const t = now();
   if (await store.paused()) return { state: 'PAUSED' };
 
@@ -33,6 +37,8 @@ export async function tick({ store, client, adapter, config, readVerification, n
     if (open.status === 'QUEUED') open = await store.saveBatch(open, { status: 'PREPARED', prepared: await adapter.prepareBatch(open.transfers) });
     if (await adapter.confirmed(open.prepared)) {
       await store.saveBatch(open, { status: 'PAID', paidAtMs: t, settled: false });
+      safeNotify(notify, { kind: 'paid', batchId: open._id, recipients: Object.keys(open.transfers).length, totalUnits: open.totalUnits,
+        txHash: open.prepared.hash, network: open.network });
     } else if (await adapter.expired(open.prepared)) {
       await store.saveBatch(open, { status: 'REVIEW', reason: 'expired_unconfirmed' });
       return { state: 'BATCH_REVIEW', batchId: open._id };
@@ -40,6 +46,8 @@ export async function tick({ store, client, adapter, config, readVerification, n
       if (!(await funded(adapter, config, open.prepared.requiredAtto))) return { state: 'LOW_BALANCE' };
       await adapter.broadcast(open.prepared);
       await store.saveBatch(open, { status: 'SUBMITTED', submittedAtMs: t });
+      safeNotify(notify, { kind: 'submitted', batchId: open._id, recipients: Object.keys(open.transfers).length, totalUnits: open.totalUnits,
+        txHash: open.prepared.hash, network: open.network });
       return { state: 'SUBMITTED', batchId: open._id };
     } else return { state: 'CONFIRMING', batchId: open._id };
   }
@@ -56,6 +64,7 @@ export async function tick({ store, client, adapter, config, readVerification, n
   for (const item of await store.items(['DECLINED_PENDING'])) {
     await client.settle({ uid: item.uid, requestId: item._id, status: 'declined', reason: item.declineReason || 'moderator' });
     await store.updateItems([item._id], { status: 'DECLINED' }, 'DECLINED_PENDING');
+    safeNotify(notify, { kind: 'declined', requestId: item._id, units: item.units, wallet: item.wallet, reason: item.declineReason || 'moderator' });
   }
 
   // 3. Collect cash-outs whose payout hour has come.
@@ -64,6 +73,13 @@ export async function tick({ store, client, adapter, config, readVerification, n
     const status = it.network !== config.blitzNetwork ? 'WRONG_NETWORK' : it.needsReview ? 'REVIEW' : 'READY';
     await store.upsertItem({ _id: it.requestId, uid: it.uid, wallet: it.walletAddress, units: String(it.amountMillionths),
       network: it.network, needsReview: !!it.needsReview, reviewReason: it.reviewReason || '', status, claimedAtMs: t });
+  }
+  // Auto-approve: everything waiting for a moderator (new, or held from before the switch) joins this run.
+  if (config.autoApprove) {
+    for (const item of await store.items(['REVIEW'])) {
+      await store.updateItems([item._id], { status: 'READY', approvedAt: new Date(t), approvedBy: 'auto' }, 'REVIEW');
+      safeNotify(notify, { kind: 'auto_approved', requestId: item._id, units: item.units, wallet: item.wallet, reason: item.reviewReason || '' });
+    }
   }
 
   // 4. Build and send one batch.
@@ -84,8 +100,13 @@ export async function tick({ store, client, adapter, config, readVerification, n
   if (!(await funded(adapter, config, batch.prepared.requiredAtto))) return { state: 'LOW_BALANCE', batchId: id };
   await adapter.broadcast(batch.prepared);
   await store.saveBatch(batch, { status: 'SUBMITTED', submittedAtMs: t });
+  safeNotify(notify, { kind: 'submitted', batchId: id, recipients: Object.keys(spec.transfers).length, totalUnits: spec.totalUnits,
+    txHash: batch.prepared.hash, network: config.blitzNetwork });
   return { state: 'SUBMITTED', batchId: id, recipients: Object.keys(spec.transfers).length };
 }
+
+// A log that fails (Discord down, rate limit) must never stop a payment.
+function safeNotify(notify, event) { try { const r = notify(event); if (r?.catch) r.catch(() => {}); } catch {} }
 
 // Never dip below the pause threshold (DISTRIBUTOR_PAYOUT_PAUSED_THRESHOLD), like the arcade worker.
 async function funded(adapter, config, requiredAtto) {
