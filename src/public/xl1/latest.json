@@ -3,7 +3,7 @@
   "build": 260,
   "tag": "v2.6.0",
   "cli": "5.8.4",
-  "sdk": "5.9.1",
+  "sdk": "5.10.6",
   "released": "2026-11-26T05:59:35Z",
   "notes": "xl1-cli 5.8.4, dashboard 2.6.0: same last-hour rank on dashboard, Pi panel and oxyon.io; software & host on every screen; Pi panel SOFTWARE page",
   "pi": "OxyonLLC/xl1-oxyonode",
