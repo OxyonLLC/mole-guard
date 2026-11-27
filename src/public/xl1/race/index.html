@@ -174,6 +174,7 @@
 <div class="tip" id="tip" role="tooltip"></div>
 
 </main>
+<script src="/xl1/shared/status-data.js?v=s004b"></script>
 <script>
 
 function renderRace(D) {
@@ -389,17 +390,18 @@ function renderRace(D) {
 }
 
 // Data: the public status repo first (updates without a site upload), then the copy beside this page.
-const RACE_URLS = ['https://raw.githubusercontent.com/LewSales/xl1-status-data/main/race.json', './race.json']
+// The public telemetry repositories first (newest valid copy of both, status-data.js), then the copy beside this page.
+const RACE_URLS = ['status-data', './race.json']
 ;(async () => {
   for (const url of RACE_URLS) {
     try {
-      const r = await fetch(url, { cache: 'no-cache' })
-      if (!r.ok) continue
-      const d = await r.json()
+      let d
+      if (url === 'status-data') d = await XL1StatusData.fetchStatus('race.json', async (u) => { const r = await fetch(u, { cache: 'no-cache' }); return r.ok ? r.json() : null })
+      else { const r = await fetch(url, { cache: 'no-cache' }); if (!r.ok) continue; d = await r.json() }
       if (!d || !Array.isArray(d.heights)) continue
       document.getElementById('rb-loading')?.remove()
       renderRace(d)
-      document.getElementById('rb-source').textContent = url.startsWith('http') ? 'Data from the public xl1-status-data repository.' : 'Data from the snapshot published with this page.'
+      document.getElementById('rb-source').textContent = url === 'status-data' ? 'Data from the public XL1 telemetry repositories.' : 'Data from the snapshot published with this page.'
       return
     } catch (e) { /* try the next source */ }
   }

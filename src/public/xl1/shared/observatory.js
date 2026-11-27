@@ -7,13 +7,14 @@
   // Loaded by /xl1/ (index.html). Every DOM write tolerates a missing element, so a page can
   // carry any subset of the ids below.
   const T = window.XL1Telemetry
-  const RAW = 'https://raw.githubusercontent.com/LewSales/xl1-status-data/main/'
+  // Telemetry files are read from both telemetry repositories, newest valid copy (status-data.js, loaded first).
+  const S = window.XL1StatusData
   const FEEDS = [
-    { key: 'windows', prefix: 'win', label: 'Windows', url: RAW + 'windows.json' },
-    { key: 'rbpi3', prefix: 'pi', label: 'Raspberry Pi 3 B+', url: RAW + 'rbpi3.json' },
+    { key: 'windows', prefix: 'win', label: 'Windows', url: 'windows.json' },
+    { key: 'rbpi3', prefix: 'pi', label: 'Raspberry Pi 3 B+', url: 'rbpi3.json' },
   ]
   // GeoHackers: the public summary (bands for completed windows; replaced the detailed geohackers.json 2026-11-06).
-  const EXTRA = { geohackers: RAW + 'geohackers-summary.json', race: RAW + 'race.json' }
+  const EXTRA = { geohackers: 'geohackers-summary.json', race: 'race.json' }
   const REFRESH_MS = 30 * 1000
   const REQUEST_TIMEOUT_MS = 8 * 1000
   const $ = (id) => document.getElementById(id)
@@ -22,15 +23,15 @@
   }[character]))
   const num = (number) => T.value(number, (v) => Number(v).toLocaleString())
 
-  async function fetchJson(url, requireSchema = true) {
+  // `file` is a telemetry file name; identity and freshness are checked by status-data.js. The schema===1 test now
+  // skips geohackers-summary.json, whose schema is a string (the old test always rejected that file).
+  async function fetchJson(file, requireSchema = true) {
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS)
     try {
-      const separator = url.includes('?') ? '&' : '?'
-      const response = await fetch(`${url}${separator}t=${Date.now()}`, { cache: 'no-store', signal: controller.signal })
-      if (!response.ok) throw new Error(`HTTP ${response.status}`)
-      const data = await response.json()
-      if (requireSchema && data.schema !== 1) throw new Error('unsupported telemetry schema')
+      const data = await S.fetchStatus(file, (url) => S.noStoreJson(url, controller.signal))
+      if (!data) throw new Error('no valid copy in either telemetry repository')
+      if (requireSchema && file !== 'geohackers-summary.json' && data.schema !== 1) throw new Error('unsupported telemetry schema')
       return data
     } finally {
       clearTimeout(timeout)

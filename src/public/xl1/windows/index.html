@@ -166,6 +166,7 @@
 <div id="stale"></div>
 <main id="grid"></main>
 <footer id="foot"></footer>
+<script src="/xl1/shared/status-data.js?v=s004b"></script>
 <script>
 const $ = (id) => document.getElementById(id)
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))
@@ -516,7 +517,9 @@ function render(d) {
 // plain cross-origin fetch with nothing to configure. Its CDN caches for five
 // minutes, and the ?t= below is already a cache-buster, so the page usually
 // sees a write immediately and never waits longer than the publish interval.
-const DATA_URL = 'https://raw.githubusercontent.com/LewSales/xl1-status-data/main/windows.json'
+// Newest valid copy across both telemetry repositories (status-data.js). DATA_URL is shown in messages only.
+const DATA_FILE = 'windows.json'
+const DATA_URL = XL1StatusData.statusUrl(XL1StatusData.STATUS_REPOS[0], DATA_FILE)
 
 // Poll and re-render rather than reloading the document. A reload re-fetches
 // the page, re-parses the CSS and throws away the scroll position, several
@@ -530,9 +533,9 @@ async function tick(force) {
   // would otherwise never get a first render to skip past.
   if (document.hidden && !force) return
   try {
-    const res = await fetch(DATA_URL + (DATA_URL.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store' })
-    if (!res.ok) throw new Error('HTTP ' + res.status)
-    render(await res.json())
+    const snapshot = await XL1StatusData.fetchStatus(DATA_FILE, (url) => XL1StatusData.noStoreJson(url))
+    if (!snapshot) throw new Error('no valid copy in either telemetry repository')
+    render(snapshot)
     failures = 0
   } catch (e) {
     // One failed poll is a hiccup and must not blank a page that is already

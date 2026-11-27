@@ -81,6 +81,7 @@
   A row over 30 minutes stale is flagged rather than silently kept. Independent community project —
   not affiliated with, endorsed by, or supported by XYO Network.
 </div></footer>
+<script src="/xl1/shared/status-data.js?v=s004b"></script>
 <script>
 "use strict"
 const $ = (id) => document.getElementById(id)
@@ -90,16 +91,23 @@ const num = (n) => (n === null || n === undefined) ? '—' : Number(n).toLocaleS
 // Operators sharing their data here. Order is display order; add yours by
 // appending { name, url } with a URL serving the same schema:1 shape.
 const SOURCES = [
-  { name: 'Windows',        url: 'https://raw.githubusercontent.com/LewSales/xl1-status-data/main/windows.json' },
-  { name: 'Raspberry Pi 3B+', url: 'https://raw.githubusercontent.com/LewSales/xl1-status-data/main/rbpi3.json' },
+  // Oxyon's own nodes name a telemetry FILE: read from both telemetry repositories (status-data.js), newest valid copy.
+  { name: 'Windows',        file: 'windows.json' },
+  { name: 'Raspberry Pi 3B+', file: 'rbpi3.json' },
 ]
 
 const STALE_MS = 30 * 60 * 1000
 
 async function fetchOne(src) {
-  const res = await fetch(src.url + (src.url.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store' })
-  if (!res.ok) throw new Error(`HTTP ${res.status}`)
-  const d = await res.json()
+  let d
+  if (src.file) {
+    d = await XL1StatusData.fetchStatus(src.file, (url) => XL1StatusData.noStoreJson(url))
+    if (!d) throw new Error('no valid copy in either telemetry repository')
+  } else {
+    const res = await fetch(src.url + (src.url.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store' })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    d = await res.json()
+  }
   if (!d.schema) throw new Error('no schema field -- not a /api/public document')
   return d
 }
