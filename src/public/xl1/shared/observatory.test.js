@@ -19,6 +19,7 @@ globalThis.document = {
 globalThis.fetch = async () => { throw new Error('simulated endpoint failure') }
 globalThis.setInterval = () => 0
 
+await import('./status-data.js')
 await import('./observatory.js')
 const O = globalThis.XL1Observatory
 const feeds = [{ label: 'Windows' }, { label: 'Raspberry Pi 3 B+' }]

@@ -144,6 +144,7 @@
       <p class="plate-copy">WinLEW is independent community work, not affiliated with, sponsored by or endorsed by XYO Network. XL1 is XYO Network's blockchain. © <span id="year">2026</span> WinLEW</p>
     </div>
 </footer>
+<script src="/xl1/shared/status-data.js?v=s004b"></script>
 <script>
 // Same source the producer pages read, and the same discipline: never invent a
 // number, and always say how old the ones on screen are. An empty card is
@@ -154,7 +155,9 @@
 // each recent event), which let anyone time individual activity. What it can say: whether each
 // service runs, whether anything waits, and RANGES of counts for the last completed day and week.
 // The page checks the file's exact shape and draws nothing from a file that fails.
-const GH_DATA = 'https://raw.githubusercontent.com/LewSales/xl1-status-data/main/geohackers-summary.json'
+// Newest valid copy across both telemetry repositories (status-data.js). GH_DATA is shown in messages only.
+const GH_FILE = 'geohackers-summary.json'
+const GH_DATA = XL1StatusData.statusUrl(XL1StatusData.STATUS_REPOS[0], GH_FILE)
 const INTERVAL = 15 * 60000
 const BANDS = ['0', '<5', '5-9', '10-19', '20-49', '50-99', '100+']
 const SERVICES = { api: 'API', worker: 'Event worker', recap: 'Daily recap', bot: 'Discord bot' }
@@ -217,8 +220,7 @@ function render (d) {
   badge.className = 'pill' + (current ? '' : ' amber')
 }
 
-fetch(GH_DATA + '?t=' + Date.now(), { cache: 'no-store' })
-  .then((r) => r.status === 404 ? null : r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)))
+XL1StatusData.fetchStatus(GH_FILE, (url) => XL1StatusData.noStoreJson(url))
   .then((d) => {
     if (d === null) {
       document.getElementById('gh-status').innerHTML =
